@@ -1,0 +1,21 @@
+﻿<Window x:Class="Tida.Canvas.Shell.Shell.Views.Shell"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:input="clr-namespace:System.Windows.Input;assembly=WindowBase"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:shell="clr-namespace:Tida.Canvas.Shell.Contracts.Shell;assembly=Tida.Canvas.Shell.Contracts"
+        xmlns:prism="http://prismlibrary.com/" 
+        prism:ViewModelLocator.AutoWireViewModel = "True"
+        mc:Ignorable="d" Title="{Binding Title}" Height="800" Width="1024">
+    <Window.InputBindings>
+        <KeyBinding  Command="{Binding SuckCommand}" Key="Z" />
+    </Window.InputBindings>
+    
+    <DockPanel>
+        <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static shell:Constants.RegionName_Ribbon}"/>
+        <ContentControl DockPanel.Dock="Bottom" prism:RegionManager.RegionName="{x:Static shell:Constants.RegionName_StatusBar}"/>
+        <Grid x:Name="grid"/>
+        
+    </DockPanel>
+</Window>

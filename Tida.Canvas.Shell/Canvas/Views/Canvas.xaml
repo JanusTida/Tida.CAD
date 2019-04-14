@@ -1,0 +1,99 @@
+﻿<ContentControl x:Class="Tida.Canvas.Shell.Canvas.Views.Canvas"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:canvas="clr-namespace:Tida.Canvas.WPFCanvas;assembly=Tida.Canvas.WPFCanvas"
+             xmlns:prism="http://prismlibrary.com/"
+                xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:ji="http://schemas.janus.com/expression/2018/interactivity"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <ContentControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Telerik.Windows.Themes.Office2013;component/Themes/Telerik.Windows.Controls.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Telerik.Windows.Themes.Office2013;component/Themes/Telerik.Windows.Controls.Navigation.xaml"/>
+                
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentControl.Resources>
+    <DockPanel>
+        
+        <canvas:CanvasControl x:Name="canvasControl" 
+        InputMethod.IsInputMethodEnabled="False"
+        Layers="{Binding Layers}"
+        ActiveLayer="{Binding ActiveLayer}" 
+        SnapShapeRules="{Binding SnapShapeRules}"
+        IsReadOnly="{Binding IsReadOnly}"
+        Zoom="{Binding Zoom}" 
+        InteractionHandlers="{Binding InteractionHandlers}"
+        IsSnapingEnabled="{Binding IsSnapingEnabled}"
+        PanScreenPosition="{Binding PanScreenPosition}"
+        CurrentEditTool="{Binding CurrentEditTool}">
+            <ji:Interaction.Triggers>
+                <ji:InteractionRequestTrigger SourceObject="{Binding UndoRequest}">
+                    <ji:CallMethodAction MethodName="Undo" TargetObject="{Binding ElementName=canvasControl}" />
+                </ji:InteractionRequestTrigger>
+                <ji:InteractionRequestTrigger SourceObject="{Binding RedoRequest}">
+                    <ji:CallMethodAction MethodName="Redo" TargetObject="{Binding ElementName=canvasControl}"/>
+                </ji:InteractionRequestTrigger>
+                <ji:InteractionRequestTrigger SourceObject="{Binding ClearTransactionsRequest}">
+                    <ji:CallMethodAction MethodName="ClearTransactions" TargetObject="{Binding ElementName=canvasControl}"/>
+                </ji:InteractionRequestTrigger>
+                <ji:EventTrigger EventName="SizeChanged">
+                    <ji:InvokeCommandAction Command="{Binding SizeChangedCommand}" />
+                </ji:EventTrigger>
+                <ji:EventTrigger EventName="CurrentMousePositionChanged"  >
+                    <ji:InvokeCommandAction  Command="{Binding CurrentMousePositionChangedCommand}" />
+                </ji:EventTrigger>
+                <ji:EventTrigger EventName="MouseHoverSnapShapeChanged">
+                    <ji:InvokeCommandAction Command="{Binding MouseHoverSnapShapeChangedCommand}"/>
+                </ji:EventTrigger>
+                <ji:EventTrigger EventName="CanUndoChanged">
+                    <ji:InvokeCommandAction Command="{Binding CanUndoChangedCommand}" />
+                </ji:EventTrigger>
+                <ji:EventTrigger EventName="CanRedoChanged">
+                    <ji:InvokeCommandAction Command="{Binding CanRedoChangedCommand}"/>
+                </ji:EventTrigger>
+                <ji:EventTrigger EventName="DrawObjectIsSelectedChanged">
+                    <ji:InvokeCommandAction Command="{Binding DrawObjectIsSelectedChangedCommand}"/>
+                </ji:EventTrigger>
+                <ji:EventTrigger EventName="EditTransactionUndone">
+                    <ji:InvokeCommandAction Command="{Binding EditTransactionUndoneCommand}"/>
+                </ji:EventTrigger>
+                <ji:EventTrigger EventName="EditTransactionRedone">
+                    <ji:InvokeCommandAction Command="{Binding EditTransactionRedoneCommand}"/>
+                </ji:EventTrigger>
+                <ji:EventTrigger EventName="DrawObjectsRemoved">
+                    <ji:InvokeCommandAction Command="{Binding DrawObjectRemovedCommand}"/>
+                </ji:EventTrigger>
+                <ji:EventTrigger EventName="DrawObjectsAdded">
+                    <ji:InvokeCommandAction Command="{Binding DrawObjectAddedCommand}"/>
+                </ji:EventTrigger>
+                <ji:EventTrigger EventName="CanvasProxyChanged">
+                    <ji:InvokeCommandAction Command="{Binding CanvasProxyChangedCommand}"/>
+                </ji:EventTrigger>
+                <ji:EventTrigger EventName="ActiveLayerChanged">
+                    <ji:InvokeCommandAction Command="{Binding ActiveLayerChangedCommand}"/>
+                </ji:EventTrigger>
+            </ji:Interaction.Triggers>
+            <telerik:RadContextMenu.ContextMenu >
+            <telerik:RadContextMenu  ItemsSource="{Binding ContextMenuItems}" >
+                    <telerik:RadContextMenu.ItemContainerStyle>
+                        <Style TargetType="telerik:RadMenuItem" BasedOn="{StaticResource {x:Type telerik:RadMenuItem}}">
+                            <Setter Property="Command" Value="{Binding Command}"/>
+                            <Setter Property="Header" Value="{Binding Name}"/>
+                            <Setter Property="ItemsSource" Value="{Binding Children}"/>
+                        </Style>
+
+                    </telerik:RadContextMenu.ItemContainerStyle>
+       
+            </telerik:RadContextMenu>
+        </telerik:RadContextMenu.ContextMenu>
+
+        </canvas:CanvasControl>
+    </DockPanel>
+    
+</ContentControl>

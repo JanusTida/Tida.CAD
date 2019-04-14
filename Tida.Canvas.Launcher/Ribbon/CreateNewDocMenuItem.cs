@@ -1,0 +1,25 @@
+﻿using Tida.Canvas.Launcher.ViewModels;
+using Tida.Application.Contracts.Common;
+using Tida.Application.Contracts.Menu;
+using Tida.Canvas.Shell.Contracts.Canvas;
+using Tida.Canvas.Shell.Contracts.Ribbon;
+using Tida.Canvas.Shell.Contracts.Shell;
+using Prism.Commands;
+using System.Windows.Input;
+using static Tida.Canvas.Shell.Contracts.Ribbon.Constants;
+
+namespace Tida.Canvas.Launcher.Ribbon {
+    [ExportMenuItem(
+        GUID = Constants.MenuItemGUID_CreateDoc,
+        HeaderLanguageKey = Constants.MenuItemName_New,
+        Icon = Constants.MenuItemIcon_CreateDoc,
+        InputGestureText = "Ctrl + N",
+        OwnerGUID = Menu_CanvasShellRibbon,
+        Key = Key.N,
+        ModifierKeys = ModifierKeys.Control,
+        Order = 1
+    )]
+    class CreateNewDocMenuItem : IMenuItem {
+        public ICommand Command => GenericServiceStaticInstance<CanvasSerializingViewModel>.Current.CreateNewCommand;
+    }
+}
