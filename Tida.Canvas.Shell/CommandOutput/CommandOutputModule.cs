@@ -11,7 +11,7 @@ namespace Tida.Canvas.Shell.CommandOutput {
     [ModuleExport(typeof(CommandOutputModule))]
     class CommandOutputModule : IModule {
         public void Initialize() {
-            CommandOutputService.WriteLine("欢迎来到王者荣耀");
+            //CommandOutputService.WriteLine("欢迎来到王者荣耀");
         }
 
         

@@ -32,7 +32,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
@@ -165,23 +165,10 @@
   <ItemGroup>
     <Resource Include="Resources\Save.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Page Include="TidaAppContent\Languages\zh_CN\Tida.Application.App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="TidaAppContent\LanguageConfig_Backup.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="TidaAppContent\LanguageConfig.xml" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>XCopy "$(ProjectDir)\TidaAppContent\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
-ECHO F | XCopy "$(ProjectDir)TidaAppContent\LanguageConfig.xml" "$(TargetDir)LanguageConfig.xml" /I /D  /E /Y
-ECHO F | XCopy "$(ProjectDir)TidaAppContent\LanguageConfig_Backup.xml" "$(TargetDir)LanguageConfig_Backup.xml" /I /D  /E /Y</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -210,9 +210,17 @@
     <Compile Include="EditTools\RoundDiameterTwoPointsEditToolProvider.cs" />
     <Compile Include="EditTools\RoundEditToolGroup.cs" />
     <Compile Include="TrimTools\BasicTrimToolsProvider.cs" />
+    <Page Include="CanvasExport\Languages\en_US\Tida.Common.Canvas.Shell.CanvasExport.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="CanvasExport\Views\SaveAsImgConfigWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Canvas\Languages\en_US\Tida.Canvas.Shell.Canvas.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Canvas\Languages\zh_CN\Tida.Canvas.Shell.Canvas.xaml">
       <SubType>Designer</SubType>
@@ -230,6 +238,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="CommandOutput\Languages\en_US\Tida.Canvas.Shell.CommandOutput.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="CommandOutput\Languages\zh_CN\Tida.Canvas.Shell.CommandOutput.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -237,6 +249,10 @@
     <Page Include="CommandOutput\Views\CommandOutput.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ComponentModel\Languages\en_US\Tida.Canvas.Shell.ComponentModel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="ComponentModel\Views\Ellipse2DEditor.xaml">
       <SubType>Designer</SubType>
@@ -254,11 +270,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="DrawObjectDescription\Languages\en_Us\Tida.Canvas.Shell.DrawObjectDescription.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="DrawObjectDescription\Languages\zh_CN\Tida.Canvas.Shell.DrawObjectDescription.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="EditTools\Languages\en_Us\Tida.Canvas.Shell.EditTools.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="EditTools\Languages\zh_CN\Tida.Canvas.Shell.EditTools.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPage\Languages\en_US\Tida.Canvas.Shell.MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -274,9 +302,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="PropertyGrid\Languages\en_US\Tida.Canvas.Shell.PropertyGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="PropertyGrid\Views\PropertyGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ribbon\Languages\en_US\Tida.Canvas.Shell.Ribbon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Shell\Languages\en_US\Tida.Canvas.Shell.Shell.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="StatusBar\Languages\en_US\Tida.Canvas.Shell.StatusBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Docking.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -410,6 +454,10 @@
       <DependentUpon>Shell.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="TidaAppContent\Languages\en_US\Tida.Application.App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="TidaAppContent\Languages\zh_CN\Tida.Application.App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -644,7 +692,11 @@ XCopy "$(ProjectDir)Shell\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
 XCopy "$(ProjectDir)StatusBar\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
 XCopy "$(ProjectDir)CommandOutput\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
 XCopy "$(ProjectDir)ComponentModel\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
-XCopy "$(ProjectDir)PropertyGrid\Languages" "$(TargetDir)Languages\" /I /D  /E /Y</PostBuildEvent>
+XCopy "$(ProjectDir)PropertyGrid\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
+
+XCopy "$(ProjectDir)\TidaAppContent\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
+ECHO F | XCopy "$(ProjectDir)TidaAppContent\LanguageConfig.xml" "$(TargetDir)LanguageConfig.xml" /I /D  /E /Y
+ECHO F | XCopy "$(ProjectDir)TidaAppContent\LanguageConfig_Backup.xml" "$(TargetDir)LanguageConfig_Backup.xml" /I /D  /E /Y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
