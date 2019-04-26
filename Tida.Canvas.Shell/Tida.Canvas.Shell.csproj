@@ -150,6 +150,8 @@
     <Compile Include="ComponentModel\ComponentModelModule.cs" />
     <Compile Include="ComponentModel\Constants.cs" />
     <Compile Include="ComponentModel\DrawObjectPropertyDescriptors.cs" />
+    <Compile Include="ComponentModel\Ellipse2DEditorDescriptor.cs" />
+    <Compile Include="ComponentModel\EllipseEllipse2DPropertyDescriptor.cs" />
     <Compile Include="ComponentModel\Line2DEditorDescriptor.cs" />
     <Compile Include="ComponentModel\LineBaseLine2DPropertyDescriptor.cs" />
     <Compile Include="ComponentModel\MousePositionTrackableDrawObjectIgnorePropertyDescriptor.cs" />
@@ -162,9 +164,29 @@
     <Compile Include="ComponentModel\Views\Line2DEditor.xaml.cs">
       <DependentUpon>Line2DEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ComponentModel\Views\StandardInputTextBox.cs" />
     <Compile Include="ComponentModel\Views\Vector2DEditor.xaml.cs">
       <DependentUpon>Vector2DEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\Constants.cs" />
+    <Compile Include="Dialogs\DrawObjectSelectDialog.cs" />
+    <Compile Include="Dialogs\DrawObjectSelectWrapper.cs" />
+    <Compile Include="Dialogs\Models\DrawObjectModel.cs" />
+    <Compile Include="Dialogs\ViewModels\DrawObjectSelectWindowViewModel.cs" />
+    <Compile Include="Dialogs\Views\DrawObjectSelectWindow.xaml.cs">
+      <DependentUpon>DrawObjectSelectWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DrawObjectDescription\Constants.cs" />
+    <Compile Include="DrawObjectDescription\DrawObjectDescriptionModule.cs" />
+    <Compile Include="DrawObjectDescription\DrawObjectDescriptors.cs" />
+    <Compile Include="DrawObjectDescription\LanguageDrawObjectDescriptorGenericBase.cs" />
+    <Compile Include="DrawObjectDescription\LanguageDrawObjectDescriptorGenericBase2.cs" />
+    <Compile Include="DynamicInput\CopyEditToolDynamicInputerProvider.cs" />
+    <Compile Include="DynamicInput\MultiLineEditDynamicInputerProvider.cs" />
+    <Compile Include="DynamicInput\SingleLineEditDynamicInputerProvider.cs" />
+    <Compile Include="DynamicInput\MoveEditToolDynamicInputerProvider.cs" />
+    <Compile Include="DynamicInput\OneLineEditDynamicInputerProvider.cs" />
+    <Compile Include="DynamicInput\PointEditDynamicInputerProvider.cs" />
     <Compile Include="EditTools\BasicEditToolGroup.cs" />
     <Compile Include="EditTools\Events\CanvasCopyEditToolEventHandler.cs" />
     <Compile Include="EditTools\Events\CanvasEditToolChangedEventHandlerGenericBase.cs" />
@@ -187,6 +209,7 @@
     <Compile Include="EditTools\RoundCenterRadiusPointsEditToolProvider.cs" />
     <Compile Include="EditTools\RoundDiameterTwoPointsEditToolProvider.cs" />
     <Compile Include="EditTools\RoundEditToolGroup.cs" />
+    <Compile Include="TrimTools\BasicTrimToolsProvider.cs" />
     <Page Include="CanvasExport\Views\SaveAsImgConfigWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -207,7 +230,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CommandOutput\Languages\zh_CN\CDO.Common.Canvas.Shell.CommandOutput.xaml">
+    <Page Include="CommandOutput\Languages\zh_CN\Tida.Canvas.Shell.CommandOutput.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -227,11 +250,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="EditTools\Languages\zh_CN\CDO.Common.Canvas.Shell.EditTools.xaml">
+    <Page Include="Dialogs\Views\DrawObjectSelectWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MainPage\Languages\zh_CN\SingularityForensic.MainPage.xaml">
+    <Page Include="DrawObjectDescription\Languages\zh_CN\Tida.Canvas.Shell.DrawObjectDescription.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EditTools\Languages\zh_CN\Tida.Canvas.Shell.EditTools.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPage\Languages\zh_CN\Tida.Canvas.Shell.MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NativePresentation\Views\NumberBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NativePresentation\Views\NumberBoxContainer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -255,7 +294,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StatusBar\Languages\zh_CN\CDO.Common.Canvas.Shell.StatusBar.xaml">
+    <Page Include="StatusBar\Languages\zh_CN\Tida.Canvas.Shell.StatusBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -306,6 +345,9 @@
     <Compile Include="EditTools\EditToolsModule.cs" />
     <Compile Include="CanvasExport\Ribbon\SaveAsImgMenuItem.cs" />
     <Compile Include="CanvasExport\ViewModels\SaveAsImgConfigWindowViewModel.cs" />
+    <Compile Include="ExtendTools\BasicExtendToolsProvider.cs" />
+    <Compile Include="InteractionHandlers\DynamicInputInteractionHandlerProvider.cs" />
+    <Compile Include="InteractionHandlers\VertextInteractionHandlerProvider.cs" />
     <Compile Include="MainPage\Constants.cs" />
     <Compile Include="MainPage\DockingPaneContainers.cs" />
     <Compile Include="MainPage\DockingPaneGroups.cs" />
@@ -317,6 +359,19 @@
     <Compile Include="MainPage\Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MirrorTools\BasicMirrorToolsProvider.cs" />
+    <Compile Include="MoveTools\BasicMoveToolsProvider.cs" />
+    <Compile Include="MoveTools\LineBaseMoveTool.cs" />
+    <Compile Include="NativePresentation\Models\NumberBoxModel.cs" />
+    <Compile Include="NativePresentation\NumberBoxServiceImpl.cs" />
+    <Compile Include="NativePresentation\ViewModels\NumberBoxContainerViewModel.cs" />
+    <Compile Include="NativePresentation\Views\NumberBox.xaml.cs">
+      <DependentUpon>NumberBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NativePresentation\Views\NumberBoxContainer.xaml.cs">
+      <DependentUpon>NumberBoxContainer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OffsetTools\BasicOffsetToolsProvider.cs" />
     <Compile Include="PropertyGrid\MefPropertyGridManager.cs" />
     <Compile Include="PropertyGrid\PropertyGridPane.cs" />
     <Compile Include="PropertyGrid\ViewModels\PropertyGridViewModel.cs" />
@@ -324,7 +379,14 @@
       <DependentUpon>PropertyGrid.xaml</DependentUpon>
     </Compile>
     <Compile Include="Canvas\Ribbon\ShowAllDrawObjectsMenuItem.cs" />
+    <Compile Include="Serializing\EllipseXmlSerializer.cs" />
+    <Compile Include="Serializing\LineXmlSerializer.cs" />
+    <Compile Include="Serializing\PointXmlSerializer.cs" />
+    <Compile Include="Serializing\RectangleXmlSerializer.cs" />
+    <Compile Include="Snaping\BasicIntersectRulesProvider.cs" />
+    <Compile Include="Snaping\BasicSnapRulesProvider.cs" />
     <Compile Include="Snaping\Constants.cs" />
+    <Compile Include="Snaping\DoubleDrawObjectIntersectRuleProvider.cs" />
     <Compile Include="StatusBar\DefaultStatusBarTextItem.cs" />
     <Compile Include="StatusBar\IndentStatusBarItem.cs" />
     <Compile Include="Ribbon\Constants.cs" />
@@ -372,20 +434,20 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
-    <Page Include="PropertyGrid\Languages\zh_CN\CDO.Common.Canvas.Shell.PropertyGrid.xaml">
+    <Page Include="PropertyGrid\Languages\zh_CN\Tida.Canvas.Shell.PropertyGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CanvasExport\Languages\zh_CN\CDO.Common.Canvas.Shell.CanvasExport.xaml">
+    <Page Include="CanvasExport\Languages\zh_CN\Tida.Common.Canvas.Shell.CanvasExport.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <None Include="ClassDiagram1.cd" />
-    <Page Include="Ribbon\Languages\zh_CN\CDO.Common.Canvas.Shell.Ribbon.xaml">
+    <Page Include="Ribbon\Languages\zh_CN\Tida.Canvas.Shell.Ribbon.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ComponentModel\Languages\zh_CN\CDO.Common.Canvas.Shell.ComponentModel.xaml">
+    <Page Include="ComponentModel\Languages\zh_CN\Tida.Canvas.Shell.ComponentModel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -555,10 +617,6 @@
     <Resource Include="TidaAppContent\LanguageConfig.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tida.Canvas.Base\Tida.Canvas.Base.csproj">
-      <Project>{29e7ac2b-d410-43fc-b2b9-9fede96a3ba5}</Project>
-      <Name>Tida.Canvas.Base</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Tida.Canvas.Contracts\Tida.Canvas.Contracts.csproj">
       <Project>{9488b9cd-3888-4e43-b598-6eb9536d2b15}</Project>
       <Name>Tida.Canvas.Contracts</Name>

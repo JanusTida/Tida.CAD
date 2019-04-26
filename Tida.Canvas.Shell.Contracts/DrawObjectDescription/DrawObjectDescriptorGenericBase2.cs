@@ -1,6 +1,4 @@
 ﻿using Tida.Canvas.Contracts;
-using Tida.Canvas.Infrastructure.ComponentModel;
-using SDrawObjectDescription = Tida.Canvas.Infrastructure.ComponentModel.DrawObjectDescription;
 
 namespace Tida.Canvas.Shell.Contracts.DrawObjectDescription {
 
@@ -8,7 +6,7 @@ namespace Tida.Canvas.Shell.Contracts.DrawObjectDescription {
     /// 绘制对象描述器泛型基类2;
     /// </summary>
     public abstract class DrawObjectDescriptorGenericBase2<TDrawObject> : IDrawObjectDescriptor where TDrawObject : DrawObject {
-        public SDrawObjectDescription GetDescription(DrawObject drawObject) {
+        public DrawObjectDescription GetDescription(DrawObject drawObject) {
             if (!(drawObject is TDrawObject tDrawObject)) {
                 return null;
             }
@@ -17,7 +15,7 @@ namespace Tida.Canvas.Shell.Contracts.DrawObjectDescription {
                 return null;
             }
 
-            return new SDrawObjectDescription(GetTypeName(tDrawObject));
+            return new DrawObjectDescription(GetTypeName(tDrawObject));
         }
 
         /// <summary>

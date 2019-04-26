@@ -1,17 +1,9 @@
 ﻿using Tida.Canvas.Infrastructure.DrawObjects;
-using Tida.Canvas.Infrastructure.Utils;
-using Tida.Canvas.Contracts;
 using Tida.Geometry.Primitives;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Tida.Canvas.Infrastructure.Constants;
 
 namespace Tida.Canvas.Infrastructure.EditTools {
     /// <summary>
-    /// 连续的线性编辑工具基类;
+    /// 连续地绘制线性图形的编辑工具基类;
     /// </summary>
     /// <typeparam name="TLine"></typeparam>
     public abstract class MultiLineEditToolGenericBase<TLine>:MouseInteractableEditToolGenericBase<TLine> where TLine:LineBase {

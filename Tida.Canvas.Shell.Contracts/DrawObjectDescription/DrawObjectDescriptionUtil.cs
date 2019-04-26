@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Tida.Canvas.Infrastructure.ComponentModel;
 
 namespace Tida.Canvas.Shell.Contracts.DrawObjectDescription {
 

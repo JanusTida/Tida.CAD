@@ -1,5 +1,4 @@
 ﻿using Tida.Canvas.Shell.Contracts.Ribbon;
-using System.ComponentModel.Composition;
 
 namespace Tida.Canvas.Shell.Canvas.Ribbon {
     [ExportRibbonGroup(

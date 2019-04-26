@@ -48,7 +48,6 @@ namespace Tida.Canvas.Launcher {
             Tida.Application.BootStrapper.AddAssemblyModules(
                 new Type[] {
                     typeof(Tida.Canvas.Shell.Dummy),
-                    typeof(Tida.Canvas.Base.Dummy),
                     typeof(Dummy)
                 }
             );

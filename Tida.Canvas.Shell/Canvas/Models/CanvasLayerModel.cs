@@ -1,11 +1,6 @@
-﻿using Tida.Canvas.Contracts;
-using Tida.Canvas.Shell.Contracts.Canvas;
+﻿using Tida.Canvas.Shell.Contracts.Canvas;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tida.Canvas.Shell.Canvas.Models {
     /// <summary>

@@ -3,10 +3,6 @@ using Tida.Canvas.Contracts;
 using Tida.Geometry.External;
 using Tida.Geometry.Primitives;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Tida.Canvas.Infrastructure.Constants;
 using static Tida.Canvas.Infrastructure.Utils.PositionHitUtils;
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using Tida.Application.Contracts.App;
 using Tida.Application.Contracts.Common;
 using Tida.Canvas.Shell.Contracts.Shell.Events;

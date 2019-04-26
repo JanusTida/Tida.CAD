@@ -98,6 +98,7 @@
     <Compile Include="Canvas\Events\CanvasEditToolChangedEvent.cs" />
     <Compile Include="Canvas\Events\CanvasDrawObjectsRemovingEvent.cs" />
     <Compile Include="Canvas\ICanvasLayersProvider.cs" />
+    <Compile Include="Canvas\IMoveToolProvider.cs" />
     <Compile Include="CommandOutput\Events\CommandLineOutputEvent.cs" />
     <Compile Include="Canvas\Events\CanvasCurrentMousePositionChangedEvent.cs" />
     <Compile Include="Canvas\Events\CanvasIsSnapingEnabledChangedEvent.cs" />
@@ -121,24 +122,39 @@
     <Compile Include="ComponentModel\StandardValueLanguageInfo.cs" />
     <Compile Include="ComponentModel\PropertyDescriptor.cs" />
     <Compile Include="ComponentModel\Views\StandardValuesEditor.cs" />
+    <Compile Include="ComponentModel\Views\StandardValuesEditorManager.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Canvas\ICanvasDataContext.cs" />
     <Compile Include="Canvas\ICanvasService.cs" />
+    <Compile Include="DrawObjectDescription\DrawObjectDescription.cs" />
     <Compile Include="DrawObjectDescription\DrawObjectDescriptionUtil.cs" />
     <Compile Include="DrawObjectDescription\DrawObjectDescriptorGenericBase.cs" />
     <Compile Include="DrawObjectDescription\DrawObjectDescriptorGenericBase2.cs" />
     <Compile Include="DrawObjectDescription\ExportDrawObjectDescriptorAttribute.cs" />
+    <Compile Include="DrawObjectDescription\IDrawObjectDescriptor.cs" />
+    <Compile Include="DrawObjectDescription\IDrawObjectDescriptorMetaData.cs" />
+    <Compile Include="DrawObjectDescription\LanguageDrawObjectDescriptorGenericBase.cs" />
+    <Compile Include="DrawObjectDescription\LanguageDrawObjectDescriptorGenericBase2.cs" />
     <Compile Include="DynamicInput\ExportCanvasControlDynamicInputerProviderAttribute.cs" />
+    <Compile Include="DynamicInput\OneEditingDrawObjectInputerProviderGenericBase.cs" />
     <Compile Include="EditTools\Constants.cs" />
+    <Compile Include="EditTools\DrawObjectSelectorService.cs" />
     <Compile Include="EditTools\EditToolProviderGenericBase.cs" />
     <Compile Include="EditTools\ExportEditToolProviderAttribute.cs" />
     <Compile Include="EditTools\IEditToolGroup.cs" />
     <Compile Include="EditTools\IEditToolProvider.cs" />
     <Compile Include="EditTools\IEditToolProviderMetaData.cs" />
+    <Compile Include="ExtendTools\IExtendToolsProvider.cs" />
     <Compile Include="InteractionHandlers\ExportCanvasInteractionHandlerProviderAttribute.cs" />
+    <Compile Include="InteractionHandlers\ICanvasInteractionHandlerProvider.cs" />
+    <Compile Include="InteractionHandlers\ICanvasInteractionHandlerProviderMetaData.cs" />
     <Compile Include="MainPage\Constants.cs" />
     <Compile Include="MainPage\Events\MainPageLoadedEvent.cs" />
     <Compile Include="MainPage\MainDockingService.cs" />
+    <Compile Include="MirrorTools\IMirrorToolProvider.cs" />
+    <Compile Include="MoveTools\IMoveToolsProvider.cs" />
+    <Compile Include="NativePresentation\NumberBoxService.cs" />
+    <Compile Include="OffsetTools\IOffsetToolsProvider.cs" />
     <Compile Include="Ribbon\CreatedRibbonGroup.cs" />
     <Compile Include="Ribbon\CreatedRibbonItem.cs" />
     <Compile Include="Ribbon\Events\SelectedRibbonTabChangedEvent.cs" />
@@ -150,6 +166,8 @@
     <Compile Include="Ribbon\IRibbonDropDownButtonItem.cs" />
     <Compile Include="Ribbon\RibbonDropDownButtonItem.cs" />
     <Compile Include="Ribbon\RibbonObjectItem.cs" />
+    <Compile Include="Serializing\EllipseXmlSerializer.cs" />
+    <Compile Include="Serializing\IDrawObjectXmlSerializer.cs" />
     <Compile Include="Serializing\IDrawObjectXmlSerializerProvider.cs" />
     <Compile Include="CommandOutput\ICommandOutputService.cs" />
     <Compile Include="Ribbon\Constants.cs" />
@@ -163,6 +181,7 @@
     <Compile Include="Ribbon\IRibbonTab.cs" />
     <Compile Include="Ribbon\RibbonButtonItem.cs" />
     <Compile Include="Ribbon\RibbonGroup.cs" />
+    <Compile Include="Serializing\XmlSerializerBase.cs" />
     <Compile Include="Shell\Constants.cs" />
     <Compile Include="Shell\Events\ShellClosingEvent.cs" />
     <Compile Include="Shell\Events\ShellInitializingEvent.cs" />
@@ -183,6 +202,9 @@
     <Compile Include="Snaping\ExportDrawObjectIntersectRuleAttribute.cs" />
     <Compile Include="Snaping\ExportSnapShapeRuleAttribute.cs" />
     <Compile Include="Snaping\ExportSnapShapeRuleProviderAttribute.cs" />
+    <Compile Include="Snaping\IIntersectRuleProvider.cs" />
+    <Compile Include="Snaping\ISnapShapeRuleProvider.cs" />
+    <Compile Include="Snaping\ISnapShapeRuleProviderMetaData.cs" />
     <Compile Include="StatusBar\Constants.cs" />
     <Compile Include="StatusBar\Events\StatusBarInitializeEvent.cs" />
     <Compile Include="StatusBar\IStatusBarItem.cs" />
@@ -190,6 +212,7 @@
     <Compile Include="StatusBar\StatusBarCheckBoxItem.cs" />
     <Compile Include="StatusBar\StatusBarItemBase.cs" />
     <Compile Include="StatusBar\StatusBarTextItem.cs" />
+    <Compile Include="TrimTools\ITrimToolsProvider.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

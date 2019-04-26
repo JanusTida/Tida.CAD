@@ -1,4 +1,11 @@
-﻿namespace Tida.Canvas.Shell.Contracts {
+﻿using Tida.Canvas.Media;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Tida.Canvas.Shell.Contracts {
     /// <summary>
     /// 图层相关常量;
     /// </summary>
@@ -36,6 +43,18 @@
         /// 标识将在绘制对象序列化时使用的转换器类型;
         /// </summary>
         public const string ConverterType_SerializingDrawObjects   = nameof(ConverterType_SerializingDrawObjects);
+
+
+        /// <summary>
+        /// 设定节标识——画布
+        /// </summary>
+        public const string SettingSectionGUID_Canvas = nameof(SettingSectionGUID_Canvas);
+
+        /// <summary>
+        /// 设定——正交模式可用状态;
+        /// </summary>
+        public const string SettingName_VertexMode = nameof(SettingName_VertexMode);
+        
     }
 
 }

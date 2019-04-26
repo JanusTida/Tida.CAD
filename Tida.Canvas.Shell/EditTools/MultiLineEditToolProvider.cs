@@ -1,10 +1,5 @@
-﻿using Tida.Canvas.Base.EditTools;
+﻿using Tida.Canvas.Infrastructure.EditTools;
 using Tida.Canvas.Shell.Contracts.EditTools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Tida.Canvas.Shell.Contracts.EditTools.Constants;
 
 namespace Tida.Canvas.Shell.EditTools {

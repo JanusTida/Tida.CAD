@@ -1,23 +1,14 @@
-﻿using Tida.Canvas.Base.InteractionHandlers;
-using Tida.Application.Contracts.App;
-using Tida.Application.Contracts.Common;
-using Tida.Application.Contracts.Controls;
-using Tida.Application.Contracts.Docking;
+﻿using Tida.Application.Contracts.Docking;
 using Tida.Canvas.Contracts;
 using Tida.Canvas.Shell.Contracts.Canvas;
-using Tida.Canvas.Shell.Contracts.Canvas.Events;
 using Tida.Canvas.Shell.Contracts.MainPage;
 using Tida.Canvas.Shell.Contracts.Shell;
 using Tida.Canvas.Shell.Contracts.Shell.Events;
 using Prism.Commands;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-
+using Tida.Canvas.Infrastructure.InteractionHandlers;
 
 namespace Tida.Canvas.Shell.Canvas.Events {
     /// <summary>

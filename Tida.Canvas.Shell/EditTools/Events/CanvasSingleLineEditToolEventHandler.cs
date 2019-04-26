@@ -1,14 +1,8 @@
-﻿using Tida.Canvas.Base.EditTools;
-using Tida.Application.Contracts.App;
-using Tida.Canvas.Base.EditTools;
+﻿using Tida.Canvas.Infrastructure.EditTools;
 using Tida.Canvas.Shell.Contracts.Canvas.Events;
 using Tida.Canvas.Shell.Contracts.CommandOutput;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Tida.Application.Contracts.App;
 
 namespace Tida.Canvas.Shell.EditTools.Events {
     [Export(typeof(ICanvasEditToolChangedEventHandler))]

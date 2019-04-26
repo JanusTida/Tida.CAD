@@ -1,11 +1,7 @@
-﻿using Tida.Application.Contracts.Common;
-using Tida.Canvas.Contracts;
-using Tida.Canvas.Shell.Contracts.Canvas;
-using Tida.Canvas.Shell.Contracts.Canvas.Events;
+﻿using Tida.Canvas.Shell.Contracts.Canvas;
 using Tida.Canvas.Shell.Contracts.EditTools;
 using Tida.Canvas.Shell.Contracts.Ribbon;
 using Prism.Commands;
-using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;

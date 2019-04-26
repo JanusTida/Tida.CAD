@@ -5,6 +5,7 @@ using Tida.Canvas.Shell.Contracts.Canvas.Events;
 using Tida.Canvas.Shell.Contracts.StatusBar;
 using System;
 using System.ComponentModel.Composition;
+using static Tida.Canvas.Shell.StatusBar.Constants;
 
 namespace Tida.Canvas.Shell.Canvas.StatusBar {
     /// <summary>
@@ -12,9 +13,9 @@ namespace Tida.Canvas.Shell.Canvas.StatusBar {
     /// </summary>
     [Export(typeof(IStatusBarItem))]
     class CanvasSnapingEnabledStatusBarItem : StatusBarCheckBoxItem {
-        public CanvasSnapingEnabledStatusBarItem():base(Constants.StatusBarItem_SnappingEnabled) {
-            this.Order = Constants.StatusBarOrder_SnapingEnabled;
-            this.Content = LanguageService.FindResourceString(Constants.StatusBarText_IsSnapingEnabled);
+        public CanvasSnapingEnabledStatusBarItem():base(StatusBarItem_SnappingEnabled) {
+            this.Order = StatusBarOrder_SnapingEnabled;
+            this.Content = LanguageService.FindResourceString(StatusBarText_IsSnapingEnabled);
 
             //建立双向"绑定";
             CommonEventHelper.GetEvent<CanvasIsSnapingEnabledChangedEvent>().Subscribe(CanvasDataContext_IsSnapingEnabledChanged);

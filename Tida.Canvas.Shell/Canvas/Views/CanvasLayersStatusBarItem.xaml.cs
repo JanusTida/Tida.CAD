@@ -5,7 +5,7 @@ namespace Tida.Canvas.Shell.Canvas.Views {
     /// <summary>
     /// CanvasLayerStatusBarItem.xaml 的交互逻辑
     /// </summary>
-    [ExportView(Constants.CanvasLayersStatusBarItem)]
+    [ExportView(Tida.Canvas.Shell.StatusBar.Constants.CanvasLayersStatusBarItem)]
     public partial class CanvasLayersStatusBarItem : ContentControl {
         public CanvasLayersStatusBarItem() {
             InitializeComponent();

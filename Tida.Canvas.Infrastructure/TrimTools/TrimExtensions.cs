@@ -1,13 +1,9 @@
 ﻿using Tida.Geometry.Primitives;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tida.Geometry.External;
 
-namespace Tida.Canvas.Infrastructure.TrimTools
-{
+namespace Tida.Canvas.Infrastructure.TrimTools {
     /// <summary>
     /// 裁剪的相关拓展;
     /// </summary>

@@ -1,12 +1,6 @@
 ﻿using Tida.Application.Contracts.Menu;
 using Tida.Canvas.Shell.Contracts.Canvas;
-using Tida.Canvas.Shell.Contracts.Ribbon;
 using Prism.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using static Tida.Canvas.Shell.Contracts.Ribbon.Constants;
 

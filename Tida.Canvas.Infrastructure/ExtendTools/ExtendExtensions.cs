@@ -2,13 +2,9 @@
 using Tida.Geometry.External.Util;
 using Tida.Geometry.Primitives;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Tida.Canvas.Infrastructure.ExtendTools
-{
+namespace Tida.Canvas.Infrastructure.ExtendTools {
     public static class ExtendExtensions
     {
         public static Line2D GetExtendLineWithIntersectPositions(Line2D line2D, Line2D[] extendLines, Vector2D[] intersectPositions, Rectangle2D2 rectIntersect)

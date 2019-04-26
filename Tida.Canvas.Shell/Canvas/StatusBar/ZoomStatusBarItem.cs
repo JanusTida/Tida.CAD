@@ -4,6 +4,7 @@ using Tida.Canvas.Shell.Contracts.Canvas;
 using Tida.Canvas.Shell.Contracts.Canvas.Events;
 using Tida.Canvas.Shell.Contracts.StatusBar;
 using System.ComponentModel.Composition;
+using static Tida.Canvas.Shell.StatusBar.Constants;
 
 namespace Tida.Canvas.Shell.Canvas.StatusBar {
     /// <summary>
@@ -11,13 +12,13 @@ namespace Tida.Canvas.Shell.Canvas.StatusBar {
     /// </summary>
     [Export(typeof(IStatusBarItem))]
     class ZoomStatusBarItem:StatusBarTextItem {
-        public ZoomStatusBarItem():base(Constants.StatusBarItem_Zoom) {
-            Order = Constants.StatusBarOrder_Zoom;
+        public ZoomStatusBarItem():base(StatusBarItem_Zoom) {
+            Order = StatusBarOrder_Zoom;
             CommonEventHelper.GetEvent<CanvasZoomChangedEvent>().Subscribe(CanvasDataContext_ZoomChanged);
         }
 
         private readonly string _statusBarText_Zoom = 
-            LanguageService.FindResourceString(Constants.StatusBarText_Zoom);
+            LanguageService.FindResourceString(StatusBarText_Zoom);
 
         private void CanvasDataContext_ZoomChanged(ICanvasDataContext canvasDataContext) {
             var zoom = CanvasService.CanvasDataContext.Zoom;

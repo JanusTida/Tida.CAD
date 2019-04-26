@@ -4,6 +4,7 @@ using Tida.Canvas.Shell.Contracts.Canvas;
 using Tida.Canvas.Shell.Contracts.StatusBar;
 using System.ComponentModel.Composition;
 using static Tida.Canvas.Shell.Contracts.Constants;
+using static Tida.Canvas.Shell.StatusBar.Constants;
 
 namespace Tida.Canvas.Shell.Canvas.StatusBar {
     /// <summary>
@@ -11,9 +12,9 @@ namespace Tida.Canvas.Shell.Canvas.StatusBar {
     /// </summary>
     [Export(typeof(IStatusBarItem))]
     class IsReadOnlyStatusBarItem: StatusBarCheckBoxItem {
-        public IsReadOnlyStatusBarItem():base(Constants.StatusBarItem_IsReadOnly) {
-            this.Order = Constants.StatusBarOrder_IsReadOnly;
-            this.Content = LanguageService.FindResourceString(Constants.StatusBarText_IsReadOnly);
+        public IsReadOnlyStatusBarItem():base(StatusBarItem_IsReadOnly) {
+            this.Order = StatusBarOrder_IsReadOnly;
+            this.Content = LanguageService.FindResourceString(StatusBarText_IsReadOnly);
 
             IsThreeState = false;
 

@@ -1,18 +1,8 @@
 ﻿using Tida.Geometry.Primitives;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Tida.Canvas.Shell.ComponentModel.Views {
     /// <summary>
@@ -27,7 +17,7 @@ namespace Tida.Canvas.Shell.ComponentModel.Views {
         /// 位置信息是否正在被刷新,防止因为事件的原因导致的无限循环调用;
         /// </summary>
         private bool _vector2DRefreshing;
-        private bool textChanged = false;
+        private bool _textChanged = false;
         public event EventHandler Vector2DChanged;
 
         public Vector2D Vector2D {
@@ -49,28 +39,7 @@ namespace Tida.Canvas.Shell.ComponentModel.Views {
 
             vector2DEditor.ApplyVector2DToTextBox(newVector2D);
         }
-
-        private void Txb_TextChanged(object sender, TextChangedEventArgs e) {
-            textChanged = true;
-        }
         
-        private void Txb_LostFocus(object sender, RoutedEventArgs e) {
-            if (textChanged) {
-                RefreshVector2D();
-            }
-            textChanged = false;
-        }
-
-        private void Txb_KeyDown(object sender, KeyEventArgs e) {
-            if(e.Key != Key.Enter) {
-                return;
-            }
-
-            if (textChanged) {
-                RefreshVector2D();
-            }
-            textChanged = false;
-        }
         
         /// <summary>
         /// 刷新<see cref="Vector2D"/>属性
@@ -119,9 +88,12 @@ namespace Tida.Canvas.Shell.ComponentModel.Views {
             txb_X.Text = vector2D.X.ToString();
             txb_Y.Text = vector2D.Y.ToString();
         }
-        
+
+        private void Txb_TextInputChanged(object sender, EventArgs e) => RefreshVector2D();
+
         ~Vector2DEditor() {
 
         }
+        
     }
 }

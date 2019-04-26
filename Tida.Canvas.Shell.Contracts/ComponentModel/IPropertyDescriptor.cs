@@ -1,6 +1,11 @@
-﻿using System;
+﻿using Tida.Util.Util;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Tida.Canvas.Shell.Contracts.ComponentModel {
     /// <summary>

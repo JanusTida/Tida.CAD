@@ -9,7 +9,6 @@ namespace Tida.Canvas.Shell.Shell.ViewModels {
     /// </summary>
     [Export]
     public partial class ShellViewModel : BindableBase {
-        [ImportingConstructor]
         public ShellViewModel() {
             SetTitle(null);
         }

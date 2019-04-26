@@ -4,6 +4,7 @@ using Tida.Canvas.Shell.Contracts.Canvas;
 using Tida.Canvas.Shell.Contracts.Canvas.Events;
 using Tida.Canvas.Shell.Contracts.StatusBar;
 using System.ComponentModel.Composition;
+using static Tida.Canvas.Shell.StatusBar.Constants;
 
 namespace Tida.Canvas.Shell.Canvas.StatusBar {
     /// <summary>
@@ -11,9 +12,9 @@ namespace Tida.Canvas.Shell.Canvas.StatusBar {
     /// </summary>
     [Export(typeof(IStatusBarItem))]
     class SnapPositionStatuBarItem: StatusBarTextItem {
-        public SnapPositionStatuBarItem():base(Constants.StatusBarItem_SnapPosition) {
-            this.Text = LanguageService.FindResourceString(Constants.StatusBarText_CurrentSnapPosition);
-            this.Order = Constants.StatusBarOrder_SnapingPosition;
+        public SnapPositionStatuBarItem():base(StatusBarItem_SnapPosition) {
+            this.Text = LanguageService.FindResourceString(StatusBarText_CurrentSnapPosition);
+            this.Order = StatusBarOrder_SnapingPosition;
 
             CommonEventHelper.GetEvent<CanvasMouseHoverSnapShapeChangedEvent>().Subscribe(CanvasDataContext_MouseHoverSnapShapeChanged);
             
@@ -22,10 +23,10 @@ namespace Tida.Canvas.Shell.Canvas.StatusBar {
         private void CanvasDataContext_MouseHoverSnapShapeChanged(ICanvasDataContext canvasDataContext) {
             var currentSnapShape = CanvasService.CanvasDataContext?.MouseHoverSnapShape;
             if(currentSnapShape != null && currentSnapShape.Position != null) {
-                Text = LanguageService.FindResourceString(Constants.StatusBarText_CurrentSnapPosition) + $"({currentSnapShape.Position.X:F3},{currentSnapShape.Position.Y:F3})";
+                Text = LanguageService.FindResourceString(StatusBarText_CurrentSnapPosition) + $"({currentSnapShape.Position.X:F3},{currentSnapShape.Position.Y:F3})";
             }
             else {
-                Text = LanguageService.FindResourceString(Constants.StatusBarText_CurrentSnapPosition);
+                Text = LanguageService.FindResourceString(StatusBarText_CurrentSnapPosition);
             }
 
         }

@@ -1,6 +1,6 @@
 ﻿using Tida.Application.Contracts.Common;
-using Tida.Canvas.Events;
 using Prism.Events;
+using Tida.Canvas.Events;
 
 namespace Tida.Canvas.Shell.Contracts.Canvas.Events {
     public class CanvasCanRedoChangedEventArgs: CanvasEventArgs<CanRedoChangedEventArgs> {

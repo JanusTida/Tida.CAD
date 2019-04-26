@@ -1,11 +1,6 @@
 ﻿using Tida.Canvas.Contracts;
 using Tida.Geometry.Primitives;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tida.Geometry.External.Util;
 using static Tida.Canvas.Infrastructure.Constants;
 
 namespace Tida.Canvas.Infrastructure.Utils {

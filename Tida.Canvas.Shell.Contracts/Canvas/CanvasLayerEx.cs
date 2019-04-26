@@ -1,8 +1,8 @@
-﻿using Tida.Canvas.Contracts;
-using Tida.Util.Extending;
+﻿using Tida.Util.Extending;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Tida.Canvas.Contracts;
 
 namespace Tida.Canvas.Shell.Contracts.Canvas {
     /// <summary>

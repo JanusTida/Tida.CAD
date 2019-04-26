@@ -5,10 +5,7 @@ using Tida.Canvas.Media;
 using Tida.Geometry.External.Util;
 using Tida.Geometry.Primitives;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Tida.Canvas.Infrastructure.Constants;
 
 namespace Tida.Canvas.Infrastructure.DrawObjects {

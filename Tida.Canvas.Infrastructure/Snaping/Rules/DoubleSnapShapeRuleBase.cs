@@ -1,5 +1,5 @@
-﻿using Tida.Canvas.Contracts;
-using System;
+﻿using System;
+using Tida.Canvas.Contracts;
 using Tida.Geometry.Primitives;
 
 namespace Tida.Canvas.Infrastructure.Snaping.Rules {

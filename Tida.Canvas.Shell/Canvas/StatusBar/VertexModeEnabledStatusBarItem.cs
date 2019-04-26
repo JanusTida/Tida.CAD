@@ -1,9 +1,8 @@
-﻿using Tida.Canvas.Base.InteractionHandlers;
-using Tida.Application.Contracts.App;
-using Tida.Application.Contracts.Setting;
-using Tida.Canvas.Shell.Contracts.StatusBar;
+﻿using Tida.Application.Contracts.App;
 using System.ComponentModel.Composition;
-using static Tida.Canvas.Base.Constants;
+using Tida.Canvas.Shell.Contracts.StatusBar;
+using Tida.Canvas.Infrastructure.InteractionHandlers;
+using static Tida.Canvas.Shell.StatusBar.Constants;
 using Tida.Canvas.Events;
 
 namespace Tida.Canvas.Shell.Canvas.StatusBar {
@@ -12,9 +11,9 @@ namespace Tida.Canvas.Shell.Canvas.StatusBar {
     /// </summary>
     [Export(typeof(IStatusBarItem))]
     class VertexModeEnabledStatusBarItem : StatusBarCheckBoxItem {
-        public VertexModeEnabledStatusBarItem():base(Constants.StatusBarItem_VertexMode) {
-            this.Order = Constants.StatusBarOrder_VertexMode;
-            this.Content = LanguageService.FindResourceString(Constants.StatusBarText_VertextMode);
+        public VertexModeEnabledStatusBarItem():base(StatusBarItem_VertexMode) {
+            this.Order = StatusBarOrder_VertexMode;
+            this.Content = LanguageService.FindResourceString(StatusBarText_VertextMode);
             
             this.IsThreeState = false;
 

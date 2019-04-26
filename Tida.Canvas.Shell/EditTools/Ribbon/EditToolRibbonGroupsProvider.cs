@@ -1,6 +1,5 @@
 ﻿using Tida.Canvas.Shell.Contracts.EditTools;
 using Tida.Canvas.Shell.Contracts.Ribbon;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;

@@ -1,14 +1,11 @@
-﻿using Tida.Canvas.Base.EditTools;
-using Tida.Application.Contracts.App;
+﻿using Tida.Application.Contracts.App;
 using Tida.Canvas.Shell.Contracts.Canvas.Events;
 using Tida.Canvas.Shell.Contracts.CommandOutput;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Tida.Canvas.Shell.EditTools.Constants;
+using Tida.Canvas.Infrastructure.EditTools;
+using Tida.Geometry.Primitives;
 
 namespace Tida.Canvas.Shell.EditTools.Events {
     [Export(typeof(ICanvasEditToolChangedEventHandler))]
@@ -39,11 +36,11 @@ namespace Tida.Canvas.Shell.EditTools.Events {
             CommandOutputService.WriteLine(LanguageService.FindResourceString(EditToolTip_AngleMeasure_ConfirmFirstMouseDownPosition));
         }
 
-        private void NewEditTool_SecondMouseDownPositionConfirmed(object sender, Geometry.Primitives.Vector2D e) {
+        private void NewEditTool_SecondMouseDownPositionConfirmed(object sender, Vector2D e) {
             CommandOutputService.WriteLine(LanguageService.FindResourceString(EditToolTip_AngleMeasure_SecondMouseDownPositionConfirmed));
         }
 
-        private void NewEditTool_FirstMouseDownPositionConfirmed(object sender, Geometry.Primitives.Vector2D e) {
+        private void NewEditTool_FirstMouseDownPositionConfirmed(object sender, Vector2D e) {
             CommandOutputService.WriteLine(LanguageService.FindResourceString(EditToolTip_AngleMeasure_FirstMouseDownPositionConfirmed));
         }
 

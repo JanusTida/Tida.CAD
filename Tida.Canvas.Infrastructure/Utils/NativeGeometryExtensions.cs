@@ -1,5 +1,4 @@
-﻿using Tida.Canvas.Contracts;
-using Tida.Geometry.Primitives;
+﻿using Tida.Geometry.Primitives;
 using System;
 
 namespace Tida.Canvas.Infrastructure.Utils {

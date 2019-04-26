@@ -1,5 +1,4 @@
 ﻿using Tida.Canvas.Shell.Contracts.EditTools;
-using System;
 using System.ComponentModel.Composition;
 using static Tida.Canvas.Shell.Contracts.EditTools.Constants;
 

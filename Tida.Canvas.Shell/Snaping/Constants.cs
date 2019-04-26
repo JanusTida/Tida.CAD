@@ -2,6 +2,8 @@
     public static class Constants {
         public const int SnapRuleOrder_DoubleDrawObjectIntersect = 8;
 
+        public const int SnapRuleOrder_Basic = 16;
+
         public const int SnapRuleOrder_AxisTracking = 1024;
 
         public const int SnapRuleOrder_GridSnap = 1020;
@@ -14,5 +16,10 @@
 
         public const int SnapRuleOrder_SingleEllipse = 420;
         
+        public const int SnapRuleOrder_OnLine = 4096;
+
+        public const int SnapRuleOrder_ExtendLine = 4399;
+        
+        public const int SnapRuleOrder_MeasureAngle = 128;
     }
 }

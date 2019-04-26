@@ -1,14 +1,9 @@
 ﻿using Tida.Application.Contracts.App;
 using Tida.Canvas.Contracts;
-using Tida.Canvas.Input;
 using Tida.Canvas.Shell.Contracts.Canvas.Events;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Tida.Canvas.Shell.Canvas.Constants;
+using Tida.Canvas.Input;
 
 namespace Tida.Canvas.Shell.Canvas.Events {
     /// <summary>

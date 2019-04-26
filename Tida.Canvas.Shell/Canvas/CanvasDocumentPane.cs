@@ -1,14 +1,6 @@
 ﻿using Tida.Application.Contracts.App;
 using Tida.Application.Contracts.Docking;
-using Prism.Regions;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using static Tida.Canvas.Shell.Canvas.Constants;
 
 namespace Tida.Canvas.Shell.Canvas {

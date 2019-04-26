@@ -1,6 +1,4 @@
-﻿using Tida.Canvas.Shell.Contracts.ComponentModel;
-using Tida.Canvas.Shell.Contracts.ComponentModel.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;

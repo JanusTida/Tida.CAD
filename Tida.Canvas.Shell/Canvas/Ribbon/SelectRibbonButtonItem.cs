@@ -1,8 +1,6 @@
 ﻿using Tida.Application.Contracts.Common;
 using Tida.Canvas.Shell.Canvas.ViewModels;
 using Tida.Canvas.Shell.Contracts.Ribbon;
-using System;
-using System.ComponentModel.Composition;
 using System.Windows.Input;
 
 namespace Tida.Canvas.Shell.Canvas.Ribbon {

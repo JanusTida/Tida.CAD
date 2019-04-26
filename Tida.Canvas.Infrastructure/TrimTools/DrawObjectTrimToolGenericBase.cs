@@ -1,5 +1,4 @@
 ﻿using Tida.Canvas.Contracts;
-using Tida.Geometry.Primitives;
 
 namespace Tida.Canvas.Infrastructure.TrimTools {
     /// <summary>

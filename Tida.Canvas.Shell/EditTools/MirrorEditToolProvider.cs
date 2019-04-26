@@ -1,16 +1,13 @@
-﻿using Tida.Canvas.Base.EditTools;
+﻿using Tida.Canvas.Infrastructure.EditTools;
 using Tida.Canvas.Infrastructure.MirrorTools;
 using Tida.Canvas.Shell.Contracts.EditTools;
-using System;
+using Tida.Canvas.Shell.Contracts.MirrorTools;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Tida.Canvas.Shell.Contracts.EditTools.Constants;
+using System.Linq;
 
-namespace Tida.Canvas.Shell.EditTools
-{
+namespace Tida.Canvas.Shell.EditTools {
     [ExportEditToolProvider(
         GroupGUID = EditToolGroup_BasicEditor,
         GUID = EditTool_MirrorTool,
@@ -21,10 +18,13 @@ namespace Tida.Canvas.Shell.EditTools
     class MirrorEditToolProvider : EditToolProviderGenericBase<MirrorEditTool>, IEditToolProvider
     {
         [ImportingConstructor]
-        public MirrorEditToolProvider([ImportMany]IEnumerable<IDrawObjectMirrorTool> drawObjectMirrorTools )
+        public MirrorEditToolProvider(
+            [ImportMany]IEnumerable<IDrawObjectMirrorTool> drawObjectMirrorTools,
+            [ImportMany]IEnumerable<IMirrorToolProvider> mirrorToolProviders)
         {
             MirrorEditTool.DrawObjectMirrorTools.Clear();
             MirrorEditTool.DrawObjectMirrorTools.AddRange(drawObjectMirrorTools);
+            MirrorEditTool.DrawObjectMirrorTools.AddRange(mirrorToolProviders.SelectMany(p => p.Tools));
         }
         protected override MirrorEditTool OnCreateEditTool() => new MirrorEditTool();
     }

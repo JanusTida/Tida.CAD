@@ -1,4 +1,9 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace Tida.Canvas.Shell.Contracts.StatusBar {
     public static class Constants {

@@ -1,12 +1,5 @@
 ﻿using Tida.Canvas.Contracts;
 using Tida.Canvas.Shell.Contracts.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using static Tida.Canvas.Shell.Contracts.ComponentModel.Constants;
 using static Tida.Canvas.Shell.ComponentModel.Constants;
 

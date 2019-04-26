@@ -1,14 +1,10 @@
-﻿using Tida.Application.Contracts.App;
-using Tida.Application.Contracts.Common;
+﻿using Tida.Application.Contracts.Common;
 using Tida.Canvas.Contracts;
 using Tida.Canvas.Shell.Canvas.ViewModels;
 using Tida.Canvas.Shell.Contracts.Canvas;
 using Tida.Canvas.Shell.Contracts.Canvas.Events;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
-using static Tida.Canvas.Shell.Canvas.Constants;
 
 namespace Tida.Canvas.Shell.Canvas {
     [Export(typeof(ICanvasService))]

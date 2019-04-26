@@ -1,14 +1,10 @@
-﻿using Tida.Canvas.Base.EditTools;
+﻿using Tida.Canvas.Infrastructure.EditTools;
 using Tida.Canvas.Infrastructure.MoveTools;
-using Tida.Canvas.Base.EditTools;
-using Tida.Canvas.Contracts;
 using Tida.Canvas.Shell.Contracts.EditTools;
-using System;
+using Tida.Canvas.Shell.Contracts.MoveTools;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Tida.Canvas.Shell.Contracts.EditTools.Constants;
 
 namespace Tida.Canvas.Shell.EditTools {
@@ -26,12 +22,13 @@ namespace Tida.Canvas.Shell.EditTools {
     public class MoveEditToolProvider : EditToolProviderGenericBase<MoveEditTool>,IEditToolProvider {
         [ImportingConstructor]
         public MoveEditToolProvider(
-            [ImportMany]IEnumerable<IDrawObjectMoveTool> drawObjectCloneTools
+            [ImportMany]IEnumerable<IDrawObjectMoveTool> drawObjectCloneTools,
+            [ImportMany]IEnumerable<IMoveToolsProvider> moveToolsProviders
         ) {
 
             MoveEditTool.DrawObjectMoveTools.Clear();
             MoveEditTool.DrawObjectMoveTools.AddRange(drawObjectCloneTools);
-            
+            MoveEditTool.DrawObjectMoveTools.AddRange(moveToolsProviders.SelectMany(p => p.Tools));
         }
 
         protected override MoveEditTool OnCreateEditTool() => new MoveEditTool();

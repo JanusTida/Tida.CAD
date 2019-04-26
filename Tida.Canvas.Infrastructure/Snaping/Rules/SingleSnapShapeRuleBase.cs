@@ -1,5 +1,5 @@
-﻿using Tida.Canvas.Contracts;
-using System;
+﻿using System;
+using Tida.Canvas.Contracts;
 using Tida.Geometry.Primitives;
 
 namespace Tida.Canvas.Infrastructure.Snaping.Rules {
@@ -25,8 +25,7 @@ namespace Tida.Canvas.Infrastructure.Snaping.Rules {
             //循环遍历绘制对象;
             foreach (var drawObject in drawObjects) {
                 //类型判断,转化为本类指定的类型;
-                var tDrawObject = drawObject as TDrawObject;
-                if (tDrawObject == null) {
+                if (!(drawObject is TDrawObject tDrawObject)) {
                     continue;
                 }
 

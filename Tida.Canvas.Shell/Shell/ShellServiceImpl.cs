@@ -14,7 +14,7 @@ namespace Tida.Canvas.Shell.Shell {
     /// <summary>
     /// 主窗体服务;
     /// </summary>
-    [Export(typeof(IShellService)),Export]
+    [Export(typeof(IShellService))]
     public class ShellServiceImpl : IShellService {
         [ImportingConstructor]
         public ShellServiceImpl(ShellViewModel shellVM, Views.Shell shell) {

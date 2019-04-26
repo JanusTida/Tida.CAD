@@ -1,4 +1,5 @@
-﻿using Tida.Canvas.Shell.Contracts.CanvasExport;
+﻿using Tida.Canvas.Contracts;
+using Tida.Canvas.Shell.Contracts.CanvasExport;
 using Tida.Geometry.Primitives;
 using Tida.Canvas.WPFCanvas;
 using Tida.Canvas.WPFCanvas.Media;
@@ -13,7 +14,6 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using static Tida.Canvas.WPFCanvas.WindowsCanvasScreenConverter;
-using Tida.Canvas.Contracts;
 
 namespace Tida.Canvas.Shell.CanvasExport {
     /// <summary>

@@ -1,21 +1,20 @@
-﻿using Tida.Canvas.Base.EditTools;
-using Tida.Application.Contracts.App;
+﻿using Tida.Application.Contracts.App;
 using Tida.Canvas.Shell.Contracts.Canvas.Events;
 using Tida.Canvas.Shell.Contracts.CommandOutput;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Tida.Canvas.Infrastructure.EditTools;
 
 namespace Tida.Canvas.Shell.EditTools.Events {
+    /// <summary>
+    /// 偏移工具对应的UI响应器;
+    /// </summary>
     [Export(typeof(ICanvasEditToolChangedEventHandler))]
-    class CanvasOffsetEditToolEventHandler : CanvasEditToolChangedEventHandlerGenericBase<OffsetEditTool> {
+    class CanvasOffsetEditToolEventHandler : CanvasEditToolChangedEventHandlerGenericBase<OffsetEditTool2> {
         /// <summary>
         /// 当当前工具变更为复制工具后,进行对应的UI响应(输出响应等);
         /// </summary>
-        protected override void HandleNewEditTool(CanvasEditToolChangedEventArgs args, OffsetEditTool newEditTool) {
+        protected override void HandleNewEditTool(CanvasEditToolChangedEventArgs args, OffsetEditTool2 newEditTool) {
             CommandOutputService.WriteLine(LanguageService.FindResourceString(Constants.EditToolTip_BeginText_Offset));
             CommandOutputService.WriteLine(LanguageService.FindResourceString(Constants.EditToolTip_InputOffset));
             newEditTool.FixedOffsetChanged += EditTool_FixedOffsetChanged;
@@ -23,7 +22,7 @@ namespace Tida.Canvas.Shell.EditTools.Events {
             newEditTool.OffsetApplied += EditTool_OffsetApplied;
         }
 
-        protected override void HandleOldEditTool(CanvasEditToolChangedEventArgs args, OffsetEditTool oldEditTool) {
+        protected override void HandleOldEditTool(CanvasEditToolChangedEventArgs args, OffsetEditTool2 oldEditTool) {
             CommandOutputService.WriteLine(LanguageService.FindResourceString(Constants.EditToolTip_EndText_Offset));
             oldEditTool.FixedOffsetChanged -= EditTool_FixedOffsetChanged;
             oldEditTool.DrawObjectSelected -= EditTool_DrawObjectSelected;
@@ -32,7 +31,7 @@ namespace Tida.Canvas.Shell.EditTools.Events {
 
 
         private static void EditTool_FixedOffsetChanged(object sender, EventArgs e) {
-            if (!(sender is OffsetEditTool offsetEditTool)) {
+            if (!(sender is OffsetEditTool2 offsetEditTool)) {
                 return;
             }
 
@@ -44,7 +43,7 @@ namespace Tida.Canvas.Shell.EditTools.Events {
         }
 
         private static void EditTool_DrawObjectSelected(object sender, EventArgs e) {
-            if (!(sender is OffsetEditTool offsetEditTool)) {
+            if (!(sender is OffsetEditTool2 offsetEditTool)) {
                 return;
             }
             

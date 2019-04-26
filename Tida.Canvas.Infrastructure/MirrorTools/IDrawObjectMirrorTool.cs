@@ -1,10 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tida.Canvas.Contracts;
+﻿using Tida.Canvas.Contracts;
 using Tida.Geometry.Primitives;
 
 namespace Tida.Canvas.Infrastructure.MirrorTools

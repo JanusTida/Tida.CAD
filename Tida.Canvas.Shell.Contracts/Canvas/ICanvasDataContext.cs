@@ -1,6 +1,5 @@
 ﻿using Tida.Application.Contracts.App;
 using Tida.Application.Contracts.Common;
-using Tida.Canvas.Contracts;
 using Tida.Canvas.Shell.Contracts.Canvas.Events;
 using Tida.Util.Extending;
 using Tida.Geometry.Primitives;
@@ -8,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Tida.Canvas.Contracts;
 
 namespace Tida.Canvas.Shell.Contracts.Canvas {
     /// <summary>

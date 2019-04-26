@@ -1,4 +1,10 @@
-﻿namespace Tida.Canvas.Shell.Contracts.ComponentModel {
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Tida.Canvas.Shell.Contracts.ComponentModel {
     /// <summary>
     /// 相关标识;
     /// </summary>
@@ -34,10 +40,16 @@
         public const string EditorType_Line2D = nameof(EditorType_Line2D);
 
 
+        public const string EditorType_Ellipse2D = nameof(EditorType_Ellipse2D);
+
+
         public const string EditorTargetProperty_Vector2D = "Vector2D";
 
 
         public const string EditorTargetProperty_Line2D = "Line2D";
+
+
+        public const string EditorTargetProperty_Ellipse2D = "Ellipse2D";
 
 
         public const string EditorTargetProperty_StandardValues_SelectedValue = "SelectedValue";

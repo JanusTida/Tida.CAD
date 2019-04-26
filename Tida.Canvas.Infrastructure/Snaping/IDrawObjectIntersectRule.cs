@@ -1,12 +1,6 @@
 ﻿using Tida.Canvas.Infrastructure.Contracts;
 using Tida.Canvas.Contracts;
 using Tida.Geometry.Primitives;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace Tida.Canvas.Infrastructure.Snaping {
     /// <summary>
@@ -30,5 +24,4 @@ namespace Tida.Canvas.Infrastructure.Snaping {
 
     }
 
-    
 }

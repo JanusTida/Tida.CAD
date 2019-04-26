@@ -13,16 +13,13 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Windows;
 using Tida.Canvas.Infrastructure.Snaping;
-using Tida.Canvas.Infrastructure.InteractionHandlers;
 using Tida.Application.Contracts.Menu;
-using static Tida.Canvas.Shell.Contracts.Canvas.Constants;
+using Tida.Canvas.Shell.Contracts.Snaping;
+using Tida.Canvas.Shell.Contracts.InteractionHandlers;
 using Tida.Canvas.Shell.Canvas.Models;
-using Tida.Canvas.Events;
-using Tida.Canvas.Contracts;
-using Tida.Canvas.Infrastructure.Snaping;
+using static Tida.Canvas.Shell.Contracts.Canvas.Constants;
 
-namespace Tida.Canvas.Shell.Canvas.ViewModels
-{
+namespace Tida.Canvas.Shell.Canvas.ViewModels {
     /// <summary>
     /// 主视图模型;
     /// </summary>

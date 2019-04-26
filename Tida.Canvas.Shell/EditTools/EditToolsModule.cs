@@ -1,18 +1,14 @@
-﻿using Tida.Application.Contracts.Common;
-using Tida.Canvas.Shell.Contracts.Canvas;
-using Tida.Canvas.Shell.Contracts.Canvas.Events;
+﻿using Tida.Canvas.Shell.Contracts.Canvas;
 using Tida.Canvas.Shell.Contracts.EditTools;
 using Tida.Canvas.Shell.Contracts.Shell;
 using Tida.Canvas.Shell.Contracts.Shell.Events;
 using Prism.Commands;
-using Prism.Mef.Modularity;
-using Prism.Modularity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Windows.Input;
 
-namespace Tida.Canvas.Base.EditTools {
+namespace Tida.Canvas.Shell.EditTools {
     [Export(typeof(IShellInitializingEventHandler))]
     class ShellInitializingAddEditToolBindingHandler : IShellInitializingEventHandler {
         [ImportingConstructor]

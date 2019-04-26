@@ -1,4 +1,13 @@
-﻿namespace Tida.Canvas.Shell.Contracts.ComponentModel {
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Tida.Util.Util;
+
+namespace Tida.Canvas.Shell.Contracts.ComponentModel {
 
 
     /// <summary>

@@ -1,5 +1,4 @@
-﻿using System;
-using Tida.Canvas.Infrastructure.DrawObjects;
+﻿using Tida.Canvas.Infrastructure.DrawObjects;
 using Tida.Canvas.Shell.Contracts.ComponentModel;
 using static Tida.Canvas.Shell.ComponentModel.Constants;
 using static Tida.Canvas.Shell.Contracts.ComponentModel.Constants;

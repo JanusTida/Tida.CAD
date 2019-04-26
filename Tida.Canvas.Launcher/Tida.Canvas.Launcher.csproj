@@ -136,10 +136,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tida.Canvas.Base\Tida.Canvas.Base.csproj">
-      <Project>{29e7ac2b-d410-43fc-b2b9-9fede96a3ba5}</Project>
-      <Name>Tida.Canvas.Base</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Tida.Canvas.Contracts\Tida.Canvas.Contracts.csproj">
       <Project>{9488b9cd-3888-4e43-b598-6eb9536d2b15}</Project>
       <Name>Tida.Canvas.Contracts</Name>

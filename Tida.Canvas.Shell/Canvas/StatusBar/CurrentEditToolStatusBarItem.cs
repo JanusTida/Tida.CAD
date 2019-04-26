@@ -1,7 +1,5 @@
 ﻿using Tida.Application.Contracts.App;
 using Tida.Application.Contracts.Common;
-using Tida.Canvas.Contracts;
-using Tida.Canvas.Events;
 using Tida.Canvas.Shell.Contracts.Canvas.Events;
 using Tida.Canvas.Shell.Contracts.EditTools;
 using Tida.Canvas.Shell.Contracts.StatusBar;
@@ -9,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using static Tida.Canvas.Shell.StatusBar.Constants;
 
 namespace Tida.Canvas.Shell.Canvas.StatusBar {
     /// <summary>
@@ -19,9 +18,9 @@ namespace Tida.Canvas.Shell.Canvas.StatusBar {
         [ImportingConstructor]
         public CurrentEditToolStatusBarItem(
             [ImportMany]IEnumerable<Lazy<IEditToolProvider, IEditToolProviderMetaData>> mefEditToolProviders
-        ) : base(Constants.StatusBarItem_CurrentEditTool) {
+        ) : base(StatusBarItem_CurrentEditTool) {
 
-            this.Order = Constants.StatusBarOrder_CurrentEditTool;
+            this.Order = StatusBarOrder_CurrentEditTool;
             _mefEditToolProviders = mefEditToolProviders;
 
             CommonEventHelper.GetEvent<CanvasEditToolChangedEvent>().Subscribe(EditTool_Loaded); 
@@ -30,7 +29,7 @@ namespace Tida.Canvas.Shell.Canvas.StatusBar {
         }
         
         private readonly string _statusBarText_CurrentEditTool =
-            LanguageService.FindResourceString(Constants.StatusBarItem_CurrentEditTool);
+            LanguageService.FindResourceString(StatusBarItem_CurrentEditTool);
 
         private void EditTool_Loaded(CanvasEditToolChangedEventArgs args) {
             var metaData = _mefEditToolProviders.FirstOrDefault(p => p.Value.ValidateFromThis(args.EventArgs.NewValue))?.Metadata;

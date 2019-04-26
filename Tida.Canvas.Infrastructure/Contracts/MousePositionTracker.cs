@@ -1,10 +1,6 @@
 ﻿using Tida.Canvas.Events;
 using Tida.Geometry.Primitives;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tida.Canvas.Infrastructure.Contracts {
 

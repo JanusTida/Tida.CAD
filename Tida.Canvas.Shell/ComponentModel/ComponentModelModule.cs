@@ -12,6 +12,7 @@ namespace Tida.Canvas.Shell.ComponentModel {
     [ModuleExport(typeof(ComponentModelModule))]
     public class ComponentModelModule : IModule {
         public void Initialize() {
+            //设定SelectorFactory为Telerik相关的;
             StandardValuesEditorManager.SelectorFactory = () => new RadComboBox();
         }
     }
