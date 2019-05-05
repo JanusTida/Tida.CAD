@@ -41,7 +41,7 @@ namespace Tida.Canvas.Shell.ComponentModel {
                 AsmBuilder.Save(TidaAsmName + ".dll");
             }
             catch (Exception ex) {
-
+                LoggerService.WriteException(ex);
             }
 
         }

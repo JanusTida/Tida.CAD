@@ -17,7 +17,7 @@ namespace Tida.Canvas.Shell.ComponentModel.Views {
         /// 位置信息是否正在被刷新,防止因为事件的原因导致的无限循环调用;
         /// </summary>
         private bool _vector2DRefreshing;
-        private bool _textChanged = false;
+        
         public event EventHandler Vector2DChanged;
 
         public Vector2D Vector2D {
