@@ -11,3 +11,5 @@ This framework consists of these parts:
 		3.Example parts:Tida.Canvas.Base provides some useful basic tools(DrawObjects and EditTools),Tida.Canvas.Shell.Contracts defines the contract for the Example framework.
 		Tida.Canvas.Shell provides the main implementations of UI parts,(note:This project use the Progress Telerik UI controls for WPF Trail version),to make the framwork more 
 		extensible,these projects are build on Prism and MEF, Tida.Canvas.Launcher is the entry project,which refrence these parts as Modules.
+![example](Images/Line.JPG)
+![example](Images/Tida.JPG)
