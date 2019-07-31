@@ -106,13 +106,13 @@
       <HintPath>..\lib\RCWPF\2018.2.620.45.NoXaml.Trial\Telerik.Windows.Themes.Office2013.dll</HintPath>
     </Reference>
     <Reference Include="Tida.Application, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tida.Application.0.4.8\lib\NET452\Tida.Application.dll</HintPath>
+      <HintPath>..\packages\Tida.Application.0.5.0\lib\NET452\Tida.Application.dll</HintPath>
     </Reference>
     <Reference Include="Tida.Application.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tida.Application.Contracts.0.4.1\lib\NET452\Tida.Application.Contracts.dll</HintPath>
+      <HintPath>..\packages\Tida.Application.Contracts.0.5.1\lib\NET452\Tida.Application.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Tida.Geometry, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tida.Geometry.1.0.1\lib\netstandard2.0\Tida.Geometry.dll</HintPath>
+      <HintPath>..\packages\Tida.Geometry.1.1.4\lib\netstandard2.0\Tida.Geometry.dll</HintPath>
     </Reference>
     <Reference Include="Tida.Util, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Tida.Util.0.4.1\lib\NET452\Tida.Util.dll</HintPath>
@@ -187,6 +187,8 @@
     <Compile Include="DynamicInput\MoveEditToolDynamicInputerProvider.cs" />
     <Compile Include="DynamicInput\OneLineEditDynamicInputerProvider.cs" />
     <Compile Include="DynamicInput\PointEditDynamicInputerProvider.cs" />
+    <Compile Include="EditTools\Arc\ArcEditToolGroup.cs" />
+    <Compile Include="EditTools\Arc\ArcStartAndCenterThenEndEditToolProvider.cs" />
     <Compile Include="EditTools\BasicEditToolGroup.cs" />
     <Compile Include="EditTools\Events\CanvasCopyEditToolEventHandler.cs" />
     <Compile Include="EditTools\Events\CanvasEditToolChangedEventHandlerGenericBase.cs" />
@@ -195,20 +197,23 @@
     <Compile Include="EditTools\Events\CanvasMoveEditToolEventHandler.cs" />
     <Compile Include="EditTools\Events\CanvasOffsetEditToolEventHandler.cs" />
     <Compile Include="EditTools\Events\CanvasTrimEditToolEventHandler.cs" />
-    <Compile Include="EditTools\LineEditToolGroup.cs" />
-    <Compile Include="EditTools\MeasureEditToolProviders.cs" />
+    <Compile Include="EditTools\Line\LineEditToolGroup.cs" />
+    <Compile Include="EditTools\Measure\AngleMeasureEditToolProvider.cs" />
+    <Compile Include="EditTools\Measure\LengthMeasureEditToolProvider.cs" />
+    <Compile Include="EditTools\Measure\MeasureEditToolGroup.cs" />
+    <Compile Include="EditTools\Measure\MeasureSettings.cs" />
     <Compile Include="EditTools\MirrorEditToolProvider.cs" />
-    <Compile Include="EditTools\MultiLineEditToolProvider.cs" />
+    <Compile Include="EditTools\Line\MultiLineEditToolProvider.cs" />
     <Compile Include="EditTools\OffsetToolEditToolProvider.cs" />
     <Compile Include="EditTools\Ribbon\MeasureShouldCommitMeasureDataRibbonItem.cs" />
-    <Compile Include="EditTools\SingleLineEditToolProvider.cs" />
+    <Compile Include="EditTools\Line\SingleLineEditToolProvider.cs" />
     <Compile Include="EditTools\MoveEditToolProvider.cs" />
     <Compile Include="EditTools\PointEditToolProvider.cs" />
-    <Compile Include="EditTools\RectangleDiagLinePointsEditToolProvider.cs" />
-    <Compile Include="EditTools\RectangleEditToolGroup.cs" />
-    <Compile Include="EditTools\RoundCenterRadiusPointsEditToolProvider.cs" />
-    <Compile Include="EditTools\RoundDiameterTwoPointsEditToolProvider.cs" />
-    <Compile Include="EditTools\RoundEditToolGroup.cs" />
+    <Compile Include="EditTools\Rectangle\RectangleDiagLinePointsEditToolProvider.cs" />
+    <Compile Include="EditTools\Rectangle\RectangleEditToolGroup.cs" />
+    <Compile Include="EditTools\Round\RoundCenterRadiusPointsEditToolProvider.cs" />
+    <Compile Include="EditTools\Round\RoundDiameterTwoPointsEditToolProvider.cs" />
+    <Compile Include="EditTools\Round\RoundEditToolGroup.cs" />
     <Compile Include="TrimTools\BasicTrimToolsProvider.cs" />
     <Page Include="CanvasExport\Languages\en_US\Tida.Common.Canvas.Shell.CanvasExport.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -659,9 +664,6 @@
     <Resource Include="Resources\镜像.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="TidaAppContent\LanguageConfig_Backup.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="TidaAppContent\LanguageConfig.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -681,6 +683,9 @@
       <Project>{84ed5a4f-5aa8-4e87-8dc8-3b7d16090f75}</Project>
       <Name>Tida.Canvas.WPFCanvas</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="TidaAppContent\LanguageConfig_Backup.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

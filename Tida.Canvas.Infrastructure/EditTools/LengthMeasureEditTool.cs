@@ -11,7 +11,7 @@ namespace Tida.Canvas.Infrastructure.EditTools {
     /// <summary>
     /// 测量工具——长度;
     /// </summary>
-    public class LengthMeasureEditTool : MouseInteractableEditToolGenericBase<MeasureLine>, IHaveMousePositionTracker {
+    public class LengthMeasureEditTool : MouseInteractableEditToolGenericBase<MeasureLine>, IMeasureEditTool {
         public LengthMeasureEditTool() {
             MousePositionTracker.LastMouseDownPositionChanged += MousePositionTracker_LastMouseDownPositionChanged;
             MousePositionTracker.CurrentHoverPositionChanged += MousePositionTracker_CurrentHoverPositionChanged;

@@ -8,7 +8,7 @@ namespace Tida.Canvas.Infrastructure.EditTools {
     /// <summary>
     /// 通过圆的直径的两个端点创建圆的编辑工具;
     /// </summary>
-    public class RoundDiameterTwoPointsEditTool :MouseInteractableEditToolGenericBase<Ellipse> {
+    public class RoundDiameterTwoPointsEditTool : MouseInteractableEditToolGenericBase<Ellipse> {
 
         protected override void OnCommit() {
             MousePositionTracker.LastMouseDownPosition = null;

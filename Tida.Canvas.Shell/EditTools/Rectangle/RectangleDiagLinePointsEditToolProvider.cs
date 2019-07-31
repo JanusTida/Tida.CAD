@@ -2,7 +2,7 @@
 using Tida.Canvas.Shell.Contracts.EditTools;
 using static Tida.Canvas.Shell.Contracts.EditTools.Constants;
 
-namespace Tida.Canvas.Shell.EditTools {
+namespace Tida.Canvas.Shell.EditTools.Rectangle {
     [ExportEditToolProvider(
         GroupGUID = EditToolGroup_Rectangle,
         EditToolLanguageKey = Constants.EditToolName_RectangleDiagLinePoints,

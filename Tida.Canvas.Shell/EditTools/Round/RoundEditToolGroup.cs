@@ -2,7 +2,7 @@
 using System.ComponentModel.Composition;
 using static Tida.Canvas.Shell.Contracts.EditTools.Constants;
 
-namespace Tida.Canvas.Shell.EditTools {
+namespace Tida.Canvas.Shell.EditTools.Round {
     /// <summary>
     /// 编辑组——圆;
     /// </summary>

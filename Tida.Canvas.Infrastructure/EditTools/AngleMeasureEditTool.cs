@@ -11,7 +11,7 @@ namespace Tida.Canvas.Infrastructure.EditTools {
     /// <summary>
     /// 测量工具-角度;
     /// </summary>
-    public class AngleMeasureEditTool : UniqueTypeEditToolGenericBase<MeasureAngle>{
+    public class AngleMeasureEditTool : UniqueTypeEditToolGenericBase<MeasureAngle>, IMeasureEditTool {
         /// <summary>
         /// 使用一个绘制对象选择器实例构建一个角度测量编辑工具;
         /// </summary>

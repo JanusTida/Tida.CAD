@@ -23,6 +23,7 @@
         public const string EditToolIcon_MeasureLength = Prefix + "Line Shape.png";
 
         public const string EditToolIcon_MeasureAngle = Prefix + "Angle.png";
+        public const string EditToolIcon_Arc = Prefix + "Arc Shape.png";
 
     }
 
@@ -33,6 +34,9 @@
         public const string EditToolGroupName_BasicEditor = nameof(EditToolGroupName_BasicEditor);
         
         public const string EditToolGroupName_Round = nameof(EditToolGroupName_Round);
+
+
+        public const string EditToolGroupName_Arc = nameof(EditToolGroupName_Arc);
 
 
         public const string EditToolGroupName_Line = nameof(EditToolGroupName_Line);
@@ -66,6 +70,8 @@
 
         public const string EditToolName_TrimTool = nameof(EditToolName_TrimTool);
 
+
+        public const string EditToolName_ArcStartAndCenterThenEnd = nameof(EditToolName_ArcStartAndCenterThenEnd);
 
         public const string EditToolName_MeasureLength = nameof(EditToolName_MeasureLength);
 

@@ -40,4 +40,6 @@
   <sys:String x:Key="EditToolTip_AngleMeasure_SecondMouseDownPositionConfirmed">The vertex has been specifed,please specify the another on.</sys:String>
   <sys:String x:Key="EditToolTip_AngleMeasure_ConfirmFirstMouseDownPosition">Please specify the first end point.</sys:String>
   <sys:String x:Key="EditToolTip_AngleMeasure_AngleCreated">One angle has already been created.</sys:String>
+    <sys:String x:Key="EditToolGroupName_Arc">Arc</sys:String>
+    <sys:String x:Key="EditToolName_ArcStartAndCenterThenEnd">Start,Center,End</sys:String>
 </ResourceDictionary>

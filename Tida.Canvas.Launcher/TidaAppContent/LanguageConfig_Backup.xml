@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageConfigs>
+  <CurrentLanguage>zh_CN</CurrentLanguage>
+  <LanguageProviders>
+    <Provider>
+      <Name>简体中文</Name>
+      <Type>zh_CN</Type>
+    </Provider>
+    <Provider>
+      <Name>English-United States</Name>
+      <Type>en_US</Type>
+    </Provider>
+  </LanguageProviders>
+</LanguageConfigs>

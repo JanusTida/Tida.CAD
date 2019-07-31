@@ -40,4 +40,5 @@
   <sys:String x:Key="EditToolTip_AngleMeasure_SecondMouseDownPositionConfirmed">已确定一个顶点,请确定另一个端点</sys:String>
   <sys:String x:Key="EditToolTip_AngleMeasure_ConfirmFirstMouseDownPosition">请确定角的第一个端点</sys:String>
   <sys:String x:Key="EditToolTip_AngleMeasure_AngleCreated">已创建了一个角</sys:String>
+    <sys:String x:Key="EditToolGroupName_Arc">圆弧</sys:String>
 </ResourceDictionary>

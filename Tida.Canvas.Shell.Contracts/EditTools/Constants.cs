@@ -13,6 +13,11 @@
         /// </summary>
         public const string EditToolGroup_Round = nameof(EditToolGroup_Round);
 
+        /// <summary>
+        /// 圆弧;
+        /// </summary>
+        public const string EditToolGroup_Arc = nameof(EditToolGroup_Arc);
+
 
         /// <summary>
         /// 直线;
@@ -38,6 +43,9 @@
 
 
         public const string EditTool_MultiLine = nameof(EditTool_MultiLine);
+
+
+        public const string EditTool_ArcStartAndCenterThenEnd = nameof(EditTool_ArcStartAndCenterThenEnd);
 
 
         public const string EditTool_Point = nameof(EditTool_Point);
@@ -77,7 +85,8 @@
 
         public const int EditToolGroupOrder_Round = 12;
 
-        
+        public const int EditToolGroupOrder_Arc = 16;
+
         //public const int EditToolGroupOrder_Measure = 1024;
         //public const int EditToolGroupOrder_Measure = 1024;
     }

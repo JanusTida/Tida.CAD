@@ -2,7 +2,7 @@
 using Tida.Canvas.Shell.Contracts.EditTools;
 using static Tida.Canvas.Shell.Contracts.EditTools.Constants;
 
-namespace Tida.Canvas.Shell.EditTools {
+namespace Tida.Canvas.Shell.EditTools.Line {
     [ExportEditToolProvider(
        GroupGUID = EditToolGroup_Line,
        EditToolLanguageKey = Constants.EditToolName_SingleLine,
