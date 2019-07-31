@@ -1,0 +1,2597 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tida.Canvas.Infrastructure</name>
+    </assembly>
+    <members>
+        <member name="T:Tida.Canvas.Infrastructure.ComponentModel.DrawObjectDescription">
+            <summary>
+            绘制对象描述信息;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.ComponentModel.DrawObjectDescription.TypeName">
+            <summary>
+            类型名;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.ComponentModel.IDrawObjectDescriptor">
+            <summary>
+            绘制对象描述器;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.ComponentModel.IDrawObjectDescriptor.GetDescription(Tida.Canvas.Contracts.DrawObject)">
+            <summary>
+            获取特定绘制对象的类别名;
+            </summary>
+            <param name="drawObject"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Constants">
+            <summary>
+            媒体相关(画刷,笔,长度，字体等);
+            </summary>
+            <summary>
+            图层相关常量;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.Constants.LinePen">
+            <summary>
+            线段的默认笔;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.Constants.LastMouseDownToCurrentMouseLinePen">
+            <summary>
+            鼠标上次按下位置到鼠标当前位置的辅助线的笔;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.Constants.NodeBrush">
+            <summary>
+            用于表示绘制对象正在编辑中的方块的画刷;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.Constants.HighLightRectLength">
+            <summary>
+            高亮的方块边长/填充画刷,将用于编辑,辅助;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.Constants.TolerantedScreenLength">
+            <summary>
+            辅助默认误差允许的范围(使用此常量时，应以视图坐标为准);
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.Constants.PointEllipseScreenRadius">
+            <summary>
+            表示点的圆的视图半径;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.Constants.LineEditingSnappingLengthFontSize">
+            <summary>
+            线段在编辑之时,显示长度的文字的大小;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.Constants.ScreenDistanceLineEditingWithLine">
+            <summary>
+            编辑中线段提示状态与原线段的垂直距离;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.Constants.LineEditingTipBrush">
+            <summary>
+            线段在编辑之时,显示提示的颜色;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.Constants.InLineSnapPointBackground">
+            <summary>
+            关注点在线段上时的辅助点背景;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.Constants.RayPen">
+            <summary>
+            极轴颜色;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.Constants.MeasureLengthPen">
+            <summary>
+            测量长度的笔;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.Constants.MeasureArcPen">
+            <summary>
+            测量长度的笔;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.Constants.EditToolGroup_EditBase">
+            <summary>
+            编辑组-基本处理(复制、移动等);
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Contracts.IHaveMousePositionTracker">
+            <summary>
+            具备部分鼠标位置状态管理单元的契约;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.Contracts.IHaveMousePositionTracker.MousePositionTracker">
+            <summary>
+            部分鼠标位置状态记录器;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.Contracts.IHaveOrder.Order">
+            <summary>
+            排序;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker">
+            <summary>
+            记录部分鼠标状态的管理单元;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker.Owner">
+            <summary>
+            本实例所属的持有者;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker.LastMouseDownPosition">
+            <summary>
+            上一次鼠标按下的位置;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker.CurrentHoverPosition">
+            <summary>
+            当前鼠标的位置;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker.PreviewCurrentHoverPositionChanged">
+            <summary>
+            当前鼠标位置发生变化(预览);
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker.PreviewLastMouseDownPositionChanged">
+            <summary>
+            上次鼠标位置发生变化(预览);
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker.CurrentHoverPositionChanged">
+            <summary>
+            当前鼠标位置发生变化;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker.LastMouseDownPositionChanged">
+            <summary>
+            上次鼠标位置发生变化;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker.NotificationSuspended">
+            <summary>
+            状态变更的通知是否挂起;
+            当值为True时,将不会触发鼠标位置变更事件,但预览事件不受此影响;
+            外部可根据重要程度订阅不同级别的事件,以在可用性和性能间作一个平衡;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Contracts.MousePositionTrackerExtention">
+            <summary>
+            <see cref="T:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker"/>拓展;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Contracts.MousePositionTrackerExtention.Reset(Tida.Canvas.Infrastructure.Contracts.MousePositionTracker,System.Boolean)">
+            <summary>
+            复位<see cref="T:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker"/>的状态;
+            将<see cref="P:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker.CurrentHoverPosition"/>和<see cref="P:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker.LastMouseDownPosition"/>置为空;
+            </summary>
+            <param name="notificationSuspended">是否挂起通知;</param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Contracts.MousePositionTrackerExtention.SetBothMousePositions(Tida.Canvas.Infrastructure.Contracts.MousePositionTracker,Tida.Geometry.Primitives.Vector2D,System.Boolean)">
+            <summary>
+            将<paramref name="mousePositionTracker"/>的
+            <see cref="P:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker.CurrentHoverPosition"/>和
+            <see cref="P:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker.LastMouseDownPosition"/>均设为
+            <paramref name="mousePosition"/>
+            </summary>
+            <param name="mousePositionTracker"></param>
+            <param name="mousePosition"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Contracts.MousePositionTrackerExtention.SetMousePositions(Tida.Canvas.Infrastructure.Contracts.MousePositionTracker,Tida.Geometry.Primitives.Vector2D,Tida.Geometry.Primitives.Vector2D,System.Boolean)">
+            <summary>
+            将<paramref name="mousePositionTracker"/>的<see cref="P:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker.LastMouseDownPosition"/>和<see cref="P:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker.CurrentHoverPosition"/>
+            分别设置为<paramref name="lastMouseDownPosition"/>和<paramref name="currentHoverPosition"/>
+            </summary>
+            <param name="mousePositionTracker">管理单元</param>
+            <param name="lastMouseDownPosition"></param>
+            <param name="currentHoverPosition"></param>
+            <param name="notificationSuspended">是否挂起通知;</param>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DrawObjects.Arc">
+            <summary>
+            绘制对象-圆弧;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.DrawObjects.Arc.Arc2D">
+            <summary>
+            圆弧几何,该值不能为空;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.DrawObjects.Arc.Pen">
+            <summary>
+            绘制圆弧的笔;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DrawObjects.Ellipse">
+            <summary>
+            绘制对象——椭圆(圆);
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.DrawObjects.Ellipse._canRadiusChangeUnratioble">
+            <summary>
+            指示当前Ellipse的横半径与纵半径的变化是否能够不等比;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.DrawObjects.Ellipse._ellipse2D">
+            <summary>
+            椭圆的核心数据,该值不可为空;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.Ellipse.SetEllipse2DCore(Tida.Geometry.Primitives.Ellipse2D)">
+            <summary>
+            设定椭圆数据核心;
+            </summary>
+            <param name="ellipse2D"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.Ellipse.DrawSelectedState(Tida.Canvas.Contracts.ICanvas,Tida.Canvas.Contracts.ICanvasScreenConvertable)">
+            <summary>
+            绘制选择状态;
+            </summary>
+            <param name="canvas"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.Ellipse.DrawPreviewState(Tida.Canvas.Contracts.ICanvas,Tida.Canvas.Contracts.ICanvasScreenConvertable)">
+            <summary>
+            绘制更改后的预览状态;
+            </summary>
+            <param name="canvas"></param>
+            <param name="canvasProxy"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.Ellipse.GetPreviewEllipse2D">
+            <summary>
+            获得根据编辑状态返回更改后的椭圆数据;
+            </summary>
+            <param name="currentPosition">当前的终止位置</param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DrawObjects.Line">
+            <summary>
+            绘制对象-线段;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DrawObjects.LineBase">
+            <summary>
+            绘制对象-线段基类;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.DrawObjects.LineBase.Line2D">
+            <summary>
+            线段几何;该值不能为空;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.DrawObjects.LineBase.Line2DChanged">
+            <summary>
+            Line2D发生了变化事件;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.LineBase.SetLine2DCore(Tida.Geometry.Primitives.Line2D)">
+            <summary>
+            设定线段数据核心;
+            </summary>
+            <param name="line2D"></param>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.DrawObjects.LineBase.RaiseLine2DChangedTransaction">
+            <summary>
+            当<see cref="P:Tida.Canvas.Infrastructure.DrawObjects.LineBase.Line2D"/>发生变化时是否触发事务;
+            默认为真;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.DrawObjects.LineBase.Pen">
+            <summary>
+            绘制线段的笔;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.DrawObjects.LineBase.SelectionPen">
+            <summary>
+            表示被选中的状态的笔;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.LineBase.GetDefaultSelectionPen">
+            <summary>
+            获得默认的选中状态的笔;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.LineBase.GetDefaultPen">
+            <summary>
+            获得默认的笔;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.LineBase.DrawSelectedState(Tida.Canvas.Contracts.ICanvas,Tida.Canvas.Contracts.ICanvasScreenConvertable)">
+            <summary>
+            绘制被选中的状态,即魂;
+            </summary>
+            <param name="canvas"></param>
+            <param name="canvasProxy"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.LineBase.DrawPreviewState(Tida.Canvas.Contracts.ICanvas,Tida.Canvas.Contracts.ICanvasScreenConvertable)">
+            <summary>
+            绘制更改后的预览状态;
+            </summary>
+            <param name="canvas"></param>
+            <param name="canvasProxy"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.LineBase.GetPreviewLine2D(Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            预览更改后的线段几何;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DrawObjects.MeasureAngle">
+            <summary>
+            绘制对象,角;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.MeasureAngle.#ctor(Tida.Geometry.Primitives.Vector2D,Tida.Geometry.Primitives.Vector2D,Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            角的构造,本构造函数所有参数均不能为空;
+            </summary>
+            <param name="start">角的某一端端点</param>
+            <param name="vertex">角的顶点</param>
+            <param name="end">角的另一端端点</param>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.DrawObjects.MeasureAngle.Start">
+            <summary>
+            角的某一端端点
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.DrawObjects.MeasureAngle.End">
+            <summary>
+            角的另一端端点;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.DrawObjects.MeasureAngle.Vertex">
+            <summary>
+            角的顶点;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.MeasureAngle.GetImportantPositions">
+            <summary>
+            返回角的两个端点和一个顶点;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.MeasureAngle.GetPreviewCell">
+            <summary>
+            根据当前上下文状态,获取预览的<see cref="T:Tida.Canvas.Infrastructure.DrawObjects.MeasureAngle.AngleThreePointsCell"/>;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DrawObjects.MeasureAngle.AngleThreePointsCell">
+            <summary>
+            使用三个位置表示一个角的单元;内部使用;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DrawObjects.MeasureLine">
+            <summary>
+            用于表示长度的线段;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.DrawObjects.MeasureLine.EndLength">
+            <summary>
+            端点线的长度;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.DrawObjects.MeasureLine.MeasurePenP">
+            <summary>
+            平行的线
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.DrawObjects.MeasureLine.MeasurePenV">
+            <summary>
+            垂直的线
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DrawObjects.MousePositionTrackableDrawObject">
+            <summary>
+            可记录部分鼠标状态的绘制对象基类;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.MousePositionTrackableDrawObject.OnMousePositionTrackerPreviewLastMouseDownPositionChanged(System.Object,Tida.Canvas.Events.ValueChangedEventArgs{Tida.Geometry.Primitives.Vector2D})">
+            <summary>
+            根据上次鼠标位置的变化,在必要时,本方法可能会触发<see cref="!:IsEditingChanged"/>事件;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.MousePositionTrackableDrawObject.OnMouseDown(Tida.Canvas.Input.MouseDownEventArgs)">
+            <summary>
+            鼠标按下时,将<see cref="P:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker.LastMouseDownPosition"/>与
+            <see cref="P:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker.CurrentHoverPosition"/>设置为<paramref name="e"/>的位置;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.MousePositionTrackableDrawObject.OnMouseMove(Tida.Canvas.Input.MouseMoveEventArgs)">
+            <summary>
+            鼠标移动时,且<see cref="P:Tida.Canvas.Infrastructure.DrawObjects.MousePositionTrackableDrawObject.IsEditing"/>为真时;
+            将<see cref="P:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker.CurrentHoverPosition"/>置为<paramref name="e"/>的位置;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.DrawObjects.MousePositionTrackableDrawObject.IsEditing">
+            <summary>
+            是否正在被编辑,<see cref="P:Tida.Canvas.Infrastructure.Contracts.MousePositionTracker.LastMouseDownPosition"/>不为空时为真;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DrawObjects.Point">
+            <summary>
+            绘制对象——点;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DrawObjects.PointBase">
+            <summary>
+            绘制对象——点基类;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.PointBase.#ctor(Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            构造方法;
+            </summary>
+            <param name="position">点的位置,不可为空;</param>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.DrawObjects.PointBase.PositionChanged">
+            <summary>
+            位置发生变化事件;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.DrawObjects.PointBase.MouseChangingPosition">
+            <summary>
+            正在通过鼠标改变本实例的位置,即<see cref="P:Tida.Canvas.Infrastructure.DrawObjects.PointBase.Position"/>;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.DrawObjects.PointBase.ScreenRadius">
+            <summary>
+            点在视图上显示的半径;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.DrawObjects.PointBase.SelectedBackground">
+            <summary>
+            选定状态的背景;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.DrawObjects.PointBase.NormalBackground">
+            <summary>
+            非选择状态下的背景色;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.PointBase.DrawSelectedStates(Tida.Canvas.Contracts.ICanvas,Tida.Canvas.Contracts.ICanvasScreenConvertable)">
+            <summary>
+            绘制选择状态;
+            </summary>
+            <param name="canvas"></param>
+            <param name="canvasProxy"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.PointBase.GetPreviewScreenEllipse2D(Tida.Canvas.Contracts.ICanvasScreenConvertable)">
+            <summary>
+            获取以视图坐标为准的,表示预览状态下的位置的圆;
+            </summary>
+            <param name="canvasProxy"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.PointBase.GetScreenEllipse(Tida.Canvas.Contracts.ICanvasScreenConvertable)">
+            <summary>
+            获得本实例以<see cref="P:Tida.Canvas.Infrastructure.DrawObjects.PointBase.Position"/>为圆心,视图坐标为准的圆;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.PointBase.GetSurroundingScreenEllipse2D(Tida.Canvas.Contracts.ICanvasScreenConvertable,Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            获取以<paramref name="center"/>圆心,<see cref="P:Tida.Canvas.Infrastructure.DrawObjects.PointBase.ScreenRadius"/>为视图半径的圆;
+            </summary>
+            <param name="canvasProxy"></param>
+            <param name="center"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DrawObjects.Rectangle">
+            <summary>
+            绘制对象——矩形;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.Rectangle.SetRetangle2DCore(Tida.Geometry.Primitives.Rectangle2D2)">
+            <summary>
+            设定矩形数据核心;
+            </summary>
+            <param name="rectangle2D"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.Rectangle.DrawSelectedState(Tida.Canvas.Contracts.ICanvas,Tida.Canvas.Contracts.ICanvasScreenConvertable)">
+            <summary>
+            绘制选择状态;
+            </summary>
+            <param name="canvas"></param>
+            <param name="canvasProxy"></param>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DynamicInput.CanvasControlDynamicInputerBase">
+            <summary>
+            动态输入处理器基类;本类在<see cref="T:Tida.Canvas.Infrastructure.DynamicInput.DynamicInputerBase"/>上,增加了<see cref="T:Tida.Canvas.Contracts.ICanvasControl"/>
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DynamicInput.DynamicInputerBase">
+            <summary>
+            动态输入处理器基类;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.DynamicInput.DynamicInputerBase.Disposed">
+            <summary>
+            已经调用了Dispose
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DynamicInput.EditToolDynamicInputerGenericBase`1">
+            <summary>
+            针对特定编辑工具的动态输入处理器泛型基类;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DynamicInput.EditToolDynamicInputerProviderGenericBase`1">
+            <summary>
+            针对特定类型的编辑工具的动态输入处理器提供者泛型基类;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DynamicInput.Events.NumberCommitedEventArgs">
+            <summary>
+            数字被呈递事件参数;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DynamicInput.HaveMousePositionTrackerForLineBase">
+            <summary>
+            为编辑线的一端所封装的<see cref="!:IHaveMousePositionTracker,IInputElement,IDisposable"/>;
+            本类实现了<see cref="T:System.IDisposable"/>,在构造时订阅了<see cref="T:Tida.Canvas.Infrastructure.DrawObjects.LineBase"/>的部分事件,
+            在<see cref="T:Tida.Canvas.Infrastructure.DrawObjects.LineBase"/>的生命周期相对本实例较长时,务必在必要时调用<see cref="M:System.IDisposable.Dispose"/>方法,
+            否则可能导致本类的实例无法被回收,以及可能存在的应用程序功能未按预期执行;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DynamicInput.ICanvasControlDynamicInputerProvider">
+            <summary>
+            画布控件的动态输入处理器提供者;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.ICanvasControlDynamicInputerProvider.CreateInputer(Tida.Canvas.Contracts.ICanvasControl)">
+            <summary>
+            创建一个编辑工具的动态输入处理器;
+            </summary>
+            <param name="canvasControl"></param>
+            <returns>若类型不匹配,则返回为空</returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DynamicInput.IDynamicInputer">
+            <summary>
+            画布的动态输入处理器;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DynamicInput.LengthAndAngleDynamicInputer`1">
+            <summary>
+            泛型动态输入处理器泛型基类;
+            本类适用于设定一个长度及一个角度的情况;
+            通过设定<see cref="!:MouseInteractableEditToolGenericBase.LastDownPosition"/>及
+            <see cref="!:MouseInteractableEditToolGenericBase.CurrentHoverPosition"/>完成上述功能;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.LengthAndAngleDynamicInputerUtil.GetFixedAnglePositiveToXAxizs(System.Double)">
+            <summary>
+            将<paramref name="angle"/>处理,返回与X正半轴的夹角(值域为[0,π]);
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DynamicInput.LengthAndAngleNumContainerForMouseTrackable`1">
+            <summary>
+            为<see cref="T:Tida.Canvas.Infrastructure.Contracts.IHaveMousePositionTracker"/>以及<see cref="T:Tida.Canvas.Input.IInputElement"/>
+            而封装的<see cref="T:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandlerContainer"/>,
+            可设定一个长度和宽度;
+            </summary>
+            <typeparam name="THaveMousePositionTracker"></typeparam>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.DynamicInput.LengthAndAngleNumContainerForMouseTrackable`1._internalChanging">
+            <summary>
+            指示是否内部正在产生变化,
+            防止在各项事件响应中,发生无限循环;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.DynamicInput.LengthAndAngleNumContainerForMouseTrackable`1._isClockWise">
+            <summary>
+            角度是否为顺时针;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.LengthAndAngleNumContainerForMouseTrackable`1.GetCalculatedHoverPosition(Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            根据当前长度和角度的输入情况,得到计算后的"悬停"位置;
+            </summary>
+            <param name="position">返回是否已经处理,以指示编辑工具是否继续处理</param>
+            <param name="currentHoverPosition">当前的悬停位置</param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.LengthAndAngleNumContainerForMouseTrackable`1.InitializeNumberBoxes">
+            <summary>
+            初始化文本框;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.LengthAndAngleNumContainerForMouseTrackable`1.AngleInteractionHandler_NumberCommited(System.Object,Tida.Canvas.Infrastructure.DynamicInput.Events.NumberCommitedEventArgs)">
+            <summary>
+            角度框确认时,更新
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.LengthAndAngleNumContainerForMouseTrackable`1.UpdateCurrentHoverPosition">
+            <summary>
+            更新<typeparamref name="THaveMousePositionTracker"/>的 鼠标当前位置;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.LengthAndAngleNumContainerForMouseTrackable`1.UpdateLineInfoForAngle">
+            <summary>
+            更新角度输入框;
+            </summary>
+            <param name="currentPosition"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.LengthAndAngleNumContainerForMouseTrackable`1.UpdateLineInfoForLength">
+            <summary>
+            更新长度输入框;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DynamicInput.LengthDynamicInputer`1">
+            <summary>
+            长度的动态输入处理器;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DynamicInput.LengthNumContainerForMouseTrackable`1">
+            <summary>
+            为<see cref="T:Tida.Canvas.Infrastructure.Contracts.IHaveMousePositionTracker"/>以及<see cref="T:Tida.Canvas.Input.IInputElement"/>
+            而封装的<see cref="T:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandlerContainer"/>,
+            只可设定一个长度和宽度;
+            </summary>
+            <typeparam name="THaveMousePositionTracker"></typeparam>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.DynamicInput.LengthNumContainerForMouseTrackable`1._internalChanging">
+            <summary>
+            指示是否内部正在产生变化,
+            防止在各项事件响应中,发生无限循环;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.LengthNumContainerForMouseTrackable`1.InitializeNumberBoxes">
+            <summary>
+            初始化文本框;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.LengthNumContainerForMouseTrackable`1.UpdateCurrentHoverPosition">
+            <summary>
+            更新<typeparamref name="THaveMousePositionTracker"/>的 鼠标当前位置;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.LengthNumContainerForMouseTrackable`1.GetCalculatedHoverPosition(Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            根据当前长度和角度的输入情况,得到计算后的"悬停"位置;
+            </summary>
+            <param name="position">返回是否已经处理,以指示编辑工具是否继续处理</param>
+            <param name="currentHoverPosition">当前的悬停位置</param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.LengthNumContainerForMouseTrackable`1.UpdateLineInfoForLength">
+            <summary>
+            更新长度输入框;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxesDynamicInputer">
+            <summary>
+            本类适用于设定多个NumberBox的动态输入情况;
+            </summary>
+            <summary>
+            文本框交互部分;
+            </summary>
+            <summary>
+            状态部分;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxesDynamicInputer.NumberBoxInteractionHandlerContainer">
+            <summary>
+            NumberBox交互容器;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxesDynamicInputer._internalChanging">
+            <summary>
+            指示是否内部正在产生变化,
+            防止在<see cref="!:INumberBox.NumberChanged"/>的处理中,
+            实际数据和<see cref="P:Tida.Canvas.Infrastructure.NativePresentation.INumberBox.Number"/>相互影响;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxesDynamicInputer._numberBoxContainer">
+            <summary>
+            输入框容器;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxesDynamicInputer.Initialize">
+            <summary>
+            初始化;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxesDynamicInputer.InitializeNumberInteractionHandlers">
+            <summary>
+            初始化数字交互容器;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxesDynamicInputer.UpdateNumberBoxWithNumberboxInteractionHandler(Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandler)">
+            <summary>
+            将<paramref name="numberBoxInteractionHandler"/>的数据同步到对应的<see cref="T:Tida.Canvas.Infrastructure.NativePresentation.INumberBox"/>
+            </summary>
+            <param name="numberBoxInteractionHandler"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxesDynamicInputer.SetPropertyInternal``1(``0,System.Action{``0})">
+            <summary>
+            设定值;
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="setAct"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxesDynamicInputer.Reset">
+            <summary>
+            复位,清除所有输入状态;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxesDynamicInputer.InitializeNumberBoxes">
+            <summary>
+            初始化文本框;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxesDynamicInputer.UpdateNumberBoxInteractionHandlerWithNumberbox(Tida.Canvas.Infrastructure.NativePresentation.INumberBox)">
+            <summary>
+            将<paramref name="numberBox"/>的数据同步到对应的<see cref="T:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandler"/>
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxesDynamicInputer.CanvasControl_CanvasPreviewKeyDown(System.Object,Tida.Canvas.Input.KeyDownEventArgs)">
+            <summary>
+            处于输入状态,按下Esc键时,清除关注的文本框内的内容;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxesDynamicInputer.NumberBoxCell">
+            <summary>
+            存储数字输入呈现于对应交互对应状态的单元;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandler">
+            <summary>
+            与<see cref="T:Tida.Canvas.Infrastructure.NativePresentation.INumberBox"/>的交互器;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandler.Number">
+            <summary>
+            当前数值;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandler.CommitNumber(System.Double)">
+            <summary>
+            应用数字的更改;
+            </summary>
+            <param name="number">数字值</param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandler.CommitNumber">
+            <summary>
+            指定当前值的更改;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandler.IsNumberCommited">
+            <summary>
+            当前数字更改是否被呈递;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandler.SavedBits">
+            <summary>
+             保留小数点小数的位数;
+             </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandler.OnNumberChanged(Tida.Canvas.Events.ValueChangedEventArgs{System.Nullable{System.Double}})">
+            <summary>
+            当数字发生变化时发生;
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandler.Reset">
+            <summary>
+            复位;解除冻结状态,属性重置;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandler.NumberChanged">
+            <summary>
+            数字已经发生变化;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandler.NumberCommited">
+            <summary>
+            数字被呈递事件;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandler.ScreenPosition">
+            <summary>
+            屏幕位置;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandler.ScreenPositionChanged">
+            <summary>
+            屏幕位置变化事件;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandlerExtension.GetCommitedNumber(Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandler)">
+            <summary>
+            获取<see cref="T:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandler"/> 确定更改的数字;
+            </summary>
+            <param name="numberBoxInteractionHandler"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandlerContainer">
+            <summary>
+            长度与角度交互器;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandlerContainer.Commit">
+            <summary>
+            呈递交互;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.DynamicInput.NumberBoxInteractionHandlerContainer.IsInputing">
+            <summary>
+            是否正在输入,将由使用者指示;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.DynamicInput.RoundDiameterTwoPointsEditDynamicInputer">
+            <summary>
+            通过圆的直径的两个端点创建圆的编辑工具的动态输入处理器;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.AngleMeasureEditTool">
+            <summary>
+            测量工具-角度;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.AngleMeasureEditTool.#ctor(Tida.Canvas.Infrastructure.EditTools.IDrawObjectSelector)">
+            <summary>
+            使用一个绘制对象选择器实例构建一个角度测量编辑工具;
+            </summary>
+            <param name="drawObjectSelector">绘制对象选择器,用于在操作多个绘制对象时,需确定一个唯一的绘制对象时使用</param>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.AngleMeasureEditTool.ShouldCommitMeasureData">
+            <summary>
+            呈递事务时是否将保持的数据绘制对象添加到到指定图层中;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.AngleMeasureEditTool._firstMouseDownPosition">
+            <summary>
+            鼠标首次按下位置;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.AngleMeasureEditTool._secondMouseDownPosition">
+            <summary>
+            鼠标第二次按下位置;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.EditTools.AngleMeasureEditTool.AngleCreated">
+            <summary>
+            创建了一个新的角;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.EditTools.AngleMeasureEditTool.FirstMouseDownPositionConfirmed">
+            <summary>
+            鼠标首次按下确定;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.EditTools.AngleMeasureEditTool.SecondMouseDownPositionConfirmed">
+            <summary>
+            鼠标第二次按下确定;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.ArcStartAndCenterThenEndEditTool">
+            <summary>
+            起点,圆心,中点的圆弧绘制工具;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.ArcStartAndCenterThenEndEditTool.GetArc2DOnCurrentState(Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            根据当前状态获取一个圆弧;
+            </summary>
+            <param name="thirdPoint"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.CopyEditTool">
+            <summary>
+            绘制工具——复制;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.CopyEditTool.DrawObjectMoveTools">
+            <summary>
+            所有绘制对象操作工具;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.CopyEditTool._copyEditDrawObjectCells">
+            <summary>
+            记录当前“抓起”的对象,所关注(根据原件的选择状态而定)的拷贝的绘制对象及其操作工具的状态集合;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.CopyEditTool._copiedDrawObjects">
+            <summary>
+            本次编辑中,已经从原件被拷贝的缓存绘制对象;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.CopyEditTool._undoCopiedDrawObjectsStack">
+            <summary>
+            即将被添加的绘制对象的撤销/重做栈;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.CopyEditTool.SyncSelectedDrawObjectsToCopiedCells">
+            <summary>
+            将<see cref="T:Tida.Canvas.Contracts.ICanvasContext"/>中选中的绘制对象与<see cref="F:Tida.Canvas.Infrastructure.EditTools.CopyEditTool._copyEditDrawObjectCells"/>同步;
+            </summary>
+            <param name="canvasContext">对应的画布上下文</param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.CopyEditTool.RollBackToLastMouseDownPosition">
+            <summary>
+            将拷贝绘制对象(非原件)集合的位置回溯至上一次鼠标按下的位置;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.CopyEditTool.ApplyCurrentPositionState(Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            在本次编辑栈内,应用拷贝状态的更改;
+            </summary>
+            <param name="thisMouseDownPosition">本次鼠标按下的位置</param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.CopyEditTool.CanvasContext_ClickSelect(System.Object,Tida.Canvas.Events.ClickSelectEventArgs)">
+            <summary>
+            根据鼠标按下的位置,更新拷贝的绘制对象(非原件)的选中状态;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.CopyEditTool.CanvasContext_PreviewInteractionWithDrawObjects(System.Object,Tida.Canvas.Events.PreviewDrawObjectsInteractionEventArgs)">
+            <summary>
+            禁用画布本身与绘制对象交互;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.CopyEditTool.CanvasContext_DragSelect(System.Object,Tida.Canvas.Events.DragSelectEventArgs)">
+            <summary>
+            禁用拖拽选中;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.CopyEditTool.CanvasContext_DrawSelectMouseMove(System.Object,Tida.Canvas.Events.DragSelectMouseMoveEventArgs)">
+            <summary>
+            禁用拖拽选中;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.CopyEditTool.CheckIsContrlKeyDown">
+            <summary>
+            检查Control键是否被按下;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.CopyEditTool.CanvasContext_Snaping(System.Object,Tida.Canvas.Events.SnapingEventArgs)">
+            <summary>
+            在进行辅助处理时,将缓存的拷贝的图形也一并加入辅助判断;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.CopyEditTool.CopyEditDrawObjectCell">
+            <summary>
+            本单位用于记录当前所关注的拷贝的绘制对象,及其操作工具的状态;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.CopyEditTool.CopyEditDrawObjectCell.CopiedDrawObject">
+            <summary>
+            拷贝的绘制对象;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.CopyEditTool.CopyEditDrawObjectCell.DrawObjectMoveTool">
+            <summary>
+            对应的操作工具;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.IDrawObjectSelector">
+            <summary>
+            绘制对象选择器;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.IDrawObjectSelector.SelectOneDrawObject(System.Collections.Generic.IEnumerable{Tida.Canvas.Contracts.DrawObject})">
+            <summary>
+            在一个或多个绘制对象集合中选择一个绘制对象;
+            </summary>
+            <param name="drawObjects"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.IMeasureEditTool">
+            <summary>
+            用于测量的编辑工具接口;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.IMeasureEditTool.ShouldCommitMeasureData">
+            <summary>
+            绘制操作完成,呈递事务时是否将保持的数据绘制对象添加到到指定图层中;
+            (对应"标注"勾选);
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.LengthMeasureEditTool">
+            <summary>
+            测量工具——长度;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.LengthMeasureEditTool.ShouldCommitMeasureData">
+            <summary>
+            呈递事务时是否将保持的数据绘制对象添加到到指定图层中;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.LengthMeasureEditTool.GetMeasureLine(Tida.Geometry.Primitives.Vector2D,Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            获取测量用线段;
+            </summary>
+            <param name="start"></param>
+            <param name="end"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.MirrorEditTool">
+            <summary>
+            镜像工具
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.MirrorEditTool.DrawObjectMirrorTools">
+            <summary>
+            所有绘制对象操作工具
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.MirrorEditTool._mirrorEditDrawObjectCells">
+            <summary>
+            记录当前需要镜像的对象及其操作工具的状态集合
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.MirrorEditTool._originReplacedDrawObjects">
+            <summary>
+            已经被镜像的,将被替换的绘制对象原件;
+            应用修改时,这些对象将会从其图层中移除,被新的对象替代;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.MirrorEditTool._createdDrawObjects">
+            <summary>
+            本次编辑的所有镜像操作所得到的新的绘制对象;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.MirrorEditTool._undoMirroredDrawObjectsStack">
+            <summary>
+            即将被添加的绘制对象的撤销/重做栈;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.MirrorEditTool.SyncSelectedDrawObjectsToMirroredCells">
+            <summary>
+            将<see cref="T:Tida.Canvas.Contracts.ICanvasContext"/>中选中的绘制对象与<see cref="F:Tida.Canvas.Infrastructure.EditTools.MirrorEditTool._mirrorEditDrawObjectCells"/>同步;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.MirrorEditTool.RollBackToLastMouseDownPosition">
+            <summary>
+            将拷贝绘制对象(非原件)集合的位置回溯至上一次鼠标按下的位置;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.MirrorEditTool.CanvasContext_Snaping(System.Object,Tida.Canvas.Events.SnapingEventArgs)">
+            <summary>
+            在进行辅助处理时,将缓存的拷贝的图形也一并加入辅助判断;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.MirrorEditTool.ApplyCurrentPositionState(Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            在本次编辑栈内,应用拷贝状态的更改;
+            </summary>
+            <param name="thisMouseDownPosition">本次鼠标按下的位置</param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.MirrorEditTool.CanvasContext_ClickSelect(System.Object,Tida.Canvas.Events.ClickSelectEventArgs)">
+            <summary>
+            根据鼠标按下的位置,更新拷贝的绘制对象(非原件)的选中状态;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.MirrorEditTool.CanvasContext_PreviewInteractionWithDrawObjects(System.Object,Tida.Canvas.Events.PreviewDrawObjectsInteractionEventArgs)">
+            <summary>
+            禁用画布本身与绘制对象交互;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.MirrorEditTool.CanvasContext_DragSelect(System.Object,Tida.Canvas.Events.DragSelectEventArgs)">
+            <summary>
+            禁用拖拽选中;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.MirrorEditTool.CanvasContext_DrawSelectMouseMove(System.Object,Tida.Canvas.Events.DragSelectMouseMoveEventArgs)">
+            <summary>
+            禁用拖拽选中;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.MirrorEditTool.CheckIsContrlKeyDown">
+            <summary>
+            检查Control键是否被按下;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.MirrorEditTool.MirrorEditDrawObjectCell">
+            <summary>
+            本单位用于记录当前所关注的拷贝的绘制对象,及其操作工具的状态;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.MirrorEditTool.MirrorEditDrawObjectCell.MirroredDrawObject">
+            <summary>
+            镜像的绘制对象;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.MirrorEditTool.MirrorEditDrawObjectCell.DrawObjectMirrorTool">
+            <summary>
+            对应的操作工具;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.MouseInteractableEditToolGenericBase`1">
+            <summary>
+            根据鼠标状态再封装的泛型编辑工具;
+            </summary>
+            <typeparam name="TDrawObject">针对的绘制对象</typeparam>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.MouseInteractableEditToolGenericBase`1.ApplyMouseDownPosition(Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            应用鼠标按下的位置,并进行数据的修改;
+            </summary>
+            <param name="thisMouseDownPosition"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.MouseInteractableEditToolGenericBase`1.OnApplyMouseDownPosition(Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            应用鼠标按下的位置,并进行数据的修改,将在调用<see cref="M:Tida.Canvas.Infrastructure.EditTools.MouseInteractableEditToolGenericBase`1.ApplyMouseDownPosition(Tida.Geometry.Primitives.Vector2D)"/>被调用;
+            </summary>
+            <param name="thisMouseDownPosition"></param>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.MoveEditTool">
+            <summary>
+            编辑工具——移动;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.MoveEditTool.DrawObjectMoveTools">
+            <summary>
+            所有绘制对象移动工具;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.MoveEditTool._catchedDrawObjectCells">
+            <summary>
+            记录被"抓起"的绘制对象及其拷贝集合;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.MoveEditTool._undoOffsetCells">
+            <summary>
+            本次编辑过程中,移动过程记录的撤销栈;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.MoveEditTool._redoOffsetCells">
+            <summary>
+            本次编辑过程中,移动过程记录的重做栈;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.MoveEditTool.CanvasContext_Snaping(System.Object,Tida.Canvas.Events.SnapingEventArgs)">
+            <summary>
+            <see cref="T:Tida.Canvas.Contracts.ICanvasContextEx"/>辅助判断时,加入被抓起的绘制对象(非原件),使本移动工具内的被抓起的绘制对象(非原件)也能参与辅助判断;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.MoveEditTool.OnEndOperation">
+            <summary>
+            清除本次编辑的状态;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.MoveEditTool.OnMouseMove(Tida.Canvas.Input.MouseMoveEventArgs)">
+            <summary>
+            鼠标移动时的绘制对象变化;
+            </summary>
+            <param name="canvasContext"></param>
+            <param name="snapShape"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.MoveEditTool.UpdateDrawObjectSelectedState(Tida.Geometry.Primitives.Vector2D,Tida.Canvas.Contracts.ICanvasContextEx)">
+            <summary>
+            根据鼠标按下的位置,更新"抓起"的绘制对象(非原件)的选中状态;
+            </summary>
+            <returns>是否命中绘制对象</returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.MoveEditTool.ApplyCurrentPositionState(Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            在本次编辑栈内,应用偏移状态的更改;
+            </summary>
+            <remarks>并非将当前的偏移状态应用到原绘制对象;</remarks>
+            <param name="thisMouseDownPosition">本次鼠标按下的位置</param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.MoveEditTool.RollBackToLastMouseDownPosition">
+            <summary>
+            将绘制对象(非原件)集合的位置回溯至上一次鼠标按下的位置;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.MoveEditTool.SyncSelectedDrawObjectsToCachedCells">
+            <summary>
+            将<see cref="T:Tida.Canvas.Contracts.ICanvasContextEx"/>中选中的绘制对象与<see cref="F:Tida.Canvas.Infrastructure.EditTools.MoveEditTool._catchedDrawObjectCells"/>同步;
+            </summary>
+            <param name="canvasContext">对应的画布上下文</param>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.MoveEditTool.MoveEditCell">
+            <summary>
+            本单位用于记录所"抓起"的绘制对象,其拷贝对象,及其操作工具的状态;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.MoveEditTool.MoveEditCell.OriginDrawObject">
+            <summary>
+            原件;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.MoveEditTool.MoveEditCell.CopiedDrawObject">
+            <summary>
+            拷贝;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.MoveEditTool.MoveEditCell.DrawObjectMoveTool">
+            <summary>
+            对应的移动工具;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.MultiLineEditTool">
+            <summary>
+            连续地绘制线的编辑工具;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.MultiLineEditTool.DrawEditingLineState(Tida.Canvas.Contracts.ICanvas,Tida.Canvas.Contracts.ICanvasScreenConvertable)">
+            <summary>
+            绘制未完成的编辑线段状态;
+            </summary>
+            <param name="canvas"></param>
+            <param name="canvasProxy"></param>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.MultiLineEditToolGenericBase`1">
+            <summary>
+            连续地绘制线性图形的编辑工具基类;
+            </summary>
+            <typeparam name="TLine"></typeparam>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.MultiLineEditToolGenericBase`1.OnCreateDrawObject(Tida.Geometry.Primitives.Vector2D,Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            根据关键信息,创建一个特定的绘制对象;
+            </summary>
+            <param name="lastDownPosition"></param>
+            <param name="thisMouseDownPosition"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool">
+            <summary>
+            编辑工具-偏移;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool.FixedOffsetChanged">
+            <summary>
+            偏移大小已确认;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool.DrawObjectSelected">
+            <summary>
+            选中了绘制对象的事件;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool.OffsetApplied">
+            <summary>
+            偏移已经应用事件;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool.FixedOffset">
+            <summary>
+            已经确定的偏移大小;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool.ClickedOffsetEditCell">
+            <summary>
+            被选中,将要被偏移的记录;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool._undoOffsetCells">
+            <summary>
+            本次编辑过程中,偏移过程记录的撤销栈;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool._redoOffsetCells">
+            <summary>
+            本次编辑过程中,偏移过程记录的重做栈;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool.BuildClickedCellOffsetWithMousePosition(Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            在本次编辑栈内,生成当前的即将偏移的记录(即<see cref="P:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool.ClickedOffsetEditCell"/>);
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool.ApplyClickedCell">
+            <summary>
+            在本次编辑栈内,应用当前的选中的记录;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool.OffsetEditCell">
+            <summary>
+            偏移过程中的步骤记录;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool.OffsetEditCell.OriginDrawObject">
+            <summary>
+            原件;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool.OffsetEditCell.CopiedDrawObject">
+            <summary>
+            偏移后的绘制对象;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool.OffsetEditCell.DrawObjectOffsetTool">
+            <summary>
+            对应的偏移工具;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool.OffsetEditCell.Offset">
+            <summary>
+            偏移量;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool2">
+            <summary>
+            编辑工具-偏移;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool2.FixedOffsetChanged">
+            <summary>
+            偏移大小已确认;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool2.DrawObjectSelected">
+            <summary>
+            选中了绘制对象的事件;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool2.OffsetApplied">
+            <summary>
+            偏移已经应用事件;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool2.FixedOffset">
+            <summary>
+            已经确定的偏移大小;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool2.ClickedOffsetEditCell">
+            <summary>
+            被选中,将要被偏移的记录;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool2._undoOffsetCells">
+            <summary>
+            本次编辑过程中,偏移过程记录的撤销栈;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool2._redoOffsetCells">
+            <summary>
+            本次编辑过程中,偏移过程记录的重做栈;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool2.BuildClickedCellOffsetWithMousePosition(Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            在本次编辑栈内,生成当前的即将偏移的记录(即<see cref="P:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool2.ClickedOffsetEditCell"/>);
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool2.ApplyClickedCell">
+            <summary>
+            在本次编辑栈内,应用当前的选中的记录;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool2.OffsetEditCell">
+            <summary>
+            偏移过程中的步骤记录;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool2.OffsetEditCell.OriginDrawObject">
+            <summary>
+            原件;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool2.OffsetEditCell.CopiedDrawObject">
+            <summary>
+            偏移后的绘制对象;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool2.OffsetEditCell.DrawObjectOffsetTool">
+            <summary>
+            对应的偏移工具;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.OffsetEditTool2.OffsetEditCell.Offset">
+            <summary>
+            偏移量;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.PointEditTool">
+            <summary>
+            点的编辑工具;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.RectangleDiagLinePointsEditTool">
+            <summary>
+            根据对角线创建矩形;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.RectangleDiagLinePointsEditTool._lastMouseDownPosition">
+            <summary>
+            鼠标上一次按下的位置;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.RectangleDiagLinePointsEditTool._currentMousePosition">
+            <summary>
+            鼠标的当前位置;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.RoundCenterRadiusPointsEditTool">
+            <summary>
+            根据圆心与直径创建圆的工具;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.RoundCenterRadiusPointsEditTool._lastMouseDownPosition">
+            <summary>
+            鼠标上一次按下的位置;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.RoundCenterRadiusPointsEditTool._currentMousePosition">
+            <summary>
+            鼠标的当前位置;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.RoundDiameterTwoPointsEditTool">
+            <summary>
+            通过圆的直径的两个端点创建圆的编辑工具;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.SingleLineEditTool">
+            <summary>
+            线段(单次)的绘制工具;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.SingleLineEditToolGenericBase`1">
+            <summary>
+            单次绘制的线性编辑工具泛型基类;
+            </summary>
+            <typeparam name="TLine"></typeparam>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.SingleLineEditToolGenericBase`1.OnCreateDrawObject(Tida.Geometry.Primitives.Vector2D,Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            根据关键信息,创建一个特定的绘制对象;
+            </summary>
+            <param name="lastDownPosition"></param>
+            <param name="thisMouseDownPosition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.SingleLineEditToolGenericBase`1.DrawEditingLineState(Tida.Canvas.Contracts.ICanvas,Tida.Canvas.Contracts.ICanvasScreenConvertable)">
+            <summary>
+            绘制未完成的编辑线段状态;
+            </summary>
+            <param name="canvas"></param>
+            <param name="canvasProxy"></param>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.TrimEditTool">
+            <summary>
+            编辑工具——裁剪;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.TrimEditTool.DrawObjectIntersectRules">
+            <summary>
+            所有绘制对象的相交规则;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.TrimEditTool.DrawObjectTrimTools">
+            <summary>
+            所有绘制对象的裁剪工具;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.TrimEditTool.DrawObjectExtendTools">
+            <summary>
+            所有绘制对象的延伸工具;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.TrimEditTool._originReplacedDrawObjects">
+            <summary>
+            已经被裁剪的,将被替换的绘制对象原件;
+            应用修改时,这些对象将会从其图层中移除,被新的对象替代;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.TrimEditTool._createdDrawObjects">
+            <summary>
+            本次编辑的所有裁剪操作所得到的新的绘制对象;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.TrimEditTool._undoTrimEditDrawObjectCells">
+            <summary>
+            本次编辑的撤销栈;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.TrimEditTool._redoTrimEditDrawObjectCells">
+            <summary>
+            本次编辑的重做栈;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.TrimEditTool.IsExtendMode">
+            <summary>
+            是否是延伸模式;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.TrimEditTool.OnDragSelectMouseMove(System.Object,Tida.Canvas.Events.DragSelectMouseMoveEventArgs)">
+            <summary>
+            指示为任意选中;
+            </summary>
+            <param name="canvasContext"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.TrimEditTool.OnDragSelect(System.Object,Tida.Canvas.Events.DragSelectEventArgs)">
+            <summary>
+            在拖放操作按下时,尝试进行裁剪操作;
+            </summary>
+            <param name="canvasContext"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.TrimEditTool.ApplyTrimCell(Tida.Canvas.Infrastructure.EditTools.TrimEditTool.TrimEditDrawObjectCell)">
+            <summary>
+            在本次编辑栈内,应用<paramref name="trimEditDrawObjectCell"/>的更改内容;
+            </summary>
+            <param name="trimEditDrawObjectCell"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.TrimEditTool.UnApplyTrimCell(Tida.Canvas.Infrastructure.EditTools.TrimEditTool.TrimEditDrawObjectCell)">
+            <summary>
+            在本次编辑栈内,取消<paramref name="trimEditDrawObjectCell"/>的更改内容;
+            </summary>
+            <param name="trimEditDrawObjectCell"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.TrimEditTool.GetTrimedOrExtendedDrawObjects(Tida.Canvas.Contracts.DrawObject,System.Collections.Generic.IEnumerable{Tida.Canvas.Contracts.DrawObject},Tida.Geometry.Primitives.Rectangle2D2)">
+            <summary>
+            根据裁剪对象<paramref name="trimingDrawObjects"/>和裁剪区域<paramref name="trimArea"/>,
+            对被裁剪对象<paramref name="toBeTrimedDrawObject"/>进行裁剪,
+            返回裁剪后的对象;
+            </summary>
+            <param name="canvasContext"></param>
+            <param name="trimArea"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.TrimEditTool.UpdateDrawObjectSelectedState(Tida.Geometry.Primitives.Vector2D,Tida.Canvas.Contracts.ICanvasContextEx)">
+            <summary>
+            根据鼠标按下的位置,更新"裁剪后"的绘制对象(非原件)的选中状态;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.TrimEditTool.TrimEditDrawObjectCell">
+            <summary>
+            本单位用于记录单次裁剪时的所使用的关键信息;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.TrimEditTool.TrimEditDrawObjectCell.NewCreatedDrawObjects">
+            <summary>
+            单次裁剪所得到的新的绘制对象;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.TrimEditTool.TrimEditDrawObjectCell.ReplacedOriginDrawObjects">
+            <summary>
+            单次裁剪将被替换的绘制对象原件;
+            来自与原图层中现存的;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.TrimEditTool.TrimEditDrawObjectCell.ReplacedCreatedDrawObjects">
+            <summary>
+            单次裁剪所被替换的新得到的绘制对象;
+            这些绘制对象将来自于单次裁剪之前的裁剪得到的绘制对象<see cref="F:Tida.Canvas.Infrastructure.EditTools.TrimEditTool._createdDrawObjects"/>
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.UniqueTypeEditToolCommitParams">
+            <summary>
+            单种单种绘制对象编辑工具呈递信息;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.UniqueTypeEditToolCommitParams.AppliedLayer">
+            <summary>
+            应用的图层;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.UniqueTypeEditToolCommitParams.AddedDrawObjects">
+            <summary>
+            将要被添加的绘制对象集合;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.EditTools.UniqueTypeEditToolCommitParams.Cancel">
+            <summary>
+            指示是否取消;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.EditTools.UniqueTypeEditToolGenericBase`1">
+            <summary>
+            适用于绘制单种绘制对象编辑工具实现类,本类实现了默认的撤销/重做;
+            </summary>
+            <typeparam name="TDrawObject">该工具所操作的绘制对象类别</typeparam>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.UniqueTypeEditToolGenericBase`1.UndoDrawObjects">
+            <summary>
+            本次编辑时,创建的绘制对象的撤销栈;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.EditTools.UniqueTypeEditToolGenericBase`1.RedoDrawObjects">
+            <summary>
+            本次编辑时,创建的绘制对象的重做栈;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.UniqueTypeEditToolGenericBase`1.OnCommit">
+            <summary>
+            呈递修改的默认实现,本方法将呈递撤销栈中的修改操作,并清空撤销/重做栈;
+            </summary>
+            <param name="canvasContext"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.UniqueTypeEditToolGenericBase`1.AddDrawObjectToUndoStack(`0)">
+            <summary>
+            将绘制对象添加到指定的图层中,并添加到撤销栈中;
+            </summary>
+            <param name="drawObject"></param>
+            <param name="layer"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.UniqueTypeEditToolGenericBase`1.Redo">
+            <summary>
+            重做默认实现,本实现将重做栈中的最后入栈的元素出栈,
+            添加到对应图层中,并压入撤销栈;
+            </summary>
+            <param name="canvasContext"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.UniqueTypeEditToolGenericBase`1.Undo">
+            <summary>
+            撤销默认实现,本实现将撤销栈中最后入栈的元素出栈,从对应图层中移除,并压入重做栈;
+            </summary>
+            <param name="canvasContext"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.EditTools.UniqueTypeEditToolGenericBase`1.Draw(Tida.Canvas.Contracts.ICanvas,Tida.Canvas.Contracts.ICanvasScreenConvertable)">
+            <summary>
+            绘制缓存中的绘制对象;
+            </summary>
+            <param name="canvas"></param>
+            <param name="canvasProxy"></param>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.ExtendTools.DrawObjectExtendInfo">
+            <summary>
+            进行延伸所需的信息;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.ExtendTools.DrawObjectExtendInfo.ExtendedDrawObject">
+            <summary>
+            将要被延伸的绘制对象;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.ExtendTools.DrawObjectExtendInfo.ExtendArea">
+            <summary>
+            延伸指定区域;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.ExtendTools.DrawObjectExtendInfo.ExtendingDrawObjects">
+            <summary>
+            用做延伸基准的对象;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.ExtendTools.DrawObjectExtendInfo.IntersectPositions">
+            <summary>
+            <see cref="P:Tida.Canvas.Infrastructure.ExtendTools.DrawObjectExtendInfo.ExtendedDrawObject"/>与<see cref="P:Tida.Canvas.Infrastructure.ExtendTools.DrawObjectExtendInfo.ExtendingDrawObjects"/>的交点;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.ExtendTools.DrawObjectExtendToolGenericBase`1">
+            <summary>
+            绘制对象延伸工具泛型基类;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.ExtendTools.IDrawObjectExtendTool">
+            <summary>
+            绘制对象延伸工具;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.ExtendTools.IDrawObjectExtendTool.CheckIsValidDrawObject(Tida.Canvas.Contracts.DrawObject)">
+            <summary>
+            检查是否是本单位可以延伸的绘制对象;
+            </summary>
+            <param name="drawObject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.ExtendTools.IDrawObjectExtendTool.ExtendDrawObject(Tida.Canvas.Infrastructure.ExtendTools.DrawObjectExtendInfo)">
+            <summary>
+            返回对绘制对象进行延伸后的绘制对象;
+            </summary>
+            <param name="trimingInfo">裁剪信息</param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.ExtendTools.LineExtendTool">
+            <summary>
+            线段的延伸工具;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.InteractionHandlers.DynamicInputInteractionHandler">
+            <summary>
+            画布交互处理器——动态输入;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.InteractionHandlers.DynamicInputInteractionHandler.Initialize">
+            <summary>
+            初始化;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.InteractionHandlers.DynamicInputInteractionHandler.CanvasControlDynamicInputerProviders">
+            <summary>
+            所有编辑工具的交互处理器;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.InteractionHandlers.DynamicInputInteractionHandler._currentCanvasControlDynamicInputer">
+            <summary>
+            当前使用的动态输入处理器;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.InteractionHandlers.DynamicInputInteractionHandler.SetCurrentCanvasControlDynamicInputer(Tida.Canvas.Infrastructure.DynamicInput.IDynamicInputer)">
+            <summary>
+            设定当前的动态输入处理器为<paramref name="dynamicInputer"/>
+            </summary>
+            <param name="dynamicInputer"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.InteractionHandlers.DynamicInputInteractionHandler.UnSetupCurrentEditToolDynamicInputer">
+            <summary>
+            卸载当前的编辑工具动态输入处理器;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.InteractionHandlers.DynamicInputInteractionHandler.SetupCurrentEditToolDynamicInputer">
+            <summary>
+            装载当前的编辑工具动态输入处理器;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.InteractionHandlers.DynamicInputInteractionHandler.CurrentEditToolDynamicInputer_VisualChanged(System.Object,System.EventArgs)">
+            <summary>
+            当当前的编辑工具动态输入处理器内容发生变化时,触发内容变化事件;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.InteractionHandlers.DynamicInputInteractionHandler.IsEnabled">
+            <summary>
+            动态输入是否可用;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.InteractionHandlers.DynamicInputInteractionHandler.CanvasControl_CurrentEditToolChanged(System.Object,Tida.Canvas.Events.ValueChangedEventArgs{Tida.Canvas.Contracts.EditTool})">
+            <summary>
+            当画布控件的当前编辑工具发生变化时;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.InteractionHandlers.VertextInteractionHandler">
+            <summary>
+            画布交互处理器——正交模式;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.InteractionHandlers.VertextInteractionHandler.IsEnabled">
+            <summary>
+            正交模式是否可用;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.InteractionHandlers.VertextInteractionHandler.IsEnabledChanged">
+            <summary>
+            正交模式可用发生变化;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.InteractionHandlers.VertextInteractionHandler.HandlePositionByEditTool(Tida.Canvas.Contracts.EditTool,Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            根据编辑工具处理位置;
+            </summary>
+            <param name="editTool"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.InteractionHandlers.VertextInteractionHandler.AlignToPosition(Tida.Geometry.Primitives.Vector2D,Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            将<paramref name="positionToBeAligned"/>的位置对齐到<paramref name="positionAligning"/>
+            </summary>
+            <param name="positionToBeAligned"></param>
+            <param name="positionAligning"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.InteractionHandlers.VertextInteractionHandler.GetLastMouseDownPositionFromDrawObjects(Tida.Canvas.Contracts.ICanvasContext)">
+            <summary>
+            从可用的绘制对象集合中获取上次鼠标按下的位置;
+            </summary>
+            <param name="canvasControl"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.MirrorTools.DrawObjectMirroToolBase`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="TDrawObject"></typeparam>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.MirrorTools.DrawObjectMirroToolBase`1.CheckDrawObjectMirrorable(Tida.Canvas.Contracts.DrawObject)">
+            <summary>
+            
+            </summary>
+            <param name="drawObject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.MirrorTools.DrawObjectMirroToolBase`1.Mirror(Tida.Canvas.Contracts.DrawObject,Tida.Geometry.Primitives.Line2D)">
+            <summary>
+            
+            </summary>
+            <param name="drawObject"></param>
+            <param name="axis"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.MirrorTools.DrawObjectMirroToolBase`1.OnMirror(`0,Tida.Geometry.Primitives.Line2D)">
+            <summary>
+            /
+            </summary>
+            <param name="drawObject"></param>
+            <param name="axis"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.MirrorTools.IDrawObjectMirrorTool.Mirror(Tida.Canvas.Contracts.DrawObject,Tida.Geometry.Primitives.Line2D)">
+            <summary>
+            根据指定偏移,对绘制对象进行偏移调整;
+            </summary>
+            <param name="drawObject"></param>
+            <param name="offset"></param>
+            <param name="relativeTo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.MirrorTools.IDrawObjectMirrorTool.CheckDrawObjectMirrorable(Tida.Canvas.Contracts.DrawObject)">
+            <summary>
+            检查是否为可偏移的绘制对象类型;
+            </summary>
+            <param name="drawObject"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.MirrorTools.LineBaseMirrorTool">
+            <summary>
+            适用于<see cref="T:Tida.Canvas.Infrastructure.DrawObjects.LineBase"/>的镜像工具;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.MoveTools.DrawObjectMoveToolBase`1">
+            <summary>
+            绘制对象移动工具的一个泛型基类，为子类提供了默认的类型安全实现;
+            </summary>
+            <typeparam name="TDrawObject"></typeparam>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.MoveTools.EllipseMoveTool">
+            <summary>
+            椭圆(圆)的移动工具;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.MoveTools.IDrawObjectMoveTool">
+            <summary>
+            绘制对象移动工具,对指定类型的绘制对象移动同步等操作;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.MoveTools.IDrawObjectMoveTool.CheckDrawObjectMoveable(Tida.Canvas.Contracts.DrawObject)">
+            <summary>
+            检查是否为可移动的绘制对象类型;
+            </summary>
+            <param name="drawObject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.MoveTools.IDrawObjectMoveTool.Move(Tida.Canvas.Contracts.DrawObject,Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            根据某个偏移量,移动某个绘制对象;
+            </summary>
+            <param name="drawObject"></param>
+            <param name="offset"></param>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.NativePresentation.INumberBox">
+            <summary>
+            数字输入框契约;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.NativePresentation.INumberBox.Number">
+            <summary>
+            所呈现的数字;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.NativePresentation.INumberBox.SavedBits">
+            <summary>
+            保留小数点小数的位数;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.NativePresentation.INumberBox.Visible">
+            <summary>
+            是否可见;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.NativePresentation.INumberBox.TabConfirmed">
+            <summary>
+            数字通过Tab经过了确认;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.NativePresentation.INumberBox.EnterConfirmed">
+            <summary>
+            数字经过回车进行了确认;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.NativePresentation.INumberBox.IsReadOnly">
+            <summary>
+            是否为只读(仅限用户输入);
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.NativePresentation.INumberBox.Position">
+            <summary>
+            当前视图位置(相对左上角);
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.NativePresentation.INumberBoxContainer">
+            <summary>
+            数字输入框容器;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.NativePresentation.INumberBoxContainer.UIObject">
+            <summary>
+            UI元素;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.NativePresentation.INumberBoxContainer.NumberBoxes">
+            <summary>
+            所有输入框;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.NativePresentation.INumberBoxContainer.IsInputing">
+            <summary>
+            是否在输入;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.Infrastructure.NativePresentation.INumberBoxContainer.IsInputingChanged">
+            <summary>
+            是否正在输入发生了变化;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.NativePresentation.INumberBoxContainer.AddNumberBox(Tida.Canvas.Infrastructure.NativePresentation.INumberBox)">
+            <summary>
+            创建输入框;
+            </summary>
+            <param name="numberBox"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.NativePresentation.INumberBoxContainer.RemoveNumberBox(Tida.Canvas.Infrastructure.NativePresentation.INumberBox)">
+            <summary>
+            移除输入框;
+            </summary>
+            <param name="numberBox"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.NativePresentation.INumberBoxContainer.Reset">
+            <summary>
+            复位;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.NativePresentation.INumberBoxService">
+            <summary>
+            输入框服务;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.NativePresentation.INumberBoxService.CreateContainer">
+            <summary>
+            创建一个新的输入框容器;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.NativePresentation.INumberBoxService.CreateNumberBox">
+            <summary>
+            创建一个新的输入框;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.OffsetTools.DrawObjectOffsetToolGenericBase`1">
+            <summary>
+            绘制对象偏移工具泛型基类;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.OffsetTools.IDrawObjectOffsetTool">
+            <summary>
+            绘制对象偏移工具;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.OffsetTools.IDrawObjectOffsetTool.MoveOffset(Tida.Canvas.Contracts.DrawObject,System.Double,Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            根据指定偏移,对绘制对象进行偏移调整;
+            </summary>
+            <param name="drawObject"></param>
+            <param name="offset"></param>
+            <param name="relativeTo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.OffsetTools.IDrawObjectOffsetTool.CheckDrawObjectMoveable(Tida.Canvas.Contracts.DrawObject)">
+            <summary>
+            检查是否为可偏移的绘制对象类型;
+            </summary>
+            <param name="drawObject"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.OffsetTools.LineOffsetTool">
+            <summary>
+            线段的偏移工具;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.OffsetTools.LineOffsetTool.OnMoveOffset(Tida.Canvas.Infrastructure.DrawObjects.LineBase,System.Double,Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            线段将以垂直线段的方向进行偏移;
+            将偏向以<paramref name="relativeTo"/>那侧;
+            </summary>
+            <param name="line"></param>
+            <param name="offset"></param>
+            <param name="relativeTo"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Serializing.IDrawObjectXmlSerializer">
+            <summary>
+            绘制对象的XML持久化序列器;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Serializing.IDrawObjectXmlSerializer.Serialize(Tida.Canvas.Contracts.DrawObject)">
+            <summary>
+            将某个满足条件的绘制对象序列化为<see cref="T:System.Xml.Linq.XElement"/>;
+            </summary>
+            <param name="drawObject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Serializing.IDrawObjectXmlSerializer.Deserialize(System.Xml.Linq.XElement)">
+            <summary>
+            将某个满足条件的XElement反序列化为绘制对象;
+            </summary>
+            <param name="xElem"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Serializing.DrawObjectXmlSerializerBase`1">
+            <summary>
+            绘制对象序列化泛型基类;
+            </summary>
+            <typeparam name="TDrawObject">对应的序列化器所序列化和反序列化的绘制对象类型,该类型应为绘制对象的最终类型</typeparam>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.Serializing.DrawObjectXmlSerializerBase`1._xElemName_DrawObject">
+            <summary>
+            关联的绘制对象的xml元素名,由子类决定;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Serializing.DrawObjectXmlSerializerBase`1.OnDeserialize(System.Xml.Linq.XElement)">
+            <summary>
+            子类进行反序列化的操作，对已经得到的xml元素进行判断;
+            </summary>
+            <param name="xElem"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Serializing.DrawObjectXmlSerializerBase`1.Serialize(Tida.Canvas.Contracts.DrawObject)">
+            <summary>
+            进行序列化;
+            </summary>
+            <param name="drawObject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Serializing.DrawObjectXmlSerializerBase`1.OnSerialize(`0,System.Xml.Linq.XElement)">
+            <summary>
+            子类进行序列化的操作，对已经创建完成的xml元素进行编辑;
+            </summary>
+            <param name="xElem"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.DoubleDrawObjectIntersectRuleGenericBase`2">
+            <summary>
+            双绘制对象相交判断泛型基类;
+            </summary>
+            <typeparam name="TDrawObject0"></typeparam>
+            <typeparam name="TDrawObject1"></typeparam>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.IDrawObjectIntersectRule">
+            <summary>
+            两绘制对象相交的规则;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Snaping.IDrawObjectIntersectRule.GetIntersectPositions(Tida.Canvas.Contracts.DrawObject,Tida.Canvas.Contracts.DrawObject,System.Boolean)">
+            <summary>
+            获取两个绘制对象的交点所在的位置;
+            </summary>
+            <param name="drawObject0"></param>
+            <param name="drawObject1"></param>
+            <param name="extendDrawObject0">是否对<paramref name="drawObject0"/>绘制对象进行延伸,比如对线段进行延伸</param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.IDrawObjectIntersectRuleMetaData">
+            <summary>
+            两绘制对象相交的规则元数据;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Intersect.DoubleDrawObjectIntersectRuleBase`2">
+            <summary>
+            双绘制对象相交判断泛型基类;
+            </summary>
+            <typeparam name="TDrawObject0"></typeparam>
+            <typeparam name="TDrawObject1"></typeparam>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Intersect.DoubleDrawObjectIntersectSnapRule">
+            <summary>
+            双对象相交辅助规则,本类不可被导出,由<see cref="!:DoubleDrawObjectIntersectRuleProvider"/>动态构成;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Intersect.DoubleLineIntersectRule">
+            <summary>
+            两线段相交交点规则;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Intersect.LineAndEllipseIntersectRule">
+            <summary>
+            线段与椭圆相交规则;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Intersect.LineAndRectangleRule">
+            <summary>
+            线段与矩形相交规则;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.ISnapShapeRuleMetaData">
+            <summary>
+            辅助图形导出的元数据;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Rules.AxisTrackingSnapRule">
+            <summary>
+            辅助规则,极轴追踪;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.Snaping.Rules.AxisTrackingSnapRule.Alpha">
+            <summary>
+            容错角度大小,单位为弧度;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.Snaping.Rules.AxisTrackingSnapRule.IsEnabled">
+            <summary>
+            极轴追踪功能是否被启用;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Snaping.Rules.AxisTrackingSnapRule.GetSnapEndPosition(Tida.Geometry.Primitives.Vector2D,Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            根据两个点的位置,获取与极轴相关的射线的延伸点;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.Snaping.Rules.AxisTrackingSnapRule._unitVector2Ds">
+            <summary>
+            延四个极轴方向的单位向量;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Rules.DoubleSnapShapeRuleBase`2">
+            <summary>
+            双绘制对象辅助规则泛型基类;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Rules.GridSnapPointRule">
+            <summary>
+            网格线的整数点与关注点关系的辅助规则;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Rules.LineSnapExtendRule">
+            <summary>
+            线段拓展辅助;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Rules.LineSnapOnLineRule">
+            <summary>
+            判断在线段上的辅助规则;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Rules.LineSnapRule">
+            <summary>
+            线段的辅助规则;
+            依次判断以下情况:1.中点 2.端点 
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Snaping.Rules.LineSnapRule.MatchSnapShape(Tida.Canvas.Infrastructure.DrawObjects.LineBase,Tida.Geometry.Primitives.Vector2D,Tida.Canvas.Contracts.ICanvasContext)">
+            <summary>
+            判断某线段与关注点的辅助命中;
+            </summary>
+            <param name="line"></param>
+            <param name="position"></param>
+            <param name="canvasContext"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Rules.MeasureAngleSnapRule">
+            <summary>
+            绘制角的辅助规则;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Rules.PointSnapPointRule">
+            <summary>
+            点的辅助规则;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Snaping.Rules.PointSnapPointRule.MatchSnapShape(Tida.Canvas.Infrastructure.DrawObjects.PointBase,Tida.Geometry.Primitives.Vector2D,Tida.Canvas.Contracts.ICanvasContext)">
+            <summary>
+            当某个位置在点附近(以视图为准)时,返回点的绝对位置;
+            </summary>
+            <param name="owner"></param>
+            <param name="position"></param>
+            <param name="canvasContext"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Rules.SingleEllipseSnapPointRule">
+            <summary>
+            椭圆(圆)的辅助规则;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Snaping.Rules.SingleEllipseSnapPointRule.MatchSnapShape(Tida.Canvas.Infrastructure.DrawObjects.Ellipse,Tida.Geometry.Primitives.Vector2D,Tida.Canvas.Contracts.ICanvasContext)">
+            <summary>
+            本规则判断椭圆(圆)的四个顶点,以及圆心与相关Position的关系;
+            </summary>
+            <param name="owner"></param>
+            <param name="position"></param>
+            <param name="canvasContext"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Rules.SingleSnapShapeRuleBase`1">
+            <summary>
+            单个绘制对象与关注点的辅助规则基类;
+            </summary>
+            <typeparam name="TDrawObject"></typeparam>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Snaping.Rules.SingleSnapShapeRuleBase`1.MatchSnapShape(`0,Tida.Geometry.Primitives.Vector2D,Tida.Canvas.Contracts.ICanvasContext)">
+            <summary>
+            判断指定类型的实例与关注点的辅助关系;
+            </summary>
+            <param name="drawObject"></param>
+            <param name="position"></param>
+            <param name="canvasContext"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Shapes.IntersectSnapPoint">
+            <summary>
+            表示相交的辅助点;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Snaping.Shapes.IntersectSnapPoint.#ctor(Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            相交辅助节点的构建方式;
+            </summary>
+            <param name="position">相交的坐标</param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Snaping.Shapes.IntersectSnapPoint.Draw(Tida.Canvas.Contracts.ICanvas,Tida.Canvas.Contracts.ICanvasScreenConvertable)">
+            <summary>
+            交点绘制;
+            </summary>
+            <param name="canvas"></param>
+            <param name="canvasProxy"></param>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Shapes.LineSnapShape">
+            <summary>
+            以数学坐标为准的线性辅助图形;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Shapes.MiddlePointSnapShape">
+            <summary>
+            中点的辅助图形;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Snaping.Shapes.MiddlePointSnapShape.#ctor(Tida.Geometry.Primitives.Vector2D,Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            中点的辅助图形构造;
+            </summary>
+            <param name="position">中点位置</param>
+            <param name="dir">方向</param>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.Snaping.Shapes.MiddlePointSnapShape.Dir">
+            <summary>
+            中点所在的单位向量;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Shapes.RaySnapLine">
+            <summary>
+            辅助图形,射线;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.Snaping.Shapes.RaySnapLine.StartPosition">
+            <summary>
+            射线的起始位置;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Shapes.ScreenLineSnapShape">
+            <summary>
+            以视图为标准的线性辅助图形;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Shapes.SnapShapeForLine">
+            <summary>
+            辅助点与某线段相关的辅助图形;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.Snaping.Shapes.SnapShapeForLine.RelatedLine2D">
+            <summary>
+            与之相关的线段几何;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Snaping.Shapes.StandardSnapPoint">
+            <summary>
+            标准辅助点实现;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.Snaping.Shapes.StandardSnapPoint.Background">
+            <summary>
+            背景色;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.TrimTools.DrawObjectTrimingInfo">
+            <summary>
+            进行裁剪所需的信息;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.TrimTools.DrawObjectTrimingInfo.TrimedDrawObject">
+            <summary>
+            将要被裁剪的绘制对象;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.TrimTools.DrawObjectTrimingInfo.TrimArea">
+            <summary>
+            裁剪指定区域;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.TrimTools.DrawObjectTrimingInfo.TrimingDrawObjects">
+            <summary>
+            用做裁剪基准的对象;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.Infrastructure.TrimTools.DrawObjectTrimingInfo.IntersectPositions">
+            <summary>
+            <see cref="P:Tida.Canvas.Infrastructure.TrimTools.DrawObjectTrimingInfo.TrimedDrawObject"/>与<see cref="P:Tida.Canvas.Infrastructure.TrimTools.DrawObjectTrimingInfo.TrimingDrawObjects"/>的交点;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.TrimTools.DrawObjectTrimToolBase`1">
+            <summary>
+            绘制对象裁剪工具泛型基类;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.TrimTools.IDrawObjectTrimTool">
+            <summary>
+            绘制对象裁剪工具;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.TrimTools.IDrawObjectTrimTool.CheckIsValidDrawObject(Tida.Canvas.Contracts.DrawObject)">
+            <summary>
+            检查是否是本单位可以裁剪的绘制对象;
+            </summary>
+            <param name="drawObject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.TrimTools.IDrawObjectTrimTool.TrimDrawObject(Tida.Canvas.Infrastructure.TrimTools.DrawObjectTrimingInfo)">
+            <summary>
+            返回对绘制对象进行裁剪后的绘制对象;
+            </summary>
+            <param name="trimingInfo">裁剪信息</param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.TrimTools.LineTrimTool">
+            <summary>
+            线段的裁剪工具;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.TrimTools.LineTrimTool.GetTrimedLineWithIntersectPositions(Tida.Canvas.Infrastructure.DrawObjects.Line,Tida.Geometry.Primitives.Vector2D[],Tida.Geometry.Primitives.Vector2D[])">
+            <summary>
+            根据交点以及与裁剪区域的交点得到裁剪后的线段集合;
+            </summary>
+            <param name="line"></param>
+            <param name="intersectPositions">裁剪区域与线段的交点集合</param>
+            <param name="rectIntersectPosition">关注的交点集合</param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.TrimTools.RectangleTrimTool">
+            <summary>
+            矩形的裁剪工具;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.TrimTools.TrimExtensions">
+            <summary>
+            裁剪的相关拓展;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.TrimTools.TrimExtensions.GetTrimedLineWithIntersectPositions(Tida.Geometry.Primitives.Line2D,Tida.Geometry.Primitives.Vector2D[],Tida.Geometry.Primitives.Vector2D[])">
+            <summary>
+            根据交点以及与裁剪区域的交点得到裁剪后的线段集合;
+            </summary>
+            <param name="line2D">被剪切线</param>
+            <param name="intersectPositions">裁剪区域与线段的交点集合</param>
+            <param name="rectIntersectPosition">关注的交点集合</param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.TrimTools.TrimExtensions.GetTrimedMemberWithIntersectPositions(Tida.Geometry.Primitives.Line2D,Tida.Geometry.Primitives.Line2D[],Tida.Geometry.Primitives.Vector2D[],Tida.Geometry.Primitives.Vector2D[],System.Double,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="line2D"></param>
+            <param name="intersectPositions"></param>
+            <param name="rectIntersectPositions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.TrimTools.TrimExtensions.GetExtendPoint(Tida.Geometry.Primitives.Vector2D,Tida.Geometry.Primitives.Vector2D,System.Double,System.Double,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="intersectPoint">杆件的相交点</param>
+            <param name="dir">被剪切杆件的方向,以相交点为终点的方向</param>
+            <param name="angle">剪切杆件与被剪切杆件的夹角(锐角)</param>
+            <param name="width">杆件的宽度</param>
+            <param name="gap">杆件之间的缝隙</param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Utils.CollectionExtensions">
+            <summary>
+            集合拓展方法;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Utils.CollectionExtensions.RemoveItems``1(System.Collections.Generic.ICollection{``0},System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            从<paramref name="collection"/>中移除指定的集合,即<paramref name="items"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="collection"></param>
+            <param name="items"></param>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Utils.LineDrawExtensions">
+            <summary>
+            线段编辑的拓展;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Utils.LineDrawExtensions.DrawEditingLine(Tida.Canvas.Contracts.ICanvas,Tida.Canvas.Contracts.ICanvasScreenConvertable,Tida.Geometry.Primitives.Line2D)">
+            <summary>
+            绘制未完成的编辑的线段及其提示;
+            </summary>
+            <param name="canvas"></param>
+            <param name="canvasProxy"></param>
+            <param name="editingLine"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Utils.LineDrawExtensions.DrawEditingLineLengthString(Tida.Canvas.Contracts.ICanvas,Tida.Canvas.Contracts.ICanvasScreenConvertable,Tida.Geometry.Primitives.Line2D)">
+            <summary>
+            在未完成的线段的中点附近的位置绘制线段的长度;
+            </summary>
+            <param name="canvas"></param>
+            <param name="canvasProxy"></param>
+            <param name="editingLine"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Utils.LineDrawExtensions.DrawEditingLineOutLines(Tida.Canvas.Contracts.ICanvas,Tida.Canvas.Contracts.ICanvasScreenConvertable,Tida.Geometry.Primitives.Line2D)">
+            <summary>
+            为未完成的线段绘制外围辅助线,这包括了一条平行与原线段的线段,以及垂直于原线段的两条侧边;
+            </summary>
+            <param name="canvas"></param>
+            <param name="canvasProxy"></param>
+            <param name="editingLine"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Utils.LineDrawExtensions.DrawEditingLineArc(Tida.Canvas.Contracts.ICanvas,Tida.Canvas.Contracts.ICanvasScreenConvertable,Tida.Geometry.Primitives.Line2D)">
+            <summary>
+            为未完成的线段绘制角度弧形,该弧将X正半轴作为起始边;
+            </summary>
+            <param name="canvas"></param>
+            <param name="canvasProxy"></param>
+            <param name="editingLine"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Utils.LineDrawExtensions.DrawEditingLineArcString(Tida.Canvas.Contracts.ICanvas,Tida.Canvas.Contracts.ICanvasScreenConvertable,Tida.Geometry.Primitives.Line2D)">
+            <summary>
+            为未完成的线段绘制角度信息,该角度将X正半轴作为起始边;
+            </summary>
+            <param name="canvas"></param>
+            <param name="canvasProxy"></param>
+            <param name="editingLine"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Utils.LineDrawExtensions.DrawSelectedLineState(Tida.Geometry.Primitives.Line2D,Tida.Canvas.Contracts.ICanvas,Tida.Canvas.Contracts.ICanvasScreenConvertable,Tida.Canvas.Media.Pen)">
+            <summary>
+            绘制线段被选中的状态;
+            </summary>
+            <param name="canvas"></param>
+            <param name="canvasProxy"></param>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Utils.LineDrawExtensions.DrawArrow(Tida.Canvas.Contracts.ICanvas,Tida.Geometry.Primitives.Line2D,Tida.Canvas.Media.Pen,System.Double,System.Double)">
+            <summary>
+            根据线段绘制箭头,线段本身将不被绘制;
+            </summary>
+            <param name="canvas"></param>
+            <param name="line2D"></param>
+            <param name="pen"></param>
+            <param name="horiSideLength">平行于原线段的翼边长度</param>
+            <param name="vertiSideLength">垂直于原线段的翼边长度</param>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Utils.LineHitUtils">
+            <summary>
+            线段画布判定相关;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Utils.LineHitUtils.PointInLine(Tida.Geometry.Primitives.Line2D,Tida.Geometry.Primitives.Vector2D,Tida.Canvas.Contracts.ICanvasScreenConvertable)">
+            <summary>
+            判断画布中某个位置是否在某个线段附近;
+            </summary>
+            <param name="line2D"></param>
+            <param name="point"></param>
+            <param name="canvasProxy"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Utils.LineHitUtils.LineInRectangle(Tida.Geometry.Primitives.Line2D,Tida.Geometry.Primitives.Rectangle2D2,System.Boolean)">
+            <summary>
+            判断某个矩形与某个线段的包含或相交(当<paramref name="anyPoint"/>为真时)关系;
+            </summary>
+            <param name="line2D"></param>
+            <param name="rect"></param>
+            <param name="anyPoint"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Utils.LineSnapExtensions">
+            <summary>
+            线段的辅助拓展;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Utils.LineSnapExtensions.GetVertextSnapShape(Tida.Geometry.Primitives.Vector2D,Tida.Geometry.Primitives.Line2D)">
+            <summary>
+            根据关注点作向线段的投影的辅助图形;
+            </summary>
+            <param name="position"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Utils.LineSnapExtensions.GetOnLineSnapShape(Tida.Geometry.Primitives.Line2D,Tida.Geometry.Primitives.Vector2D,Tida.Canvas.Contracts.ICanvasContext)">
+            <summary>
+            获取某个点是否在某个线段上的辅助;
+            </summary>
+            <param name="line2D"></param>
+            <param name="position"></param>
+            <param name="canvasContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Utils.LineSnapExtensions.GetLine2DSnapShape(Tida.Geometry.Primitives.Line2D,Tida.Geometry.Primitives.Vector2D,Tida.Canvas.Contracts.ICanvasScreenConvertable)">
+            <summary>
+            线段的辅助判断;
+            依次判断以下情况:1.中点 2.端点 
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Utils.NativeGeometryExtensions">
+            <summary>
+            以视图坐标为准,进行某些几何运算;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Utils.NativeGeometryExtensions.GetNativeSuroundingScreenRect(Tida.Geometry.Primitives.Vector2D,System.Double,System.Double)">
+            <summary>
+            得到以某视图坐标为中心的视图矩形;
+            </summary>
+            <param name="nativeCenterRectPoint">以视图为准的中心坐标</param>
+            <param name="width">宽度</param>
+            <param name="height">高度</param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Utils.NativeGeometryExtensions.GetNativeSuroundingScreenRect(Tida.Geometry.Primitives.Vector2D,System.Double,System.Double,Tida.Geometry.Primitives.Rectangle2D2)">
+            <summary>
+            得到以某视图坐标为中心的视图矩形;
+            </summary>
+            <param name="nativeCenterRectPoint">以视图为准的中心坐标</param>
+            <param name="width">宽度</param>
+            <param name="height">高度</param>
+            <param name="rectangle2D2">用于写入的矩形实例</param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Utils.PointDrawExtensions">
+            <summary>
+            位置的绘制拓展;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Utils.PointDrawExtensions.DrawSelectedPointState(Tida.Geometry.Primitives.Vector2D,Tida.Canvas.Contracts.ICanvas,Tida.Canvas.Contracts.ICanvasScreenConvertable)">
+            <summary>
+            绘制某位置的选中状态(使用一个矩形);
+            </summary>
+            <param name="point"></param>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Utils.PositionHitUtils">
+            <summary>
+            位置<see cref="T:Tida.Geometry.Primitives.Vector2D"/>相关;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Utils.PositionHitUtils.GetIsSurround(Tida.Geometry.Primitives.Vector2D,Tida.Geometry.Primitives.Vector2D,Tida.Canvas.Contracts.ICanvasScreenConvertable)">
+            <summary>
+            判断数学坐标中某个位置是否在另一个位置的附近;
+            </summary>
+            <param name="screenPosition0"></param>
+            <param name="screenPosition1"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Utils.PositionHitUtils.GetIsSurround(Tida.Geometry.Primitives.Vector2D,Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            判断视图坐标中某个位置是否在另一个位置的附近;
+            </summary>
+            <param name="screenPosition0"></param>
+            <param name="screenPosition1"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
