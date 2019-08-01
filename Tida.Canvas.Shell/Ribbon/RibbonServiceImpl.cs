@@ -88,7 +88,11 @@ namespace Tida.Canvas.Shell.Ribbon {
                 };
 
                 if(!string.IsNullOrEmpty(menuItem.Metadata.Icon)) {
-                    radMenuItem.Icon = new Image { Source = new BitmapImage(new Uri(menuItem.Metadata.Icon, UriKind.RelativeOrAbsolute)) };
+                    radMenuItem.Icon = new Image {
+                        Source = new BitmapImage(new Uri(menuItem.Metadata.Icon, UriKind.RelativeOrAbsolute)),
+                        Width = Constants.MenuIconWidth,
+                        Height = Constants.MenuIconHeight
+                    };
                 }
 
                 _ribbon.AppMenu.Items.Add(radMenuItem);

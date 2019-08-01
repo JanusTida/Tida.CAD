@@ -21,6 +21,7 @@ namespace Tida.Canvas.Launcher.Ribbon {
         private DelegateCommand _closeShellCommand;
         private void CloseShell() {
             ShellService.Current.Close();
+            
         }
     }
 }

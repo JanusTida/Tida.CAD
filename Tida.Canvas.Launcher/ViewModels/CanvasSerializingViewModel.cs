@@ -1,4 +1,4 @@
-﻿using Tida.Canvas.Infrastructure.Serializing;
+﻿
 using Tida.Application.Contracts.App;
 using Tida.Application.Contracts.Common;
 using Tida.Canvas.Shell.Contracts.Canvas;
@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Tida.Canvas.Shell.Contracts.Serializing;
 
 namespace Tida.Canvas.Launcher.ViewModels {
     /// <summary>
