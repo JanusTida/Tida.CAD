@@ -188,6 +188,7 @@
     <Compile Include="DWG\CADLineToLineConverter.cs" />
     <Compile Include="DWG\CadCircleToEllipseConverter.cs" />
     <Compile Include="DWG\CADBaseToDrawObjectConverterGenericBase.cs" />
+    <Compile Include="DWG\CadPointToPointConverter.cs" />
     <Compile Include="DWG\Constants.cs" />
     <Compile Include="DWG\ConvertUtils.cs" />
     <Compile Include="DWG\ICADBaseToDrawObjectConverter.cs" />
