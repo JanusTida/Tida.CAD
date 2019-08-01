@@ -2,6 +2,7 @@
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,12 @@ namespace Tida.Canvas.Shell.DWG.Ribbon {
         Order = 4
     )]
     class OpenDWGMenuItem : IMenuItem {
+        [ImportingConstructor]
+        public OpenDWGMenuItem([ImportMany]IEnumerable<ICADBaseToDrawObjectConverter> cadBaseToDrawObjectConverters) {
+            this._cadBaseToDrawObjectConverters = cadBaseToDrawObjectConverters.ToArray();
+        }
+        private readonly ICADBaseToDrawObjectConverter[] _cadBaseToDrawObjectConverters;
+
         public ICommand Command => _openDWGCommand ?? (_openDWGCommand = new DelegateCommand(OpenDWG));
         private DelegateCommand _openDWGCommand;
         private void OpenDWG() {
@@ -52,7 +59,7 @@ namespace Tida.Canvas.Shell.DWG.Ribbon {
                 for (int i = 0; i < cadImg.Entities.Length; i++) {
                     var entity = cadImg.Entities[i];
 
-                    var drawObject = CADBaseToDrawObjectConverters.Converters.Select(p => p.Convert(entity)).
+                    var drawObject = _cadBaseToDrawObjectConverters.Select(p => p.Convert(entity)).
                         FirstOrDefault(p => p != null);
 
                     //Not supported.

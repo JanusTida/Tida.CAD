@@ -1,12 +1,14 @@
 ﻿using Aspose.CAD.FileFormats.Cad.CadObjects;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tida.Canvas.Infrastructure.DrawObjects;
 
 namespace Tida.Canvas.Shell.DWG {
+    [Export(typeof(ICADBaseToDrawObjectConverter))]
     class CADLineToLineConverter : CADBaseToDrawObjectConverterGenericBase<CadLine> {
         protected override Tida.Canvas.Contracts.DrawObject Convert(CadLine cadLine) {
             return new Line(

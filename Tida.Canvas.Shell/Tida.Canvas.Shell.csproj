@@ -184,7 +184,7 @@
     <Compile Include="DrawObjectDescription\DrawObjectDescriptors.cs" />
     <Compile Include="DrawObjectDescription\LanguageDrawObjectDescriptorGenericBase.cs" />
     <Compile Include="DrawObjectDescription\LanguageDrawObjectDescriptorGenericBase2.cs" />
-    <Compile Include="DWG\CADBaseToDrawObjectConverters.cs" />
+    <Compile Include="DWG\CadArcToArcConverter.cs" />
     <Compile Include="DWG\CADLineToLineConverter.cs" />
     <Compile Include="DWG\CadCircleToEllipseConverter.cs" />
     <Compile Include="DWG\CADBaseToDrawObjectConverterGenericBase.cs" />

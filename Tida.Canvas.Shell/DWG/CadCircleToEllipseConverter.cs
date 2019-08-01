@@ -1,6 +1,7 @@
 ﻿using Aspose.CAD.FileFormats.Cad.CadObjects;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Tida.Canvas.Infrastructure.DrawObjects;
 using Tida.Geometry.Primitives;
 
 namespace Tida.Canvas.Shell.DWG {
+    [Export(typeof(ICADBaseToDrawObjectConverter))]
     class CadCircleToEllipseConverter : CADBaseToDrawObjectConverterGenericBase<CadCircle> {
         protected override DrawObject Convert(CadCircle cadCircle) {
             return new Ellipse(
