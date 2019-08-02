@@ -21,16 +21,22 @@ namespace Tida.Canvas.Shell.MainPage.Events {
         public bool IsEnabled => true;
 
         public void Handle() {
-            var mainPageView = ServiceProvider.GetInstance<Views.MainPage>();
-            //画布加入导航;
-            ShellService.Current.StackGrid.AddChild(
-                UIObjectProviderFactory.CreateNew(mainPageView),
-                new GridChildLength(
-                    new System.Windows.GridLength(
-                        1, System.Windows.GridUnitType.Star
-                    )
-                )
+            //ServiceProvider.GetInstance<IRibbonService>().Initialize();
+
+            RegionHelper.RegisterViewWithRegion(
+                Contracts.Shell.Constants.RegionName_MainPage,
+                typeof(Views.MainPage)
             );
+            //var mainPageView = ServiceProvider.GetInstance<Views.MainPage>();
+            ////画布加入导航;
+            //ShellService.Current.StackGrid.AddChild(
+            //    UIObjectProviderFactory.CreateNew(mainPageView),
+            //    new GridChildLength(
+            //        new System.Windows.GridLength(
+            //            1, System.Windows.GridUnitType.Star
+            //        )
+            //    )
+            //);
 
         }
     }

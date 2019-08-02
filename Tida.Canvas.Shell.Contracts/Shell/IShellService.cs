@@ -64,7 +64,7 @@ namespace Tida.Canvas.Shell.Contracts.Shell {
         /// <summary>
         /// 主界面堆叠栈;
         /// </summary>
-        IStackGrid<IUIObjectProvider> StackGrid { get; }
+        //IStackGrid<IUIObjectProvider> StackGrid { get; }
 
         /// <summary>
         /// 窗体;

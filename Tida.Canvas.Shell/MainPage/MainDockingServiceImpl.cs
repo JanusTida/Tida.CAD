@@ -13,6 +13,9 @@ using static Tida.Canvas.Shell.MainPage.Constants;
 using static Tida.Canvas.Shell.Contracts.MainPage.Constants;
 
 namespace Tida.Canvas.Shell.MainPage {
+    /// <summary>
+    /// 主区域的停靠服务;
+    /// </summary>
     [Export(DockingService_Main, typeof(IDockingService))]
     public partial class MainDockingServiceImpl : IDockingService {
         static MainDockingServiceImpl() {

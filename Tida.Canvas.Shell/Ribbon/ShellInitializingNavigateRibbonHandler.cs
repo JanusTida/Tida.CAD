@@ -7,6 +7,9 @@ using Prism.Mef.Modularity;
 using Prism.Modularity;
 
 namespace Tida.Canvas.Shell.Ribbon {
+    /// <summary>
+    /// 主窗体初始化时Ribbon区域载入;
+    /// </summary>
     [Export(typeof(IShellInitializingEventHandler))]
     class ShellInitializingNavigateRibbonHandler : IShellInitializingEventHandler {
         public int Sort => 0;

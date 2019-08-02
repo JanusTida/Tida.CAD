@@ -19,6 +19,12 @@ namespace Tida.Canvas.Shell.Contracts.Shell {
         /// </summary>
         public const string RegionName_Ribbon = nameof(RegionName_Ribbon);
 
+        /// <summary>
+        /// 区域名——主区域;
+        /// </summary>
+
+        public const string RegionName_MainPage = nameof(RegionName_MainPage);
+
         ///// <summary>
         ///// 主窗体名称;
         ///// </summary>

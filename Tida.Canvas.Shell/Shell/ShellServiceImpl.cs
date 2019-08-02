@@ -129,16 +129,16 @@ namespace Tida.Canvas.Shell.Shell {
         private Views.Shell _shell;
         public object Shell => _shell;// ViewProvider.GetView(Contracts.Shell.Constants.ShellView);
 
-        private IStackGrid<IUIObjectProvider> _stackGrid;
-        public IStackGrid<IUIObjectProvider> StackGrid {
-            get {
-                if(_stackGrid == null) {
-                    _stackGrid = StackGridFactory.CreateNew<IUIObjectProvider>(_shell.Grid);
-                    _stackGrid.Orientation = System.Windows.Controls.Orientation.Vertical;
-                    _stackGrid.SplitterLength = 0;
-                }
-                return _stackGrid;
-            }
-        }
+        //private IStackGrid<IUIObjectProvider> _stackGrid;
+        //public IStackGrid<IUIObjectProvider> StackGrid {
+        //    get {
+        //        if(_stackGrid == null) {
+        //            _stackGrid = StackGridFactory.CreateNew<IUIObjectProvider>(_shell.Grid);
+        //            _stackGrid.Orientation = System.Windows.Controls.Orientation.Vertical;
+        //            _stackGrid.SplitterLength = 0;
+        //        }
+        //        return _stackGrid;
+        //    }
+        //}
     }
 }

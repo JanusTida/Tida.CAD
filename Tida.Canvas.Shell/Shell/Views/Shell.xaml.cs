@@ -10,6 +10,6 @@ namespace Tida.Canvas.Shell.Shell.Views {
             InitializeComponent();
         }
         
-        public Grid Grid => grid;
+        //public Grid Grid => grid;
     }
 }
