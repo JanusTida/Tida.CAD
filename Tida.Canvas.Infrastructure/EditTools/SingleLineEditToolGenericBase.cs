@@ -12,7 +12,7 @@ namespace Tida.Canvas.Infrastructure.EditTools {
     public abstract class SingleLineEditToolGenericBase<TLine>:MouseInteractableEditToolGenericBase<TLine> where TLine:LineBase {
         protected override void OnApplyMouseDownPosition(Vector2D thisMouseDownPosition) {
 
-            //若上一次鼠标按下的位置不为空,则不是第一次按下鼠标,需添加杆件对象;
+            //若上一次鼠标按下的位置不为空,则不是第一次按下鼠标,需添加线段对象;
             if (MousePositionTracker.LastMouseDownPosition != null) {
                 var line = OnCreateDrawObject(MousePositionTracker.LastMouseDownPosition, thisMouseDownPosition);
 

@@ -18,6 +18,7 @@ namespace Tida.Canvas.Infrastructure.EditTools {
 
         private readonly Line _firstToSecondLine = new Line(Vector2D.Zero,Vector2D.Zero);
         private readonly Arc _editingArc = new Arc(new Arc2D(Vector2D.Zero));
+        public override bool IsEditing => true;
 
         protected override void OnMouseDown(MouseDownEventArgs e)
         {

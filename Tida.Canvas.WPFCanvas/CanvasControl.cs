@@ -2258,9 +2258,9 @@ namespace Tida.Canvas.WPFCanvas {
                 var canShow = true;
 
                 //遍历能否显示辅助图形的指示器队列,直到某一个指示器指示处理完成或完成遍历;
-                foreach (var setter in GetCanShowSnapShapeGetters())
+                foreach (var getter in GetCanShowSnapShapeGetters())
                 {
-                    var tuple = setter();
+                    var tuple = getter();
                     canShow = tuple.canShow;
 
                     if (tuple.handled)
