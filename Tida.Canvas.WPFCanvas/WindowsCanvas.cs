@@ -106,6 +106,9 @@ namespace Tida.Canvas.WPFCanvas {
         /// <param name="beginangle"></param>
         /// <param name="angle"></param>
         public void DrawArc(Pen pen, Vector2D center, double radius, double beginangle, double angle,bool smallAngle) {
+            if(pen == null) {
+                throw new ArgumentNullException(nameof(pen));
+            }
 
             ValidateDrawingContext();
             beginangle %= (Math.PI * 2);

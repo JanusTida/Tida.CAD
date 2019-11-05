@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Tida.Canvas.Contracts;
+using Tida.Canvas.Infrastructure.Utils;
 using Tida.Canvas.Media;
 using Tida.Geometry.Primitives;
 using static Tida.Canvas.Infrastructure.Constants;
@@ -15,6 +16,7 @@ namespace Tida.Canvas.Infrastructure.DrawObjects {
         {
             Arc2D = arc2D ?? throw new ArgumentNullException(nameof(arc2D));
             Pen = LinePen;
+            SelectionPen = HilightLinePen;
         }
 
         private Arc2D _arc2D;
@@ -59,7 +61,21 @@ namespace Tida.Canvas.Infrastructure.DrawObjects {
 
         public override bool PointInObject(Vector2D point, ICanvasScreenConvertable canvasProxy)
         {
-            return false;
+            return ArcHitUtils.PointInArc(Arc2D, point, canvasProxy);
+        }
+
+        private Pen _selectionPen;
+        /// <summary>
+        /// 表示被选中的状态的笔;
+        /// </summary>
+        public Pen SelectionPen {
+            get { return _selectionPen; }
+            set {
+                _selectionPen = value;
+                if (IsSelected) {
+                    RaiseVisualChanged();
+                }
+            }
         }
 
         private Pen _pen;
@@ -83,6 +99,21 @@ namespace Tida.Canvas.Infrastructure.DrawObjects {
                 return;
             }
             canvas.DrawArc(Pen,Arc2D.Center,Arc2D.Radius, Arc2D.StartAngle,Arc2D.Angle,Arc2D.Angle < Math.PI);
+
+            DrawSelectedState(canvas, canvasProxy);
+        }
+
+        /// <summary>
+        /// 绘制被选中状态;
+        /// </summary>
+        /// <param name="canvas"></param>
+        /// <param name="canvasProxy"></param>
+        private void DrawSelectedState(ICanvas canvas, ICanvasScreenConvertable canvasProxy) {
+            if (!IsSelected) {
+                return;
+            }
+
+            canvas.DrawArc(SelectionPen, Arc2D.Center, Arc2D.Radius, Arc2D.StartAngle, Arc2D.Angle, Arc2D.Angle < Math.PI); 
         }
     }
 }
