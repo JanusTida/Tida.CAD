@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.ValueTuple" Version="4.4.0" />
-    <PackageReference Include="Tida.Geometry" Version="2.0.2" />
+    <PackageReference Include="Tida.Geometry" Version="2.1.0" />
   </ItemGroup>
 
 </Project>

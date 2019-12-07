@@ -60,7 +60,7 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="Tida.Geometry, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tida.Geometry.2.0.2\lib\net45\Tida.Geometry.dll</HintPath>
+      <HintPath>..\packages\Tida.Geometry.2.1.0\lib\net45\Tida.Geometry.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
