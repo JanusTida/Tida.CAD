@@ -44,15 +44,10 @@ namespace Tida.Canvas.Launcher {
 
         }
         protected override void OnStartup(StartupEventArgs e) {
-            
-            Tida.Application.BootStrapper.AddAssemblyModules(
-                new Type[] {
-                    typeof(Tida.Canvas.Shell.Dummy),
-                    typeof(Dummy)
-                }
-            );
 
-            Tida.Application.BootStrapper.Run();
+            
+            new BootStrapper().Run();
+            
             
 
             base.OnStartup(e);

@@ -12,10 +12,6 @@ namespace Tida.Canvas.Shell.Contracts.Ribbon {
     public class RibbonButtonItem : IRibbonButtonItem {
         public ICommand Command { get; set; }
 
-        public string GroupGUID { get; set; }
-
-        public string GUID { get; set; }
-
         public string HeaderLanguageKey { get; set; }
 
         public string Icon { get; set; }

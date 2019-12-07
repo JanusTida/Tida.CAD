@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{38AB92BA-F73
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Xamarin", "Xamarin", "{144CB122-3A64-49D0-88C8-97975B58BE6E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tida.Canvas.Shell.ExtensionExample", "Tida.Canvas.Shell.ExtensionExample\Tida.Canvas.Shell.ExtensionExample.csproj", "{ECDCED0C-531F-4270-845B-95DF1404DB85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{53547F9A-498F-4EC0-A9F7-8B69185BFE4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53547F9A-498F-4EC0-A9F7-8B69185BFE4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53547F9A-498F-4EC0-A9F7-8B69185BFE4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECDCED0C-531F-4270-845B-95DF1404DB85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECDCED0C-531F-4270-845B-95DF1404DB85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECDCED0C-531F-4270-845B-95DF1404DB85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECDCED0C-531F-4270-845B-95DF1404DB85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{32A7EEDD-7287-4793-BA43-F5E49C77C54F} = {38AB92BA-F73E-4229-A842-A2A9F1D4651D}
 		{53547F9A-498F-4EC0-A9F7-8B69185BFE4E} = {38AB92BA-F73E-4229-A842-A2A9F1D4651D}
 		{38AB92BA-F73E-4229-A842-A2A9F1D4651D} = {DC4D155C-4A4A-41EC-852A-C3295DC997B8}
+		{ECDCED0C-531F-4270-845B-95DF1404DB85} = {38AB92BA-F73E-4229-A842-A2A9F1D4651D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32B050FB-5ADD-4CE8-83B6-CEEAD9AD0F32}

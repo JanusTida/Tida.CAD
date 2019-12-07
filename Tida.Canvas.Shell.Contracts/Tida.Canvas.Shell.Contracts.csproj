@@ -66,13 +66,13 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="Tida.Application.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tida.Application.Contracts.0.5.1\lib\NET452\Tida.Application.Contracts.dll</HintPath>
+      <HintPath>..\packages\Tida.Application.Contracts.1.0.0\lib\NET452\Tida.Application.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Tida.Geometry, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Tida.Geometry.2.1.0\lib\net45\Tida.Geometry.dll</HintPath>
     </Reference>
     <Reference Include="Tida.Util, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tida.Util.0.4.1\lib\NET452\Tida.Util.dll</HintPath>
+      <HintPath>..\packages\Tida.Util.1.0.0\lib\NET452\Tida.Util.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />

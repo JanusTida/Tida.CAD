@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using Tida.Application.Contracts.App;
-using Tida.Util.Util;
 
 namespace Tida.Canvas.Shell.Contracts.ComponentModel.Views {
     /// <summary>

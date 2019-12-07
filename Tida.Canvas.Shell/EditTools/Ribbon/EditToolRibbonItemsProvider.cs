@@ -52,8 +52,6 @@ namespace Tida.Canvas.Shell.EditTools.Ribbon {
                 var ribbonBtnItem = new RibbonButtonItem {
                     Command = createCommand,
                     Icon = editToolProvider.Metadata.IconResource,
-                    GUID = editToolProvider.Metadata.GUID,
-                    GroupGUID = editToolProvider.Metadata.GroupGUID,
                     HeaderLanguageKey = editToolProvider.Metadata.EditToolLanguageKey,
                     Order = editToolProvider.Metadata.Order
                 };

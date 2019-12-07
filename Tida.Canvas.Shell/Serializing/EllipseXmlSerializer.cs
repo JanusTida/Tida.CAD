@@ -5,6 +5,7 @@ using Tida.Canvas.Infrastructure.DrawObjects;
 using Tida.Application.Contracts.Common;
 using Tida.Canvas.Shell.Contracts.Serializing;
 using System.ComponentModel.Composition;
+using Tida.Xml;
 
 namespace Tida.Canvas.Shell.Serializing {
     /// <summary>

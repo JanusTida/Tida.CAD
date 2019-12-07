@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Tida.Application.Contracts.App;
 using Tida.Application.Contracts.Common;
-using Tida.Util.Util;
 
 namespace Tida.Canvas.Shell.ComponentModel {
     /// <summary>
