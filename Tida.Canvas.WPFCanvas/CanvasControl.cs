@@ -831,7 +831,7 @@ namespace Tida.Canvas.WPFCanvas {
 
 
         public static readonly DependencyProperty PanLengthProperty =
-            DependencyProperty.Register(nameof(PanLength), typeof(double), typeof(CanvasControl), new PropertyMetadata(36.0D));
+            DependencyProperty.Register(nameof(PanLength), typeof(double), typeof(CanvasControl), new PropertyMetadata(72.0D));
 
 
         /// <summary>
@@ -857,7 +857,7 @@ namespace Tida.Canvas.WPFCanvas {
         }
 
         public static readonly DependencyProperty PanThicknessProperty =
-            DependencyProperty.Register(nameof(PanThickness), typeof(double), typeof(CanvasControl), new PropertyMetadata(0.2D));
+            DependencyProperty.Register(nameof(PanThickness), typeof(double), typeof(CanvasControl), new PropertyMetadata(2D));
 
 
         /// <summary>
@@ -890,7 +890,7 @@ namespace Tida.Canvas.WPFCanvas {
         /// <param name="drawingContext"></param>
         private void DrawPan(DrawingContext drawingContext)
         {
-            var panPen = new Pen { Brush = PanBrush };
+            var panPen = new Pen { Brush = PanBrush,Thickness = PanThickness };
             panPen.Freeze();
             
             drawingContext.DrawLine(
