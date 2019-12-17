@@ -4,19 +4,6 @@
         <name>Tida.Canvas.Infrastructure</name>
     </assembly>
     <members>
-        <member name="T:Tida.Canvas.Infrastructure.CollectionExtensions">
-            <summary>
-            此类用于补充.NetStandard1.0中缺失的<see cref="T:System.Collections.Generic.List`1"/>部分;
-            </summary>
-        </member>
-        <member name="M:Tida.Canvas.Infrastructure.CollectionExtensions.ForEach``1(System.Collections.Generic.List{``0},System.Action{``0})">
-            <summary>
-            补充<see cref="T:System.Collections.Generic.List`1"/>的遍历方法;
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="list"></param>
-            <param name="action"></param>
-        </member>
         <member name="T:Tida.Canvas.Infrastructure.ComponentModel.DrawObjectDescription">
             <summary>
             绘制对象描述信息;
@@ -221,10 +208,22 @@
             圆弧几何,该值不能为空;
             </summary>
         </member>
+        <member name="P:Tida.Canvas.Infrastructure.DrawObjects.Arc.SelectionPen">
+            <summary>
+            表示被选中的状态的笔;
+            </summary>
+        </member>
         <member name="P:Tida.Canvas.Infrastructure.DrawObjects.Arc.Pen">
             <summary>
             绘制圆弧的笔;
             </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.DrawObjects.Arc.DrawSelectedState(Tida.Canvas.Contracts.ICanvas,Tida.Canvas.Contracts.ICanvasScreenConvertable)">
+            <summary>
+            绘制被选中状态;
+            </summary>
+            <param name="canvas"></param>
+            <param name="canvasProxy"></param>
         </member>
         <member name="T:Tida.Canvas.Infrastructure.DrawObjects.Ellipse">
             <summary>
@@ -2031,6 +2030,57 @@
             <param name="relativeTo"></param>
             <returns></returns>
         </member>
+        <member name="T:Tida.Canvas.Infrastructure.Serializing.IDrawObjectXmlSerializer">
+            <summary>
+            绘制对象的XML持久化序列器;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Serializing.IDrawObjectXmlSerializer.Serialize(Tida.Canvas.Contracts.DrawObject)">
+            <summary>
+            将某个满足条件的绘制对象序列化为<see cref="T:System.Xml.Linq.XElement"/>;
+            </summary>
+            <param name="drawObject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Serializing.IDrawObjectXmlSerializer.Deserialize(System.Xml.Linq.XElement)">
+            <summary>
+            将某个满足条件的XElement反序列化为绘制对象;
+            </summary>
+            <param name="xElem"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Serializing.DrawObjectXmlSerializerBase`1">
+            <summary>
+            绘制对象序列化泛型基类;
+            </summary>
+            <typeparam name="TDrawObject">对应的序列化器所序列化和反序列化的绘制对象类型,该类型应为绘制对象的最终类型</typeparam>
+        </member>
+        <member name="F:Tida.Canvas.Infrastructure.Serializing.DrawObjectXmlSerializerBase`1._xElemName_DrawObject">
+            <summary>
+            关联的绘制对象的xml元素名,由子类决定;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Serializing.DrawObjectXmlSerializerBase`1.OnDeserialize(System.Xml.Linq.XElement)">
+            <summary>
+            子类进行反序列化的操作，对已经得到的xml元素进行判断;
+            </summary>
+            <param name="xElem"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Serializing.DrawObjectXmlSerializerBase`1.Serialize(Tida.Canvas.Contracts.DrawObject)">
+            <summary>
+            进行序列化;
+            </summary>
+            <param name="drawObject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Serializing.DrawObjectXmlSerializerBase`1.OnSerialize(`0,System.Xml.Linq.XElement)">
+            <summary>
+            子类进行序列化的操作，对已经创建完成的xml元素进行编辑;
+            </summary>
+            <param name="xElem"></param>
+            <returns></returns>
+        </member>
         <member name="T:Tida.Canvas.Infrastructure.Snaping.DoubleDrawObjectIntersectRuleGenericBase`2">
             <summary>
             双绘制对象相交判断泛型基类;
@@ -2372,6 +2422,20 @@
             <param name="angle">剪切杆件与被剪切杆件的夹角(锐角)</param>
             <param name="width">杆件的宽度</param>
             <param name="gap">杆件之间的缝隙</param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.Infrastructure.Utils.ArcHitUtils">
+            <summary>
+            圆弧判定;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.Infrastructure.Utils.ArcHitUtils.PointInArc(Tida.Geometry.Primitives.Arc2D,Tida.Geometry.Primitives.Vector2D,Tida.Canvas.Contracts.ICanvasScreenConvertable)">
+            <summary>
+            判断画布中某个位置是否在某个圆弧附近;
+            </summary>
+            <param name="arc2D"></param>
+            <param name="point"></param>
+            <param name="canvasProxy"></param>
             <returns></returns>
         </member>
         <member name="T:Tida.Canvas.Infrastructure.Utils.CollectionExtensions">

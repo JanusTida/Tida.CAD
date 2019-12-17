@@ -698,7 +698,7 @@
       <Name>Tida.Canvas.Shell.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tida.Canvas.WPFCanvas\Tida.Canvas.WPFCanvas.csproj">
-      <Project>{84ed5a4f-5aa8-4e87-8dc8-3b7d16090f75}</Project>
+      <Project>{fbf41f15-f1b5-4f4d-a83f-9f8bfc4ad1e7}</Project>
       <Name>Tida.Canvas.WPFCanvas</Name>
     </ProjectReference>
   </ItemGroup>

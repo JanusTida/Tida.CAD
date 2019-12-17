@@ -1469,15 +1469,21 @@ namespace Tida.Canvas.WPFCanvas {
         /// 当当前编辑工具不为空,且指示<see cref="EditTool.IsEditing"/>为假时,不能显示辅助图形;
         /// </summary>
         /// <returns></returns>
-        public (bool canShow, bool handled) CanShowSnapOnEditTool()
+        private CanSnapShowResult CanShowSnapOnEditTool()
         {
             if (CurrentEditTool != null)
             {
-                return (CurrentEditTool.IsEditing, true);
+                return new CanSnapShowResult
+                {
+                    CanShow = CurrentEditTool.IsEditing,
+                    Handled = true
+                };
             }
 
-            return (true, false);
+            return new CanSnapShowResult (true, false);
         }
+
+        
         
     }
 
@@ -2169,15 +2175,15 @@ namespace Tida.Canvas.WPFCanvas {
         /// 根据当前是否存在绘制对象在自编辑的状态,指示是否可以显示辅助图形,
         /// </summary>
         /// <returns></returns>
-        private (bool canShow, bool handled) CanShowSnapOnLayersAndDrawObjects()
+        private CanSnapShowResult CanShowSnapOnLayersAndDrawObjects()
         {
             ///当存在绘制对象处于自编辑状态时 < see cref = "DrawObject.IsEditing" />,可以显示辅助图形,并指示已处理;
             if (this.GetInteractionableLayers()?.SelectMany(p => p.DrawObjects).Any(p => p.IsEditing) ?? false)
             {
-                return (true, true);
+                return new CanSnapShowResult(true, true);
             }
 
-            return (false, false);
+            return new CanSnapShowResult(false, false);
         }
     }
 
@@ -2261,9 +2267,9 @@ namespace Tida.Canvas.WPFCanvas {
                 foreach (var getter in GetCanShowSnapShapeGetters())
                 {
                     var tuple = getter();
-                    canShow = tuple.canShow;
+                    canShow = tuple.CanShow;
 
-                    if (tuple.handled)
+                    if (tuple.Handled)
                     {
                         break;
                     }
@@ -2282,14 +2288,38 @@ namespace Tida.Canvas.WPFCanvas {
         }
 
         /// <summary>
+        /// 获取是否能够显示辅助图形的结果;
+        /// </summary>
+        struct CanSnapShowResult
+        {
+            public CanSnapShowResult(bool canShow,bool handled)
+            {
+                CanShow = canShow;
+                Handled = handled;
+            }
+            
+            /// <summary>
+            /// 是否能够显示;
+            /// </summary>
+            public bool CanShow { get; set; }
+
+            /// <summary>
+            /// 是否已经处理;
+            /// </summary>
+            public bool Handled { get; set; }
+        }
+
+        /// <summary>
         /// 获取是否能够显示辅助图形的设定器集合;
         /// </summary>
         /// <returns></returns>
-        private IEnumerable<Func<(bool canShow, bool handled)>> GetCanShowSnapShapeGetters()
+        private IEnumerable<Func<CanSnapShowResult>> GetCanShowSnapShapeGetters()
         {
             yield return CanShowSnapOnEditTool;
             yield return CanShowSnapOnLayersAndDrawObjects;
         }
+
+        
 
         /// <summary>
         /// 鼠标所处的辅助节点发生变化时;
