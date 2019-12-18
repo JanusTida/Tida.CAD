@@ -1,4 +1,4 @@
-﻿using Tida.Application.Contracts.Common;
+﻿
 using Tida.Canvas.Shell.Contracts.Canvas;
 using Tida.Canvas.Shell.Contracts.Canvas.Events;
 using Tida.Canvas.Shell.Contracts.ComponentModel;
@@ -9,6 +9,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.PropertyGrid.ViewModels {
     [Export]

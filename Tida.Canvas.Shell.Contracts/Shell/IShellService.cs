@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
-using Tida.Application.Contracts.Common;
-using Tida.Application.Contracts.Controls;
+using Tida.Canvas.Shell.Contracts.Common;
+using Tida.Canvas.Shell.Contracts.Controls;
 
 namespace Tida.Canvas.Shell.Contracts.Shell {
     /// <summary>

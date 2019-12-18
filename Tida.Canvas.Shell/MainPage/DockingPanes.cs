@@ -1,5 +1,5 @@
-﻿using Tida.Application.Contracts.App;
-using Tida.Application.Contracts.Docking;
+﻿using Tida.Canvas.Shell.Contracts.App;
+using Tida.Canvas.Shell.Contracts.Docking;
 using Tida.Canvas.Shell.Contracts.MainPage;
 using Tida.Canvas.Shell.Contracts.Ribbon;
 using Prism.Commands;

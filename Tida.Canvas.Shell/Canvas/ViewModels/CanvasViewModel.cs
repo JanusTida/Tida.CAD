@@ -1,4 +1,4 @@
-﻿using Tida.Application.Contracts.Common;
+﻿
 using Tida.Canvas.Contracts;
 using Tida.Canvas.Events;
 using Tida.Canvas.Shell.Contracts.Canvas;
@@ -13,11 +13,12 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Windows;
 using Tida.Canvas.Infrastructure.Snaping;
-using Tida.Application.Contracts.Menu;
+using Tida.Canvas.Shell.Contracts.Menu;
 using Tida.Canvas.Shell.Contracts.Snaping;
 using Tida.Canvas.Shell.Contracts.InteractionHandlers;
 using Tida.Canvas.Shell.Canvas.Models;
 using static Tida.Canvas.Shell.Contracts.Canvas.Constants;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.Canvas.ViewModels {
     /// <summary>

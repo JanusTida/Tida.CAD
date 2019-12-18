@@ -7,7 +7,7 @@
         /// 基本图形;
         /// </summary>
         public const string EditToolGroup_BasicEditor = nameof(EditToolGroup_BasicEditor);
-
+        
         /// <summary>
         /// 圆;
         /// </summary>

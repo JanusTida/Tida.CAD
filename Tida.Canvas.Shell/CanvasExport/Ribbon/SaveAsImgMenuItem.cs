@@ -1,6 +1,6 @@
-﻿using Tida.Application.Contracts.App;
-using Tida.Application.Contracts.Common;
-using Tida.Application.Contracts.Menu;
+﻿using Tida.Canvas.Shell.Contracts.App;
+
+using Tida.Canvas.Shell.Contracts.Menu;
 using Tida.Canvas.Shell.Contracts.Canvas;
 using Tida.Canvas.Shell.Contracts.CanvasExport;
 using Tida.Canvas.Shell.Contracts.Ribbon;
@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using static Tida.Canvas.Shell.CanvasExport.Constants;
 using static Tida.Canvas.Shell.Contracts.Ribbon.Constants;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.CanvasExport.Ribbon {
     /// <summary>

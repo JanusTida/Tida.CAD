@@ -1,9 +1,10 @@
-﻿using Tida.Application.Contracts.Common;
+﻿
 using Tida.Canvas.Shell.Contracts.Canvas;
 using Tida.Canvas.Shell.Contracts.Canvas.Events;
 using Tida.Canvas.Shell.Contracts.Ribbon;
 using Prism.Commands;
 using System.Windows.Input;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.Canvas.Ribbon {
     /// <summary>

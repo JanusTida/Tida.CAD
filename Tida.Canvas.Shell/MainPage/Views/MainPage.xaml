@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:prism="http://www.codeplex.com/prism" 
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
-             xmlns:ji="http://schemas.janus.com/expression/2018/interactivity"
+             xmlns:ji="clr-namespace:Tida.Canvas.Shell.Contracts.Interactivity;assembly=Tida.Canvas.Shell.Contracts"
              xmlns:mainPage="clr-namespace:Tida.Canvas.Shell.Contracts.MainPage;assembly=Tida.Canvas.Shell.Contracts"
              x:Class="Tida.Canvas.Shell.MainPage.Views.MainPage" 
              mc:Ignorable="d" prism:ViewModelLocator.AutoWireViewModel="True" 

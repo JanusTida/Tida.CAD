@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:prism="http://prismlibrary.com/"
              xmlns:local="clr-namespace:Tida.Canvas.Shell.CommandOutput.Views"
-             xmlns:ji="http://schemas.janus.com/expression/2018/interactivity"
+             xmlns:ji="clr-namespace:Tida.Canvas.Shell.Contracts.Interactivity;assembly=Tida.Canvas.Shell.Contracts"
              mc:Ignorable="d" 
              prism:ViewModelLocator.AutoWireViewModel="True"
              d:DesignHeight="450" d:DesignWidth="800">

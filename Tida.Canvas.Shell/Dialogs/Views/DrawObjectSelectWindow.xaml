@@ -3,8 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ji="http://schemas.janus.com/expression/2018/interactivity"
-        xmlns:local="clr-namespace:Tida.Canvas.Shell.Dialogs.Views" WindowStartupLocation="CenterScreen"
+        xmlns:local="clr-namespace:Tida.Canvas.Shell.Dialogs.Views"
+        xmlns:ji="clr-namespace:Tida.Canvas.Shell.Contracts.Interactivity;assembly=Tida.Canvas.Shell.Contracts"
+        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" SizeToContent="WidthAndHeight" MinWidth="240" x:Name="window"
         Title="{Binding Title,FallbackValue=选择集}" >
     <ji:Interaction.Triggers>

@@ -9,13 +9,13 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Tida.Application.Common;
-using Tida.Application.Contracts.App;
-using Tida.Application.Contracts.App.Events;
-using Tida.Application.Contracts.Common;
-using Tida.Application.Contracts.Controls;
-using Tida.Application.Contracts.Setting;
-using Tida.Application.Controls;
+using Tida.Canvas.Shell.Common;
+using Tida.Canvas.Shell.Contracts.App;
+using Tida.Canvas.Shell.Contracts.App.Events;
+using Tida.Canvas.Shell.Contracts.Common;
+using Tida.Canvas.Shell.Contracts.Controls;
+using Tida.Canvas.Shell.Contracts.Setting;
+using Tida.Canvas.Shell.Controls;
 
 namespace Tida.Canvas.Launcher
 {
@@ -33,7 +33,7 @@ namespace Tida.Canvas.Launcher
         public event EventHandler ModulesInitializing;
 
 
-
+        
         /// <summary>
 
         /// 模块初始化完毕事件;
@@ -54,10 +54,7 @@ namespace Tida.Canvas.Launcher
             base.ConfigureAggregateCatalog();
 
             //主框架模块;
-
-            
-            this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Tida.Application.Dummy).Assembly));
-            this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Tida.Canvas.Shell.Dummy).Assembly));
+            this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Shell.Dummy).Assembly));
             this.AggregateCatalog.Catalogs.Add(new DirectoryCatalog("Plugins"));
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Dummy).Assembly));
             //附加模块;
@@ -161,5 +158,9 @@ namespace Tida.Canvas.Launcher
 
         }
 
+
+
     }
+
+ 
 }

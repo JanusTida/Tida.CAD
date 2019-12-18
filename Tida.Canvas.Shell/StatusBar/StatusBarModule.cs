@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.Composition;
-using Tida.Application.Contracts.App;
-using Tida.Application.Contracts.Common;
+using Tida.Canvas.Shell.Contracts.App;
+
 using Tida.Canvas.Shell.Contracts.Shell.Events;
 using Tida.Canvas.Shell.Contracts.StatusBar;
 using Prism.Mef.Modularity;
 using Prism.Modularity;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.StatusBar {
     [Export(typeof(IShellInitializingEventHandler))]

@@ -7,11 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Tida.Application.Contracts.App;
-using Tida.Application.Contracts.Common;
-using Tida.Application.Contracts.Menu;
+using Tida.Canvas.Shell.Contracts.App;
+
+using Tida.Canvas.Shell.Contracts.Menu;
 using Tida.Canvas.Shell.Contracts.Canvas;
 using static Tida.Canvas.Shell.Contracts.Ribbon.Constants;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.DWG.Ribbon {
     [ExportMenuItem(

@@ -75,11 +75,11 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="Tida.Application, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tida.Application.1.0.0\lib\NET452\Tida.Application.dll</HintPath>
+    <Reference Include="Tida.Canvas.Shell, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Tida.Canvas.Shell.1.0.0\lib\NET452\Tida.Canvas.Shell.dll</HintPath>
     </Reference>
-    <Reference Include="Tida.Application.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tida.Application.Contracts.1.0.0\lib\NET452\Tida.Application.Contracts.dll</HintPath>
+    <Reference Include="Tida.Canvas.Shell.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Tida.Canvas.Shell.Contracts.1.0.0\lib\NET452\Tida.Canvas.Shell.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Tida.Util, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Tida.Util.1.0.0\lib\NET452\Tida.Util.dll</HintPath>
@@ -165,18 +165,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Save.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="TidaAppContent\LanguageConfig.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="TidaAppContent\Languages\zh_CN\Tida.Application.App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="TidaAppContent\LanguageConfig_Backup.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

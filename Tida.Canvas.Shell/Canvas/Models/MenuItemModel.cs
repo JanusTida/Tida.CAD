@@ -1,5 +1,5 @@
-﻿using Tida.Application.Contracts.App;
-using Tida.Application.Contracts.Menu;
+﻿using Tida.Canvas.Shell.Contracts.App;
+using Tida.Canvas.Shell.Contracts.Menu;
 using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;

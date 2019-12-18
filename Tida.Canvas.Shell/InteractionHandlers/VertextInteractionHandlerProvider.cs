@@ -2,7 +2,7 @@
 using Tida.Canvas.Events;
 using Tida.Canvas.Infrastructure.InteractionHandlers;
 using Tida.Canvas.Shell.Contracts.InteractionHandlers;
-using Tida.Application.Contracts.Setting;
+using Tida.Canvas.Shell.Contracts.Setting;
 using static Tida.Canvas.Shell.Contracts.Constants;
 
 namespace Tida.Canvas.Shell.InteractionHandlers {

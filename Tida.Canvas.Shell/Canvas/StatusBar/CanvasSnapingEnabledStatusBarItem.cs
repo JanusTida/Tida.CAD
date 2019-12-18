@@ -1,11 +1,12 @@
-﻿using Tida.Application.Contracts.App;
-using Tida.Application.Contracts.Common;
+﻿using Tida.Canvas.Shell.Contracts.App;
+
 using Tida.Canvas.Shell.Contracts.Canvas;
 using Tida.Canvas.Shell.Contracts.Canvas.Events;
 using Tida.Canvas.Shell.Contracts.StatusBar;
 using System;
 using System.ComponentModel.Composition;
 using static Tida.Canvas.Shell.StatusBar.Constants;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.Canvas.StatusBar {
     /// <summary>

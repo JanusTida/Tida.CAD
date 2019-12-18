@@ -1,5 +1,5 @@
-﻿using Tida.Application.Contracts.App;
-using Tida.Application.Contracts.Setting;
+﻿using Tida.Canvas.Shell.Contracts.App;
+using Tida.Canvas.Shell.Contracts.Setting;
 using Tida.Canvas.Shell.Contracts.StatusBar;
 using System.ComponentModel.Composition;
 using static Tida.Canvas.Shell.Contracts.Constants;

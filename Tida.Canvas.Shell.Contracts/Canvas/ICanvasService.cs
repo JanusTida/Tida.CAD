@@ -1,4 +1,6 @@
-﻿using Tida.Application.Contracts.Common;
+﻿
+
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.Contracts.Canvas {
     /// <summary>

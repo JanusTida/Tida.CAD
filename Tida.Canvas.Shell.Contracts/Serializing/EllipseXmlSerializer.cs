@@ -2,8 +2,9 @@
 using System.Xml.Linq;
 using Tida.Geometry.Primitives;
 using Tida.Canvas.Infrastructure.DrawObjects;
-using Tida.Application.Contracts.Common;
+
 using Tida.Xml;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.Contracts.Serializing {
     /// <summary>

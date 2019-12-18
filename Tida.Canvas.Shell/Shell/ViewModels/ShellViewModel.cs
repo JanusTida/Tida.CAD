@@ -1,6 +1,6 @@
 ﻿using Prism.Mvvm;
 using System.ComponentModel.Composition;
-using Tida.Application.Contracts.App;
+using Tida.Canvas.Shell.Contracts.App;
 using Prism.Commands;
 
 namespace Tida.Canvas.Shell.Shell.ViewModels {

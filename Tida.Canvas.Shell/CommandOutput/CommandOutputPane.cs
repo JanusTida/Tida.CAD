@@ -1,4 +1,4 @@
-﻿using Tida.Application.Contracts.Docking;
+﻿using Tida.Canvas.Shell.Contracts.Docking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using static Tida.Canvas.Shell.Contracts.MainPage.Constants;
 using static Tida.Canvas.Shell.CommandOutput.Constants;
 using System.ComponentModel.Composition;
-using Tida.Application.Contracts.App;
+using Tida.Canvas.Shell.Contracts.App;
 
 namespace Tida.Canvas.Shell.CommandOutput {
 

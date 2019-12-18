@@ -1,4 +1,4 @@
-﻿using Tida.Application.Contracts.Menu;
+﻿using Tida.Canvas.Shell.Contracts.Menu;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using Tida.Application.Contracts.App;
+using Tida.Canvas.Shell.Contracts.App;
 
 namespace Tida.Canvas.Shell.Contracts.ComponentModel.Views {
     /// <summary>

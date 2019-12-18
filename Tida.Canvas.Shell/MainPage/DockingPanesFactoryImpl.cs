@@ -1,6 +1,6 @@
-﻿//using Tida.Application.Contracts.App;
-//using Tida.Application.Contracts.Common;
-//using Tida.Application.Contracts.Docking;
+﻿//using Tida.Canvas.Shell.Contracts.App;
+//
+//using Tida.Canvas.Shell.Contracts.Docking;
 //using System;
 //using System.Collections.Generic;
 //using System.Linq;

@@ -1,7 +1,8 @@
-﻿using Tida.Application.Contracts.Common;
+﻿
 using Tida.Canvas.Contracts;
 using Tida.Canvas.Events;
 using Prism.Events;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.Contracts.Canvas.Events {
     public class CanvasEditToolChangedEventArgs : CanvasEventArgs<ValueChangedEventArgs<EditTool>> {

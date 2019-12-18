@@ -21,11 +21,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tida.Canvas.Launcher", "Tid
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{38AB92BA-F73E-4229-A842-A2A9F1D4651D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Xamarin", "Xamarin", "{144CB122-3A64-49D0-88C8-97975B58BE6E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tida.Canvas.Shell.ExtensionExample", "Tida.Canvas.Shell.ExtensionExample\Tida.Canvas.Shell.ExtensionExample.csproj", "{ECDCED0C-531F-4270-845B-95DF1404DB85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tida.Canvas.WPFCanvas", "Tida.Canvas.WPFCanvas\Tida.Canvas.WPFCanvas.csproj", "{FBF41F15-F1B5-4F4D-A83F-9F8BFC4AD1E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tida.Canvas.WPFCanvas", "Tida.Canvas.WPFCanvas\Tida.Canvas.WPFCanvas.csproj", "{FBF41F15-F1B5-4F4D-A83F-9F8BFC4AD1E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

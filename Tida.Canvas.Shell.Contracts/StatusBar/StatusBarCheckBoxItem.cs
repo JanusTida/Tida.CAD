@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tida.Application.Contracts.Controls;
+using Tida.Canvas.Shell.Contracts.Controls;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;

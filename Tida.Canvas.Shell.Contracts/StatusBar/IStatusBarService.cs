@@ -1,10 +1,11 @@
-﻿using Tida.Application.Contracts.Common;
-using Tida.Application.Contracts.Controls;
+﻿
+using Tida.Canvas.Shell.Contracts.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.Contracts.StatusBar {
     /// <summary>

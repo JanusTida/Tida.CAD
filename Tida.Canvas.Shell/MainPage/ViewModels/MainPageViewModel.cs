@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.Composition;
 using Prism.Mvvm;
 using System;
-using Tida.Application.Contracts.Common;
-using Tida.Application.Contracts.App;
+
+using Tida.Canvas.Shell.Contracts.App;
 using Tida.Canvas.Shell.Contracts.MainPage.Events;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.MainPage.ViewModels {
     [Export]

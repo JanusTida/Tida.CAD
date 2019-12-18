@@ -6,7 +6,7 @@
              xmlns:canvas="clr-namespace:Tida.Canvas.WPFCanvas;assembly=Tida.Canvas.WPFCanvas"
              xmlns:prism="http://prismlibrary.com/"
                 xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
-             xmlns:ji="http://schemas.janus.com/expression/2018/interactivity"
+             xmlns:ji="clr-namespace:Tida.Canvas.Shell.Contracts.Interactivity;assembly=Tida.Canvas.Shell.Contracts"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -15,7 +15,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Telerik.Windows.Themes.Office2013;component/Themes/Telerik.Windows.Controls.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Telerik.Windows.Themes.Office2013;component/Themes/Telerik.Windows.Controls.Navigation.xaml"/>
-                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </ContentControl.Resources>

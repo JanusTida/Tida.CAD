@@ -1,4 +1,4 @@
-﻿using Tida.Application.Contracts.Controls;
+﻿using Tida.Canvas.Shell.Contracts.Controls;
 using System.Windows.Controls;
 
 namespace Tida.Canvas.Shell.Canvas.Views {

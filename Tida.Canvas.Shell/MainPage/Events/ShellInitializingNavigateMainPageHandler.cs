@@ -1,5 +1,5 @@
-﻿using Tida.Application.Contracts.Common;
-using Tida.Application.Contracts.Controls;
+﻿
+using Tida.Canvas.Shell.Contracts.Controls;
 using Tida.Canvas.Shell.Contracts.MainPage;
 using Tida.Canvas.Shell.Contracts.Shell;
 using Tida.Canvas.Shell.Contracts.Shell.Events;
@@ -9,6 +9,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.MainPage.Events {
     /// <summary>

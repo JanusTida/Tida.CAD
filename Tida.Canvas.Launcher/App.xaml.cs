@@ -1,5 +1,5 @@
-﻿using Tida.Application.Contracts.App;
-using Tida.Application.Contracts.Common;
+﻿using Tida.Canvas.Shell.Contracts.App;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,6 +11,7 @@ using System.Windows;
 using WPFApplication = System.Windows.Application;
 using Tida.Canvas.Shell.Contracts.Shell;
 using Tida.Canvas.Shell.Contracts.Shell.Events;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Launcher {
     /// <summary>

@@ -1,4 +1,4 @@
-﻿using Tida.Application.Contracts.App;
+﻿using Tida.Canvas.Shell.Contracts.App;
 using Tida.Canvas.Shell.Contracts.Ribbon;
 using System.Windows.Controls;
 using static Tida.Canvas.Shell.Contracts.EditTools.Constants;

@@ -1,12 +1,13 @@
 ﻿using Tida.Canvas.Launcher.ViewModels;
-using Tida.Application.Contracts.Common;
-using Tida.Application.Contracts.Menu;
+
+using Tida.Canvas.Shell.Contracts.Menu;
 using Tida.Canvas.Shell.Contracts.Canvas;
 using Tida.Canvas.Shell.Contracts.Ribbon;
 using Tida.Canvas.Shell.Contracts.Shell;
 using Prism.Commands;
 using System.Windows.Input;
 using static Tida.Canvas.Shell.Contracts.Ribbon.Constants;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Launcher.Ribbon {
     [ExportMenuItem(

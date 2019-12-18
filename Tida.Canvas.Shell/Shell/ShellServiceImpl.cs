@@ -4,11 +4,12 @@ using System.Windows.Input;
 using Tida.Canvas.Shell.Shell.ViewModels;
 using Tida.Canvas.Shell.Contracts.Shell;
 using System;
-using Tida.Application.Contracts.Controls;
-using Tida.Application.Contracts.Common;
+using Tida.Canvas.Shell.Contracts.Controls;
+
 using Tida.Canvas.Shell.Contracts.Shell.Events;
 using System.ComponentModel;
-using Tida.Application.Contracts.App;
+using Tida.Canvas.Shell.Contracts.App;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.Shell {
     /// <summary>

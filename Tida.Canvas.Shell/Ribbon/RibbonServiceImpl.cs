@@ -4,7 +4,7 @@ using System.Windows.Input;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
-using Tida.Application.Contracts.App;
+using Tida.Canvas.Shell.Contracts.App;
 using Telerik.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Controls;
@@ -12,10 +12,11 @@ using System;
 using Telerik.Windows.Controls.RibbonView;
 using System.Windows;
 using System.Windows.Automation;
-using Tida.Application.Contracts.Common;
+
 using Tida.Canvas.Shell.Contracts.Ribbon.Events;
-using Tida.Application.Contracts.Menu;
+using Tida.Canvas.Shell.Contracts.Menu;
 using static Tida.Canvas.Shell.Contracts.Ribbon.Constants;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.Ribbon {
     /// <summary>

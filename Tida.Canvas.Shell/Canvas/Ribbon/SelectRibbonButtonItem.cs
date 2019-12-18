@@ -1,7 +1,8 @@
-﻿using Tida.Application.Contracts.Common;
+﻿
 using Tida.Canvas.Shell.Canvas.ViewModels;
 using Tida.Canvas.Shell.Contracts.Ribbon;
 using System.Windows.Input;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.Canvas.Ribbon {
     /// <summary>

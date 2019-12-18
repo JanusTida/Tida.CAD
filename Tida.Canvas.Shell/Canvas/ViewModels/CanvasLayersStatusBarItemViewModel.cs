@@ -1,4 +1,4 @@
-﻿using Tida.Application.Contracts.Common;
+﻿
 using Tida.Canvas.Shell.Canvas.Models;
 using Tida.Canvas.Shell.Contracts.Canvas;
 using Tida.Canvas.Shell.Contracts.Canvas.Events;
@@ -6,6 +6,7 @@ using Prism.Mvvm;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Linq;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.Canvas.ViewModels {
     /// <summary>

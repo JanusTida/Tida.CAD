@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Tida.Application.Contracts.Controls;
+using Tida.Canvas.Shell.Contracts.Controls;
 
 namespace Tida.Canvas.Shell.Contracts.StatusBar {
     /// <summary>

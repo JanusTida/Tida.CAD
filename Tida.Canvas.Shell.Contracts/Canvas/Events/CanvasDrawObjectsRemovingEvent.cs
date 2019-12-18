@@ -1,9 +1,10 @@
-﻿using Tida.Application.Contracts.Common;
+﻿
 using Tida.Canvas.Contracts;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.Contracts.Canvas.Events {
     /// <summary>

@@ -1,5 +1,6 @@
-﻿using Tida.Application.Contracts.Common;
+﻿
 using Prism.Events;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.Contracts.Canvas.Events {
     /// <summary>

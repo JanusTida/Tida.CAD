@@ -1,5 +1,5 @@
-﻿using Tida.Application.Contracts.Common;
-using Tida.Application.Contracts.Controls;
+﻿
+using Tida.Canvas.Shell.Contracts.Controls;
 using Tida.Canvas.Shell.Contracts.StatusBar;
 using Tida.Canvas.Shell.Contracts.StatusBar.Events;
 using System;
@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Windows.Controls;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.StatusBar {
     [Export(typeof(IStatusBarService))]

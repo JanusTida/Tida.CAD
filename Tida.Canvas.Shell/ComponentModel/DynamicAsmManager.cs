@@ -6,8 +6,8 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
-using Tida.Application.Contracts.App;
-using Tida.Application.Contracts.Common;
+using Tida.Canvas.Shell.Contracts.App;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Shell.ComponentModel {
     /// <summary>

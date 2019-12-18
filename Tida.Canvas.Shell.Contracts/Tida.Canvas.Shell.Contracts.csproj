@@ -65,9 +65,6 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="Tida.Application.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tida.Application.Contracts.1.0.0\lib\NET452\Tida.Application.Contracts.dll</HintPath>
-    </Reference>
     <Reference Include="Tida.Geometry, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Tida.Geometry.2.1.0\lib\net45\Tida.Geometry.dll</HintPath>
     </Reference>
@@ -79,6 +76,19 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App\Constants.cs" />
+    <Compile Include="App\Events\ApplicationStartUpEvent.cs" />
+    <Compile Include="App\IAppDomainService.cs" />
+    <Compile Include="App\IDialogService.cs" />
+    <Compile Include="App\ILanguageService.cs" />
+    <Compile Include="App\ILocalExplorerService.cs" />
+    <Compile Include="App\IMessageBoxService.cs" />
+    <Compile Include="App\Input\GetInputValueSetting.cs" />
+    <Compile Include="App\Input\IInputChecker.cs" />
+    <Compile Include="App\Input\IInputCheckResult.cs" />
+    <Compile Include="App\IThemeService.cs" />
+    <Compile Include="App\IThreadInvoker.cs" />
+    <Compile Include="App\WindowExtension.cs" />
     <Compile Include="CanvasExport\IDrawObjectsImgExporter.cs" />
     <Compile Include="CanvasExport\IExportCanvasAsImgService.cs" />
     <Compile Include="Canvas\CanvasLayerEx.cs" />
@@ -105,6 +115,20 @@
     <Compile Include="Canvas\Events\CanvasMouseHoverSnapShapeChangedEvent.cs" />
     <Compile Include="Canvas\Events\CanvasZoomChangedEvent.cs" />
     <Compile Include="Canvas\Events\CanvasEditTransactionCommitedEvent.cs" />
+    <Compile Include="Common\CommonEventHelper.cs" />
+    <Compile Include="Common\ExportObjectEntityConverterAttribute.cs" />
+    <Compile Include="Common\ExtensibleBindableBase.cs" />
+    <Compile Include="Common\GenericCollectionExtension.cs" />
+    <Compile Include="Common\GenericServiceStaticInstance.cs" />
+    <Compile Include="Common\GenericServiceStaticInstances.cs" />
+    <Compile Include="Common\ICommandItem.cs" />
+    <Compile Include="Common\ICustomNotify.cs" />
+    <Compile Include="Common\IEventHandler.cs" />
+    <Compile Include="Common\IHaveOrder.cs" />
+    <Compile Include="Common\ILoggerService.cs" />
+    <Compile Include="Common\IServiceProvider.cs" />
+    <Compile Include="Common\IUIObjectProvider.cs" />
+    <Compile Include="Common\RegionHelper.cs" />
     <Compile Include="ComponentModel\Constants.cs" />
     <Compile Include="ComponentModel\CreatedIgnoredPropertyDescriptor.cs" />
     <Compile Include="ComponentModel\CreatedPropertyDescriptor.cs" />
@@ -126,6 +150,26 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Canvas\ICanvasDataContext.cs" />
     <Compile Include="Canvas\ICanvasService.cs" />
+    <Compile Include="Controls\ExportViewAttribute.cs" />
+    <Compile Include="Controls\GridChildLength.cs" />
+    <Compile Include="Controls\GridExtensions.cs" />
+    <Compile Include="Controls\GridViewAutoGeneratingColumnEventArgs.cs" />
+    <Compile Include="Controls\InputBindingExtensions.cs" />
+    <Compile Include="Controls\IStackGrid.cs" />
+    <Compile Include="Controls\IViewProvider.cs" />
+    <Compile Include="Conveters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Docking\CreatedDockingContainer.cs" />
+    <Compile Include="Docking\CreatedDockingGroup.cs" />
+    <Compile Include="Docking\CreatedDockingPane.cs" />
+    <Compile Include="Docking\DockingPaneBase.cs" />
+    <Compile Include="Docking\DockingPosition.cs" />
+    <Compile Include="Docking\Events\DockingPaneIsHiddenChangedEvent.cs" />
+    <Compile Include="Docking\Events\DockingPaneVisibilityChangedEvent.cs" />
+    <Compile Include="Docking\IDockingContainer.cs" />
+    <Compile Include="Docking\IDockingGroup.cs" />
+    <Compile Include="Docking\IDockingItem.cs" />
+    <Compile Include="Docking\IDockingPane.cs" />
+    <Compile Include="Docking\IDockingService.cs" />
     <Compile Include="DrawObjectDescription\DrawObjectDescription.cs" />
     <Compile Include="DrawObjectDescription\DrawObjectDescriptionUtil.cs" />
     <Compile Include="DrawObjectDescription\DrawObjectDescriptorGenericBase.cs" />
@@ -148,9 +192,43 @@
     <Compile Include="InteractionHandlers\ExportCanvasInteractionHandlerProviderAttribute.cs" />
     <Compile Include="InteractionHandlers\ICanvasInteractionHandlerProvider.cs" />
     <Compile Include="InteractionHandlers\ICanvasInteractionHandlerProviderMetaData.cs" />
+    <Compile Include="Interactivity\AttachableCollection.cs" />
+    <Compile Include="Interactivity\Behavior.cs" />
+    <Compile Include="Interactivity\BehaviorCollection.cs" />
+    <Compile Include="Interactivity\Behavior_T.cs" />
+    <Compile Include="Interactivity\CallMethodAction.cs" />
+    <Compile Include="Interactivity\CommandBehaviorBase.cs" />
+    <Compile Include="Interactivity\CustomPropertyValueEditor.cs" />
+    <Compile Include="Interactivity\CustomPropertyValueEditorAttribute.cs" />
+    <Compile Include="Interactivity\DefaultTriggerAttribute.cs" />
+    <Compile Include="Interactivity\DependencyObjectHelper.cs" />
+    <Compile Include="Interactivity\EventObserver.cs" />
+    <Compile Include="Interactivity\EventTrigger.cs" />
+    <Compile Include="Interactivity\EventTriggerBase.cs" />
+    <Compile Include="Interactivity\EventTriggerBase_T.cs" />
+    <Compile Include="Interactivity\ExceptionStringTable.cs" />
+    <Compile Include="Interactivity\IAttachedObject.cs" />
+    <Compile Include="Interactivity\Interaction.cs" />
+    <Compile Include="Interactivity\InteractionRequestTrigger.cs" />
+    <Compile Include="Interactivity\InvokeCommandAction.cs" />
+    <Compile Include="Interactivity\NameResolvedEventArgs.cs" />
+    <Compile Include="Interactivity\NameResolver.cs" />
+    <Compile Include="Interactivity\PreviewInvokeEventArgs.cs" />
+    <Compile Include="Interactivity\TargetedTriggerAction.cs" />
+    <Compile Include="Interactivity\TargetedTriggerAction_T.cs" />
+    <Compile Include="Interactivity\TriggerAction.cs" />
+    <Compile Include="Interactivity\TriggerActionCollection.cs" />
+    <Compile Include="Interactivity\TriggerAction_T.cs" />
+    <Compile Include="Interactivity\TriggerBase.cs" />
+    <Compile Include="Interactivity\TriggerBase_T.cs" />
+    <Compile Include="Interactivity\TriggerCollection.cs" />
+    <Compile Include="Interactivity\TypeConstraintAttribute.cs" />
     <Compile Include="MainPage\Constants.cs" />
     <Compile Include="MainPage\Events\MainPageLoadedEvent.cs" />
     <Compile Include="MainPage\MainDockingService.cs" />
+    <Compile Include="Menu\CreatedMenuItem.cs" />
+    <Compile Include="Menu\IMenuItem.cs" />
+    <Compile Include="Menu\IMenuItemProvider.cs" />
     <Compile Include="MirrorTools\IMirrorToolProvider.cs" />
     <Compile Include="MoveTools\IMoveToolsProvider.cs" />
     <Compile Include="NativePresentation\NumberBoxService.cs" />
@@ -182,6 +260,9 @@
     <Compile Include="Ribbon\RibbonButtonItem.cs" />
     <Compile Include="Ribbon\RibbonGroup.cs" />
     <Compile Include="Serializing\XmlSerializerBase.cs" />
+    <Compile Include="Setting\Events\SettingsServiceInitializeEvent.cs" />
+    <Compile Include="Setting\ISettingsSection.cs" />
+    <Compile Include="Setting\ISettingsService.cs" />
     <Compile Include="Shell\Constants.cs" />
     <Compile Include="Shell\Events\ShellClosingEvent.cs" />
     <Compile Include="Shell\Events\ShellInitializingEvent.cs" />
@@ -205,6 +286,7 @@
     <Compile Include="Snaping\IIntersectRuleProvider.cs" />
     <Compile Include="Snaping\ISnapShapeRuleProvider.cs" />
     <Compile Include="Snaping\ISnapShapeRuleProviderMetaData.cs" />
+    <Compile Include="Splash\ISplashService.cs" />
     <Compile Include="StatusBar\Constants.cs" />
     <Compile Include="StatusBar\Events\StatusBarInitializeEvent.cs" />
     <Compile Include="StatusBar\IStatusBarItem.cs" />
@@ -212,6 +294,8 @@
     <Compile Include="StatusBar\StatusBarCheckBoxItem.cs" />
     <Compile Include="StatusBar\StatusBarItemBase.cs" />
     <Compile Include="StatusBar\StatusBarTextItem.cs" />
+    <Compile Include="TreeView\ITreeUnit.cs" />
+    <Compile Include="TreeView\ITreeUnitFactory.cs" />
     <Compile Include="TrimTools\ITrimToolsProvider.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

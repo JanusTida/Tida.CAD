@@ -1,6 +1,6 @@
 ﻿using System;
-using Tida.Application.Contracts.Common;
-using Tida.Application.Contracts.Controls;
+
+using Tida.Canvas.Shell.Contracts.Controls;
 using Tida.Canvas.Shell.Contracts.CommandOutput;
 using Tida.Canvas.Shell.Contracts.Shell;
 using Tida.Canvas.Shell.Contracts.Shell.Events;

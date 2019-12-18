@@ -9,7 +9,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tida.Application.Contracts.Setting;
+using Tida.Canvas.Shell.Contracts.Setting;
 using static Tida.Canvas.Shell.Contracts.Constants;
 
 namespace Tida.Canvas.Shell.InteractionHandlers {

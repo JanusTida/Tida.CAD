@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.Composition;
-using Tida.Application.Contracts.Setting;
-using Tida.Application.Contracts.Setting.Events;
+using Tida.Canvas.Shell.Contracts.Setting;
+using Tida.Canvas.Shell.Contracts.Setting.Events;
 
 namespace Tida.Canvas.Shell.Canvas.Setting {
     /// <summary>

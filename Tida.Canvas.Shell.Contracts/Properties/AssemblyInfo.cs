@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Markup;
 
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
@@ -18,7 +19,7 @@ using System.Windows;
 //对 COM 组件不可见。  如果需要从 COM 访问此程序集中的类型，
 //请将此类型的 ComVisible 特性设置为 true。
 [assembly: ComVisible(false)]
-
+[assembly: XmlnsDefinition("http://schemas.janus.com/expression/2018/interactivity", "Tida.Canvas.Shell.Contracts.Interactivity")]
 //若要开始生成可本地化的应用程序，请
 //<PropertyGroup> 中的 .csproj 文件中
 //例如，如果您在源文件中使用的是美国英语，
@@ -27,6 +28,7 @@ using System.Windows;
 //以下行中的“en-US”以匹配项目文件中的 UICulture 设置。
 
 //[assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.Satellite)]
+
 
 
 [assembly: ThemeInfo(

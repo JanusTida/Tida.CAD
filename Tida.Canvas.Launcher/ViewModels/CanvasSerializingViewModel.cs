@@ -1,6 +1,6 @@
 ﻿
-using Tida.Application.Contracts.App;
-using Tida.Application.Contracts.Common;
+using Tida.Canvas.Shell.Contracts.App;
+
 using Tida.Canvas.Shell.Contracts.Canvas;
 using Tida.Canvas.Shell.Contracts.Shell;
 using Prism.Commands;
@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Tida.Canvas.Shell.Contracts.Serializing;
+using Tida.Canvas.Shell.Contracts.Common;
 
 namespace Tida.Canvas.Launcher.ViewModels {
     /// <summary>

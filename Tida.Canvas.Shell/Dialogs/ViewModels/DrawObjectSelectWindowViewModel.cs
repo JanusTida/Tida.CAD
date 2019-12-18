@@ -1,5 +1,5 @@
 ﻿using Tida.Canvas.Shell.Dialogs.Models;
-using Tida.Application.Contracts.App;
+using Tida.Canvas.Shell.Contracts.App;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;

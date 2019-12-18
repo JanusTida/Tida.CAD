@@ -1,4 +1,4 @@
-﻿using Tida.Application.Contracts.App;
+﻿using Tida.Canvas.Shell.Contracts.App;
 using System.ComponentModel.Composition;
 using Tida.Canvas.Shell.Contracts.StatusBar;
 using Tida.Canvas.Infrastructure.InteractionHandlers;

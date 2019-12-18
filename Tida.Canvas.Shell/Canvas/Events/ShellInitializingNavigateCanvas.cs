@@ -1,4 +1,4 @@
-﻿using Tida.Application.Contracts.Docking;
+﻿using Tida.Canvas.Shell.Contracts.Docking;
 using Tida.Canvas.Contracts;
 using Tida.Canvas.Shell.Contracts.Canvas;
 using Tida.Canvas.Shell.Contracts.MainPage;

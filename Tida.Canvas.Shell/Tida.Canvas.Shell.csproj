@@ -108,13 +108,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\RCWPF\2018.2.620.45.NoXaml.Trial\Telerik.Windows.Themes.Office2013.dll</HintPath>
     </Reference>
-    <Reference Include="Tida.Application, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tida.Application.1.0.0\lib\NET452\Tida.Application.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Tida.Application.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tida.Application.Contracts.1.0.0\lib\NET452\Tida.Application.Contracts.dll</HintPath>
-    </Reference>
     <Reference Include="Tida.Geometry, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Tida.Geometry.2.1.0\lib\net45\Tida.Geometry.dll</HintPath>
     </Reference>
@@ -128,6 +121,21 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App\AppDomainServiceImpl.cs" />
+    <Compile Include="App\AppLanguageDictProvider.cs" />
+    <Compile Include="App\Constants.cs" />
+    <Compile Include="App\DialogServiceImpl.cs" />
+    <Compile Include="App\Dialogs\InputValueDialog.cs" />
+    <Compile Include="App\LanguageServiceImpl.cs" />
+    <Compile Include="App\LocalExplorerServiceImpl.cs" />
+    <Compile Include="App\MessageBoxServiceImpl.cs" />
+    <Compile Include="App\ResourceDictionaryEx.cs" />
+    <Compile Include="App\ThemeServiceImpl.cs" />
+    <Compile Include="App\ThreadInvokerImpl.cs" />
+    <Compile Include="App\ViewModels\InputValueWindowViewModel.cs" />
+    <Compile Include="App\Views\InputValueWindow.xaml.cs">
+      <DependentUpon>InputValueWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CanvasExport\Constants.cs" />
     <Compile Include="CanvasExport\ExportCanvasAsImgServiceImpl.cs" />
     <Compile Include="CanvasExport\Views\SaveAsImgConfigWindow.xaml.cs">
@@ -151,6 +159,11 @@
       <DependentUpon>CanvasSelector.xaml</DependentUpon>
     </Compile>
     <Compile Include="CommandOutput\CommandOutputPane.cs" />
+    <Compile Include="Common\CommandItem.cs" />
+    <Compile Include="Common\Constants.cs" />
+    <Compile Include="Common\LoggerServiceImpl.cs" />
+    <Compile Include="Common\ServiceProviderWrapper.cs" />
+    <Compile Include="Common\UIObjectProviderFactoryImpl.cs" />
     <Compile Include="ComponentModel\ComponentModelModule.cs" />
     <Compile Include="ComponentModel\Constants.cs" />
     <Compile Include="ComponentModel\DrawObjectPropertyDescriptors.cs" />
@@ -172,6 +185,10 @@
     <Compile Include="ComponentModel\Views\Vector2DEditor.xaml.cs">
       <DependentUpon>Vector2DEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Constants.cs" />
+    <Compile Include="Controls\StackGrid.cs" />
+    <Compile Include="Controls\StackGridFactoryImpl.cs" />
+    <Compile Include="Controls\ViewProviderImpl.cs" />
     <Compile Include="Dialogs\Constants.cs" />
     <Compile Include="Dialogs\DrawObjectSelectDialog.cs" />
     <Compile Include="Dialogs\DrawObjectSelectWrapper.cs" />
@@ -227,7 +244,25 @@
     <Compile Include="EditTools\Round\RoundCenterRadiusPointsEditToolProvider.cs" />
     <Compile Include="EditTools\Round\RoundDiameterTwoPointsEditToolProvider.cs" />
     <Compile Include="EditTools\Round\RoundEditToolGroup.cs" />
+    <Compile Include="Setting\Constants.cs" />
+    <Compile Include="Setting\SettingsSection.cs" />
+    <Compile Include="Setting\SettingsService.cs" />
+    <Compile Include="Splash\SplashServiceImpl.cs" />
+    <Compile Include="Splash\ViewModels\SplashViewModel.cs" />
+    <Compile Include="Splash\Views\Splash.xaml.cs">
+      <DependentUpon>Splash.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeView\TreeUnit.cs" />
+    <Compile Include="TreeView\TreeUnitFactoryImpl.cs" />
     <Compile Include="TrimTools\BasicTrimToolsProvider.cs" />
+    <Page Include="App\Languages\zh_CN\Tida.Canvas.Shell.App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="App\Views\InputValueWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="CanvasExport\Languages\en_US\Tida.Common.Canvas.Shell.CanvasExport.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -284,6 +319,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Themes\Button.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Themes\ComboBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Dialogs\Views\DrawObjectSelectWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -337,6 +384,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Shell\Languages\en_US\Tida.Canvas.Shell.Shell.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Splash\Views\Splash.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -694,7 +745,7 @@
       <Name>Tida.Canvas.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tida.Canvas.Shell.Contracts\Tida.Canvas.Shell.Contracts.csproj">
-      <Project>{8b2b400e-280e-4c1c-94f3-0a83b4628e68}</Project>
+      <Project>{8B2B400E-280E-4C1C-94F3-0A83B4628E68}</Project>
       <Name>Tida.Canvas.Shell.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tida.Canvas.WPFCanvas\Tida.Canvas.WPFCanvas.csproj">
@@ -707,6 +758,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\DWG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="LanguageConfig.xml" />
+    <Resource Include="LanguageConfig_Backup.xml" />
+    <Resource Include="Splash\Images\CDO.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
