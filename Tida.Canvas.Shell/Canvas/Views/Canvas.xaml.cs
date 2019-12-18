@@ -12,7 +12,6 @@ namespace Tida.Canvas.Shell.Canvas.Views {
             InitializeComponent();
         }
         
-
         public ICanvasControl CanvasControl => canvasControl;
         
     }

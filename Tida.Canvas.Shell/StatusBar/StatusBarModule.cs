@@ -6,6 +6,7 @@ using Tida.Canvas.Shell.Contracts.StatusBar;
 using Prism.Mef.Modularity;
 using Prism.Modularity;
 using Tida.Canvas.Shell.Contracts.Common;
+using Prism.Ioc;
 
 namespace Tida.Canvas.Shell.StatusBar {
     [Export(typeof(IShellInitializingEventHandler))]
@@ -26,11 +27,16 @@ namespace Tida.Canvas.Shell.StatusBar {
     /// </summary>
     [ModuleExport(typeof(StatusBarModule))]
     class StatusBarModule : IModule {
-        public void Initialize() {
+        
+
+        public void OnInitialized(IContainerProvider containerProvider)
+        {
             RegionHelper.RegisterViewWithRegion(Contracts.Shell.Constants.RegionName_StatusBar, typeof(Views.StatusBarView));
-            
+        }
+
+        public void RegisterTypes(IContainerRegistry containerRegistry)
+        {
             
         }
-        
     }
 }

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ji="http://schemas.janus.com/expression/2018/interactivity"
+        xmlns:ji="clr-namespace:Tida.Canvas.Shell.Contracts.Interactivity;assembly=Tida.Canvas.Shell.Contracts"
         ResizeMode="NoResize" x:Name="window" Title="{Binding Title}"
          WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" SizeToContent="Height" Width="240">

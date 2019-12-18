@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Tida.Canvas.Shell.Contracts.Common;
-using Microsoft.Practices.ServiceLocation;
 using IServiceProvider = Tida.Canvas.Shell.Contracts.Common.IServiceProvider;
+using CommonServiceLocator;
 
 namespace Tida.Canvas.Shell.Common {
     /// <summary>

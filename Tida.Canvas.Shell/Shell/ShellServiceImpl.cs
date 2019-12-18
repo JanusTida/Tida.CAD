@@ -27,12 +27,16 @@ namespace Tida.Canvas.Shell.Shell {
             if (Initialized) {
                 return;
             }
-
+            
             _shell.Closing += Shell_Closing;
             CommonEventHelper.GetEvent<ShellInitializingEvent>().Publish();
             CommonEventHelper.PublishEventToHandlers<IShellInitializingEventHandler>();
+            
             Initialized = true;
+            
         }
+
+        
 
         public bool Initialized { get; private set; }
 
@@ -41,20 +45,7 @@ namespace Tida.Canvas.Shell.Shell {
             CommonEventHelper.PublishEventToHandlers<IShellClosingEventHandler,CancelEventArgs>(e);
         }
 
-        private void ShellVM_ClosingRequest(object sender, CancelEventArgs e) {
-            //if (ShellClosingEventHandlers == null) {
-            //    return;
-            //}
-
-            //var args = new ShellClosingEventArgs(e);
-            //foreach (var handler in ShellClosingEventHandlers) {
-            //    handler.Handle(args);
-            //    if (args.Handled) {
-            //        break;
-            //    }
-            //}
-        }
-
+      
         private ShellViewModel _shellVM;
         
         //更改标题栏文字;

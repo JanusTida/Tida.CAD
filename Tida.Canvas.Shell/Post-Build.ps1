@@ -7,9 +7,7 @@ param ([string]$ProjectDir, [string]$TargetDir)
 [Console]::WriteLine("TargetDir:" + $TargetDir)
 
 
-Import-Module $PSScriptRoot"\IOUtils.psm1" -Force
-
-Copy-DirectoryEx $ProjectDir"EditTools\Languages\" $TargetDir"EditTools\Languages\" 
+Import-Module $PSScriptRoot"\..\IOUtils.psm1" -Force
 
 Copy-DirectoryEx $ProjectDir"EditTools\Languages" $TargetDir"Languages\"
 Copy-DirectoryEx $ProjectDir"CanvasExport\Languages" $TargetDir"Languages\" 

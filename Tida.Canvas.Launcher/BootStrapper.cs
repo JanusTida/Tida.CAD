@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.ServiceLocation;
+﻿using CommonServiceLocator;
+using Prism.Ioc;
 using Prism.Mef;
 using Prism.Modularity;
 using Prism.Mvvm;
@@ -56,7 +57,7 @@ namespace Tida.Canvas.Launcher
             //主框架模块;
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Shell.Dummy).Assembly));
             this.AggregateCatalog.Catalogs.Add(new DirectoryCatalog("Plugins"));
-            this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Dummy).Assembly));
+            //this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Dummy).Assembly));
             //附加模块;
             
             if (_assemblies != null)
@@ -158,8 +159,10 @@ namespace Tida.Canvas.Launcher
 
         }
 
-
-
+        protected override IContainerExtension CreateContainerExtension()
+        {
+            return null;
+        }
     }
 
  

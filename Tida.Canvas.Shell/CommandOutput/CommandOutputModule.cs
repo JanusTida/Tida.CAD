@@ -8,12 +8,12 @@ using Prism.Mef.Modularity;
 using Prism.Modularity;
 
 namespace Tida.Canvas.Shell.CommandOutput {
-    [ModuleExport(typeof(CommandOutputModule))]
-    class CommandOutputModule : IModule {
-        public void Initialize() {
-            //CommandOutputService.WriteLine("欢迎来到王者荣耀");
-        }
+    //[ModuleExport(typeof(CommandOutputModule))]
+    //class CommandOutputModule : IModule {
+    //    public void Initialize() {
+    //        //CommandOutputService.WriteLine("欢迎来到王者荣耀");
+    //    }
 
         
-    }
+    //}
 }

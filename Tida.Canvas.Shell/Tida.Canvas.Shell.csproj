@@ -1,577 +1,74 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{32A7EEDD-7287-4793-BA43-F5E49C77C54F}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tida.Canvas.Shell</RootNamespace>
-    <AssemblyName>Tida.Canvas.Shell</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
+    <TargetFrameworks>netcoreapp3.0;net45</TargetFrameworks>
+    <UseWPF>true</UseWPF>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>..\bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Aspose.CAD, Version=19.5.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
-      <HintPath>..\packages\Aspose.CAD.19.5.0\lib\net40\Aspose.CAD.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
-    </Reference>
-    <Reference Include="Ookii.Dialogs.Wpf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0c15020868fd6249, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ookii.Dialogs.1.0\lib\net35\Ookii.Dialogs.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="Prism, Version=6.3.0.0, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.Core.6.3.0\lib\net45\Prism.dll</HintPath>
-    </Reference>
-    <Reference Include="Prism.Mef.Wpf, Version=6.3.0.0, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.Mef.6.3.0\lib\net45\Prism.Mef.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="Prism.Wpf, Version=6.3.0.0, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.Wpf.6.3.0\lib\net45\Prism.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="Telerik.Windows.Controls, Version=2015.3.930.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\RCWPF\2018.2.620.45.NoXaml.Trial\Telerik.Windows.Controls.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Controls.Data, Version=2015.3.930.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\RCWPF\2018.2.620.45.NoXaml.Trial\Telerik.Windows.Controls.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Controls.Docking, Version=2015.3.930.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\RCWPF\2018.2.620.45.NoXaml.Trial\Telerik.Windows.Controls.Docking.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Controls.Input, Version=2015.3.930.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\RCWPF\2018.2.620.45.NoXaml.Trial\Telerik.Windows.Controls.Input.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Controls.Navigation, Version=2015.3.930.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\RCWPF\2018.2.620.45.NoXaml.Trial\Telerik.Windows.Controls.Navigation.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Controls.RibbonView, Version=2015.3.930.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\RCWPF\2018.2.620.45.NoXaml.Trial\Telerik.Windows.Controls.RibbonView.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Data, Version=2015.3.930.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\RCWPF\2018.2.620.45.NoXaml.Trial\Telerik.Windows.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Themes.Office2013, Version=2015.3.930.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\RCWPF\2018.2.620.45.NoXaml.Trial\Telerik.Windows.Themes.Office2013.dll</HintPath>
-    </Reference>
-    <Reference Include="Tida.Geometry, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tida.Geometry.2.1.0\lib\net45\Tida.Geometry.dll</HintPath>
-    </Reference>
-    <Reference Include="Tida.Util, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tida.Util.1.0.0\lib\NET452\Tida.Util.dll</HintPath>
-    </Reference>
-    <Reference Include="UIAutomationProvider" />
-    <Reference Include="UIAutomationTypes" />
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
+    <None Remove="Resources\Align.png" />
+    <None Remove="Resources\Angle.png" />
+    <None Remove="Resources\Arc Shape.png" />
+    <None Remove="Resources\Array.png" />
+    <None Remove="Resources\Beam Shape.png" />
+    <None Remove="Resources\Circle Shape.png" />
+    <None Remove="Resources\CircleColumn.png" />
+    <None Remove="Resources\Column Shape.png" />
+    <None Remove="Resources\Copy Time.png" />
+    <None Remove="Resources\CWall.jpg" />
+    <None Remove="Resources\Dashed.png" />
+    <None Remove="Resources\Delete.png" />
+    <None Remove="Resources\DWG.png" />
+    <None Remove="Resources\Ellipse Shape.png" />
+    <None Remove="Resources\FontColor.png" />
+    <None Remove="Resources\Index Shape.png" />
+    <None Remove="Resources\Line Shape.png" />
+    <None Remove="Resources\LineStyle.png" />
+    <None Remove="Resources\Mirror.png" />
+    <None Remove="Resources\Move Shape.png" />
+    <None Remove="Resources\New Scene.png" />
+    <None Remove="Resources\NWall.jpg" />
+    <None Remove="Resources\offset.png" />
+    <None Remove="Resources\OrangeLarge.png" />
+    <None Remove="Resources\OSB Shape.png" />
+    <None Remove="Resources\PLine Shape.png" />
+    <None Remove="Resources\Polygon Shape.png" />
+    <None Remove="Resources\print.png" />
+    <None Remove="Resources\Rectangle Shape.png" />
+    <None Remove="Resources\Rotate.png" />
+    <None Remove="Resources\Rule Shape.jpg" />
+    <None Remove="Resources\Save.png" />
+    <None Remove="Resources\sectionI.png" />
+    <None Remove="Resources\self_close_icon.png" />
+    <None Remove="Resources\SquareColumn.png" />
+    <None Remove="Resources\Staff Setup.png" />
+    <None Remove="Resources\Start Parameter.png" />
+    <None Remove="Resources\Steel beam.png" />
+    <None Remove="Resources\Steel Member.jpg" />
+    <None Remove="Resources\Tape Measure.png" />
+    <None Remove="Resources\Text Shape.png" />
+    <None Remove="Resources\TextEffects.png" />
+    <None Remove="Resources\TextHighlightColor.png" />
+    <None Remove="Resources\Wall Shape.png" />
+    <None Remove="Resources\圆.png" />
+    <None Remove="Resources\复制.png" />
+    <None Remove="Resources\撤销.png" />
+    <None Remove="Resources\点.png" />
+    <None Remove="Resources\矩形.png" />
+    <None Remove="Resources\移动.png" />
+    <None Remove="Resources\裁剪.png" />
+    <None Remove="Resources\选择.png" />
+    <None Remove="Resources\重做.png" />
+    <None Remove="Resources\镜像.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="App\AppDomainServiceImpl.cs" />
-    <Compile Include="App\AppLanguageDictProvider.cs" />
-    <Compile Include="App\Constants.cs" />
-    <Compile Include="App\DialogServiceImpl.cs" />
-    <Compile Include="App\Dialogs\InputValueDialog.cs" />
-    <Compile Include="App\LanguageServiceImpl.cs" />
-    <Compile Include="App\LocalExplorerServiceImpl.cs" />
-    <Compile Include="App\MessageBoxServiceImpl.cs" />
-    <Compile Include="App\ResourceDictionaryEx.cs" />
-    <Compile Include="App\ThemeServiceImpl.cs" />
-    <Compile Include="App\ThreadInvokerImpl.cs" />
-    <Compile Include="App\ViewModels\InputValueWindowViewModel.cs" />
-    <Compile Include="App\Views\InputValueWindow.xaml.cs">
-      <DependentUpon>InputValueWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CanvasExport\Constants.cs" />
-    <Compile Include="CanvasExport\ExportCanvasAsImgServiceImpl.cs" />
-    <Compile Include="CanvasExport\Views\SaveAsImgConfigWindow.xaml.cs">
-      <DependentUpon>SaveAsImgConfigWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Canvas\CanvasDocumentPane.cs" />
-    <Compile Include="Canvas\DefaultLayersProviderGeneric.cs" />
-    <Compile Include="Canvas\Events\CurrentEditToolChangedHandlerWarningUnVisibleLayer.cs" />
-    <Compile Include="Canvas\Events\ShellInitializingNavigateCanvas.cs" />
-    <Compile Include="Canvas\Menu\ShowAllDrawObjectsMenuItem.cs" />
-    <Compile Include="Canvas\Menu\CommitEditContextMenuItem.cs" />
-    <Compile Include="Canvas\Menu\DeleteSelectedDrawObjectsContextMenuItem.cs" />
-    <Compile Include="Canvas\Menu\HideSelectedDrawObjectsContextMenuItem.cs" />
-    <Compile Include="Canvas\Menu\RedoContextMenuItem.cs" />
-    <Compile Include="Canvas\Menu\UndoContextMenuItem.cs" />
-    <Compile Include="Canvas\Models\CanvasLayerModel.cs" />
-    <Compile Include="Canvas\Models\MenuItemModel.cs" />
-    <Compile Include="Canvas\Ribbon\RedoRibbonButtonItem.cs" />
-    <Compile Include="Canvas\Ribbon\UndoRibbonButtonItem.cs" />
-    <Compile Include="Canvas\Views\CanvasSelector.xaml.cs">
-      <DependentUpon>CanvasSelector.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CommandOutput\CommandOutputPane.cs" />
-    <Compile Include="Common\CommandItem.cs" />
-    <Compile Include="Common\Constants.cs" />
-    <Compile Include="Common\LoggerServiceImpl.cs" />
-    <Compile Include="Common\ServiceProviderWrapper.cs" />
-    <Compile Include="Common\UIObjectProviderFactoryImpl.cs" />
-    <Compile Include="ComponentModel\ComponentModelModule.cs" />
-    <Compile Include="ComponentModel\Constants.cs" />
-    <Compile Include="ComponentModel\DrawObjectPropertyDescriptors.cs" />
-    <Compile Include="ComponentModel\Ellipse2DEditorDescriptor.cs" />
-    <Compile Include="ComponentModel\EllipseEllipse2DPropertyDescriptor.cs" />
-    <Compile Include="ComponentModel\Line2DEditorDescriptor.cs" />
-    <Compile Include="ComponentModel\LineBaseLine2DPropertyDescriptor.cs" />
-    <Compile Include="ComponentModel\MousePositionTrackableDrawObjectIgnorePropertyDescriptor.cs" />
-    <Compile Include="ComponentModel\PointPropertyDescriptors.cs" />
-    <Compile Include="ComponentModel\DynamicAsmManager.cs" />
-    <Compile Include="ComponentModel\Vector2DEditorDescriptor.cs" />
-    <Compile Include="ComponentModel\Views\Ellipse2DEditor.xaml.cs">
-      <DependentUpon>Ellipse2DEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ComponentModel\Views\Line2DEditor.xaml.cs">
-      <DependentUpon>Line2DEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ComponentModel\Views\StandardInputTextBox.cs" />
-    <Compile Include="ComponentModel\Views\Vector2DEditor.xaml.cs">
-      <DependentUpon>Vector2DEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Constants.cs" />
-    <Compile Include="Controls\StackGrid.cs" />
-    <Compile Include="Controls\StackGridFactoryImpl.cs" />
-    <Compile Include="Controls\ViewProviderImpl.cs" />
-    <Compile Include="Dialogs\Constants.cs" />
-    <Compile Include="Dialogs\DrawObjectSelectDialog.cs" />
-    <Compile Include="Dialogs\DrawObjectSelectWrapper.cs" />
-    <Compile Include="Dialogs\Models\DrawObjectModel.cs" />
-    <Compile Include="Dialogs\ViewModels\DrawObjectSelectWindowViewModel.cs" />
-    <Compile Include="Dialogs\Views\DrawObjectSelectWindow.xaml.cs">
-      <DependentUpon>DrawObjectSelectWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DrawObjectDescription\Constants.cs" />
-    <Compile Include="DrawObjectDescription\DrawObjectDescriptionModule.cs" />
-    <Compile Include="DrawObjectDescription\DrawObjectDescriptors.cs" />
-    <Compile Include="DrawObjectDescription\LanguageDrawObjectDescriptorGenericBase.cs" />
-    <Compile Include="DrawObjectDescription\LanguageDrawObjectDescriptorGenericBase2.cs" />
-    <Compile Include="DWG\CadArcToArcConverter.cs" />
-    <Compile Include="DWG\CADLineToLineConverter.cs" />
-    <Compile Include="DWG\CadCircleToEllipseConverter.cs" />
-    <Compile Include="DWG\CADBaseToDrawObjectConverterGenericBase.cs" />
-    <Compile Include="DWG\CadPointToPointConverter.cs" />
-    <Compile Include="DWG\Constants.cs" />
-    <Compile Include="DWG\ConvertUtils.cs" />
-    <Compile Include="DWG\ICADBaseToDrawObjectConverter.cs" />
-    <Compile Include="DWG\Ribbon\OpenDWGMenuItem.cs" />
-    <Compile Include="DynamicInput\CopyEditToolDynamicInputerProvider.cs" />
-    <Compile Include="DynamicInput\MultiLineEditDynamicInputerProvider.cs" />
-    <Compile Include="DynamicInput\SingleLineEditDynamicInputerProvider.cs" />
-    <Compile Include="DynamicInput\MoveEditToolDynamicInputerProvider.cs" />
-    <Compile Include="DynamicInput\OneLineEditDynamicInputerProvider.cs" />
-    <Compile Include="DynamicInput\PointEditDynamicInputerProvider.cs" />
-    <Compile Include="EditTools\Arc\ArcEditToolGroup.cs" />
-    <Compile Include="EditTools\Arc\ArcStartAndCenterThenEndEditToolProvider.cs" />
-    <Compile Include="EditTools\BasicEditToolGroup.cs" />
-    <Compile Include="EditTools\Events\CanvasCopyEditToolEventHandler.cs" />
-    <Compile Include="EditTools\Events\CanvasEditToolChangedEventHandlerGenericBase.cs" />
-    <Compile Include="EditTools\Events\CanvasMeasureEditToolEventHandlers.cs" />
-    <Compile Include="EditTools\Events\CanvasSingleLineEditToolEventHandler.cs" />
-    <Compile Include="EditTools\Events\CanvasMoveEditToolEventHandler.cs" />
-    <Compile Include="EditTools\Events\CanvasOffsetEditToolEventHandler.cs" />
-    <Compile Include="EditTools\Events\CanvasTrimEditToolEventHandler.cs" />
-    <Compile Include="EditTools\Line\LineEditToolGroup.cs" />
-    <Compile Include="EditTools\Measure\AngleMeasureEditToolProvider.cs" />
-    <Compile Include="EditTools\Measure\LengthMeasureEditToolProvider.cs" />
-    <Compile Include="EditTools\Measure\MeasureEditToolGroup.cs" />
-    <Compile Include="EditTools\Measure\MeasureSettings.cs" />
-    <Compile Include="EditTools\MirrorEditToolProvider.cs" />
-    <Compile Include="EditTools\Line\MultiLineEditToolProvider.cs" />
-    <Compile Include="EditTools\OffsetToolEditToolProvider.cs" />
-    <Compile Include="EditTools\Ribbon\MeasureShouldCommitMeasureDataRibbonItem.cs" />
-    <Compile Include="EditTools\Line\SingleLineEditToolProvider.cs" />
-    <Compile Include="EditTools\MoveEditToolProvider.cs" />
-    <Compile Include="EditTools\PointEditToolProvider.cs" />
-    <Compile Include="EditTools\Rectangle\RectangleDiagLinePointsEditToolProvider.cs" />
-    <Compile Include="EditTools\Rectangle\RectangleEditToolGroup.cs" />
-    <Compile Include="EditTools\Round\RoundCenterRadiusPointsEditToolProvider.cs" />
-    <Compile Include="EditTools\Round\RoundDiameterTwoPointsEditToolProvider.cs" />
-    <Compile Include="EditTools\Round\RoundEditToolGroup.cs" />
-    <Compile Include="Setting\Constants.cs" />
-    <Compile Include="Setting\SettingsSection.cs" />
-    <Compile Include="Setting\SettingsService.cs" />
-    <Compile Include="Splash\SplashServiceImpl.cs" />
-    <Compile Include="Splash\ViewModels\SplashViewModel.cs" />
-    <Compile Include="Splash\Views\Splash.xaml.cs">
-      <DependentUpon>Splash.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="TreeView\TreeUnit.cs" />
-    <Compile Include="TreeView\TreeUnitFactoryImpl.cs" />
-    <Compile Include="TrimTools\BasicTrimToolsProvider.cs" />
-    <Page Include="App\Languages\zh_CN\Tida.Canvas.Shell.App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="App\Views\InputValueWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CanvasExport\Languages\en_US\Tida.Common.Canvas.Shell.CanvasExport.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CanvasExport\Views\SaveAsImgConfigWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Canvas\Languages\en_US\Tida.Canvas.Shell.Canvas.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Canvas\Languages\zh_CN\Tida.Canvas.Shell.Canvas.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Canvas\Views\Canvas.xaml">
-      <SubType>Designer</SubType>
-      <Generator>XamlIntelliSenseFileGenerator</Generator>
-    </Page>
-    <Page Include="Canvas\Views\CanvasLayersStatusBarItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Canvas\Views\CanvasSelector.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CommandOutput\Languages\en_US\Tida.Canvas.Shell.CommandOutput.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CommandOutput\Languages\zh_CN\Tida.Canvas.Shell.CommandOutput.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CommandOutput\Views\CommandOutput.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ComponentModel\Languages\en_US\Tida.Canvas.Shell.ComponentModel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ComponentModel\Views\Ellipse2DEditor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ComponentModel\Views\Line2DEditor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ComponentModel\Views\Vector2DEditor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Themes\Button.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\Themes\ComboBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Dialogs\Views\DrawObjectSelectWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DrawObjectDescription\Languages\en_US\Tida.Canvas.Shell.DrawObjectDescription.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DrawObjectDescription\Languages\zh_CN\Tida.Canvas.Shell.DrawObjectDescription.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DWG\Languages\en_US\Tida.Canvas.Shell.DWG.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="EditTools\Languages\en_Us\Tida.Canvas.Shell.EditTools.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="EditTools\Languages\zh_CN\Tida.Canvas.Shell.EditTools.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MainPage\Languages\en_US\Tida.Canvas.Shell.MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MainPage\Languages\zh_CN\Tida.Canvas.Shell.MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="NativePresentation\Views\NumberBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="NativePresentation\Views\NumberBoxContainer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PropertyGrid\Languages\en_US\Tida.Canvas.Shell.PropertyGrid.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PropertyGrid\Views\PropertyGrid.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Ribbon\Languages\en_US\Tida.Canvas.Shell.Ribbon.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Shell\Languages\en_US\Tida.Canvas.Shell.Shell.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Splash\Views\Splash.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="StatusBar\Languages\en_US\Tida.Canvas.Shell.StatusBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Docking.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MainPage\Views\MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Ribbon\Views\Ribbon.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Shell\Languages\zh_CN\Tida.Canvas.Shell.Shell.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="StatusBar\Languages\zh_CN\Tida.Canvas.Shell.StatusBar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="StatusBar\Views\StatusBarView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Shell\Views\Shell.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="Canvas\CanvasServiceImpl.cs" />
-    <Compile Include="Canvas\Constants.cs" />
-    <Compile Include="Canvas\Ribbon\EditRibbonGroup.cs" />
-    <Compile Include="EditTools\Ribbon\EditToolRibbonGroupsProvider.cs" />
-    <Compile Include="EditTools\Ribbon\EditToolRibbonItemsProvider.cs" />
-    <Compile Include="Canvas\Ribbon\SelectRibbonButtonItem.cs" />
-    <Compile Include="Canvas\Setting\VertexModelSettingServiceEventHandler.cs" />
-    <Compile Include="Canvas\StatusBar\AxisTrackingEnabledStatusBarItem.cs" />
-    <Compile Include="Canvas\StatusBar\CanvasLayersStatuBarItem.cs" />
-    <Compile Include="Canvas\StatusBar\CanvasSnapingEnabledStatusBarItem.cs" />
-    <Compile Include="Canvas\StatusBar\CurrentEditToolStatusBarItem.cs" />
-    <Compile Include="Canvas\StatusBar\InitializeStatusBarEventHandlerForCanvas.cs" />
-    <Compile Include="Canvas\StatusBar\IsReadOnlyStatusBarItem.cs" />
-    <Compile Include="Canvas\StatusBar\SnapPositionStatuBarItem.cs" />
-    <Compile Include="Canvas\StatusBar\DynamicInputStatusBarItem.cs" />
-    <Compile Include="Canvas\StatusBar\VertexModeEnabledStatusBarItem.cs" />
-    <Compile Include="Canvas\StatusBar\ZoomStatusBarItem.cs" />
-    <Compile Include="Canvas\ViewModels\CanvasLayersStatusBarItemViewModel.cs" />
-    <Compile Include="Canvas\ViewModels\CanvasViewModel.cs" />
-    <Compile Include="Canvas\Views\Canvas.xaml.cs">
-      <DependentUpon>Canvas.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Canvas\Views\CanvasLayersStatusBarItem.xaml.cs">
-      <DependentUpon>CanvasLayersStatusBarItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CommandOutput\CommandOutputModule.cs" />
-    <Compile Include="CommandOutput\Constants.cs" />
-    <Compile Include="CommandOutput\CommandOutputServiceImpl.cs" />
-    <Compile Include="CommandOutput\ViewModels\CommandOutputViewModel.cs" />
-    <Compile Include="CommandOutput\Views\CommandOutput.xaml.cs">
-      <DependentUpon>CommandOutput.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Constants.cs" />
-    <Compile Include="EditTools\TrimEditToolProvider.cs" />
-    <Compile Include="EditTools\Constants.cs" />
-    <Compile Include="EditTools\CopyEditToolProvider.cs" />
-    <Compile Include="EditTools\EditToolsModule.cs" />
-    <Compile Include="CanvasExport\Ribbon\SaveAsImgMenuItem.cs" />
-    <Compile Include="CanvasExport\ViewModels\SaveAsImgConfigWindowViewModel.cs" />
-    <Compile Include="ExtendTools\BasicExtendToolsProvider.cs" />
-    <Compile Include="InteractionHandlers\DynamicInputInteractionHandlerProvider.cs" />
-    <Compile Include="InteractionHandlers\VertextInteractionHandlerProvider.cs" />
-    <Compile Include="MainPage\Constants.cs" />
-    <Compile Include="MainPage\DockingPaneContainers.cs" />
-    <Compile Include="MainPage\DockingPaneGroups.cs" />
-    <Compile Include="MainPage\DockingPanes.cs" />
-    <Compile Include="MainPage\DockingPanesFactoryImpl.cs" />
-    <Compile Include="MainPage\Events\ShellInitializingNavigateMainPageHandler.cs" />
-    <Compile Include="MainPage\MainDockingServiceImpl.cs" />
-    <Compile Include="MainPage\ViewModels\MainPageViewModel.cs" />
-    <Compile Include="MainPage\Views\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MirrorTools\BasicMirrorToolsProvider.cs" />
-    <Compile Include="MoveTools\BasicMoveToolsProvider.cs" />
-    <Compile Include="MoveTools\LineBaseMoveTool.cs" />
-    <Compile Include="NativePresentation\Models\NumberBoxModel.cs" />
-    <Compile Include="NativePresentation\NumberBoxServiceImpl.cs" />
-    <Compile Include="NativePresentation\ViewModels\NumberBoxContainerViewModel.cs" />
-    <Compile Include="NativePresentation\Views\NumberBox.xaml.cs">
-      <DependentUpon>NumberBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="NativePresentation\Views\NumberBoxContainer.xaml.cs">
-      <DependentUpon>NumberBoxContainer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="OffsetTools\BasicOffsetToolsProvider.cs" />
-    <Compile Include="PropertyGrid\MefPropertyGridManager.cs" />
-    <Compile Include="PropertyGrid\PropertyGridPane.cs" />
-    <Compile Include="PropertyGrid\ViewModels\PropertyGridViewModel.cs" />
-    <Compile Include="PropertyGrid\Views\PropertyGrid.xaml.cs">
-      <DependentUpon>PropertyGrid.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Canvas\Ribbon\ShowAllDrawObjectsMenuItem.cs" />
-    <Compile Include="Serializing\EllipseXmlSerializer.cs" />
-    <Compile Include="Serializing\LineXmlSerializer.cs" />
-    <Compile Include="Serializing\PointXmlSerializer.cs" />
-    <Compile Include="Serializing\RectangleXmlSerializer.cs" />
-    <Compile Include="Snaping\BasicIntersectRulesProvider.cs" />
-    <Compile Include="Snaping\BasicSnapRulesProvider.cs" />
-    <Compile Include="Snaping\Constants.cs" />
-    <Compile Include="Snaping\DoubleDrawObjectIntersectRuleProvider.cs" />
-    <Compile Include="StatusBar\DefaultStatusBarTextItem.cs" />
-    <Compile Include="StatusBar\IndentStatusBarItem.cs" />
-    <Compile Include="Ribbon\Constants.cs" />
-    <Compile Include="Ribbon\ShellInitializingNavigateRibbonHandler.cs" />
-    <Compile Include="Ribbon\RibbonServiceImpl.cs" />
-    <Compile Include="Ribbon\ToolsRibbonTab.cs" />
-    <Compile Include="Ribbon\Views\Ribbon.xaml.cs">
-      <DependentUpon>Ribbon.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Shell\ShellServiceImpl.cs" />
-    <Compile Include="Dummy.cs" />
-    <Compile Include="Shell\Constants.cs" />
-    <Compile Include="StatusBar\Constants.cs" />
-    <Compile Include="StatusBar\StatusBarServiceImpl.cs" />
-    <Compile Include="StatusBar\StatusBarModule.cs" />
-    <Compile Include="StatusBar\Views\StatusBarView.xaml.cs">
-      <DependentUpon>StatusBarView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Shell\ViewModels\ShellViewModel.cs" />
-    <Compile Include="Shell\Views\Shell.xaml.cs">
-      <DependentUpon>Shell.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="app.config" />
-    <Page Include="PropertyGrid\Languages\zh_CN\Tida.Canvas.Shell.PropertyGrid.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CanvasExport\Languages\zh_CN\Tida.Common.Canvas.Shell.CanvasExport.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <None Include="ClassDiagram1.cd" />
-    <Page Include="Ribbon\Languages\zh_CN\Tida.Canvas.Shell.Ribbon.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ComponentModel\Languages\zh_CN\Tida.Canvas.Shell.ComponentModel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <None Include="IOUtils.psm1" />
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <AppDesigner Include="Properties\" />
-  </ItemGroup>
+
   <ItemGroup>
     <Folder Include="ComponentModel\Model\" />
     <Folder Include="ComponentModel\ViewModels\" />
@@ -580,192 +77,130 @@
     <Folder Include="ToolBar\ViewModels\" />
     <Folder Include="ToolBar\Views\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspose.CAD" Version="19.9.0" />
+    <PackageReference Include="Ookii.Dialogs.Wpf" Version="1.1.0" />
+    <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
+    <PackageReference Include="WinInsider.Prism.Mef.Wpf" Version="7.2.0.1375" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tida.Canvas.Shell.Contracts\Tida.Canvas.Shell.Contracts.csproj" />
+    <ProjectReference Include="..\Tida.Canvas.WPFCanvas\Tida.Canvas.WPFCanvas.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='net45'">
+    <Reference Include="Telerik.Windows.Controls">
+      <HintPath>..\lib\RCWPF\WPF45\Telerik.Windows.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Data">
+      <HintPath>..\lib\RCWPF\WPF45\Telerik.Windows.Controls.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Docking">
+      <HintPath>..\lib\RCWPF\WPF45\Telerik.Windows.Controls.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Input">
+      <HintPath>..\lib\RCWPF\WPF45\Telerik.Windows.Controls.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Navigation">
+      <HintPath>..\lib\RCWPF\WPF45\Telerik.Windows.Controls.Navigation.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.RibbonView">
+      <HintPath>..\lib\RCWPF\WPF45\Telerik.Windows.Controls.RibbonView.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Data">
+      <HintPath>..\lib\RCWPF\WPF45\Telerik.Windows.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Themes.Office2013">
+      <HintPath>..\lib\RCWPF\WPF45\Telerik.Windows.Themes.Office2013.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.0'">
+    <Reference Include="Telerik.Windows.Controls">
+      <HintPath>..\lib\RCWPF\NetCore\Telerik.Windows.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Data">
+      <HintPath>..\lib\RCWPF\NetCore\Telerik.Windows.Controls.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Docking">
+      <HintPath>..\lib\RCWPF\NetCore\Telerik.Windows.Controls.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Input">
+      <HintPath>..\lib\RCWPF\NetCore\Telerik.Windows.Controls.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Navigation">
+      <HintPath>..\lib\RCWPF\NetCore\Telerik.Windows.Controls.Navigation.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.RibbonView">
+      <HintPath>..\lib\RCWPF\NetCore\Telerik.Windows.Controls.RibbonView.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Data">
+      <HintPath>..\lib\RCWPF\NetCore\Telerik.Windows.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Themes.Office2013">
+      <HintPath>..\lib\RCWPF\NetCore\Telerik.Windows.Themes.Office2013.dll</HintPath>
+    </Reference>
+  </ItemGroup>  
   <ItemGroup>
     <Resource Include="Resources\Align.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Resources\Angle.png" />
     <Resource Include="Resources\Arc Shape.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Array.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Beam Shape.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Circle Shape.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\CircleColumn.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Column Shape.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Copy Time.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\CWall.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Dashed.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Delete.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Resources\DWG.png" />
     <Resource Include="Resources\Ellipse Shape.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\FontColor.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Index Shape.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Line Shape.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\LineStyle.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Mirror.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Move Shape.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\New Scene.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\NWall.jpg" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Resources\offset.png" />
     <Resource Include="Resources\OrangeLarge.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\OSB Shape.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\PLine Shape.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Polygon Shape.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\print.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Rectangle Shape.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Rotate.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Rule Shape.jpg" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Resources\Save.png" />
     <Resource Include="Resources\sectionI.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\self_close_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\SquareColumn.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Staff Setup.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Start Parameter.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Steel beam.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Steel Member.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Tape Measure.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Text Shape.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\TextEffects.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\TextHighlightColor.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Wall Shape.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Resources\圆.png" />
     <Resource Include="Resources\复制.png" />
     <Resource Include="Resources\撤销.png" />
     <Resource Include="Resources\点.png" />
+    <Resource Include="Resources\矩形.png" />
     <Resource Include="Resources\移动.png" />
     <Resource Include="Resources\裁剪.png" />
     <Resource Include="Resources\选择.png" />
     <Resource Include="Resources\重做.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\圆.png" />
-    <Resource Include="Resources\矩形.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Save.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\offset.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Angle.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\镜像.png" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Tida.Canvas.Contracts\Tida.Canvas.Contracts.csproj">
-      <Project>{9488b9cd-3888-4e43-b598-6eb9536d2b15}</Project>
-      <Name>Tida.Canvas.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tida.Canvas.Infrastructure\Tida.Canvas.Infrastructure.csproj">
-      <Project>{8dfd89dc-7bce-41a3-b60c-4221b3d154bc}</Project>
-      <Name>Tida.Canvas.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tida.Canvas.Shell.Contracts\Tida.Canvas.Shell.Contracts.csproj">
-      <Project>{8B2B400E-280E-4C1C-94F3-0A83B4628E68}</Project>
-      <Name>Tida.Canvas.Shell.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tida.Canvas.WPFCanvas\Tida.Canvas.WPFCanvas.csproj">
-      <Project>{fbf41f15-f1b5-4f4d-a83f-9f8bfc4ad1e7}</Project>
-      <Name>Tida.Canvas.WPFCanvas</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\DWG.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="LanguageConfig.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="LanguageConfig_Backup.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <None Include="Post-Build.ps1" />
-    <Resource Include="Splash\Images\CDO.jpg" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>powershell -ExecutionPolicy RemoteSigned -File "$(ProjectDir)Post-Build.ps1" -ProjectDir $(ProjectDir)  -TargetDir $(TargetDir)
-</PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="powershell -ExecutionPolicy RemoteSigned -File &quot;$(ProjectDir)Post-Build.ps1&quot; -ProjectDir $(ProjectDir)  -TargetDir $(TargetDir)" />
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

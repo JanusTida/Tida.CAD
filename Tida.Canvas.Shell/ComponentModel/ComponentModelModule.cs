@@ -7,13 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Telerik.Windows.Controls;
+using Prism.Ioc;
 
 namespace Tida.Canvas.Shell.ComponentModel {
     [ModuleExport(typeof(ComponentModelModule))]
     public class ComponentModelModule : IModule {
-        public void Initialize() {
+       
+        public void OnInitialized(IContainerProvider containerProvider)
+        {
             //设定SelectorFactory为Telerik相关的;
-            StandardValuesEditorManager.SelectorFactory = () => new RadComboBox();
+            StandardValuesEditorManager.SelectorFactory = () => new RadComboBox(); 
+        }
+
+        public void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            
         }
     }
 }

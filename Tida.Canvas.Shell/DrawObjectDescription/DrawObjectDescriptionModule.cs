@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using Prism.Ioc;
 
 namespace Tida.Canvas.Shell.DrawObjectDescription {
     [ModuleExport(typeof(DrawObjectDescriptionModule))]
@@ -14,8 +15,15 @@ namespace Tida.Canvas.Shell.DrawObjectDescription {
             DrawObjectDescriptionUtil.DrawObjectDescriptors.AddRange(mefDrawObjectDescriptors.OrderBy(p => p.Metadata.Order).Select(p => p.Value));
         }
 
-        public void Initialize() {
+       
+        public void OnInitialized(IContainerProvider containerProvider)
+        {
+            
+        }
 
+        public void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            
         }
     }
 }

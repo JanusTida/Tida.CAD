@@ -82,6 +82,7 @@ namespace Tida.Canvas.Shell.Ribbon {
             
             //初始化顶级菜单;
             foreach (var menuItem in _mefMenuItems.OrderBy(p => p.Metadata.Order)) {
+                
                 var header = LanguageService.FindResourceString(menuItem.Metadata.HeaderLanguageKey);
                 var radMenuItem = new RadMenuItem {
                     Command = menuItem.Value.Command,
@@ -89,11 +90,19 @@ namespace Tida.Canvas.Shell.Ribbon {
                 };
 
                 if(!string.IsNullOrEmpty(menuItem.Metadata.Icon)) {
-                    radMenuItem.Icon = new Image {
-                        Source = new BitmapImage(new Uri(menuItem.Metadata.Icon, UriKind.RelativeOrAbsolute)),
-                        Width = Constants.MenuIconWidth,
-                        Height = Constants.MenuIconHeight
-                    };
+                    try
+                    {
+                        radMenuItem.Icon = new Image
+                        {
+                            Source = new BitmapImage(new Uri(menuItem.Metadata.Icon, UriKind.RelativeOrAbsolute)),
+                            Width = Constants.MenuIconWidth,
+                            Height = Constants.MenuIconHeight
+                        };
+                    }
+                    catch(Exception ex)
+                    {
+                        LoggerService.WriteException(ex);
+                    }
                 }
 
                 _ribbon.AppMenu.Items.Add(radMenuItem);
@@ -284,7 +293,16 @@ namespace Tida.Canvas.Shell.Ribbon {
                     ribbonGroupControl.Items.Add(ribbonButton);
                 }
                 else if (ribbonItem.RibbonItem is IRibbonObjectItem objectItem) {
-                    ribbonGroupControl.Items.Add(objectItem.UIObject);
+                    try
+                    {
+                        ribbonGroupControl.Items.Add(objectItem.UIObject);
+                    }
+                    catch(Exception ex)
+                    {
+                        LoggerService.WriteLine($"ribbon add error {nameof(ribbonItem.RibbonItemMetaData.GUID)}:{ribbonItem.RibbonItemMetaData.GUID}");
+                        LoggerService.WriteException(ex);
+                    }
+                    
                 }
             }
         }

@@ -1,10 +1,11 @@
-﻿using CDO.Common.Canvas.Contracts;
-using CDO.Common.Geometry.Primitives;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tida.Canvas.Contracts;
+using Tida.Canvas.Shell.Contracts.Canvas;
+using Tida.Geometry.Primitives;
 
 namespace CDO.Common.Canvas.Shell.Contracts.Canvas {
 

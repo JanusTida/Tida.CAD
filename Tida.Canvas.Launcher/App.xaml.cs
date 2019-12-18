@@ -12,6 +12,7 @@ using WPFApplication = System.Windows.Application;
 using Tida.Canvas.Shell.Contracts.Shell;
 using Tida.Canvas.Shell.Contracts.Shell.Events;
 using Tida.Canvas.Shell.Contracts.Common;
+using System.Reflection;
 
 namespace Tida.Canvas.Launcher {
     /// <summary>
@@ -42,13 +43,45 @@ namespace Tida.Canvas.Launcher {
                 }
             };
             InitializeComponent();
-
+#if NETCOREAPP
+            InitializeAssmblyProbing();
+#endif
         }
+
+        /// <summary>
+        /// 因为Net core 下会出现同目录下无法加载部分程序集的问题,故在此显式加载程序集;
+        /// </summary>
+        private void InitializeAssmblyProbing()
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+        }
+
+        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            if (args.Name.Contains(".resources"))
+            {
+                return null;
+            }
+            var commaIndex = args.Name.IndexOf(",");
+            if(commaIndex == -1)
+            {
+                return null;
+            }
+
+            var asm = Assembly.GetExecutingAssembly();
+            var asmPath = System.IO.Path.GetDirectoryName(asm.Location);
+            var dllPath = System.IO.Path.Combine(asmPath, $"{args.Name.Substring(0, commaIndex)}.dll");
+            if (System.IO.File.Exists(dllPath))
+            {
+                return Assembly.LoadFrom(dllPath);
+            }
+            return null;
+        }
+
         protected override void OnStartup(StartupEventArgs e) {
 
             
             new BootStrapper().Run();
-            
             
 
             base.OnStartup(e);

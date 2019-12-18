@@ -17,8 +17,8 @@ namespace Tida.Canvas.Shell.ComponentModel {
 
         static DynamicAsmManager() {
             var asmName = new AssemblyName(TidaAsmName);
-            AsmBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(asmName, AssemblyBuilderAccess.RunAndSave);
-            ModuleBuilder = AsmBuilder.DefineDynamicModule(asmName.Name, asmName.Name + ".dll");
+            AsmBuilder = AssemblyBuilder.DefineDynamicAssembly(asmName, AssemblyBuilderAccess.RunAndCollect);
+            ModuleBuilder = AsmBuilder.DefineDynamicModule(asmName.Name);
         }
 
         private const string TidaAsmName = "TidaDynamicEditorAsm";
@@ -35,14 +35,17 @@ namespace Tida.Canvas.Shell.ComponentModel {
         /// 保存临时程序集,本方法只能被调用一次,用于在调试中检查生成后的代码;
         /// </summary>
         public static void SaveTempAssembly() {
-            try {
+            ///.net core 中已经移除<see cref="AssemblyBuilder.Save(string)"/>,故.net core 中将不能保存程序集;
+#if NETFRAMEWORK
+            try
+            {
                 Saving?.Invoke(null, EventArgs.Empty);
                 AsmBuilder.Save(TidaAsmName + ".dll");
             }
             catch (Exception ex) {
                 LoggerService.WriteException(ex);
-            }
-
+            }      
+#endif
         }
     }
 
