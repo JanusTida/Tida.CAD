@@ -564,6 +564,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <None Include="IOUtils.psm1" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -752,22 +753,12 @@
     <Content Include="LanguageConfig_Backup.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Post-Build.ps1" />
     <Resource Include="Splash\Images\CDO.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>XCopy "$(ProjectDir)EditTools\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
-XCopy "$(ProjectDir)CanvasExport\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
-XCopy "$(ProjectDir)Ribbon\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
-XCopy "$(ProjectDir)Canvas\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
-XCopy "$(ProjectDir)Shell\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
-XCopy "$(ProjectDir)StatusBar\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
-XCopy "$(ProjectDir)CommandOutput\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
-XCopy "$(ProjectDir)ComponentModel\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
-XCopy "$(ProjectDir)PropertyGrid\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
-XCopy "$(ProjectDir)DWG\Languages" "$(TargetDir)Languages\" /I /D  /E /YECHO F | XCopy "$(ProjectDir)TidaAppContent\LanguageConfig.xml" "$(TargetDir)LanguageConfig.xml" /I /D  /E /Y
-XCopy "$(ProjectDir)App\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
-
+    <PostBuildEvent>powershell -ExecutionPolicy RemoteSigned -File "$(ProjectDir)Post-Build.ps1" -ProjectDir $(ProjectDir)  -TargetDir $(TargetDir)
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
