@@ -1,4 +1,6 @@
 ﻿using namespace System
+using namespace System.IO;
+
 param ([string]$ProjectDir, [string]$TargetDir)
 
 [Console]::WriteLine("ProjectDir:"+ $ProjectDir)
@@ -9,7 +11,7 @@ Import-Module $PSScriptRoot"\IOUtils.psm1" -Force
 
 Copy-DirectoryEx $ProjectDir"EditTools\Languages\" $TargetDir"EditTools\Languages\" 
 
-
+Copy-DirectoryEx $ProjectDir"EditTools\Languages" $TargetDir"Languages\"
 Copy-DirectoryEx $ProjectDir"CanvasExport\Languages" $TargetDir"Languages\" 
 Copy-DirectoryEx $ProjectDir"Ribbon\Languages" $TargetDir"Languages\" 
 Copy-DirectoryEx $ProjectDir"Canvas\Languages" $TargetDir"Languages\" 
@@ -20,4 +22,8 @@ Copy-DirectoryEx $ProjectDir"ComponentModel\Languages" $TargetDir"Languages\"
 Copy-DirectoryEx $ProjectDir"PropertyGrid\Languages" $TargetDir"Languages\" 
 Copy-DirectoryEx $ProjectDir"DWG\Languages" $TargetDir"Languages\" 
 Copy-FileEx $ProjectDir"LanguageConfig.xml" $TargetDir"LanguageConfig.xml" 
-Copy-DirectoryEx $ProjectDir"App\Languages" $TargetDir"Languages\" 
+Copy-DirectoryEx $ProjectDir"App\Languages" $TargetDir"Languages\"
+
+if(![Directory]::Exists($TargetDir + "\Plugins")){
+    [Directory]::CreateDirectory($TargetDir + "\Plugins")
+}
