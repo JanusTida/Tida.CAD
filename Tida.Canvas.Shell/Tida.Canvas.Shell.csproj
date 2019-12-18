@@ -765,11 +765,10 @@ XCopy "$(ProjectDir)StatusBar\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
 XCopy "$(ProjectDir)CommandOutput\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
 XCopy "$(ProjectDir)ComponentModel\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
 XCopy "$(ProjectDir)PropertyGrid\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
-XCopy "$(ProjectDir)DWG\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
+XCopy "$(ProjectDir)DWG\Languages" "$(TargetDir)Languages\" /I /D  /E /YECHO F | XCopy "$(ProjectDir)TidaAppContent\LanguageConfig.xml" "$(TargetDir)LanguageConfig.xml" /I /D  /E /Y
+XCopy "$(ProjectDir)App\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
 
-XCopy "$(ProjectDir)\TidaAppContent\Languages" "$(TargetDir)Languages\" /I /D  /E /Y
-ECHO F | XCopy "$(ProjectDir)TidaAppContent\LanguageConfig.xml" "$(TargetDir)LanguageConfig.xml" /I /D  /E /Y
-ECHO F | XCopy "$(ProjectDir)TidaAppContent\LanguageConfig_Backup.xml" "$(TargetDir)LanguageConfig_Backup.xml" /I /D  /E /Y</PostBuildEvent>
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
