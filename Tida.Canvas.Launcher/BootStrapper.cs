@@ -58,7 +58,7 @@ namespace Tida.Canvas.Launcher
             this.AggregateCatalog.Catalogs.Add(new DirectoryCatalog("Plugins"));
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Dummy).Assembly));
             //附加模块;
-
+            
             if (_assemblies != null)
             {
 

@@ -527,14 +527,6 @@
       <DependentUpon>Shell.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="TidaAppContent\Languages\en_US\Tida.Application.App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="TidaAppContent\Languages\zh_CN\Tida.Application.App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -733,9 +725,6 @@
     <Resource Include="Resources\镜像.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="TidaAppContent\LanguageConfig.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Tida.Canvas.Contracts\Tida.Canvas.Contracts.csproj">
       <Project>{9488b9cd-3888-4e43-b598-6eb9536d2b15}</Project>
       <Name>Tida.Canvas.Contracts</Name>
@@ -754,14 +743,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="TidaAppContent\LanguageConfig_Backup.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\DWG.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="LanguageConfig.xml" />
-    <Resource Include="LanguageConfig_Backup.xml" />
+    <Content Include="LanguageConfig.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="LanguageConfig_Backup.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Splash\Images\CDO.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
