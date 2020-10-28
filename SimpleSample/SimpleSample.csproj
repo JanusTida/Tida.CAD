@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tida.Canvas.Contracts\Tida.Canvas.Contracts.csproj" />
+    <ProjectReference Include="..\Tida.Canvas.Infrastructure\Tida.Canvas.Infrastructure.csproj" />
+    <ProjectReference Include="..\Tida.Canvas.WPFCanvas\Tida.Canvas.WPFCanvas.csproj" />
+  </ItemGroup>
+
+</Project>

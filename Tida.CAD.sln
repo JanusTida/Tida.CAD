@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tida.Canvas.Shell", "Tida.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tida.Canvas.Launcher", "Tida.Canvas.Launcher\Tida.Canvas.Launcher.csproj", "{CACCD1A7-5785-4095-B4E6-F77B2BE8EB21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tida.Canvas.Shell.ExtensionExample", "Tida.Canvas.Shell.ExtensionExample\Tida.Canvas.Shell.ExtensionExample.csproj", "{70CD4D5F-F075-4A8F-8779-F2E48F34B757}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tida.Canvas.Shell.ExtensionExample", "Tida.Canvas.Shell.ExtensionExample\Tida.Canvas.Shell.ExtensionExample.csproj", "{70CD4D5F-F075-4A8F-8779-F2E48F34B757}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleSample", "SimpleSample\SimpleSample.csproj", "{47D4EAB7-B11A-4E7B-A1CB-2FBE76BE9EC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{70CD4D5F-F075-4A8F-8779-F2E48F34B757}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70CD4D5F-F075-4A8F-8779-F2E48F34B757}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70CD4D5F-F075-4A8F-8779-F2E48F34B757}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47D4EAB7-B11A-4E7B-A1CB-2FBE76BE9EC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47D4EAB7-B11A-4E7B-A1CB-2FBE76BE9EC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47D4EAB7-B11A-4E7B-A1CB-2FBE76BE9EC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47D4EAB7-B11A-4E7B-A1CB-2FBE76BE9EC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +78,7 @@ Global
 		{1D7D9714-B2F0-4DEE-86A5-FADFAB07AC6B} = {38AB92BA-F73E-4229-A842-A2A9F1D4651D}
 		{CACCD1A7-5785-4095-B4E6-F77B2BE8EB21} = {38AB92BA-F73E-4229-A842-A2A9F1D4651D}
 		{70CD4D5F-F075-4A8F-8779-F2E48F34B757} = {38AB92BA-F73E-4229-A842-A2A9F1D4651D}
+		{47D4EAB7-B11A-4E7B-A1CB-2FBE76BE9EC2} = {38AB92BA-F73E-4229-A842-A2A9F1D4651D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32B050FB-5ADD-4CE8-83B6-CEEAD9AD0F32}

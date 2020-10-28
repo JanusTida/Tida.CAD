@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:canvas="clr-namespace:Tida.Canvas.WPFCanvas;assembly=Tida.Canvas.WPFCanvas"
+             xmlns:canvas="https://github.com/Tida.CAD/WPFCanvas"
              xmlns:prism="http://prismlibrary.com/"
                 xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
              xmlns:ji="clr-namespace:Tida.Canvas.Shell.Contracts.Interactivity;assembly=Tida.Canvas.Shell.Contracts"

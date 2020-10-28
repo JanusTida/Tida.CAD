@@ -95,7 +95,6 @@ namespace Tida.Canvas.Contracts {
         /// </summary>
         event EventHandler<DrawObjectsAddedEventArgs> DrawObjectsAdded;
 
-
         /// <summary>
         /// 绘制对象是否正在被编辑发生了变化事件;
         /// </summary>
