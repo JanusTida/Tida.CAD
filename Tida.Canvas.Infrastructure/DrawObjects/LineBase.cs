@@ -242,9 +242,7 @@ namespace Tida.Canvas.Infrastructure.DrawObjects {
             
         }
 
-        public void ApplyMouseDownPosition(Vector2D thisMouseDownPosition) {
-
-        }
+       
 
     }
 }
