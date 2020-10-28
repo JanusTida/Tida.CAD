@@ -107,15 +107,6 @@ namespace Tida.Canvas.Contracts {
         /// </summary>
         void Pop();
 
-        ///// <summary>
-        ///// 实际视图宽度;
-        ///// </summary>
-        //double ActualWidth { get; }
-
-        ///// <summary>
-        ///// 实际视图高度;
-        ///// </summary>
-        //double ActualHeight { get; }
     }
 
 
