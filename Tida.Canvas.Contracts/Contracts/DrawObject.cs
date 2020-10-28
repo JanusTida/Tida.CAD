@@ -14,11 +14,6 @@ namespace Tida.Canvas.Contracts {
     public abstract partial class DrawObject : CanvasElement,ICloneable<DrawObject>,IInputElement {
 
         /// <summary>
-        /// 是否只读;
-        /// </summary>
-        //public virtual bool ReadOnly { get; }
-        
-        /// <summary>
         /// 判定某个坐标是否在绘制对象所在范围内;
         /// </summary>
         /// <param name="point">坐标(工程数学坐标)</param>
