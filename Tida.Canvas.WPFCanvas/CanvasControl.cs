@@ -151,15 +151,7 @@ namespace Tida.Canvas.WPFCanvas {
         /// <summary>
         /// 绘制对象被添加;
         /// </summary>
-        public event EventHandler<DrawObjectsAddedEventArgs> DrawObjectsAdded {
-            //初次订阅之时触发事件;
-            add {
-                _drawObjectAdded += value;
-                value?.Invoke(this, new DrawObjectsAddedEventArgs(this.GetAllDrawObjects()));
-            }
-            remove => _drawObjectAdded -= value;
-        }
-        private event EventHandler<DrawObjectsAddedEventArgs> _drawObjectAdded;
+        public event EventHandler<DrawObjectsAddedEventArgs> DrawObjectsAdded;
 
         /// <summary>
         /// 绘制对象是否正在被编辑变化;
@@ -1902,7 +1894,7 @@ namespace Tida.Canvas.WPFCanvas {
                 drawObject.IsEditingChanged += DrawObject_IsEditingChanged;
             }
 
-            _drawObjectAdded?.Invoke(this, new DrawObjectsAddedEventArgs(drawObjects));
+            DrawObjectsAdded?.Invoke(this, new DrawObjectsAddedEventArgs(drawObjects));
         }
 
 
