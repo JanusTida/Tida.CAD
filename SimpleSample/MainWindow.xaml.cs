@@ -29,6 +29,10 @@ namespace SimpleSample
             {
                 _canvasLayer = new CanvasLayer()
             };
+            canvasControl.InteractionHandlers = new CanvasInteractionHandler[]
+            {
+
+            };
         }
 
         private readonly CanvasLayer _canvasLayer;

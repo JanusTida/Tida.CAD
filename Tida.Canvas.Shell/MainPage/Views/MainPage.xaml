@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:prism="http://www.codeplex.com/prism" 
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
-             xmlns:ji="clr-namespace:Tida.Canvas.Shell.Contracts.Interactivity;assembly=Tida.Canvas.Shell.Contracts"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mainPage="clr-namespace:Tida.Canvas.Shell.Contracts.MainPage;assembly=Tida.Canvas.Shell.Contracts"
              x:Class="Tida.Canvas.Shell.MainPage.Views.MainPage" 
              mc:Ignorable="d" prism:ViewModelLocator.AutoWireViewModel="True" 
@@ -13,11 +13,11 @@
     <ContentControl.Resources>
         <ResourceDictionary Source="pack://application:,,,/Tida.Canvas.Shell;component/Themes/Docking.xaml"/>
     </ContentControl.Resources>
-    <ji:Interaction.Triggers>
-        <ji:EventTrigger EventName="Loaded">
-            <ji:InvokeCommandAction Command="{Binding LoadedCommand}"/>
-        </ji:EventTrigger>
-    </ji:Interaction.Triggers>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <DockPanel>
         <telerik:RadDocking x:Name="docking"  BorderThickness="0"  >
             <telerik:RadDocking.DocumentHost>

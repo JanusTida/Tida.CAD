@@ -246,30 +246,24 @@ namespace Tida.Canvas.WPFCanvas {
     }
 
     /// <summary>
-    /// <see cref="ICanvasScreenConvertable"/>成员;
+    /// <see cref="ICanvasScreenConvertable"/>相关成员;
     /// </summary>
     public partial class CanvasControl {
-        private event EventHandler<ValueChangedEventArgs<ICanvasScreenConvertable>> _canvasProxyChanged;
-        /// <summary>
-        /// 当转换契约实例发生变化时;
-        /// </summary>
-        public event EventHandler<ValueChangedEventArgs<ICanvasScreenConvertable>> CanvasProxyChanged {
-            add {
-                _canvasProxyChanged += value;
-                value?.Invoke(this, new ValueChangedEventArgs<ICanvasScreenConvertable>(CanvasProxy,null));
-            }
-            remove {
-                _canvasProxyChanged -= value;
-            }
-        }
-        
+
+        private static readonly DependencyPropertyKey CanvasProxyPropertyKey = DependencyProperty.RegisterReadOnly(nameof(CanvasProxy), typeof(ICanvasScreenConvertable), typeof(CanvasControl), new PropertyMetadata());
+        public static readonly DependencyProperty CanvasProxyProperty = CanvasProxyPropertyKey.DependencyProperty;
+
+     
         private readonly WindowsCanvasScreenConverter _canvasProxy = new WindowsCanvasScreenConverter();
 
         /// <summary>
         /// 画布坐标转化实例;
         /// </summary>
-        public ICanvasScreenConvertable CanvasProxy => _canvasProxy;
-            
+        public ICanvasScreenConvertable CanvasProxy {
+            get => _canvasProxy;
+            set => throw new NotSupportedException($"The {nameof(CanvasProxy)} property is readonly!");
+        }
+
         /// <summary>
         /// 更新<see cref="_canvasProxy"/>中的关键参数;
         /// </summary>
@@ -280,13 +274,6 @@ namespace Tida.Canvas.WPFCanvas {
             _canvasProxy.PanScreenPosition = this.PanScreenPosition;
         }
 
-        /// <summary>
-        /// 该属性应为只读属性;
-        /// </summary>
-        public static readonly DependencyProperty CanvasProxyProperty =
-            DependencyProperty.Register(nameof(CanvasProxy),
-                typeof(ICanvasScreenConvertable), typeof(CanvasControl),
-                new PropertyMetadata());
     }
 
     /// <summary>

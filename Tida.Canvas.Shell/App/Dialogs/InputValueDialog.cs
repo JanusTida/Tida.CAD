@@ -26,12 +26,14 @@ namespace Tida.Canvas.Shell.App.Dialogs {
                 Val = setting?.Val,
                 Desc = setting?.Desc
             };
+            
 
             var window = new InputValueWindow {
                 DataContext = vm
             };
 
-            
+            vm.ClosedRequest += delegate { window.Close(); };
+
             window.ShowDialog(setting.Owner);
 
             if (vm.Confirmed) {

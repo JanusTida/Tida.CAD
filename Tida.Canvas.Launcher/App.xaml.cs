@@ -79,10 +79,7 @@ namespace Tida.Canvas.Launcher {
         }
 
         protected override void OnStartup(StartupEventArgs e) {
-
-            
             new BootStrapper().Run();
-            
 
             base.OnStartup(e);
 

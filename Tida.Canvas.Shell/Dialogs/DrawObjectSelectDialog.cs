@@ -28,11 +28,11 @@ namespace Tida.Canvas.Shell.Dialogs {
             var vm = new DrawObjectSelectWindowViewModel();
             var models = drawObjects.Select(p => GetDrawObjectModel(p));
             vm.DrawObjectModels.AddRange(models);
-
+            
             var window = new DrawObjectSelectWindow {
                 DataContext = vm
             };
-
+            vm.CloseRequest += delegate { window.Close(); };
             window.ShowDialog();
             if (vm.DialogResult) {
                 return vm.SelectedDrawObjectModel?.DrawObject;

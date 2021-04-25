@@ -1,0 +1,102 @@
+﻿<ContentControl x:Class="Tida.Canvas.Shell.Canvas.Views.CanvasPresenter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:canvas="https://github.com/Tida.CAD/WPFCanvas"
+             xmlns:prism="http://prismlibrary.com/"
+                xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+            xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                xmlns:behaviors="clr-namespace:Tida.Canvas.Shell.Canvas"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <ContentControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Telerik.Windows.Themes.Office2013;component/Themes/Telerik.Windows.Controls.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Telerik.Windows.Themes.Office2013;component/Themes/Telerik.Windows.Controls.Navigation.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentControl.Resources>
+    <DockPanel>
+
+        <canvas:CanvasControl x:Name="canvasControl" 
+        InputMethod.IsInputMethodEnabled="False"
+        Layers="{Binding Layers}"
+        ActiveLayer="{Binding ActiveLayer}" 
+        SnapShapeRules="{Binding SnapShapeRules}"
+        IsReadOnly="{Binding IsReadOnly}"
+        Zoom="{Binding Zoom}" 
+        InteractionHandlers="{Binding InteractionHandlers}"
+        IsSnapingEnabled="{Binding IsSnapingEnabled}"
+        PanScreenPosition="{Binding PanScreenPosition}"
+        CurrentEditTool="{Binding CurrentEditTool}">
+            <i:Interaction.Behaviors>
+                <behaviors:CanvasControlBehavior CanvasProxy="{Binding CanvasProxy,Mode=OneWay}"/>
+            </i:Interaction.Behaviors>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SizeChanged">
+                    <i:InvokeCommandAction Command="{Binding SizeChangedCommand}" PassEventArgsToCommand="True" />
+                </i:EventTrigger>
+                <i:EventTrigger EventName="CurrentMousePositionChanged"  >
+                    <i:InvokeCommandAction  Command="{Binding CurrentMousePositionChangedCommand}"   PassEventArgsToCommand="True" />
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseHoverSnapShapeChanged">
+                    <i:InvokeCommandAction Command="{Binding MouseHoverSnapShapeChangedCommand}"  PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="CanUndoChanged">
+                    <i:InvokeCommandAction Command="{Binding CanUndoChangedCommand}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="CanRedoChanged">
+                    <i:InvokeCommandAction Command="{Binding CanRedoChangedCommand}"  PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="DrawObjectIsSelectedChanged">
+                    <i:InvokeCommandAction Command="{Binding DrawObjectIsSelectedChangedCommand}"  PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="EditTransactionUndone">
+                    <i:InvokeCommandAction Command="{Binding EditTransactionUndoneCommand}"  PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="EditTransactionRedone">
+                    <i:InvokeCommandAction Command="{Binding EditTransactionRedoneCommand}"  PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="DrawObjectsRemoved">
+                    <i:InvokeCommandAction Command="{Binding DrawObjectRemovedCommand}"  PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="DrawObjectsAdded">
+                    <i:InvokeCommandAction Command="{Binding DrawObjectAddedCommand}"  PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="ActiveLayerChanged">
+                    <i:InvokeCommandAction Command="{Binding ActiveLayerChangedCommand}"  PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <!--<i:Interaction.Triggers>
+                <i:InteractionRequestTrigger SourceObject="{Binding UndoRequest}">
+                    <i:CallMethodAction MethodName="Undo" TargetObject="{Binding ElementName=canvasControl}" />
+                </i:InteractionRequestTrigger>
+                <i:InteractionRequestTrigger SourceObject="{Binding RedoRequest}">
+                        <i:CallMethodAction MethodName="Redo" TargetObject="{Binding ElementName=canvasControl}"/>
+                    </i:InteractionRequestTrigger>
+                    <i:InteractionRequestTrigger SourceObject="{Binding ClearTransactionsRequest}">
+                        <i:CallMethodAction MethodName="ClearTransactions" TargetObject="{Binding ElementName=canvasControl}"/>
+                </i:InteractionRequestTrigger>
+                   
+            </i:Interaction.Triggers>-->
+            <telerik:RadContextMenu.ContextMenu >
+            <telerik:RadContextMenu  ItemsSource="{Binding ContextMenuItems}" >
+                    <telerik:RadContextMenu.ItemContainerStyle>
+                        <Style TargetType="telerik:RadMenuItem" BasedOn="{StaticResource {x:Type telerik:RadMenuItem}}">
+                            <Setter Property="Command" Value="{Binding Command}"/>
+                            <Setter Property="Header" Value="{Binding Name}"/>
+                            <Setter Property="ItemsSource" Value="{Binding Children}"/>
+                        </Style>
+
+                    </telerik:RadContextMenu.ItemContainerStyle>
+       
+            </telerik:RadContextMenu>
+        </telerik:RadContextMenu.ContextMenu>
+
+        </canvas:CanvasControl>
+    </DockPanel>
+    
+</ContentControl>

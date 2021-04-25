@@ -4,15 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tida.Canvas.Shell.Dialogs.Views"
-        xmlns:ji="clr-namespace:Tida.Canvas.Shell.Contracts.Interactivity;assembly=Tida.Canvas.Shell.Contracts"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" SizeToContent="WidthAndHeight" MinWidth="240" x:Name="window"
         Title="{Binding Title,FallbackValue=选择集}" >
-    <ji:Interaction.Triggers>
-        <ji:InteractionRequestTrigger SourceObject="{Binding CloseRequest}">
-            <ji:CallMethodAction MethodName="Close" TargetObject="{Binding ElementName=window}"/>
-        </ji:InteractionRequestTrigger>
-    </ji:Interaction.Triggers>
     <DockPanel>
         <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
             <StackPanel.Resources>

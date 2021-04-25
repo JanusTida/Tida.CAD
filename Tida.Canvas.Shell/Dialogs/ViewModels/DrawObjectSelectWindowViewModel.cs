@@ -4,6 +4,7 @@ using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using System.Collections.ObjectModel;
+using System;
 
 namespace Tida.Canvas.Shell.Dialogs.ViewModels {
     class DrawObjectSelectWindowViewModel:BindableBase {
@@ -20,7 +21,7 @@ namespace Tida.Canvas.Shell.Dialogs.ViewModels {
                 if(_selectedDrawObjectModel != null) {
                     _selectedDrawObjectModel.DrawObject.IsSelected = false;
                 }
-
+                
                 if (value != null) {
                     value.DrawObject.IsSelected = true;
                 }
@@ -31,7 +32,7 @@ namespace Tida.Canvas.Shell.Dialogs.ViewModels {
         }
 
 
-        public InteractionRequest<Notification> CloseRequest { get; } = new InteractionRequest<Notification>();
+        public event EventHandler CloseRequest;
 
         /// <summary>
         /// 对话框结果;
@@ -52,7 +53,7 @@ namespace Tida.Canvas.Shell.Dialogs.ViewModels {
                             }
 
                             DialogResult = true;
-                            CloseRequest?.Raise(new Notification());
+                            CloseRequest?.Invoke(this, EventArgs.Empty);
                         },
                         () => SelectedDrawObjectModel != null
                     );
@@ -68,8 +69,8 @@ namespace Tida.Canvas.Shell.Dialogs.ViewModels {
         public DelegateCommand CancelCommand => _cancelCommand ??
             (_cancelCommand = new DelegateCommand(
                 () => {
-                    SelectedDrawObjectModel = null;
-                    CloseRequest.Raise(new Notification());
+                SelectedDrawObjectModel = null;
+                CloseRequest?.Invoke(this, EventArgs.Empty);
                 }
             ));
 

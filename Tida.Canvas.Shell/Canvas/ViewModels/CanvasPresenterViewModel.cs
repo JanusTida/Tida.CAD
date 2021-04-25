@@ -19,17 +19,20 @@ using Tida.Canvas.Shell.Contracts.InteractionHandlers;
 using Tida.Canvas.Shell.Canvas.Models;
 using static Tida.Canvas.Shell.Contracts.Canvas.Constants;
 using Tida.Canvas.Shell.Contracts.Common;
+using Prism.Ioc;
+using Tida.Canvas.Shell.Canvas.IViews;
+using CommonServiceLocator;
 
 namespace Tida.Canvas.Shell.Canvas.ViewModels {
     /// <summary>
     /// 主视图模型;
     /// </summary>
     [Export]
-    public partial class CanvasViewModel : ExtensibleBindableBase, ICanvasDataContext
+    public partial class CanvasPresenterViewModel : ExtensibleBindableBase, ICanvasDataContext
     {
 
         [ImportingConstructor]
-        public CanvasViewModel(
+        public CanvasPresenterViewModel(
             [ImportMany]IEnumerable<Lazy<ISnapShapeRule, ISnapShapeRuleMetaData>> snapShapeRules,
             [ImportMany]IEnumerable<Lazy<ISnapShapeRuleProvider, ISnapShapeRuleProviderMetaData>> snapShapeRuleProviders,
             [ImportMany]IEnumerable<Lazy<ICanvasInteractionHandlerProvider, ICanvasInteractionHandlerProviderMetaData>> interactionHandlers,
@@ -40,12 +43,12 @@ namespace Tida.Canvas.Shell.Canvas.ViewModels {
         {
             this._mefSnapShapeRuleProviders = snapShapeRuleProviders;
             this._mefSnapShapeRules = snapShapeRules;
-
+            this._mefCanvasLayersProviders = canvasLayersProviders;
             //添加位置预处理器集合;
             InteractionHandlers.AddRange(interactionHandlers.OrderBy(p => p.Metadata.Order).Select(p => p.Value).Select(p => p.CreateHandler()));
 
-            this._mefCanvasLayersProviders = canvasLayersProviders;
             this._mefMenuItems = menuItems.Where(p => p.Metadata.OwnerGUID == Menu_CanvasContextMenu).OrderBy(p => p.Metadata.Order).ToArray();
+            
 
             Initialize();
         }
@@ -55,6 +58,7 @@ namespace Tida.Canvas.Shell.Canvas.ViewModels {
         private readonly IEnumerable<Lazy<ICanvasLayersProvider, ICanvasLayersProviderMetadata>> _mefCanvasLayersProviders;
 
         private readonly Lazy<IMenuItem, IMenuItemMetaData>[] _mefMenuItems;
+        private ICanvasPresenter GetCanvasPresenter() => ServiceProvider.GetInstance<ICanvasPresenter>()??throw new InvalidOperationException($"The {nameof(ServiceProvider)} doesn't contain a instance of type {nameof(ICanvasPresenter)}");
 
         private void Initialize()
         {
@@ -113,7 +117,7 @@ namespace Tida.Canvas.Shell.Canvas.ViewModels {
     /// <summary>
     /// <see cref="ICanvasScreenConvertable"/>部分;
     /// </summary>
-    public partial class CanvasViewModel
+    public partial class CanvasPresenterViewModel
     {
 
         private DelegateCommand<SizeChangedEventArgs> _sizeChangedCommand;
@@ -133,26 +137,19 @@ namespace Tida.Canvas.Shell.Canvas.ViewModels {
                 }
             ));
 
-        private DelegateCommand<ValueChangedEventArgs<ICanvasScreenConvertable>> _canvasProxyChangedCommand;
-        public DelegateCommand<ValueChangedEventArgs<ICanvasScreenConvertable>> CanvasProxyChangedCommand => _canvasProxyChangedCommand ??
-            (_canvasProxyChangedCommand = new DelegateCommand<ValueChangedEventArgs<ICanvasScreenConvertable>>(
-                e =>
-                {
-                    this.CanvasProxy = e.NewValue;
-                }
-            ));
-
-
         /// <summary>
-        /// 画布坐标转化器,由于WPF无法绑定只读依赖属性,此值将由外部指定;
+        /// 画布坐标转化器;
         /// </summary>
-        public ICanvasScreenConvertable CanvasProxy { get; private set; }
+        public ICanvasScreenConvertable CanvasProxy { 
+            get; 
+            set; 
+        }
     }
 
     /// <summary>
     /// 只读部分;
     /// </summary>
-    public partial class CanvasViewModel
+    public partial class CanvasPresenterViewModel
     {
         /// <summary>
         /// 是否只读;
@@ -169,7 +166,7 @@ namespace Tida.Canvas.Shell.Canvas.ViewModels {
     /// <summary>
     /// 鼠标当前位置以及辅助信息;
     /// </summary>
-    public partial class CanvasViewModel
+    public partial class CanvasPresenterViewModel
     {
 
         public Vector2D CurrentMousePosition { get; private set; }
@@ -224,7 +221,7 @@ namespace Tida.Canvas.Shell.Canvas.ViewModels {
     /// <summary>
     /// 图层,编辑工具,撤销/重做操作;
     /// </summary>
-    public partial class CanvasViewModel
+    public partial class CanvasPresenterViewModel
     {
 
         /// <summary>
@@ -234,11 +231,11 @@ namespace Tida.Canvas.Shell.Canvas.ViewModels {
 
 
         //撤销/重做请求事件;
-        public InteractionRequest<Notification> RedoRequest { get; } = new InteractionRequest<Notification>();
-        public InteractionRequest<Notification> UndoRequest { get; } = new InteractionRequest<Notification>();
+        //public InteractionRequest<Notification> RedoRequest { get; } = new InteractionRequest<Notification>();
+        //public InteractionRequest<Notification> UndoRequest { get; } = new InteractionRequest<Notification>();
 
-        //清除事务请求;
-        public InteractionRequest<Notification> ClearTransactionsRequest { get; } = new InteractionRequest<Notification>();
+        ////清除事务请求;
+        //public InteractionRequest<Notification> ClearTransactionsRequest { get; } = new InteractionRequest<Notification>();
 
 
 
@@ -346,7 +343,7 @@ namespace Tida.Canvas.Shell.Canvas.ViewModels {
     /// <summary>
     /// 当前缩放;
     /// </summary>
-    public partial class CanvasViewModel
+    public partial class CanvasPresenterViewModel
     {
         /// <summary>
         /// 当前缩放比例;(放大变大，缩小变小);
@@ -369,7 +366,7 @@ namespace Tida.Canvas.Shell.Canvas.ViewModels {
     /// <summary>
     /// 原点部分;
     /// </summary>
-    public partial class CanvasViewModel
+    public partial class CanvasPresenterViewModel
     {
 
         private Vector2D _panScreenPosition = null;
@@ -387,7 +384,7 @@ namespace Tida.Canvas.Shell.Canvas.ViewModels {
     /// <summary>
     /// 撤销/重做部分;
     /// </summary>
-    public partial class CanvasViewModel
+    public partial class CanvasPresenterViewModel
     {
         public bool CanUndo { get; private set; }
         public bool CanRedo { get; private set; }
@@ -398,8 +395,7 @@ namespace Tida.Canvas.Shell.Canvas.ViewModels {
             {
                 return;
             }
-
-            UndoRequest.Raise(new Notification());
+            GetCanvasPresenter().CanvasControl.Undo();
         }
 
         public void Redo()
@@ -408,8 +404,7 @@ namespace Tida.Canvas.Shell.Canvas.ViewModels {
             {
                 return;
             }
-
-            RedoRequest.Raise(new Notification());
+            GetCanvasPresenter().CanvasControl.Redo();
         }
 
         /// <summary>
@@ -515,7 +510,7 @@ namespace Tida.Canvas.Shell.Canvas.ViewModels {
     /// <summary>
     /// 上下文菜单部分;
     /// </summary>
-    public partial class CanvasViewModel
+    public partial class CanvasPresenterViewModel
     {
         /// <summary>
         /// 初始化上下文菜单;
@@ -536,7 +531,7 @@ namespace Tida.Canvas.Shell.Canvas.ViewModels {
     /// <summary>
     /// 状态部分;
     /// </summary>
-    public partial class CanvasViewModel
+    public partial class CanvasPresenterViewModel
     {
         /// <summary>
         /// 清除包括事务状态;
@@ -544,7 +539,7 @@ namespace Tida.Canvas.Shell.Canvas.ViewModels {
         public void ClearTransactions()
         {
             //清除事务栈;
-            ClearTransactionsRequest.Raise(new Notification());
+            //ClearTransactionsRequest.Raise(new Notification());
         }
 
         /// <summary>
@@ -568,7 +563,7 @@ namespace Tida.Canvas.Shell.Canvas.ViewModels {
     /// <summary>
     /// 辅助规则部分;
     /// </summary>
-    public partial class CanvasViewModel
+    public partial class CanvasPresenterViewModel
     {
         /// <summary>
         /// 辅助规则集合;
@@ -603,7 +598,7 @@ namespace Tida.Canvas.Shell.Canvas.ViewModels {
     /// <summary>
     /// 画布内绘制对象选定状态;
     /// </summary>
-    public partial class CanvasViewModel
+    public partial class CanvasPresenterViewModel
     {
         /// <summary>
         /// 画布内绘制对象选定发生了变化命令;
@@ -624,7 +619,7 @@ namespace Tida.Canvas.Shell.Canvas.ViewModels {
     /// <summary>
     /// 绘制对象被移除部分;
     /// </summary>
-    public partial class CanvasViewModel
+    public partial class CanvasPresenterViewModel
     {
 
         private DelegateCommand<DrawObjectsRemovedEventArgs> _drawObjectRemovedCommand;

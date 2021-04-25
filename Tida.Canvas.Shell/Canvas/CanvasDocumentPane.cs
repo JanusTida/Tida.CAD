@@ -7,7 +7,7 @@ namespace Tida.Canvas.Shell.Canvas {
     [Export]
     class CanvasDocumentPane : DockingPaneBase,IDockingPaneMetaData {
         [ImportingConstructor]
-        public CanvasDocumentPane(Views.Canvas canvas) {
+        public CanvasDocumentPane(Views.CanvasPresenter canvas) {
             Header = LanguageService.FindResourceString(DocumentPaneHeader_Canvas);
             _canvas = canvas;
         }
@@ -16,7 +16,7 @@ namespace Tida.Canvas.Shell.Canvas {
         
         public string GUID => null;
 
-        private readonly Views.Canvas _canvas;
+        private readonly Views.CanvasPresenter _canvas;
         public override object UIObject => _canvas;
 
         public double InitialWidth => double.NaN;

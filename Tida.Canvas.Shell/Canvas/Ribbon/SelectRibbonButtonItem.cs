@@ -10,7 +10,7 @@ namespace Tida.Canvas.Shell.Canvas.Ribbon {
     /// </summary>
     [ExportRibbonItem(GroupGUID = Constants.RibbonGroup_Edit, GUID = Constants.RibbonItem_Select, Order = 1)]
     class SelectRibbonButtonItem : IRibbonButtonItem {
-        public ICommand Command => ServiceProvider.GetInstance<CanvasViewModel>().SelectCommand;
+        public ICommand Command => ServiceProvider.GetInstance<CanvasPresenterViewModel>().SelectCommand;
 
         public string HeaderLanguageKey => Constants.MenuItemName_Select;
 

@@ -23,7 +23,7 @@ namespace Tida.Canvas.Shell.Contracts.CommandOutput {
         public void WriteLine(string line) {
             _sb.AppendLine(">>" + line);
             _vm.Text = _sb.ToString();
-            _vm.ScrollToEndRequest.Raise(new Notification());
+            _vm.ScrollToEnd();
         }
     }
 

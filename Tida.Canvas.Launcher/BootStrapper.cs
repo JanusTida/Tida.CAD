@@ -5,6 +5,7 @@ using Prism.Modularity;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using System.Reflection;
@@ -45,32 +46,17 @@ namespace Tida.Canvas.Launcher
 
 
 
-        private Assembly[] _assemblies;
-
-
 
         protected override void ConfigureAggregateCatalog()
         {
 
             base.ConfigureAggregateCatalog();
-
+            
             //主框架模块;
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Shell.Dummy).Assembly));
             this.AggregateCatalog.Catalogs.Add(new DirectoryCatalog("Plugins"));
             //this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Dummy).Assembly));
-            //附加模块;
             
-            if (_assemblies != null)
-            {
-
-                foreach (var asm in _assemblies)
-                {
-
-                    this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(asm));
-
-                }
-
-            }
 
             ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver(viewType =>
             {
@@ -116,9 +102,7 @@ namespace Tida.Canvas.Launcher
 
         protected override void InitializeModules()
         {
-
             ServiceProvider.SetServiceProvider(new ServiceProviderWrapper(ServiceLocator.Current));
-
             ViewProvider.SetViewProvider(new ViewProviderImpl(ServiceProvider.Current));
 
 
@@ -140,9 +124,9 @@ namespace Tida.Canvas.Launcher
             //初始化设定服务;
 
             SettingsService.Current.Initialize();
+            
 
-
-
+            
             base.InitializeModules();
 
             ModulesInitializing?.Invoke(this, EventArgs.Empty);
@@ -161,7 +145,7 @@ namespace Tida.Canvas.Launcher
 
         protected override IContainerExtension CreateContainerExtension()
         {
-            return null;
+            return Container.GetExportedValue<IContainerExtension>();
         }
     }
 

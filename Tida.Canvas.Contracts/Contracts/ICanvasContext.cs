@@ -21,11 +21,6 @@ namespace Tida.Canvas.Contracts {
         ICanvasScreenConvertable CanvasProxy { get; }
 
         /// <summary>
-        /// 当转换契约实例发生变化时;
-        /// </summary>
-        event EventHandler<ValueChangedEventArgs<ICanvasScreenConvertable>> CanvasProxyChanged;
-
-        /// <summary>
         /// 当前选定的活动图层;
         /// </summary>
         CanvasLayer ActiveLayer { get; set; }

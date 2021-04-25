@@ -71,7 +71,7 @@ namespace Tida.Canvas.Shell.App.ViewModels {
                     }
 
                     Confirmed = true;
-                    CloseRequest.Raise(new Notification());
+                    ClosedRequest?.Invoke(this, EventArgs.Empty);
                 }
             ));
 
@@ -81,7 +81,7 @@ namespace Tida.Canvas.Shell.App.ViewModels {
             (_cancelCommand = new DelegateCommand(
                 () => {
                     Confirmed = false;
-                    CloseRequest.Raise(new Notification());
+                    ClosedRequest?.Invoke(this, EventArgs.Empty);
                 }
             ));
 
@@ -91,6 +91,6 @@ namespace Tida.Canvas.Shell.App.ViewModels {
         /// </summary>
         public bool Confirmed { get; private set; }
 
-        public InteractionRequest<INotification> CloseRequest { get; } = new InteractionRequest<INotification>();
+        public event EventHandler ClosedRequest;
     }
 }
