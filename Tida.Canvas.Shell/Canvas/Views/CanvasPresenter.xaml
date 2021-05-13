@@ -33,7 +33,7 @@
         PanScreenPosition="{Binding PanScreenPosition}"
         CurrentEditTool="{Binding CurrentEditTool}">
             <i:Interaction.Behaviors>
-                <behaviors:CanvasControlBehavior CanvasProxy="{Binding CanvasProxy,Mode=OneWay}"/>
+                <behaviors:CanvasControlBehavior CanvasProxy="{Binding CanvasProxy,Mode=OneWayToSource}"/>
             </i:Interaction.Behaviors>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SizeChanged">
