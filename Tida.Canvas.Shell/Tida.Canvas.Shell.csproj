@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;net45</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net45;net5.0-windows</TargetFrameworks>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -123,7 +123,7 @@
       <HintPath>..\lib\RCWPF\WPF45\Telerik.Windows.Themes.Office2013.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.1' or '$(TargetFramework)' == 'net5.0-windows'">
     <Reference Include="Telerik.Windows.Controls">
       <HintPath>..\lib\RCWPF\NetCore\Telerik.Windows.Controls.dll</HintPath>
     </Reference>
