@@ -750,6 +750,16 @@ namespace Tida.Canvas.WPFCanvas {
                 return;
             }
 
+            if(GridLineThickness <= 0)
+            {
+                return;
+            }
+
+            if(GridLineBrush == null)
+            {
+                return;
+            }
+
             var pen = new Pen
             {
                 Brush = GridLineBrush,
