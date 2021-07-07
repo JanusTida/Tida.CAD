@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard1.0;NET45;net5.0-windows</TargetFrameworks>
-    <Version>2019.12.18</Version>
+    <Version>3.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>D:\Tida.CAD\Tida.CAD\Tida.Canvas.Infrastructure\Tida.Canvas.Infrastructure.xml</DocumentationFile>
+    <DocumentationFile>..\bin\Release\Documents\Tida.Canvas.Infrastructure.xml</DocumentationFile>
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
