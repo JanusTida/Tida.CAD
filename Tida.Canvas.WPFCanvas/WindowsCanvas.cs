@@ -296,8 +296,15 @@ namespace Tida.Canvas.WPFCanvas {
             DrawFill(rectangle.GetVertexes(), brush, pen);
         }
 
+
+        public void DrawPolygon(IEnumerable<Vector2D> points, Brush brush,Pen pen)
+        {
+            ValidateDrawingContext();
+            DrawFill(points, brush, pen);
+        }
+
         /// <summary>
-        /// 根据所有的点，组成一个封闭区域，且可以填充，并且填充
+        /// 根据所有的点，组成一个封闭区域，并且填充
         /// </summary>
         /// <param name="points">所有的顶点坐标</param>
         /// <param name="brush">区域颜色</param>
@@ -319,6 +326,7 @@ namespace Tida.Canvas.WPFCanvas {
             );
         }
 
+        
         /// <summary>
         /// 直接根据视图位置,绘制WPF封闭区域;
         /// </summary>
@@ -491,5 +499,6 @@ namespace Tida.Canvas.WPFCanvas {
                 DrawingContext.DrawText(formattedText, nativeOriginScreenPoint);
             }
         }
+
     }
 }

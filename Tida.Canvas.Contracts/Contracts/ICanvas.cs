@@ -30,6 +30,14 @@ namespace Tida.Canvas.Contracts {
         void DrawArc(Pen pen, Vector2D center, double radius, double beginangle, double angle,bool smallAngle);
 
         /// <summary>
+        /// 绘制多边形;
+        /// </summary>
+        /// <param name="points">顶点</param>
+        /// <param name="brush"></param>
+        /// <param name="pen"></param>
+        void DrawPolygon(IEnumerable<Vector2D> points, Brush brush, Pen pen);
+
+        /// <summary>
         /// 绘制圆;
         /// </summary>
         /// <param name="canvas"></param>
@@ -97,7 +105,7 @@ namespace Tida.Canvas.Contracts {
 
 
         /// <summary>
-        /// 推入不透明度效果;
+        /// 推入透明度效果;
         /// </summary>
         /// <param name="opacity">最大值为1D</param>
         void PushOpacity(double opacity);

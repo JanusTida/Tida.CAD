@@ -25,9 +25,9 @@ namespace Tida.Canvas.WPFCanvas.Media {
             if(_frozenBrushes.TryGetValue(brush,out var sysBrush)) {
                 return sysBrush;
             }
-
+            
             var newSystemBrush = CreateBrushCore(brush);
-            if(newSystemBrush != null) {
+            if(newSystemBrush != null && brush.IsFrozen) {
                 newSystemBrush.Freeze();
                 _frozenBrushes.Add(brush, newSystemBrush);
             }

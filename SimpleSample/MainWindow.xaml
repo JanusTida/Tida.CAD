@@ -8,9 +8,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <DockPanel>
-        <UniformGrid Height="40" DockPanel.Dock="Bottom">
+        <UniformGrid  DockPanel.Dock="Bottom">
             <Button Click="AddLine_Click">Add line</Button>
             <Button Click="AddCustomObject_Click">Add Custom Draw Object</Button>
+            <Button Click="AddCustomPolygon_Click">Add Custom Draw Polygon</Button>
             <Button Click="RemovedSelected_Click">Remove Selected DrawObjects</Button>
             <Button Click="Clear_Click">Clear Objects</Button>
         </UniformGrid>

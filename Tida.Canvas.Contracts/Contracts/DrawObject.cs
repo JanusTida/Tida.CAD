@@ -19,7 +19,7 @@ namespace Tida.Canvas.Contracts {
         /// <param name="point">坐标(工程数学坐标)</param>
         /// <param name="canvasProxy">视图单位转化器,可用于内部进行误差判断</param>
         /// <returns></returns>
-        public abstract bool PointInObject(Vector2D point,ICanvasScreenConvertable canvasProxy);
+        public virtual bool PointInObject(Vector2D point, ICanvasScreenConvertable canvasProxy) => false;
 
         /// <summary>
         /// 判定绘制对象是否在某个矩形区域内;
@@ -28,14 +28,14 @@ namespace Tida.Canvas.Contracts {
         /// <param name="anyPoint">是否模糊匹配,即判定相交是否满足条件</param>
         /// <param name="canvasProxy">视图单位转化器,可用于内部进行误差判断</param>
         /// <returns></returns>
-        public abstract bool ObjectInRectangle(Rectangle2D2 rect, ICanvasScreenConvertable canvasProxy,bool anyPoint);
-        
+        public virtual bool ObjectInRectangle(Rectangle2D2 rect, ICanvasScreenConvertable canvasProxy, bool anyPoint) => false;
+
 
         /// <summary>
         /// 获取绘制对象有效的区域范围,该区域以工程坐标为准;
         /// </summary>
         /// <returns></returns>
-        public abstract Rectangle2D2 GetBoundingRect();
+        public virtual Rectangle2D2 GetBoundingRect() => null;
         
         private bool _isSelected;
         /// <summary>
@@ -123,7 +123,7 @@ namespace Tida.Canvas.Contracts {
         /// 复制自身;
         /// </summary>
         /// <returns></returns>
-        public abstract DrawObject Clone();
+        public virtual DrawObject Clone() => null;
         
         /// <summary>
         /// 设定字段值,

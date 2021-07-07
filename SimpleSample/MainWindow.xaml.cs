@@ -58,5 +58,10 @@ namespace SimpleSample
         {
             _canvasLayer.Clear();
         }
+
+        private void AddCustomPolygon_Click(object sender, RoutedEventArgs e)
+        {
+            _canvasLayer.AddDrawObject(new CustomPolygon());
+        }
     }
 }
