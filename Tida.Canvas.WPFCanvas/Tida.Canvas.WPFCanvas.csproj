@@ -6,8 +6,12 @@
     <Version>2019.12.18</Version>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netcoreapp3.1|AnyCPU'">
+    <DocumentationFile>C:\CodeRepository\Tida.CAD\Tida.Canvas.WPFCanvas\Tida.Canvas.WPFCanvas.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="Tida.Geometry" Version="2.1.0" />
+    <PackageReference Include="Tida.Geometry" Version="2.1.0"  />
   </ItemGroup>
 
   <ItemGroup>
