@@ -27,6 +27,7 @@ namespace Tida.Canvas.WPFCanvas {
                 Constants.DefaultCanvasBackground,
                 FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits
             ));
+            
         }
 
         public CanvasControl() {
@@ -259,9 +260,17 @@ namespace Tida.Canvas.WPFCanvas {
         /// <summary>
         /// 更新<see cref="_canvasProxy"/>中的关键参数;
         /// </summary>
-        private void UpdateCanvasProxy() {
-            _canvasProxy.ActualWidth = this.ActualWidth;
-            _canvasProxy.ActualHeight = this.ActualHeight;
+        private void UpdateCanvasProxy(Size? size = null) {
+            if(size == null)
+            {
+                _canvasProxy.ActualWidth = this.ActualWidth;
+                _canvasProxy.ActualHeight = this.ActualHeight;
+            }
+            else
+            {
+                _canvasProxy.ActualHeight = size.Value.Height;
+                _canvasProxy.ActualWidth = size.Value.Width;
+            }
             _canvasProxy.Zoom = this.Zoom;
             _canvasProxy.PanScreenPosition = this.PanScreenPosition;
         }

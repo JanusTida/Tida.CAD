@@ -345,8 +345,6 @@ namespace Tida.Canvas.WPFCanvas {
 
             pen.Freeze();
             
-
-
             //操作SystemMedia.PathGeometry中的Figures以绘制(封闭)区域
             var paths = new SystemMedia.PathGeometry();
 
