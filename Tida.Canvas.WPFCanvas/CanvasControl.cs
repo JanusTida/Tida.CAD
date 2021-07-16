@@ -233,7 +233,7 @@ namespace Tida.Canvas.WPFCanvas {
         }
 
         protected override Size ArrangeOverride(Size arrangeSize) {
-            UpdateCanvasProxy();
+            UpdateCanvasProxy(arrangeSize);
             return base.ArrangeOverride(arrangeSize);
         }
     }
