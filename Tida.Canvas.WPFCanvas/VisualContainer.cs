@@ -11,21 +11,25 @@ namespace Tida.Canvas.WPFCanvas {
     /// <summary>
     /// 可视化对象，实现了向界面上添加可视化对象的功能，并且能够获取可视化对象的数量
     /// </summary>
-    class VisualContainer : FrameworkElement {
+    public class VisualContainer : FrameworkElement {
         public VisualContainer() {
             this.Focusable = true;
             
         }
-
+        
         /// <summary>
         /// 当前所有的可见对象
         /// </summary>
-        private readonly HashSet<Visual> _visuals = new HashSet<Visual>();
-        public ISet<Visual> Visuals => _visuals;
-        
+        private readonly List<Visual> _visuals = new List<Visual>();
+
         //获取Visual的个数
         protected override int VisualChildrenCount => _visuals.Count;
-        
+
+        /// <summary>
+        /// 获取界面上所有的可视化对象
+        /// </summary>
+        public IEnumerable<Visual> Visuals => _visuals.Select(p => p);
+
         /// <summary>
         /// 获取Visual
         /// </summary>
@@ -36,8 +40,7 @@ namespace Tida.Canvas.WPFCanvas {
 
                 return null;
             }
-            
-            return _visuals.ElementAt(index);
+            return _visuals[index];
         }
         
         /// <summary>
