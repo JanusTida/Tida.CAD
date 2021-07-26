@@ -13,6 +13,7 @@
             <Button Click="AddCustomObject_Click">Add Custom Draw Object</Button>
             <Button Click="AddCustomPolygon_Click">Add Custom Draw Polygon</Button>
             <Button Click="RemovedSelected_Click">Remove Selected DrawObjects</Button>
+            <Button Click="AddInteractionHandler_Click">Add Interaction Handler</Button>
             <Button Click="Clear_Click">Clear Objects</Button>
         </UniformGrid>
         <canvas:CanvasControl x:Name="canvasControl"/>
