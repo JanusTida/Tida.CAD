@@ -21,7 +21,7 @@ namespace Tida.Canvas.WPFCanvas {
         /// 当前所有的可见对象
         /// </summary>
         private readonly List<Visual> _visuals = new List<Visual>();
-
+        
         //获取Visual的个数
         protected override int VisualChildrenCount => _visuals.Count;
 
@@ -52,7 +52,17 @@ namespace Tida.Canvas.WPFCanvas {
             base.AddVisualChild(visual);
             base.AddLogicalChild(visual);
         }
-
+        /// <summary>
+        /// 插入Visual;
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="visual"></param>
+        public void InsertVisual(int index, Visual visual)
+        {
+            _visuals.Insert(index, visual);
+            base.AddVisualChild(visual);
+            base.AddLogicalChild(visual);
+        }
         /// <summary>
         /// 删除Visual
         /// </summary>

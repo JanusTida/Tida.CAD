@@ -32,11 +32,20 @@ namespace Tida.Canvas.WPFCanvas {
 
         public CanvasControl() {
             this.Children.Add(_visualContainer);
-            this.Focusable = true;
+            _visualContainer.AddVisual(_editToolContainerVisual);
+            _visualContainer.AddVisual(_snapShapeContainerVisual);
+            _visualContainer.AddVisual(_dragSelectionContainerVisual);
+            _visualContainer.AddVisual(_interactionHandlerContainerVisual);
+            this.Focusable = true;    
         }
         
         private readonly VisualContainer _visualContainer = new VisualContainer();
-
+        private readonly Dictionary<CanvasLayer, ContainerVisual> _layerContainerVisualDict = new Dictionary<CanvasLayer, ContainerVisual>();
+        private readonly ContainerVisual _editToolContainerVisual = new ContainerVisual();
+        private readonly ContainerVisual _snapShapeContainerVisual = new ContainerVisual();
+        private readonly ContainerVisual _dragSelectionContainerVisual = new ContainerVisual();
+        private readonly ContainerVisual _interactionHandlerContainerVisual = new ContainerVisual();
+        
         /// <summary>
         /// ICanvas画布工具的内部实现,用于传递到<see cref="IDrawable.Draw(ICanvas)"/>中进行绘制;
         /// 通过更改<see cref="WindowsCanvas.DrawingContext"/>实现复用的目的;
@@ -358,33 +367,33 @@ namespace Tida.Canvas.WPFCanvas {
         /// <summary>
         /// 装载位置预处理器;
         /// </summary>
-        /// <param name="positionHandler"></param>
-        private void SetupInteractionHandler(CanvasInteractionHandler positionHandler) {
-            if (positionHandler == null) {
+        /// <param name="interactionHandler"></param>
+        private void SetupInteractionHandler(CanvasInteractionHandler interactionHandler) {
+            if (interactionHandler == null) {
                 return;
             }
 
-            AddDrawable(positionHandler);
+            AddDrawable(interactionHandler,_interactionHandlerContainerVisual);
 
-            positionHandler.CanvasControl = this;
+            interactionHandler.CanvasControl = this;
 
-            _positionHandlers.Remove(positionHandler);
+            _positionHandlers.Remove(interactionHandler);
         }
 
         /// <summary>
         /// 卸载位置预处理器;
         /// </summary>
-        /// <param name="positionHandler"></param>
-        private void UnSetupInteractionHandler(CanvasInteractionHandler positionHandler) {
-            if (positionHandler == null) {
+        /// <param name="interactionHandler"></param>
+        private void UnSetupInteractionHandler(CanvasInteractionHandler interactionHandler) {
+            if (interactionHandler == null) {
                 return;
             }
 
-            RemoveDrawable(positionHandler);
+            RemoveDrawable(interactionHandler,_interactionHandlerContainerVisual);
 
-            positionHandler.CanvasControl = null;
+            interactionHandler.CanvasControl = null;
 
-            _positionHandlers.Add(positionHandler);
+            _positionHandlers.Add(interactionHandler);
         }
 
         /// <summary>
@@ -1239,7 +1248,7 @@ namespace Tida.Canvas.WPFCanvas {
         private void SetupEditTool(EditTool editTool)
         {
             //添加视觉元素;
-            AddDrawable(editTool);
+            AddDrawable(editTool,_editToolContainerVisual);
 
             editTool.TransactionCommited += EditTool_TransactionCommited;
             editTool.CanUndoChanged += EditTool_CanUndoChanged;
@@ -1267,7 +1276,7 @@ namespace Tida.Canvas.WPFCanvas {
             //通知递交更改;
             editTool.Commit();
             
-            RemoveDrawable(editTool);
+            RemoveDrawable(editTool,_editToolContainerVisual);
 
             editTool.TransactionCommited -= EditTool_TransactionCommited;
             editTool.CanUndoChanged -= EditTool_CanUndoChanged;
@@ -1826,10 +1835,17 @@ namespace Tida.Canvas.WPFCanvas {
         /// <param name="canvasLayer"></param>
         private void SetupLayer(CanvasLayer canvasLayer)
         {
+            if (_layerContainerVisualDict.ContainsKey(canvasLayer))
+            {
+                return;
+            }
+            var layerContainerVisual = new ContainerVisual();
+            _layerContainerVisualDict.Add(canvasLayer, layerContainerVisual);
+            _visualContainer.InsertVisual(_layerContainerVisualDict.Count - 1, layerContainerVisual);
             //添加画布内容;
-            AddDrawable(canvasLayer);
+            AddDrawable(canvasLayer,layerContainerVisual);
 
-            AddDrawObjects(canvasLayer.DrawObjects);
+            AddDrawObjects(canvasLayer.DrawObjects,canvasLayer);
           
             //图层内绘制对象增减清除时,延长/缩减/清除绘制对象的缓冲池;
             canvasLayer.DrawObjectsAdded += CanvasLayer_DrawObjectsAdded;
@@ -1849,7 +1865,17 @@ namespace Tida.Canvas.WPFCanvas {
         /// <param name="canvasLayer"></param>
         private void UnSetupLayer(CanvasLayer canvasLayer)
         {
-            RemoveDrawable(canvasLayer);
+            if(canvasLayer == null)
+            {
+                return;
+            }
+
+            if (_layerContainerVisualDict.TryGetValue(canvasLayer,out var layerContaienrVisual))
+            {
+                return;
+            }
+            
+            RemoveDrawable(canvasLayer,layerContaienrVisual);
             //卸载该图层内所有绘制对象;
             RemoveAllVisualsOfLayer(canvasLayer);
 
@@ -1873,8 +1899,12 @@ namespace Tida.Canvas.WPFCanvas {
             {
                 return;
             }
+            if(!(sender is CanvasLayer canvasLayer))
+            {
+                return;
+            }
 
-            AddDrawObjects(e);
+            AddDrawObjects(e,canvasLayer);
         }
         
         /// <summary>
@@ -1895,13 +1925,21 @@ namespace Tida.Canvas.WPFCanvas {
         /// 添加绘制对象;
         /// </summary>
         /// <param name="drawObject"></param>
-        private void AddDrawObjects(IEnumerable<DrawObject> drawObjects) {
+        private void AddDrawObjects(IEnumerable<DrawObject> drawObjects,CanvasLayer canvasLayer) {
             if (drawObjects == null) {
+                return;
+            }
+            if (canvasLayer == null)
+            {
+                return;
+            }
+            if (!_layerContainerVisualDict.TryGetValue(canvasLayer, out var containerVisual))
+            {
                 return;
             }
 
             foreach (var drawObject in drawObjects) {
-                AddDrawable(drawObject);
+                AddDrawable(drawObject,containerVisual);
 
                 drawObject.IsVisibleChanged += DrawObject_IsVisibleChanged;
                 drawObject.EditTransActionCommited += DrawObject_EditTransActionCommited;
@@ -1917,14 +1955,23 @@ namespace Tida.Canvas.WPFCanvas {
         /// 移除绘制元素;
         /// </summary>
         /// <param name="drawObject"></param>
-        private void RemoveDrawObjects(IEnumerable<DrawObject> drawObjects)
+        private void RemoveDrawObjects(IEnumerable<DrawObject> drawObjects, CanvasLayer canvasLayer)
         {
-            if(drawObjects == null) {
+            if(drawObjects == null) 
+            {
+                return;
+            }
+            if(canvasLayer == null)
+            {
+                return;
+            }
+            if (!_layerContainerVisualDict.TryGetValue(canvasLayer,out var containerVisual))
+            {
                 return;
             }
 
             foreach (var drawObject in drawObjects) {
-                RemoveDrawable(drawObject);
+                RemoveDrawable(drawObject, containerVisual);
 
                 drawObject.IsVisibleChanged -= DrawObject_IsVisibleChanged;
                 drawObject.EditTransActionCommited -= DrawObject_EditTransActionCommited;
@@ -2001,8 +2048,12 @@ namespace Tida.Canvas.WPFCanvas {
             {
                 return;
             }
+            if(!(sender is CanvasLayer canvasLayer))
+            {
+                return;
+            }
 
-            RemoveDrawObjects(e);
+            RemoveDrawObjects(e,canvasLayer);
             
         }
 
@@ -2010,14 +2061,14 @@ namespace Tida.Canvas.WPFCanvas {
         /// 添加Drawble对象,扩充缓冲区以及VisualTree等操作;
         /// </summary>
         /// <param name="drawable"></param>
-        private void AddDrawable(IDrawable drawable)
+        private void AddDrawable(IDrawable drawable,ContainerVisual containerVisual)
         {
             //若缓存中包含当前该绘制对象,则返回;
             if (_visualDict.ContainsKey(drawable))
             {
                 return;
             }
-
+            
             //若不包含,则加入缓存队列中;
             var drawingVisual = new DrawingVisual
             {
@@ -2031,7 +2082,7 @@ namespace Tida.Canvas.WPFCanvas {
             _visualDict.Add(drawable, drawingVisual);
 
             //加入Visual Tree;
-            _visualContainer.AddVisual(drawingVisual);
+            containerVisual.Children.Add(drawingVisual);
 
             //订阅该对象的视觉变化事件;
             drawable.VisualChanged += Drawable_VisualChanged;
@@ -2044,7 +2095,7 @@ namespace Tida.Canvas.WPFCanvas {
         /// 移除Drawable对象,删减缓冲区以及VisualTree等操作;
         /// </summary>
         /// <param name="drawable"></param>
-        private void RemoveDrawable(IDrawable drawable)
+        private void RemoveDrawable(IDrawable drawable,ContainerVisual containerVisual)
         {
             //若缓存中不包含当前该绘制对象,则返回;
             if (!_visualDict.ContainsKey(drawable))
@@ -2056,7 +2107,7 @@ namespace Tida.Canvas.WPFCanvas {
             _visualDict.Remove(drawable);
 
             //从Viusal Tree中移除;
-            _visualContainer.RemoveVisual(drawingVisual);
+            containerVisual.Children.Remove(drawingVisual);
 
             //退订视觉变化事件;
             drawable.VisualChanged -= Drawable_VisualChanged;
@@ -2117,7 +2168,7 @@ namespace Tida.Canvas.WPFCanvas {
                 return drawObject.Parent == canvasLayer;
             });
 
-            RemoveDrawObjects(removeVisualPairs.Select(p => p.Key).OfType<DrawObject>().ToList());
+            RemoveDrawObjects(removeVisualPairs.Select(p => p.Key).OfType<DrawObject>().ToList(),canvasLayer);
         }
 
         /// <summary>
@@ -2131,16 +2182,20 @@ namespace Tida.Canvas.WPFCanvas {
             {
                 return;
             }
+            if(!_layerContainerVisualDict.TryGetValue(canvasLayer,out var layerContainerVisual))
+            {
+                return;
+            }
 
             //若可见,则加入来自该图层内的所有元素;
             if (canvasLayer.IsVisible)
             {
-                AddDrawObjects(canvasLayer.DrawObjects);
+                AddDrawObjects(canvasLayer.DrawObjects, canvasLayer);
             }
             //若不可见,则移除制来自该图层内的所有元素;
             else
             {
-                RemoveDrawObjects(canvasLayer.DrawObjects);
+                RemoveDrawObjects(canvasLayer.DrawObjects, canvasLayer);
             }
 
         }
@@ -2243,7 +2298,7 @@ namespace Tida.Canvas.WPFCanvas {
         {
             if (_activeSnapShape != null)
             {
-                RemoveDrawable(_activeSnapShape);
+                RemoveDrawable(_activeSnapShape,_snapShapeContainerVisual);
             }
 
             var position = CanvasProxy.ToUnit(Vector2DAdapter.ConverterToVector2D(e.GetPosition(this)));
@@ -2271,7 +2326,7 @@ namespace Tida.Canvas.WPFCanvas {
 
                 if (canShow)
                 {
-                    AddDrawable(activeSnapShape);
+                    AddDrawable(activeSnapShape,_snapShapeContainerVisual);
                 }
             }
             
@@ -2550,7 +2605,7 @@ namespace Tida.Canvas.WPFCanvas {
         private void AddSelectRectangleToDict() {
             if (!_visualDict.ContainsKey(_dragSelectRectangle)) {
                 //将拖放选择的高亮矩形加入到视觉树中;
-                AddDrawable(_dragSelectRectangle);
+                AddDrawable(_dragSelectRectangle,_dragSelectionContainerVisual);
             }
         }
 
@@ -2637,7 +2692,7 @@ namespace Tida.Canvas.WPFCanvas {
             }
 
             //将高亮矩形加入到视觉树中;
-            AddDrawable(_dragSelectRectangle);
+            AddDrawable(_dragSelectRectangle,_dragSelectionContainerVisual);
 
             //若矩形两对角点的横坐标或纵坐标相等,则无法组成矩形,无法绘制矩形;
             if (_lastMouseDownPositionForDragSelecting.X == mousePosition.X
