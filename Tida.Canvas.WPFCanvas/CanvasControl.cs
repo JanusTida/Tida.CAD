@@ -961,6 +961,11 @@ namespace Tida.Canvas.WPFCanvas {
         /// <param name="e"></param>
         private bool MouseWheelOnZoom(MouseWheelEventArgs e)
         {
+            if(e.Delta == 0)
+            {
+                return false;
+            }
+
             //根据鼠标的位置响应缩放;
             var mouseUnitPos = CanvasProxy.ToUnit(Vector2DAdapter.ConverterToVector2D(e.GetPosition(this)));
 
