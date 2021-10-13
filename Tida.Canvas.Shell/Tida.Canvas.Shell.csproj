@@ -97,7 +97,7 @@
     <ProjectReference Include="..\Tida.Canvas.WPFCanvas\Tida.Canvas.WPFCanvas.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='net45'">
+  <ItemGroup Condition="'$(TargetFramework)'=='net46'">
     <Reference Include="Telerik.Windows.Controls">
       <HintPath>..\lib\RCWPF\WPF45\Telerik.Windows.Controls.dll</HintPath>
     </Reference>
