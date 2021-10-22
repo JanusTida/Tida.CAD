@@ -1,12 +1,7 @@
-﻿using Tida.Canvas.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 
-namespace Tida.CAD {
+namespace Tida.CAD
+{
     /// <summary>
     /// 根据画布信息,画布的交互信息的预处理器;
     /// 本接口适用范围为在通知编辑工具或绘制对象前，需预处理关注位置的情况,

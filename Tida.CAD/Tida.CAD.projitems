@@ -13,6 +13,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)CanvasLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DrawObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EditTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\CanvasScreenConvertableExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ICanvasContextExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ICanvas.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ICanvasContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ICanvasContextEx.cs" />
@@ -46,24 +48,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)Events\SnapingEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\ValueChangedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\ValueChangingEventArgs.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\HandleableEventArgs.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\IInputDevice.cs" />
-    <Compile Include="..\Tida.CAD\Input\ICanvasInputElement.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\IKeyBoard.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\IMouse.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\Key.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\KeyDownEventArgs.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\KeyEventArgs.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\KeyExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\KeyUpEventArgs.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\ModifierKeys.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\MouseButtonEventArgs.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\MouseButtons.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\MouseButtonState.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\MouseDownEventArgs.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\MouseEventArgs.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\MouseMoveEventArgs.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\MouseUpEventArgs.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\TextInputEventArgs.cs" />
   </ItemGroup>
 </Project>

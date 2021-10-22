@@ -1,17 +1,17 @@
-﻿using Tida.Canvas.Events;
-using Tida.Canvas.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
+using Tida.CAD.Events;
 
 namespace Tida.CAD {
     /// <summary>
     /// 绘制对象;
     /// </summary>
-    public abstract partial class DrawObject : CanvasElement,ICloneable<DrawObject>, ICanvasInputElement {
+    public abstract partial class DrawObject : CanvasElement,ICloneable<DrawObject> {
         
         /// <summary>
         /// 判定某个坐标是否在绘制对象所在范围内;
@@ -28,14 +28,14 @@ namespace Tida.CAD {
         /// <param name="anyPoint">是否模糊匹配,即判定相交是否满足条件</param>
         /// <param name="canvasScreenConverter">视图单位转化器,可用于内部进行误差判断</param>
         /// <returns></returns>
-        public virtual bool ObjectInRectangle(Rect rect, ICanvasScreenConverter canvasScreenConverter, bool anyPoint) => false;
+        public virtual bool ObjectInRectangle(CADRect rect, ICanvasScreenConverter canvasScreenConverter, bool anyPoint) => false;
 
 
         /// <summary>
         /// 获取绘制对象有效的区域范围,该区域以工程坐标为准;
         /// </summary>
         /// <returns></returns>
-        public virtual Rect? GetBoundingRect() => null;
+        public virtual CADRect? GetBoundingRect() => null;
         
         private bool _isSelected;
         /// <summary>
@@ -91,7 +91,7 @@ namespace Tida.CAD {
             if (e == null) {
                 throw new ArgumentNullException(nameof(e));
             }
-
+            
             IsEditingChanged?.Invoke(this, e);
         }
 
@@ -198,8 +198,8 @@ namespace Tida.CAD {
         /// </summary>
         /// <param name="canvas"></param>
         /// <param name="point"></param>
-        public void RaisePreviewMouseMove(MouseMoveEventArgs e) {
-            CanvasPreviewMouseMove?.Invoke(this, e);
+        public void RaisePreviewMouseMove(MouseEventArgs e) {
+            PreviewMouseMove?.Invoke(this, e);
             if (e.Handled) {
                 return;
             }
@@ -207,7 +207,7 @@ namespace Tida.CAD {
             OnMouseMove(e);
         }
 
-        protected virtual void OnMouseMove(MouseMoveEventArgs e) { }
+        protected virtual void OnMouseMove(MouseEventArgs e) { }
 
         /// <summary>
         /// 鼠标按下响应;
@@ -215,8 +215,8 @@ namespace Tida.CAD {
         /// <param name="canvas"></param>
         /// <param name="point"></param>
         /// <param name="snapShape"></param>
-        public void RaisePreviewMouseDown(MouseDownEventArgs e) {
-            CanvasPreviewMouseDown?.Invoke(this, e);
+        public void RaisePreviewMouseDown(MouseButtonEventArgs e) {
+            PreviewMouseDown?.Invoke(this, e);
             if (e.Handled) {
                 return;
             }
@@ -224,7 +224,7 @@ namespace Tida.CAD {
             OnMouseDown(e);
         }
 
-        protected virtual void OnMouseDown(MouseDownEventArgs e) { }
+        protected virtual void OnMouseDown(MouseButtonEventArgs e) { }
 
         /// <summary>
         /// 鼠标弹起响应;
@@ -232,8 +232,8 @@ namespace Tida.CAD {
         /// <param name="canvas"></param>
         /// <param name="point"></param>
         /// <param name="snapShape"></param>
-        public void RaisePreviewMouseUp(MouseUpEventArgs e) {
-            CanvasPreviewMouseUp?.Invoke(this, e);
+        public void RaisePreviewMouseUp(MouseButtonEventArgs e) {
+            PreviewMouseUp?.Invoke(this, e);
             if(e.Handled) {
                 return;
             }
@@ -242,15 +242,15 @@ namespace Tida.CAD {
         }
 
 
-        protected virtual void OnMouseUp(MouseUpEventArgs e) { }
+        protected virtual void OnMouseUp(MouseButtonEventArgs e) { }
 
         /// <summary>
         /// 键盘按键响应;
         /// </summary>
         /// <param name="canvas"></param>
         /// <param name="e"></param>
-        public void RaisePreviewKeyDown(KeyDownEventArgs e) {
-            CanvasPreviewKeyDown?.Invoke(this, e);
+        public void RaisePreviewKeyDown(KeyEventArgs e) {
+            PreviewKeyDown?.Invoke(this, e);
             if (e.Handled) {
                 return;
             }
@@ -258,10 +258,10 @@ namespace Tida.CAD {
             OnKeyDown(e);
         }
 
-        protected virtual void OnKeyDown(KeyDownEventArgs e) { }
+        protected virtual void OnKeyDown(KeyEventArgs e) { }
 
-        public void RaisePreviewKeyUp(KeyUpEventArgs e) {
-            CanvasPreviewKeyUp?.Invoke(this, e);
+        public void RaisePreviewKeyUp(KeyEventArgs e) {
+            PreviewKeyUp?.Invoke(this, e);
 
             if (e.Handled) {
                 return;
@@ -270,31 +270,31 @@ namespace Tida.CAD {
             OnKeyUp(e);
         }
 
-        protected virtual void OnKeyUp(KeyUpEventArgs e) {
+        protected virtual void OnKeyUp(KeyEventArgs e) {
 
         }
 
-        public void RaisePreviewTextInput(TextInputEventArgs e) {
-            CanvasPreviewTextInput?.Invoke(this, e);
+        public void RaisePreviewTextInput(TextCompositionEventArgs e) {
+            PreviewTextInput?.Invoke(this, e);
             if (e.Handled) {
                 return;
             }
-
+            
             OnTextInput(e);
         }
 
-        protected virtual void OnTextInput(TextInputEventArgs e) {
+        protected virtual void OnTextInput(TextCompositionEventArgs e) {
             
         }
 
 
 
-        public event EventHandler<MouseDownEventArgs> CanvasPreviewMouseDown;
-        public event EventHandler<MouseMoveEventArgs> CanvasPreviewMouseMove;
-        public event EventHandler<MouseUpEventArgs> CanvasPreviewMouseUp;
-        public event EventHandler<KeyDownEventArgs> CanvasPreviewKeyDown;
-        public event EventHandler<KeyUpEventArgs> CanvasPreviewKeyUp;
-        public event EventHandler<TextInputEventArgs> CanvasPreviewTextInput;
+        public event EventHandler<MouseButtonEventArgs> PreviewMouseDown;
+        public event EventHandler<MouseEventArgs> PreviewMouseMove;
+        public event EventHandler<MouseButtonEventArgs> PreviewMouseUp;
+        public event EventHandler<KeyEventArgs> PreviewKeyDown;
+        public event EventHandler<KeyEventArgs> PreviewKeyUp;
+        public event EventHandler<TextCompositionEventArgs> PreviewTextInput;
     }
 
 }

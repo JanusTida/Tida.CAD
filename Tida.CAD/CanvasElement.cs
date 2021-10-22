@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Tida.CAD {
+namespace Tida.CAD
+{
     /// <summary>
     /// The base class of sort things like Layer and drawobjects;
     /// </summary>

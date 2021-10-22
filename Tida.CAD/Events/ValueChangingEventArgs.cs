@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
-namespace Tida.Canvas.Events {
+namespace Tida.CAD.Events
+{
     /// <summary>
     /// 即将更改值的事件参数;
     /// </summary>

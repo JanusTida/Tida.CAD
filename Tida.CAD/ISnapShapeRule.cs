@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 
-namespace Tida.CAD {
+namespace Tida.CAD
+{
     /// <summary>
     /// 绘制对象辅助感应坐标点规则契约;
     /// </summary>

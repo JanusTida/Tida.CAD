@@ -1,11 +1,10 @@
-﻿using Tida.Canvas.Events;
-using Tida.Canvas.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
+using Tida.CAD.Events;
 
-namespace Tida.CAD {
+namespace Tida.CAD
+{
     /// <summary>
     /// 画布数据协约;
     /// </summary>
@@ -18,7 +17,7 @@ namespace Tida.CAD {
         /// <summary>
         /// 坐标间进行转化契约实例;
         /// </summary>
-        ICanvasScreenConverter canvasScreenConverter { get; }
+        ICanvasScreenConverter CanvasScreenConverter { get; }
 
         /// <summary>
         /// 当前选定的活动图层;
@@ -39,18 +38,13 @@ namespace Tida.CAD {
         /// <summary>
         /// 上次编辑的标识位置;以工程数学坐标为准;
         /// </summary>
-        Point LastEditPosition { get;  }
+        Point? LastEditPosition { get;  }
 
 
         /// <summary>
         /// 原点所在的视图坐标位置;
         /// </summary>
         Point PanScreenPosition { get; set; }
-
-        /// <summary>
-        /// 输入设备服务封装;
-        /// </summary>
-        IInputDevice InputDevice { get; }
 
         /// <summary>
         /// 拖拽选择事件;

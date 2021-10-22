@@ -1,12 +1,8 @@
-﻿using Tida.CAD.Contracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tida.CAD;
 
-namespace Tida.Canvas.Events {
+namespace Tida.CAD.Events
+{
     /// <summary>
     /// 事务已经重做事件;
     /// </summary>

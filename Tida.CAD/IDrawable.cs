@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Tida.CAD {
+namespace Tida.CAD
+{
     /// <summary>
     /// 可绘制对象协约;
     /// </summary>

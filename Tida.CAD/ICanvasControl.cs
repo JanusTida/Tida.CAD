@@ -1,18 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tida.Canvas.Events;
-using Tida.Canvas.Input;
-using System.IO;
+using System.Windows;
+using Tida.CAD.Events;
 
-namespace Tida.CAD {
-    
+namespace Tida.CAD
+{
+
     /// <summary>
     /// 画布控件协约;
     /// </summary>
-    public interface ICanvasControl : IHaveEditTool , ICanvasContextEx, ICanvasInputElement {
+    public interface ICanvasControl : 
+        IHaveEditTool , 
+        ICanvasContextEx
+#if WPF
+        ,IInputElement
+#endif
+    {
         /// <summary>
         /// 是否是只读的,当此值设置为真时,本控件及其内容将无法通过输入设备被操作;
         /// </summary>

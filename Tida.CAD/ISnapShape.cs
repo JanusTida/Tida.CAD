@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 
-namespace Tida.CAD {
+namespace Tida.CAD
+{
     /// <summary>
     /// 感应坐标的辅助图形(通常跟鼠标位置有关);
     /// </summary>

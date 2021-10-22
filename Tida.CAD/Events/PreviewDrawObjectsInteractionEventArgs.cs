@@ -1,13 +1,9 @@
-﻿using Tida.CAD.Contracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tida.CAD;
 
-namespace Tida.Canvas.Events {
+namespace Tida.CAD.Events
+{
     /// <summary>
     /// 通知外部,将要针对指定的绘制对象集合,将要进行某种的类型输入交互的预处理事件的参数;
     /// </summary>

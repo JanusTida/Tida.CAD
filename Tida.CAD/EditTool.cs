@@ -1,17 +1,15 @@
-﻿using Tida.Canvas.Events;
-using Tida.Canvas.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Tida.CAD.Events;
+using System.Windows.Input;
+using System.Windows;
 
-namespace Tida.CAD {
+namespace Tida.CAD
+{
 
     /// <summary>
     /// 编辑工具协约;
     /// </summary>
-    public  abstract partial class EditTool:CanvasElement, IDrawable,ICanvasInputElement {
+    public  abstract partial class EditTool:CanvasElement, IDrawable {
 
         public abstract bool CanUndo { get; }
 
@@ -25,31 +23,34 @@ namespace Tida.CAD {
         public event EventHandler<CanRedoChangedEventArgs> CanRedoChanged;
 
         /// <summary>
-        /// 通知将执行<see cref="EditTool.OnPreviewMouseDown(ICanvasContextEx, MouseDownEventArgs)"/>动作;
+        /// 通知将执行<see cref="EditTool.OnPreviewMouseDown(MouseEventArgs)"/>动作;
         /// </summary>
-        public event EventHandler<MouseDownEventArgs> CanvasPreviewMouseDown;
+        public event EventHandler<MouseButtonEventArgs> PreviewMouseDown;
 
         /// <summary>
-        /// 通知将执行<see cref="EditTool.OnPreviewMouseMove(ICanvasContextEx, MouseMoveEventArgs)"/>动作;
+        /// 通知将执行<see cref="EditTool.OnPreviewMouseMove(MouseEventArgs)"/>动作;
         /// </summary>
-        public event EventHandler<MouseMoveEventArgs> CanvasPreviewMouseMove;
+        public event EventHandler<MouseEventArgs> PreviewMouseMove;
 
         /// <summary>
-        /// 通知将执行<see cref="EditTool.OnPreviewMouseUp(ICanvasContextEx, MouseUpEventArgs)"/>动作;
+        /// 通知将执行<see cref="EditTool.OnPreviewMouseUp(MouseEventArgs)"/>动作;
         /// </summary>
-        public event EventHandler<MouseUpEventArgs> CanvasPreviewMouseUp;
+        public event EventHandler<MouseEventArgs> PreviewMouseUp;
 
         /// <summary>
-        /// 通知将执行<see cref="EditTool.OnPreviewKeyDown(ICanvasContextEx, KeyDownEventArgs)"/>动作;
+        /// 通知将执行<see cref="EditTool.OnPreviewKeyDown(KeyEventArgs)"/>动作;
         /// </summary>
-        public event EventHandler<KeyDownEventArgs> CanvasPreviewKeyDown;
+        public event EventHandler<KeyEventArgs> PreviewKeyDown;
 
         /// <summary>
-        /// 通知将执行<see cref="EditTool.OnPreviewKeyUp(ICanvasContextEx, KeyUpEventArgs)"/>动作;
+        /// 通知将执行<see cref="EditTool.OnKeyUp(KeyEventArgs)"/>动作;
         /// </summary>
-        public event EventHandler<KeyUpEventArgs> CanvasPreviewKeyUp;
+        public event EventHandler<KeyEventArgs> PreviewKeyUp;
 
-        public event EventHandler<TextInputEventArgs> CanvasPreviewTextInput;
+        /// <summary>
+        /// 通知将执行<see cref="EditTool.OnTextInput(KeyEventArgs)"/>动作;
+        /// </summary>
+        public event EventHandler<TextCompositionEventArgs> PreviewTextInput;
 
         /// <summary>
         /// 开始/终止操作事件事件;
@@ -162,18 +163,14 @@ namespace Tida.CAD {
     public  abstract partial class EditTool {
 
         /// <summary>
-        /// 处理事件的泛型方法;
+        /// Handle a routed event;
         /// </summary>
-        /// <typeparam name="TEventArgs"></typeparam>
         /// <param name="previewHandler"></param>
         /// <param name="handler"></param>
         /// <param name="e"></param>
-        private static void HandleEventArgs<TEventArgs>(
-            object sender,
-            EventHandler<TEventArgs> previewHandler,
-            Action<TEventArgs> handler,
-            TEventArgs e
-        ) where TEventArgs : HandleableEventArgs {
+        private static void HandleEvent<TEventArgs>(
+            object sender, EventHandler<TEventArgs> previewHandler, Action<TEventArgs> handler, TEventArgs e
+        ) where TEventArgs:RoutedEventArgs {
 
             previewHandler?.Invoke(sender, e);
 
@@ -184,49 +181,53 @@ namespace Tida.CAD {
             handler(e);
         }
 
-
-        public void RaisePreviewMouseDown(MouseDownEventArgs e) {
-            HandleEventArgs(this, CanvasPreviewMouseDown, OnMouseDown, e);
+        public void RaisePreviewMouseDown(MouseButtonEventArgs e) {
+            HandleEvent(this, PreviewMouseDown, OnMouseDown, e);
         }
 
-        protected virtual void OnMouseDown(MouseDownEventArgs e) { }
+        protected virtual void OnMouseDown(MouseButtonEventArgs e) { }
 
-        public void RaisePreviewMouseMove(MouseMoveEventArgs e) {
-            HandleEventArgs(this, CanvasPreviewMouseMove, OnMouseMove, e);
+        public void RaisePreviewMouseMove(MouseEventArgs e) {
+            HandleEvent(this, PreviewMouseMove, OnMouseMove, e);
         }
 
-        protected virtual void OnMouseMove(MouseMoveEventArgs e) {
-
-        }
-
-        public void RaisePreviewMouseUp(MouseUpEventArgs e) {
-            HandleEventArgs(this, CanvasPreviewMouseUp, OnMouseUp, e);
-        }
-
-        protected virtual void OnMouseUp(MouseUpEventArgs e) {
+        protected virtual void OnMouseMove(MouseEventArgs e) {
 
         }
 
-        public void RaisePreviewKeyDown(KeyDownEventArgs e) {
-            HandleEventArgs(this, CanvasPreviewKeyDown, args => OnKeyDown(args), e);
+        public void RaisePreviewMouseUp(MouseButtonEventArgs e) {
+            HandleEvent(this, PreviewMouseUp, OnMouseUp, e);
         }
 
-        protected virtual void OnKeyDown(KeyDownEventArgs e) {
+        protected virtual void OnMouseUp(MouseEventArgs e) {
 
         }
 
-        public void RaisePreviewKeyUp(KeyUpEventArgs e) {
-            HandleEventArgs(this, CanvasPreviewKeyUp, OnKeyUp, e);
+        public void RaisePreviewKeyDown(KeyEventArgs e) {
+            HandleEvent(this, PreviewKeyDown, args => OnKeyDown(args), e);
         }
 
-        protected virtual void OnKeyUp(KeyUpEventArgs e) {
+        protected virtual void OnKeyDown(KeyEventArgs e) {
+
         }
 
-        public void RaisePreviewTextInput(TextInputEventArgs e) {
-            HandleEventArgs(this, CanvasPreviewTextInput, OnTextInput, e);
+        public void RaisePreviewKeyUp(KeyEventArgs e) {
+            HandleEvent(this, PreviewKeyUp, OnKeyUp, e);
         }
 
-        protected virtual void OnTextInput(TextInputEventArgs e) {
+        protected virtual void OnKeyUp(KeyEventArgs e) {
+        }
+
+        public void RaisePreviewTextInput(TextCompositionEventArgs e) {
+            PreviewTextInput?.Invoke(this, e);
+            if (e.Handled)
+            {
+                return;
+            }
+            OnTextInput(e);
+        }
+
+        protected virtual void OnTextInput(TextCompositionEventArgs e) {
 
         }
     }

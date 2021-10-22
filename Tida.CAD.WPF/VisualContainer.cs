@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Tida.CAD.WPF {
+namespace Tida.CAD.WPF
+{
     /// <summary>
     /// 可视化对象，实现了向界面上添加可视化对象的功能，并且能够获取可视化对象的数量
     /// </summary>

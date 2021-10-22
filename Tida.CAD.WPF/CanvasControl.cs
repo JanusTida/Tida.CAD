@@ -5,24 +5,18 @@ using System.Windows.Media;
 using System.Linq;
 using System.Collections.Specialized;
 using System.Windows.Input;
-
-using Tida.Geometry.Primitives;
-using Tida.Canvas.Contracts;
-using Tida.Canvas.Events;
-using Tida.Canvas.WPFCanvas.Geometry;
-using Tida.Canvas.WPFCanvas.Input;
-
-using SystemInput = System.Windows.Input;
-using CanvasInput = Tida.Canvas.Input;
 using System.Windows.Controls;
-using Size = System.Windows.Size;
+using Tida.CAD;
+using Tida.CAD.Events;
+using Tida.CAD.Extensions;
 
-namespace Tida.Canvas.WPFCanvas {
+namespace Tida.CAD.WPF {
     /// <summary>
     /// 画布控件;
     /// </summary>
     public partial class CanvasControl : Grid , ICanvasControl, IInteractionCanvasControl {
         static CanvasControl() {
+            
             BackgroundProperty.OverrideMetadata(typeof(CanvasControl), new FrameworkPropertyMetadata(
                 Constants.DefaultCanvasBackground,
                 FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits
@@ -50,9 +44,9 @@ namespace Tida.Canvas.WPFCanvas {
         /// ICanvas画布工具的内部实现,用于传递到<see cref="IDrawable.Draw(ICanvas)"/>中进行绘制;
         /// 通过更改<see cref="WindowsCanvas.DrawingContext"/>实现复用的目的;
         /// </summary>
-        private WindowsCanvas InternalCanvas => _canvas ?? (_canvas = new WindowsCanvas(this.CanvasProxy));
+        private WPFCanvas InternalCanvas => _canvas ?? (_canvas = new WPFCanvas(this.CanvasScreenConverter));
         
-        private WindowsCanvas _canvas;
+        private WPFCanvas _canvas;
         
         /// <summary>
         /// 记录鼠标按下的位置,拖拽画布时使用;
@@ -65,7 +59,7 @@ namespace Tida.Canvas.WPFCanvas {
         /// <summary>
         /// 记录未拖动前原点的视图坐标(用于拖拽进行中的时候);
         /// </summary>
-        private Vector2D _lastPanOffsetBeforeDragging;
+        private Point _lastPanOffsetBeforeDragging;
 
         /// <summary>
         /// 可绘制对象与WPF DrawingVisual缓存;
@@ -115,7 +109,7 @@ namespace Tida.Canvas.WPFCanvas {
         /// <summary>
         /// 记录上一次鼠标按下的位置,在拖放选择时使用;
         /// </summary>
-        private Vector2D _lastMouseDownPositionForDragSelecting;
+        private Point? _lastMouseDownPositionForDragSelecting;
 
         /// <summary>
         /// 拖放选择时所呈现的矩形对象;
@@ -193,7 +187,7 @@ namespace Tida.Canvas.WPFCanvas {
         /// </summary>
         private void InitializePanOffset() {
             if (PanScreenPosition == null) {
-                PanScreenPosition = new Vector2D(this.ActualWidth / 2, this.ActualHeight / 2);
+                PanScreenPosition = new Point(this.ActualWidth / 2, this.ActualHeight / 2);
             }
         }
 
@@ -201,8 +195,8 @@ namespace Tida.Canvas.WPFCanvas {
         /// 通过调整原点的视图偏移,使得某个某个视图坐标的某工程坐标点处于视图中心的位置;
         /// </summary>
         /// <param name="screenPoint"></param>
-        protected void SetCenterScreen(Vector2D screenPoint) {
-            PanScreenPosition = new Vector2D(
+        protected void SetCenterScreen(Point screenPoint) {
+            PanScreenPosition = new Point(
                 PanScreenPosition.X + this.ActualWidth / 2 - screenPoint.X,
                 PanScreenPosition.Y + this.ActualHeight / 2 - screenPoint.Y
             );
@@ -252,32 +246,32 @@ namespace Tida.Canvas.WPFCanvas {
     /// </summary>
     public partial class CanvasControl {
 
-        private static readonly DependencyPropertyKey CanvasProxyPropertyKey = DependencyProperty.RegisterReadOnly(nameof(CanvasProxy), typeof(ICanvasScreenConvertable), typeof(CanvasControl), new PropertyMetadata());
+        private static readonly DependencyPropertyKey CanvasProxyPropertyKey = DependencyProperty.RegisterReadOnly(nameof(CanvasScreenConverter), typeof(ICanvasScreenConverter), typeof(CanvasControl), new PropertyMetadata());
         public static readonly DependencyProperty CanvasProxyProperty = CanvasProxyPropertyKey.DependencyProperty;
 
      
-        private readonly WindowsCanvasScreenConverter _canvasProxy = new WindowsCanvasScreenConverter();
+        private readonly WPFCanvasScreenConverter _canvasScreenConverter = new WPFCanvasScreenConverter();
 
         /// <summary>
         /// 画布坐标转化实例;
         /// </summary>
-        public ICanvasScreenConvertable CanvasProxy {
-            get => _canvasProxy;
-            set => throw new NotSupportedException($"The {nameof(CanvasProxy)} property is readonly!");
+        public ICanvasScreenConverter CanvasScreenConverter {
+            get => _canvasScreenConverter;
+            set => throw new NotSupportedException($"The {nameof(CanvasScreenConverter)} property is readonly!");
         }
 
         /// <summary>
-        /// 更新<see cref="_canvasProxy"/>中的关键参数;
+        /// 更新<see cref="_canvasScreenConverter"/>中的关键参数;
         /// </summary>
         private void UpdateCanvasProxy(Size? actualSize = null) {
             if(actualSize != null)
             {
-                _canvasProxy.ActualHeight = actualSize.Value.Height;
-                _canvasProxy.ActualWidth = actualSize.Value.Width;
+                _canvasScreenConverter.ActualHeight = actualSize.Value.Height;
+                _canvasScreenConverter.ActualWidth = actualSize.Value.Width;
             }
 
-            _canvasProxy.Zoom = this.Zoom;
-            _canvasProxy.PanScreenPosition = this.PanScreenPosition;
+            _canvasScreenConverter.Zoom = this.Zoom;
+            _canvasScreenConverter.PanScreenPosition = this.PanScreenPosition;
         }
 
     }
@@ -350,11 +344,7 @@ namespace Tida.Canvas.WPFCanvas {
         /// </summary>
         /// <param name="oriPosition"></param>
         /// <returns></returns>
-        private void HandlePosition(Vector2D oriPosition) {
-            if (oriPosition == null) {
-                return;
-            }
-
+        private void HandlePosition(Point oriPosition) {
             if (InteractionHandlers == null) {
                 return;
             }
@@ -758,7 +748,7 @@ namespace Tida.Canvas.WPFCanvas {
         private void DrawGridLines(DrawingContext drawingContext)
         {
             //获得单元格的边长视图大小;
-            var unitLength = CanvasProxy.ToScreen(1);
+            var unitLength = CanvasScreenConverter.ToScreen(1);
             if (unitLength < 3)
             {
                 return;
@@ -866,14 +856,14 @@ namespace Tida.Canvas.WPFCanvas {
         /// <summary>
         /// 原点所在的视图坐标;
         /// </summary>
-        public Vector2D PanScreenPosition {
-            get { return (Vector2D)GetValue(PanScreenPositionProperty); }
+        public Point PanScreenPosition {
+            get { return (Point)GetValue(PanScreenPositionProperty); }
             set { SetValue(PanScreenPositionProperty, value); }
         }
 
         
         public static readonly DependencyProperty PanScreenPositionProperty =
-            DependencyProperty.Register(nameof(PanScreenPosition), typeof(Vector2D), typeof(CanvasControl),
+            DependencyProperty.Register(nameof(PanScreenPosition), typeof(Point), typeof(CanvasControl),
                 new FrameworkPropertyMetadata(null,
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsRender,
                     PanScreenPosition_PropertyChanged));
@@ -967,7 +957,7 @@ namespace Tida.Canvas.WPFCanvas {
             }
 
             //根据鼠标的位置响应缩放;
-            var mouseUnitPos = CanvasProxy.ToUnit(Vector2DAdapter.ConverterToVector2D(e.GetPosition(this)));
+            var mouseUnitPos = CanvasScreenConverter.ToCAD(e.GetPosition(this));
 
             double wheeldeltatick = 120;
             double zoomdelta = (1.25f * (Math.Abs(e.Delta) / wheeldeltatick));
@@ -981,7 +971,7 @@ namespace Tida.Canvas.WPFCanvas {
                 }
             }
             //放大时设定上限;
-            else if (CanvasProxy.ToScreen(1) < 1200)
+            else if (CanvasScreenConverter.ToScreen(1) < 1200)
             {
                 Zoom *= zoomdelta;
             }
@@ -997,12 +987,12 @@ namespace Tida.Canvas.WPFCanvas {
         /// <param name="unitPos"></param>
         /// <param name="screenPos"></param>
         private void MoveUnitPositionToScreenPosition(
-            Vector2D unitPos,
+            Point unitPos,
             Point screenPos)
         {
-            var unitPosInScreen = CanvasProxy.ToScreen(unitPos);
+            var unitPosInScreen = CanvasScreenConverter.ToScreen(unitPos);
             //通过调整原点的视图偏移实现;
-            PanScreenPosition = new Vector2D(
+            PanScreenPosition = new Point(
                 PanScreenPosition.X + screenPos.X - unitPosInScreen.X,
                 PanScreenPosition.Y + screenPos.Y - unitPosInScreen.Y
             );
@@ -1040,7 +1030,7 @@ namespace Tida.Canvas.WPFCanvas {
         /// <param name="e"></param>
         private Cursor GetCursorOnDrag()
         {
-            if (SystemInput.Mouse.MiddleButton == MouseButtonState.Pressed)
+            if (Mouse.MiddleButton == MouseButtonState.Pressed)
             {
                 return DragCursor;
             }
@@ -1065,7 +1055,7 @@ namespace Tida.Canvas.WPFCanvas {
                 UpdateCursor();
                 var mousePos = e.GetPosition(this);
 
-                PanScreenPosition = new Vector2D(
+                PanScreenPosition = new Point(
                     _lastPanOffsetBeforeDragging.X + mousePos.X - _lastMouseDownPointForPan.X,
                     _lastPanOffsetBeforeDragging.Y + mousePos.Y - _lastMouseDownPointForPan.Y
                 );
@@ -1340,22 +1330,19 @@ namespace Tida.Canvas.WPFCanvas {
                 return false;
             }
             
-            var viewPosition = Vector2DAdapter.ConverterToVector2D(e.GetPosition(this));
-            var position = _activeSnapShape?.Position ?? CanvasProxy.ToUnit(viewPosition);
+            var viewPosition = e.GetPosition(this);
+            var position = _activeSnapShape?.Position ?? CanvasScreenConverter.ToCAD(viewPosition);
             
             //预处理位置;
             HandlePosition(position);
 
-            //转换系统参数至协约中的参数;
-            var arg = MouseEventAdapter.ConvertToMouseDownEventArgs(e, position);
-
             //通知编辑工具按下动作;
-            CurrentEditTool.RaisePreviewMouseDown(arg);
+            CurrentEditTool.RaisePreviewMouseDown(e);
 
             //变更上次编辑的位置;
             LastEditPosition = position;
 
-            return arg.Handled;
+            return e.Handled;
         }
         
         /// <summary>
@@ -1367,19 +1354,17 @@ namespace Tida.Canvas.WPFCanvas {
                 return false;
             }
 
-            var viewPosition = Vector2DAdapter.ConverterToVector2D(e.GetPosition(this));
-            var position = _activeSnapShape?.Position ?? CanvasProxy.ToUnit(viewPosition);
+            var viewPosition = e.GetPosition(this);
+            var position = _activeSnapShape?.Position ?? CanvasScreenConverter.ToCAD(viewPosition);
 
             //预处理位置;
             HandlePosition(position);
 
-            //转换系统参数至协约中的参数;
-            var arg = MouseEventAdapter.ConvertToMouseMoveEventArgs(position);
-
+            
             //通知编辑工具;
-            CurrentEditTool.RaisePreviewMouseMove(arg);
+            CurrentEditTool.RaisePreviewMouseMove(e);
 
-            return arg.Handled;
+            return e.Handled;
         }
 
         /// <summary>
@@ -1391,15 +1376,11 @@ namespace Tida.Canvas.WPFCanvas {
                 return false;
             }
 
-            var viewPosition = Vector2DAdapter.ConverterToVector2D(e.GetPosition(this));
-            var position = _activeSnapShape?.Position ?? CanvasProxy.ToUnit(viewPosition);
-
-            //转换系统参数至协约中的参数;
-            var arg = MouseEventAdapter.ConvertToMouseUpEventArgs(e, position);
+            var viewPosition = e.GetPosition(this);
+            var position = _activeSnapShape?.Position ?? CanvasScreenConverter.ToCAD(viewPosition);
 
             //通知编辑工具弹起动作;
-            CurrentEditTool.RaisePreviewMouseUp(arg);
-
+            CurrentEditTool.RaisePreviewMouseUp(e);
             return true;
         }
         
@@ -1412,10 +1393,8 @@ namespace Tida.Canvas.WPFCanvas {
                 return false;
             }
 
-            var arg = KeyAdapter.ConvertToKeyDownEventArgs(e);
-
             //通知编辑工具按键按下;
-            CurrentEditTool.RaisePreviewKeyDown(arg);
+            CurrentEditTool.RaisePreviewKeyDown(e);
 
             return true;
         }
@@ -1430,12 +1409,10 @@ namespace Tida.Canvas.WPFCanvas {
                 return false;
             }
 
-            var arg = KeyAdapter.ConvertToKeyUpEventArgs(e);
-
             //通知编辑工具按键弹起;
-            CurrentEditTool.RaisePreviewKeyUp(arg);
+            CurrentEditTool.RaisePreviewKeyUp(e);
 
-            return arg.Handled;
+            return e.Handled;
         }
         
         /// <summary>
@@ -1448,9 +1425,8 @@ namespace Tida.Canvas.WPFCanvas {
                 return false;
             }
 
-            var args = TextInputAdapter.ConverterToTextInputEventArgs(e);
-            CurrentEditTool.RaisePreviewTextInput(args);
-            return args.Handled;
+            CurrentEditTool.RaisePreviewTextInput(e);
+            return e.Handled;
         }
 
 
@@ -1471,7 +1447,7 @@ namespace Tida.Canvas.WPFCanvas {
         /// <summary>
         /// 上次编辑的标识位置;
         /// </summary>
-        public Vector2D LastEditPosition { get;private set; }
+        public Point? LastEditPosition { get;private set; }
 
         /// <summary>
         /// 当当前编辑工具不为空,且指示<see cref="EditTool.IsEditing"/>为假时,不能显示辅助图形;
@@ -2148,7 +2124,7 @@ namespace Tida.Canvas.WPFCanvas {
 
             if (!(drawable is CanvasElement canvasElement) || canvasElement.IsVisible)
             {
-                drawable.Draw(InternalCanvas, CanvasProxy);
+                drawable.Draw(InternalCanvas);
             }
 
 
@@ -2306,7 +2282,7 @@ namespace Tida.Canvas.WPFCanvas {
                 RemoveDrawable(_activeSnapShape,_snapShapeContainerVisual);
             }
 
-            var position = CanvasProxy.ToUnit(Vector2DAdapter.ConverterToVector2D(e.GetPosition(this)));
+            var position = CanvasScreenConverter.ToCAD(e.GetPosition(this));
 
             //预处理位置;
             HandlePosition(position);
@@ -2386,7 +2362,7 @@ namespace Tida.Canvas.WPFCanvas {
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
-        private ISnapShape GetSnapShape(Vector2D point)
+        private ISnapShape GetSnapShape(Point point)
         {
 #if DEBUG
             //return null;
@@ -2412,7 +2388,7 @@ namespace Tida.Canvas.WPFCanvas {
             //获取所有绘制对象,进行辅助判断;
             var drawObjects = this.Layers.
                 Where(p => p.IsVisible).SelectMany(p => p.DrawObjects).
-                Where(p => p.IsVisible).Where(p => p.PointInObject(point, CanvasProxy) || p.IsEditing).
+                Where(p => p.IsVisible).Where(p => p.PointInObject(point, CanvasScreenConverter) || p.IsEditing).
                 OrderByDescending(p => p.IsSelected);
 
             //触发辅助判断的事件;
@@ -2460,13 +2436,13 @@ namespace Tida.Canvas.WPFCanvas {
             }
 
             //检查是否存在某个图层，该图层内存在元素符合悬停条件,若满足条件,需高亮感应;
-            var mousePosition = CanvasProxy.ToUnit(Vector2DAdapter.ConverterToVector2D(e.GetPosition(this)));
+            var mousePosition = CanvasScreenConverter.ToCAD(e.GetPosition(this));
 
             _hoveredDrawObjects.Clear();
 
             _hoveredDrawObjects.AddRange(
                 this.GetVisibleLayers().SelectMany(p => p.DrawObjects.Where(
-                    q => q.PointInObject(mousePosition, CanvasProxy)
+                    q => q.PointInObject(mousePosition, CanvasScreenConverter)
                 )
             ));
 
@@ -2493,10 +2469,10 @@ namespace Tida.Canvas.WPFCanvas {
             }
 
             //将所有被悬停的元素置为被选择状态;
-            var mousePosition = CanvasProxy.ToUnit(Vector2DAdapter.ConverterToVector2D(e.GetPosition(this)));
+            var mousePosition = CanvasScreenConverter.ToCAD(e.GetPosition(this));
 
             var clickedDrawObjects = this.GetAllVisibleDrawObjects().
-                Where(p => p.PointInObject(mousePosition, CanvasProxy)).ToArray();
+                Where(p => p.PointInObject(mousePosition, CanvasScreenConverter)).ToArray();
 
             bool canApplySelect = true;
 
@@ -2620,7 +2596,7 @@ namespace Tida.Canvas.WPFCanvas {
         /// <param name="e"></param>
         private bool MouseDownOnDragingSelectDrawObject(MouseEventArgs e)
         {
-            var mousePosition = CanvasProxy.ToUnit(Vector2DAdapter.ConverterToVector2D(e.GetPosition(this)));
+            var mousePosition = CanvasScreenConverter.ToCAD(e.GetPosition(this));
             //若上次点击位置不为空,则进行拖放选中操作;
             if (_lastMouseDownPositionForDragSelecting != null)
             {
@@ -2630,13 +2606,13 @@ namespace Tida.Canvas.WPFCanvas {
                 }
 
                 //若矩形两对角点的横坐标或纵坐标相等,则无法组成矩形,不能拖放选择;
-                if (_lastMouseDownPositionForDragSelecting.X == mousePosition.X
-                    || _lastMouseDownPositionForDragSelecting.Y == mousePosition.Y)
+                if (_lastMouseDownPositionForDragSelecting.Value.X == mousePosition.X
+                    || _lastMouseDownPositionForDragSelecting.Value.Y == mousePosition.Y)
                 {
                     return false;
                 }
 
-                var rect = _dragSelectRectangle.Rectangle2D;
+                var rect = _dragSelectRectangle.Rectangle;
                 if (rect == null)
                 {
                     return false;
@@ -2644,13 +2620,13 @@ namespace Tida.Canvas.WPFCanvas {
 
                 //遍历选中所有在框选范围中的可见绘制对象;
                 var selectedObjects = this.GetVisibleLayers().SelectMany(p => p.DrawObjects).Where(p => p.IsVisible).
-                        Where(p => p.ObjectInRectangle(rect, CanvasProxy, _anyPointSelectForDragSelect)).ToArray();
+                        Where(p => p.ObjectInRectangle(rect.Value, CanvasScreenConverter, _anyPointSelectForDragSelect)).ToArray();
 
                 bool canApplySelect = true;
 
                 //若当前编辑工具不为空,由其指示是否能够应用拖放选中;
                 if (CurrentEditTool != null) {
-                    var dragArgs = new DragSelectEventArgs(mousePosition, rect, selectedObjects);
+                    var dragArgs = new DragSelectEventArgs(mousePosition, rect.Value, selectedObjects);
                     DragSelect?.Invoke(this, dragArgs);
                     //若当前编辑工具指示取消,则不能应用拖放选中;
                     canApplySelect = !dragArgs.Cancel;
@@ -2664,14 +2640,14 @@ namespace Tida.Canvas.WPFCanvas {
 
                 //将选中矩形的数据置空;
                 _lastMouseDownPositionForDragSelecting = null;
-                _dragSelectRectangle.Rectangle2D = null;
+                _dragSelectRectangle.Rectangle = null;
 
                 return true;
             }
             else if (e.LeftButton == MouseButtonState.Pressed)
             {
                 //框选矩形的起点不能命中任何绘制对象;
-                if (this.GetAllVisibleDrawObjects().Any(p => p.PointInObject(mousePosition, CanvasProxy))){
+                if (this.GetAllVisibleDrawObjects().Any(p => p.PointInObject(mousePosition, CanvasScreenConverter))){
                     return false;
                 }
                 //记录本次鼠标点击的位置;
@@ -2688,7 +2664,7 @@ namespace Tida.Canvas.WPFCanvas {
         /// <param name="e"></param>
         private bool MouseMoveOnDragingSelectDrawObject(MouseEventArgs e)
         {
-            var mousePosition = CanvasProxy.ToUnit(Vector2DAdapter.ConverterToVector2D(e.GetPosition(this)));
+            var mousePosition = CanvasScreenConverter.ToCAD(e.GetPosition(this));
 
             //若鼠标上次按下的位置不为空,则绘制选择矩形;
             if (_lastMouseDownPositionForDragSelecting == null)
@@ -2700,31 +2676,23 @@ namespace Tida.Canvas.WPFCanvas {
             AddDrawable(_dragSelectRectangle,_dragSelectionContainerVisual);
 
             //若矩形两对角点的横坐标或纵坐标相等,则无法组成矩形,无法绘制矩形;
-            if (_lastMouseDownPositionForDragSelecting.X == mousePosition.X
-                || _lastMouseDownPositionForDragSelecting.Y == mousePosition.Y)
+            if (_lastMouseDownPositionForDragSelecting.Value.X == mousePosition.X
+                || _lastMouseDownPositionForDragSelecting.Value.Y == mousePosition.Y)
             {
-                _dragSelectRectangle.Rectangle2D = null;
+                _dragSelectRectangle.Rectangle = null;
                 return false;
             }
 
             //计算拖放选中区域;
-            var middleLineY = (_lastMouseDownPositionForDragSelecting.Y + mousePosition.Y) / 2;
-            var rect = new Rectangle2D2(
-                new Line2D(
-                    new Vector2D(_lastMouseDownPositionForDragSelecting.X, middleLineY),
-                    new Vector2D(mousePosition.X, middleLineY)
-                ),
-                Math.Abs(_lastMouseDownPositionForDragSelecting.Y - mousePosition.Y)
-            );
+            var rect = new CADRect(_lastMouseDownPositionForDragSelecting.Value, mousePosition);
+            _dragSelectRectangle.Rectangle = rect;
 
-            _dragSelectRectangle.Rectangle2D = rect;
-
-            var dragArgs = new DragSelectMouseMoveEventArgs(_dragSelectRectangle.Rectangle2D, mousePosition);
+            var dragArgs = new DragSelectMouseMoveEventArgs(rect, mousePosition);
 
             HandleDragSelectOnMouseMove(dragArgs);
 
             if (dragArgs.Handled) {
-                _dragSelectRectangle.Rectangle2D = null;
+                _dragSelectRectangle.Rectangle = null;
                 return true;
             }
             
@@ -2758,7 +2726,7 @@ namespace Tida.Canvas.WPFCanvas {
                     return false;
                 }
 
-                _dragSelectRectangle.Rectangle2D = null;
+                _dragSelectRectangle.Rectangle = null;
                 _lastMouseDownPositionForDragSelecting = null;
 
                 return true;
@@ -2775,7 +2743,7 @@ namespace Tida.Canvas.WPFCanvas {
         {
             //清除所有绘制对象的状态;
             _lastMouseDownPositionForDragSelecting = null;
-            _dragSelectRectangle.Rectangle2D = null;
+            _dragSelectRectangle.Rectangle = null;
         }
 
         /// <summary>
@@ -2789,7 +2757,7 @@ namespace Tida.Canvas.WPFCanvas {
                 return;
             }
 
-            if (_dragSelectRectangle.Rectangle2D == null)
+            if (_dragSelectRectangle.Rectangle == null)
             {
                 return;
             }
@@ -2801,7 +2769,7 @@ namespace Tida.Canvas.WPFCanvas {
             }
             
             //若未指示,则根据鼠标的走向判断;
-            _anyPointSelectForDragSelect = dragArgs.IsAnyPoint ?? (dragArgs.Position.X < _lastMouseDownPositionForDragSelecting.X);
+            _anyPointSelectForDragSelect = dragArgs.IsAnyPoint ?? (dragArgs.Position.X < _lastMouseDownPositionForDragSelecting.Value.X);
             
         }
     }
@@ -2834,7 +2802,7 @@ namespace Tida.Canvas.WPFCanvas {
         private bool InteractWithSelectedDrawObjects<TEventArgs>(
             Action<DrawObject,TEventArgs> handler,
             TEventArgs eventArgs)
-            where TEventArgs:CanvasInput.HandleableEventArgs {
+            where TEventArgs:RoutedEventArgs {
 
             if (!CheckInteractWithSelectedDrawObjectsEnabled()) {
                 return false;
@@ -2903,12 +2871,10 @@ namespace Tida.Canvas.WPFCanvas {
                 return false;
             }
             
-            var mouseScreenPosition = Vector2DAdapter.ConverterToVector2D(e.GetPosition(this));
-            var mousePosition = CanvasProxy.ToUnit(mouseScreenPosition);
+            var mouseScreenPosition = e.GetPosition(this);
+            var mousePosition = CanvasScreenConverter.ToCAD(mouseScreenPosition);
             HandlePosition(mousePosition);
-            var mouseDownEventArgs = MouseEventAdapter.ConvertToMouseDownEventArgs(e, _activeSnapShape?.Position ?? mousePosition);
-
-            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.RaisePreviewMouseDown(eventArgs), mouseDownEventArgs);
+            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.RaisePreviewMouseDown(eventArgs), e);
         }
 
         /// <summary>
@@ -2917,15 +2883,13 @@ namespace Tida.Canvas.WPFCanvas {
         /// <param name="e"></param>
         private bool MouseMoveOnSelectedDrawObjects(MouseEventArgs e)
         {
-            var mouseScreenPosition = Vector2DAdapter.ConverterToVector2D(e.GetPosition(this));
-            var mousePosition = CanvasProxy.ToUnit(mouseScreenPosition);
+            var mouseScreenPosition = e.GetPosition(this);
+            var mousePosition = CanvasScreenConverter.ToCAD(mouseScreenPosition);
 
             HandlePosition(mousePosition);
 
             //与所有选中的绘制对象进行交互;
-            var args = MouseEventAdapter.ConvertToMouseMoveEventArgs(_activeSnapShape?.Position??mousePosition);
-
-            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.RaisePreviewMouseMove(eventArgs), args);
+            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.RaisePreviewMouseMove(eventArgs), e);
         }
 
         /// <summary>
@@ -2935,9 +2899,7 @@ namespace Tida.Canvas.WPFCanvas {
         private bool KeyDownOnSelectedDrawObjects(KeyEventArgs e)
         {
             //与所有选中的绘制对象进行交互;
-            var args = KeyAdapter.ConvertToKeyDownEventArgs(e);
-         
-            return InteractWithSelectedDrawObjects((drawObject,eventArgs) => drawObject.RaisePreviewKeyDown(eventArgs),args);
+            return InteractWithSelectedDrawObjects((drawObject,eventArgs) => drawObject.RaisePreviewKeyDown(eventArgs),e);
         }
 
         /// <summary>
@@ -2947,8 +2909,7 @@ namespace Tida.Canvas.WPFCanvas {
         private bool KeyUpOnSelectedDrawObjects(KeyEventArgs e)
         {
             //与所有选中的绘制对象进行交互;
-            var args = KeyAdapter.ConvertToKeyUpEventArgs(e);
-            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.RaisePreviewKeyUp(eventArgs), args);
+            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.RaisePreviewKeyUp(eventArgs), e);
         }
 
         
@@ -2962,12 +2923,12 @@ namespace Tida.Canvas.WPFCanvas {
         /// <summary>
         /// 当前的鼠标所在的工程数学坐标;
         /// </summary>
-        public Vector2D CurrentMousePosition { get; private set; }
+        public Point CurrentMousePosition { get; private set; }
 
         /// <summary>
         /// 当前的鼠标所在的工程数学坐标发生变化事件;
         /// </summary>
-        public event EventHandler<ValueChangedEventArgs<Vector2D>> CurrentMousePositionChanged;
+        public event EventHandler<ValueChangedEventArgs<Point>> CurrentMousePositionChanged;
 
         /// <summary>
         /// 鼠标移动时,通知当前鼠标的工程数学坐标节点变化;
@@ -2975,10 +2936,10 @@ namespace Tida.Canvas.WPFCanvas {
         /// <param name="e"></param>
         private bool MouseMoveOnCurrentMousePosition(MouseEventArgs e)
         {
-            var point = CanvasProxy.ToUnit(Vector2DAdapter.ConverterToVector2D(e.GetPosition(this)));
+            var point = CanvasScreenConverter.ToCAD(e.GetPosition(this));
             var oldValue = CurrentMousePosition;
             CurrentMousePosition = point;
-            CurrentMousePositionChanged?.Invoke(this, new ValueChangedEventArgs<Vector2D>(CurrentMousePosition, oldValue));
+            CurrentMousePositionChanged?.Invoke(this, new ValueChangedEventArgs<Point>(CurrentMousePosition, oldValue));
 
             return false;
         }
@@ -2986,15 +2947,7 @@ namespace Tida.Canvas.WPFCanvas {
 
     }
 
-    /// <summary>
-    /// 输入设备封装;
-    /// </summary>
-    public partial class CanvasControl
-    {
-        private CanvasInput.IInputDevice _inputDevice;
-        public CanvasInput.IInputDevice InputDevice => _inputDevice??(_inputDevice = new InputDeviceWrapper(this));
-    }
-
+ 
     /// <summary>
     /// 原生对象部分;
     /// </summary>
@@ -3041,121 +2994,69 @@ namespace Tida.Canvas.WPFCanvas {
         /// <summary>
         /// 鼠标按下事件;
         /// </summary>
-        public event EventHandler<CanvasInput.MouseDownEventArgs> CanvasPreviewMouseDown;
+        public event EventHandler<MouseEventArgs> CanvasPreviewMouseDown;
 
         /// <summary>
         /// 鼠标移动事件;
         /// </summary>
-        public event EventHandler<CanvasInput.MouseMoveEventArgs> CanvasPreviewMouseMove;
+        public event EventHandler<MouseEventArgs> CanvasPreviewMouseMove;
 
 
         /// <summary>
         /// 鼠标弹起事件;
         /// </summary>
-        public event EventHandler<CanvasInput.MouseUpEventArgs> CanvasPreviewMouseUp;
+        public event EventHandler<MouseEventArgs> CanvasPreviewMouseUp;
 
         /// <summary>
         /// 键盘按下事件;
         /// </summary>
-        public event EventHandler<CanvasInput.KeyDownEventArgs> CanvasPreviewKeyDown;
+        public event EventHandler<KeyEventArgs> CanvasPreviewKeyDown;
 
         /// <summary>
         /// 键盘弹起事件;
         /// </summary>
-        public event EventHandler<CanvasInput.KeyUpEventArgs> CanvasPreviewKeyUp;
+        public event EventHandler<KeyEventArgs> CanvasPreviewKeyUp;
 
         /// <summary>
         /// 键盘输入事件;
         /// </summary>
-        public event EventHandler<CanvasInput.TextInputEventArgs> CanvasPreviewTextInput;
+        public event EventHandler<TextCompositionEventArgs> CanvasPreviewTextInput;
 
         
-        /// <summary>
-        /// 获取鼠标事件的屏幕坐标位置;
-        /// </summary>
-        /// <param name="e"></param>
-        /// <returns></returns>
-        private Vector2D GetMouseScreenPosition(MouseEventArgs e) {
-            return Vector2DAdapter.ConverterToVector2D(e.GetPosition(this));
-        }
         
         /// <summary>
         /// 鼠标按下时,通知外部;
         /// </summary>
         /// <param name="e"></param>
         private bool MouseDownOnPreview(MouseButtonEventArgs e) {
-            var viewPosition = GetMouseScreenPosition(e);
-            var position = _activeSnapShape?.Position ?? CanvasProxy.ToUnit(viewPosition);
-            var arg = MouseEventAdapter.ConvertToMouseDownEventArgs(e, position);
-
-            CanvasPreviewMouseDown?.Invoke(this, arg);
-
-            return arg.Handled;
+            CanvasPreviewMouseDown?.Invoke(this, e);
+            return e.Handled;
         }
         
         private bool MouseMoveOnPreview(MouseEventArgs e) {
-            var viewPosition = GetMouseScreenPosition(e);
-            var position = _activeSnapShape?.Position ?? CanvasProxy.ToUnit(viewPosition);
-            var arg = MouseEventAdapter.ConvertToMouseMoveEventArgs(position);
-
-            RaisePreviewMouseMove(arg);
-            
-            return arg.Handled;
+            CanvasPreviewMouseMove?.Invoke(this, e);
+            return e.Handled;
         }
 
         private bool MouseUpOnPreview(MouseButtonEventArgs e) {
-            var viewPosition = GetMouseScreenPosition(e);
-            var position = _activeSnapShape?.Position ?? CanvasProxy.ToUnit(viewPosition);
-            var arg = MouseEventAdapter.ConvertToMouseUpEventArgs(e,position);
-
-            RaisePreviewMouseUp(arg);
-
-            return arg.Handled;
+            CanvasPreviewMouseUp?.Invoke(this, e);
+            return e.Handled;
         }
 
         private bool KeyDownOnPreview(KeyEventArgs e) {
-            var arg = KeyAdapter.ConvertToKeyDownEventArgs(e);
-            RaisePreviewKeyDown(arg);
-            CanvasPreviewKeyDown?.Invoke(this, arg);
-            return arg.Handled;
+            CanvasPreviewKeyDown?.Invoke(this, e);
+            return e.Handled;
         }
 
         private bool KeyUpOnPreview(KeyEventArgs e) {
-            var arg = KeyAdapter.ConvertToKeyUpEventArgs(e);
-            RaisePreviewKeyUp(arg);
-            return arg.Handled;
+            CanvasPreviewKeyUp?.Invoke(this, e);
+            return e.Handled;
         }
         
 
         private bool TextInputOnPreview(TextCompositionEventArgs e) {
-            var arg = TextInputAdapter.ConverterToTextInputEventArgs(e);
-            RaisePreviewTextInput(arg);
-            return arg.Handled;
-        }
-
-
-        public void RaisePreviewMouseDown(CanvasInput.MouseDownEventArgs e) {
-            CanvasPreviewMouseDown?.Invoke(this, e);
-        }
-
-        public void RaisePreviewMouseMove(CanvasInput.MouseMoveEventArgs e) {
-            CanvasPreviewMouseMove?.Invoke(this, e);
-        }
-
-        public void RaisePreviewMouseUp(CanvasInput.MouseUpEventArgs e) {
-            CanvasPreviewMouseUp?.Invoke(this, e);
-        }
-
-        public void RaisePreviewKeyDown(CanvasInput.KeyDownEventArgs e) {
-            CanvasPreviewKeyDown?.Invoke(this, e);
-        }
-
-        public void RaisePreviewKeyUp(CanvasInput.KeyUpEventArgs e) {
-            CanvasPreviewKeyUp?.Invoke(this, e);
-        }
-
-        public void RaisePreviewTextInput(CanvasInput.TextInputEventArgs e) {
             CanvasPreviewTextInput?.Invoke(this, e);
+            return e.Handled;
         }
 
 

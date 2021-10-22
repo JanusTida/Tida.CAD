@@ -2,37 +2,35 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Linq;
-using Tida.CAD.Contracts;
 using System.Windows.Media;
-using Tida.CAD.Extensions;
 
-namespace Tida.CAD.WPFCanvas {
+namespace Tida.CAD.WPF
+{
     /// <summary>
-    /// 本类为根据<see cref="DrawingContext"/>为基础所封装的WPF画布实现;
+    /// A WPF canvas implemented with <see cref="DrawingContext"/>;
     /// </summary>
-    public class WindowsCanvas : ICanvas {
-
+    public class WPFCanvas : ICanvas {
         /// <summary>
-        /// 根据一个画布-视图转化实现构建;
+        /// Create an instance of WPFCanvas;
         /// </summary>
-        /// <param name="canvasScreenConverter">转化实现</param>
-        public WindowsCanvas(ICanvasScreenConverter canvasScreenConverter)
+        /// <param name="canvasScreenConverter">An converter instance</param>
+        public WPFCanvas(ICanvasScreenConverter canvasScreenConverter)
         {
             CanvasScreenConverter = canvasScreenConverter ?? throw new ArgumentNullException(nameof(canvasScreenConverter));
         }
 
         /// <summary>
-        /// 被操作的DrawingContext实例;外部可更改本对象,以达到复用对象的目的,避免反复构建画布;
+        /// An instance of DrawingContext,the value can be modified in run time;
         /// </summary>
-        public DrawingContext DrawingContext { get; set; }
+        public DrawingContext DrawingContext { get; internal set; }
 
         /// <summary>
-        /// 因为绘制需要使用到坐标转换等的功能，以处理工程数学与WPF间的转换;
+        /// The coverter instance;
         /// </summary>
         public ICanvasScreenConverter CanvasScreenConverter { get; }
 
         /// <summary>
-        /// 验证DrawingContext是否可用;
+        /// Validate <see cref="DrawingContext"/> is available at present;
         /// </summary>
         private void ValidateDrawingContext() {
             //如若DrawingContext为空,则不可执行动作;
@@ -43,7 +41,7 @@ namespace Tida.CAD.WPFCanvas {
         }
 
         /// <summary>
-        /// 绘制线段;
+        /// Draw a line;
         /// </summary>
         /// <param name="pen"></param>
         public void DrawLine(Pen pen, Point point0,Point point1) {
@@ -66,7 +64,7 @@ namespace Tida.CAD.WPFCanvas {
 
      
         /// <summary>
-        /// 绘制圆弧;
+        /// Draw a arc;
         /// </summary>
         /// <param name="pen"></param>
         /// <param name="center"></param>
@@ -114,7 +112,7 @@ namespace Tida.CAD.WPFCanvas {
         }
         
         /// <summary>
-        /// 得到圆弧的几何图形;
+        /// Create a <see cref="PathGeometry"/> from an arc;
         /// </summary>
         /// <param name="center"></param>
         /// <param name="screenRadius"></param>
@@ -213,38 +211,38 @@ namespace Tida.CAD.WPFCanvas {
 
             ValidateDrawingContext();
             
-            //使用一个变量存储上一次的视图点;
-            Point? lastScreenPoint = null;
-            foreach (var point in points)
-            {
-                var thisScreenPoint = CanvasScreenConverter.ToScreen(point);
-                if (lastScreenPoint != null)
-                {
-                    //绘制的是上一次的节点到这一次的节点;
-                    DrawingContext.DrawLine(pen, lastScreenPoint.Value, thisScreenPoint);
+            ////使用一个变量存储上一次的视图点;
+            //Point? lastScreenPoint = null;
+            //foreach (var point in points)
+            //{
+            //    var thisScreenPoint = CanvasScreenConverter.ToScreen(point);
+            //    if (lastScreenPoint != null)
+            //    {
+            //        //绘制的是上一次的节点到这一次的节点;
+            //        DrawingContext.DrawLine(pen, lastScreenPoint.Value, thisScreenPoint);
 
-                }
-                lastScreenPoint = thisScreenPoint;
-            }
+            //    }
+            //    lastScreenPoint = thisScreenPoint;
+            //}
 
-            //var path = GetCurveGeometry(points);
-            //DrawingContext.DrawGeometry(null, sysPen, path);
+            var path = GetCurveGeometry(points);
+            DrawingContext.DrawGeometry(null, pen, path);
         }
 
         /// <summary>
-        /// 绘制矩形;
+        /// Draw a rectangle;
         /// </summary>
-        /// <param name="brush">填充颜色</param>
-        /// <param name="pen"></param>
+        /// <param name="brush">The brush to fill the rect</param>
+        /// <param name="pen">The pen to decorate the border of the rect</param>
         /// <param name="rect"></param>
         public void DrawRectangle(CADRect rect,Brush brush, Pen pen) {
             ValidateDrawingContext();
 
-            //Check whether the rect is visible;
-            var centerInScreen = CanvasScreenConverter.ToScreen(rect.X);
-            
-            
-            
+            var topLeftInScreen = CanvasScreenConverter.ToScreen(rect.TopLeft);
+            var widthInScreen = CanvasScreenConverter.ToScreen(rect.Width);
+            var heightInScreen = CanvasScreenConverter.ToScreen(rect.Height);
+            var rectInScreen = new Rect(topLeftInScreen, new Size(widthInScreen, heightInScreen));
+            DrawingContext.DrawRectangle(brush, pen, rectInScreen);
         }
 
         public void DrawPolygon(IEnumerable<Point> points, Brush brush,Pen pen)

@@ -1,13 +1,10 @@
-﻿using Tida.CAD.Contracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tida.CAD;
 
-namespace Tida.Canvas.Events {
+namespace Tida.CAD.Events
+{
     /// <summary>
     /// 正在进行辅助判断的事件参数;
     /// </summary>

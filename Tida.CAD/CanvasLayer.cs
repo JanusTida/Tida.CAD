@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 
-namespace Tida.CAD {
+namespace Tida.CAD
+{
     /// <summary>
     /// 画布图层;
     /// </summary>

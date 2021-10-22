@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 
-namespace Tida.CAD {
+namespace Tida.CAD
+{
 
     /// <summary>
     /// ICanvas interface describes the drawing method in unit coordinate system,
@@ -75,6 +75,10 @@ namespace Tida.CAD {
         /// <param name="cadRect"></param>
         void DrawRectangle(CADRect cadRect,Brush brush, Pen pen);
 
+
+#if WPF
+        DrawingContext DrawingContext { get; }
+#endif
     }
 
 

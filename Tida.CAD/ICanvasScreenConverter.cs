@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 
-namespace Tida.CAD {
+namespace Tida.CAD
+{
 
     /// <summary>
     /// The converter between screen coordinates and CAD coordinates;
@@ -44,7 +40,7 @@ namespace Tida.CAD {
         double ToCAD(double pixelLength);
 
         /// <summary>
-        /// 将视图坐标转化为工程数学坐标;
+        /// Convert a point in rendering coordinates into a point in CAD coordinates;
         /// </summary>
         /// <param name="screenPoint"></param>
         /// <returns></returns>

@@ -16,8 +16,7 @@ namespace Tida.Canvas.Input {
         /// <param name="button">指示哪个按键被按下</param>
         /// <param name="position">指针所在的工程数学坐标</param>
         /// <param name="location">指针所在的视图位置</param>
-        public MouseDownEventArgs(MouseButton button, Vector2D position) : 
-            base(button,position) {
+        public MouseDownEventArgs(MouseButton button, Vector2D position) : base(button,position) {
             
         }
 

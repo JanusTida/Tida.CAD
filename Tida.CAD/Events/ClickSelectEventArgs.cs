@@ -1,14 +1,8 @@
-﻿using Tida.CAD.Contracts;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows;
-using Tida.CAD;
 
-namespace Tida.Canvas.Events {
+namespace Tida.CAD.Events
+{
     /// <summary>
     /// 点击选取事件参数;
     /// </summary>

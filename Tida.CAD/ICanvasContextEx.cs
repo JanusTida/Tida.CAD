@@ -1,11 +1,9 @@
-﻿using Tida.Canvas.Events;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Tida.CAD.Events;
 
-namespace Tida.CAD {
+namespace Tida.CAD
+{
 
     /// <summary>
     /// 画布上下文升级契约,此契约在<see cref="ICanvasContext"/>上加入了辅助规则内容;
