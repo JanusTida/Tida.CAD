@@ -7,14 +7,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Tida.Canvas.WPFCanvas {
+namespace Tida.CAD.WPF {
     /// <summary>
     /// 可视化对象，实现了向界面上添加可视化对象的功能，并且能够获取可视化对象的数量
     /// </summary>
     public class VisualContainer : FrameworkElement {
         public VisualContainer() {
             this.Focusable = true;
-            
         }
         
         /// <summary>

@@ -399,7 +399,6 @@ namespace Tida.Canvas.WPFCanvas {
         /// <summary>
         /// 以视图坐标为标准,绘制椭圆;
         /// </summary>
-        /// <param name="rectangle">以视图坐标为准的矩形</param>
         /// <param name="brush">填充色</param>
         /// <param name="pen">笔</param>
         public void NativeDrawEllipse(Brush brush, Pen pen, Vector2D center, double radiusX, double radiusY) {
