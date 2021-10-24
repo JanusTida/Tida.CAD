@@ -186,9 +186,7 @@ namespace Tida.CAD.WPF {
         /// 初始化原点所在坐标;
         /// </summary>
         private void InitializePanOffset() {
-            if (PanScreenPosition == null) {
-                PanScreenPosition = new Point(this.ActualWidth / 2, this.ActualHeight / 2);
-            }
+            PanScreenPosition = new Point(this.ActualWidth / 2, this.ActualHeight / 2);
         }
 
         /// <summary>
@@ -864,7 +862,7 @@ namespace Tida.CAD.WPF {
         
         public static readonly DependencyProperty PanScreenPositionProperty =
             DependencyProperty.Register(nameof(PanScreenPosition), typeof(Point), typeof(CanvasControl),
-                new FrameworkPropertyMetadata(null,
+                new FrameworkPropertyMetadata(default(Point),
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsRender,
                     PanScreenPosition_PropertyChanged));
 
