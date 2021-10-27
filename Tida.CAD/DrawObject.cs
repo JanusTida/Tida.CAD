@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Tida.CAD.Events;
+using Tida.CAD.Input;
 
 namespace Tida.CAD {
     /// <summary>
-    /// 绘制对象;
+    /// Drawobject in layer;
     /// </summary>
     public abstract partial class DrawObject : CanvasElement,ICloneable<DrawObject> {
         
         /// <summary>
-        /// 判定某个坐标是否在绘制对象所在范围内;
+        /// Indicates whether the point in inside the object;
         /// </summary>
         /// <param name="point">坐标(工程数学坐标)</param>
         /// <param name="canvasScreenConverter">视图单位转化器,可用于内部进行误差判断</param>
@@ -22,7 +23,7 @@ namespace Tida.CAD {
         public virtual bool PointInObject(Point point, ICanvasScreenConverter canvasScreenConverter) => false;
 
         /// <summary>
-        /// 判定绘制对象是否在某个矩形区域内;
+        /// Indicated whether the object in inside a rectangle;
         /// </summary>
         /// <param name="rect">区域(工程数学坐标为准)</param>
         /// <param name="anyPoint">是否模糊匹配,即判定相交是否满足条件</param>
@@ -198,16 +199,17 @@ namespace Tida.CAD {
         /// </summary>
         /// <param name="canvas"></param>
         /// <param name="point"></param>
-        public void RaisePreviewMouseMove(MouseEventArgs e) {
+        public void OnMouseMove(CADMouseEventArgs e) 
+        {
             PreviewMouseMove?.Invoke(this, e);
             if (e.Handled) {
                 return;
             }
 
-            OnMouseMove(e);
+            OnMouseMoveCore(e);
         }
 
-        protected virtual void OnMouseMove(MouseEventArgs e) { }
+        protected virtual void OnMouseMoveCore(CADMouseEventArgs e) { }
 
         /// <summary>
         /// 鼠标按下响应;
@@ -215,16 +217,16 @@ namespace Tida.CAD {
         /// <param name="canvas"></param>
         /// <param name="point"></param>
         /// <param name="snapShape"></param>
-        public void RaisePreviewMouseDown(MouseButtonEventArgs e) {
+        public void OnPreviewMouseDown(CADMouseButtonEventArgs e) {
             PreviewMouseDown?.Invoke(this, e);
             if (e.Handled) {
                 return;
             }
 
-            OnMouseDown(e);
+            OnMouseDownCore(e);
         }
 
-        protected virtual void OnMouseDown(MouseButtonEventArgs e) { }
+        protected virtual void OnMouseDownCore(CADMouseButtonEventArgs e) { }
 
         /// <summary>
         /// 鼠标弹起响应;
@@ -232,68 +234,66 @@ namespace Tida.CAD {
         /// <param name="canvas"></param>
         /// <param name="point"></param>
         /// <param name="snapShape"></param>
-        public void RaisePreviewMouseUp(MouseButtonEventArgs e) {
+        public void OnMouseUp(CADMouseButtonEventArgs e) {
             PreviewMouseUp?.Invoke(this, e);
             if(e.Handled) {
                 return;
             }
 
-            OnMouseUp(e);
+            OnMouseUpCore(e);
         }
 
 
-        protected virtual void OnMouseUp(MouseButtonEventArgs e) { }
+        protected virtual void OnMouseUpCore(CADMouseButtonEventArgs e) { }
 
         /// <summary>
         /// 键盘按键响应;
         /// </summary>
         /// <param name="canvas"></param>
         /// <param name="e"></param>
-        public void RaisePreviewKeyDown(KeyEventArgs e) {
+        public void OnKeyDown(CADKeyEventArgs e) {
             PreviewKeyDown?.Invoke(this, e);
             if (e.Handled) {
                 return;
             }
 
-            OnKeyDown(e);
+            OnKeyDownCore(e);
         }
 
-        protected virtual void OnKeyDown(KeyEventArgs e) { }
+        protected virtual void OnKeyDownCore(CADKeyEventArgs e) { }
 
-        public void RaisePreviewKeyUp(KeyEventArgs e) {
+        public void OnKeyUp(CADKeyEventArgs e) {
             PreviewKeyUp?.Invoke(this, e);
 
             if (e.Handled) {
                 return;
             }
 
-            OnKeyUp(e);
+            OnKeyUpCore(e);
         }
 
-        protected virtual void OnKeyUp(KeyEventArgs e) {
+        protected virtual void OnKeyUpCore(CADKeyEventArgs e) {
 
         }
 
-        public void RaisePreviewTextInput(TextCompositionEventArgs e) {
+        public void OnTextInput(TextCompositionEventArgs e) {
             PreviewTextInput?.Invoke(this, e);
             if (e.Handled) {
                 return;
             }
             
-            OnTextInput(e);
+            OnTextInputCore(e);
         }
 
-        protected virtual void OnTextInput(TextCompositionEventArgs e) {
+        protected virtual void OnTextInputCore(TextCompositionEventArgs e) {
             
         }
 
-
-
-        public event EventHandler<MouseButtonEventArgs> PreviewMouseDown;
-        public event EventHandler<MouseEventArgs> PreviewMouseMove;
-        public event EventHandler<MouseButtonEventArgs> PreviewMouseUp;
-        public event EventHandler<KeyEventArgs> PreviewKeyDown;
-        public event EventHandler<KeyEventArgs> PreviewKeyUp;
+        public event EventHandler<CADMouseButtonEventArgs> PreviewMouseDown;
+        public event EventHandler<CADMouseEventArgs> PreviewMouseMove;
+        public event EventHandler<CADMouseButtonEventArgs> PreviewMouseUp;
+        public event EventHandler<CADKeyEventArgs> PreviewKeyDown;
+        public event EventHandler<CADKeyEventArgs> PreviewKeyUp;
         public event EventHandler<TextCompositionEventArgs> PreviewTextInput;
     }
 

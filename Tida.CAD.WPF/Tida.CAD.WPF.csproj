@@ -14,6 +14,10 @@
     <DefineConstants>$(DefineConstants)TRACE;WPF</DefineConstants>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="DrawObjects\" />
+  </ItemGroup>
+
   <Import Project="..\Tida.CAD\Tida.CAD.projitems" Label="Shared" />
 
 </Project>

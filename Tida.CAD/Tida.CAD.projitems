@@ -21,6 +21,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)ICanvasControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ICanvasInteractionHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\GeometryExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\CADKeyEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\CADMouseButtonEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\CADMouseEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\CADRoutedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\CADTextInputEventArgs.cs" />
     <Compile Include="..\Tida.CAD\CADRect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ICanvasScreenConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ICloneable.cs" />

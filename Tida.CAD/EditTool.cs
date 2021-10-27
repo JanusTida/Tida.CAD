@@ -2,6 +2,7 @@
 using Tida.CAD.Events;
 using System.Windows.Input;
 using System.Windows;
+using Tida.CAD.Input;
 
 namespace Tida.CAD
 {
@@ -23,34 +24,34 @@ namespace Tida.CAD
         public event EventHandler<CanRedoChangedEventArgs> CanRedoChanged;
 
         /// <summary>
-        /// 通知将执行<see cref="EditTool.OnPreviewMouseDown(MouseEventArgs)"/>动作;
+        /// 通知将执行<see cref="EditTool.OnPreviewMouseDown(CADMouseEventArgs)"/>动作;
         /// </summary>
-        public event EventHandler<MouseButtonEventArgs> PreviewMouseDown;
+        public event EventHandler<CADMouseButtonEventArgs> PreviewMouseDown;
 
         /// <summary>
-        /// 通知将执行<see cref="EditTool.OnPreviewMouseMove(MouseEventArgs)"/>动作;
+        /// 通知将执行<see cref="EditTool.OnPreviewMouseMove(CADMouseEventArgs)"/>动作;
         /// </summary>
-        public event EventHandler<MouseEventArgs> PreviewMouseMove;
+        public event EventHandler<CADMouseEventArgs> PreviewMouseMove;
 
         /// <summary>
-        /// 通知将执行<see cref="EditTool.OnPreviewMouseUp(MouseEventArgs)"/>动作;
+        /// 通知将执行<see cref="EditTool.OnPreviewMouseUp(CADMouseEventArgs)"/>动作;
         /// </summary>
-        public event EventHandler<MouseEventArgs> PreviewMouseUp;
+        public event EventHandler<CADMouseButtonEventArgs> PreviewMouseUp;
 
         /// <summary>
-        /// 通知将执行<see cref="EditTool.OnPreviewKeyDown(KeyEventArgs)"/>动作;
+        /// 通知将执行<see cref="EditTool.OnPreviewKeyDown(CADKeyEventArgs)"/>动作;
         /// </summary>
-        public event EventHandler<KeyEventArgs> PreviewKeyDown;
+        public event EventHandler<CADKeyEventArgs> PreviewKeyDown;
 
         /// <summary>
-        /// 通知将执行<see cref="EditTool.OnKeyUp(KeyEventArgs)"/>动作;
+        /// 通知将执行<see cref="EditTool.OnKeyUp(CADKeyEventArgs)"/>动作;
         /// </summary>
-        public event EventHandler<KeyEventArgs> PreviewKeyUp;
+        public event EventHandler<CADKeyEventArgs> PreviewKeyUp;
 
         /// <summary>
-        /// 通知将执行<see cref="EditTool.OnTextInput(KeyEventArgs)"/>动作;
+        /// 通知将执行<see cref="EditTool.OnTextInput(CADTextInputEventArgs)"/>动作;
         /// </summary>
-        public event EventHandler<TextCompositionEventArgs> PreviewTextInput;
+        public event EventHandler<CADTextInputEventArgs> PreviewTextInput;
 
         /// <summary>
         /// 开始/终止操作事件事件;
@@ -170,7 +171,7 @@ namespace Tida.CAD
         /// <param name="e"></param>
         private static void HandleEvent<TEventArgs>(
             object sender, EventHandler<TEventArgs> previewHandler, Action<TEventArgs> handler, TEventArgs e
-        ) where TEventArgs:RoutedEventArgs {
+        ) where TEventArgs:CADRoutedEventArgs {
 
             previewHandler?.Invoke(sender, e);
 
@@ -181,53 +182,59 @@ namespace Tida.CAD
             handler(e);
         }
 
-        public void RaisePreviewMouseDown(MouseButtonEventArgs e) {
+        public void RaisePreviewMouseDown(CADMouseButtonEventArgs e) 
+        {
             HandleEvent(this, PreviewMouseDown, OnMouseDown, e);
         }
 
-        protected virtual void OnMouseDown(MouseButtonEventArgs e) { }
+        protected virtual void OnMouseDown(CADMouseButtonEventArgs e) { }
 
-        public void RaisePreviewMouseMove(MouseEventArgs e) {
+        public void RaisePreviewMouseMove(CADMouseEventArgs e) 
+        {
             HandleEvent(this, PreviewMouseMove, OnMouseMove, e);
         }
 
-        protected virtual void OnMouseMove(MouseEventArgs e) {
+        protected virtual void OnMouseMove(CADMouseEventArgs e) 
+        {
 
         }
 
-        public void RaisePreviewMouseUp(MouseButtonEventArgs e) {
+        public void RaisePreviewMouseUp(CADMouseButtonEventArgs e) 
+        {
             HandleEvent(this, PreviewMouseUp, OnMouseUp, e);
         }
 
-        protected virtual void OnMouseUp(MouseEventArgs e) {
+        protected virtual void OnMouseUp(CADMouseButtonEventArgs e) 
+        {
 
         }
 
-        public void RaisePreviewKeyDown(KeyEventArgs e) {
+        public void RaisePreviewKeyDown(CADKeyEventArgs e) 
+        {
             HandleEvent(this, PreviewKeyDown, args => OnKeyDown(args), e);
         }
 
-        protected virtual void OnKeyDown(KeyEventArgs e) {
+        protected virtual void OnKeyDown(CADKeyEventArgs e) 
+        {
 
         }
 
-        public void RaisePreviewKeyUp(KeyEventArgs e) {
+        public void RaisePreviewKeyUp(CADKeyEventArgs e)
+        {
             HandleEvent(this, PreviewKeyUp, OnKeyUp, e);
         }
 
-        protected virtual void OnKeyUp(KeyEventArgs e) {
+        protected virtual void OnKeyUp(CADKeyEventArgs e) 
+        {
         }
 
-        public void RaisePreviewTextInput(TextCompositionEventArgs e) {
-            PreviewTextInput?.Invoke(this, e);
-            if (e.Handled)
-            {
-                return;
-            }
-            OnTextInput(e);
+        public void RaisePreviewTextInput(CADTextInputEventArgs e) 
+        {
+            HandleEvent(this, PreviewTextInput, OnTextInput, e);
         }
 
-        protected virtual void OnTextInput(TextCompositionEventArgs e) {
+        protected virtual void OnTextInput(CADTextInputEventArgs e) 
+        {
 
         }
     }

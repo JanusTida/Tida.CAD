@@ -9,10 +9,12 @@ using System.Windows.Controls;
 using Tida.CAD;
 using Tida.CAD.Events;
 using Tida.CAD.Extensions;
+using System.Diagnostics;
+using Tida.CAD.Input;
 
 namespace Tida.CAD.WPF {
     /// <summary>
-    /// 画布控件;
+    /// <see cref="ICanvasControl"/> implemented with WPF;
     /// </summary>
     public partial class CanvasControl : Grid , ICanvasControl, IInteractionCanvasControl {
         static CanvasControl() {
@@ -30,7 +32,10 @@ namespace Tida.CAD.WPF {
             _visualContainer.AddVisual(_snapShapeContainerVisual);
             _visualContainer.AddVisual(_dragSelectionContainerVisual);
             _visualContainer.AddVisual(_interactionHandlerContainerVisual);
-            this.Focusable = true;    
+            this.Focusable = true;
+
+            RefreshPanPen();
+            RefreshGridLinePen();
         }
         
         private readonly VisualContainer _visualContainer = new VisualContainer();
@@ -41,8 +46,7 @@ namespace Tida.CAD.WPF {
         private readonly ContainerVisual _interactionHandlerContainerVisual = new ContainerVisual();
         
         /// <summary>
-        /// ICanvas画布工具的内部实现,用于传递到<see cref="IDrawable.Draw(ICanvas)"/>中进行绘制;
-        /// 通过更改<see cref="WindowsCanvas.DrawingContext"/>实现复用的目的;
+        /// <see cref="ICanvas"/> implemented with WPF;
         /// </summary>
         private WPFCanvas InternalCanvas => _canvas ?? (_canvas = new WPFCanvas(this.CanvasScreenConverter));
         
@@ -182,11 +186,17 @@ namespace Tida.CAD.WPF {
         /// </summary>
         public event EventHandler<ClickSelectEventArgs> ClickSelect;
 
+        private bool _panInitialized;
         /// <summary>
-        /// 初始化原点所在坐标;
+        /// Initialize PanScreenPosition the first time control is being arranged;
         /// </summary>
-        private void InitializePanOffset() {
-            PanScreenPosition = new Point(this.ActualWidth / 2, this.ActualHeight / 2);
+        private void InitializePanScreenPosition(Size actualSize) {
+            if (_panInitialized)
+            {
+                return;
+            }
+            PanScreenPosition = new Point(actualSize.Width / 2, actualSize.Height / 2);
+            _panInitialized = true;
         }
 
         /// <summary>
@@ -206,9 +216,7 @@ namespace Tida.CAD.WPF {
         /// <param name="drawingContext"></param>
         protected override void OnRender(DrawingContext drawingContext) {
             base.OnRender(drawingContext);
-
-            InitializePanOffset();
-
+            
             //绘制背景;
             //DrawBackground(drawingContext);
             //绘制网格;
@@ -232,8 +240,9 @@ namespace Tida.CAD.WPF {
                 DrawDrawableCore(pair.Key, pair.Value);
             }
         }
-
+        
         protected override Size ArrangeOverride(Size arrangeSize) {
+            InitializePanScreenPosition(arrangeSize);
             UpdateCanvasProxy(arrangeSize);
             return base.ArrangeOverride(arrangeSize);
         }
@@ -314,7 +323,7 @@ namespace Tida.CAD.WPF {
 
             var oldHandlers = e.OldValue as IEnumerable<CanvasInteractionHandler>;
             var newHandlers = e.NewValue as IEnumerable<CanvasInteractionHandler>;
-
+            
             //卸载/装载新/旧交互器;
             if (oldHandlers != null) {
                 foreach (var handler in oldHandlers) {
@@ -346,7 +355,7 @@ namespace Tida.CAD.WPF {
             if (InteractionHandlers == null) {
                 return;
             }
-
+            
             foreach (var positionHandler in InteractionHandlers) {
                 positionHandler.HandlePosition(this, oriPosition);
             }
@@ -711,6 +720,17 @@ namespace Tida.CAD.WPF {
     /// </summary>
     public partial class CanvasControl
     {
+        private Pen _gridLinePen;
+        private void RefreshGridLinePen()
+        {
+            if(GridLineBrush == null || GridLineThickness <= 0)
+            {
+                return;
+            }
+
+            _gridLinePen = new Pen { Brush = GridLineBrush,Thickness = GridLineThickness };
+            _gridLinePen.Freeze();
+        }
 
         /// <summary>
         /// 网格线颜色;
@@ -726,7 +746,16 @@ namespace Tida.CAD.WPF {
             Color = Color.FromArgb(230, 80, 80, 80)
         };
         public static readonly DependencyProperty GridLineBrushProperty =
-        DependencyProperty.Register(nameof(GridLineBrush), typeof(Brush), typeof(CanvasControl), new FrameworkPropertyMetadata(DefaultGridLineBrush, FrameworkPropertyMetadataOptions.AffectsRender));
+            DependencyProperty.Register(nameof(GridLineBrush), typeof(Brush), typeof(CanvasControl), new FrameworkPropertyMetadata(DefaultGridLineBrush, FrameworkPropertyMetadataOptions.AffectsRender, GridLineBrush_PropertyChanged));
+
+        private static void GridLineBrush_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(d is CanvasControl canvasControl))
+            {
+                return;
+            }
+            canvasControl.RefreshGridLinePen();
+        }
 
         /// <summary>
         /// 网格线宽度;
@@ -738,7 +767,16 @@ namespace Tida.CAD.WPF {
         }
 
         public static readonly DependencyProperty GirdLineThicknessProperty =
-            DependencyProperty.Register(nameof(GridLineThickness), typeof(double), typeof(CanvasControl), new FrameworkPropertyMetadata(0.2D,FrameworkPropertyMetadataOptions.AffectsRender));
+            DependencyProperty.Register(nameof(GridLineThickness), typeof(double), typeof(CanvasControl), new FrameworkPropertyMetadata(0.2D,FrameworkPropertyMetadataOptions.AffectsRender,GridLineThickness_PropertyChanged));
+
+        private static void GridLineThickness_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(d is CanvasControl canvasControl))
+            {
+                return;
+            }
+            canvasControl.RefreshGridLinePen();
+        }
 
         /// <summary>
         /// 绘制网格;
@@ -751,24 +789,11 @@ namespace Tida.CAD.WPF {
             {
                 return;
             }
-
-            if(GridLineThickness <= 0)
+            if(_gridLinePen == null)
             {
                 return;
             }
-
-            if(GridLineBrush == null)
-            {
-                return;
-            }
-
-            var pen = new Pen
-            {
-                Brush = GridLineBrush,
-                Thickness = GridLineThickness
-            };
-            pen.Freeze();
-
+            
             //为避免多次构造Point，只构造两个实例以重复利用;
             var point0 = new Point();
             var point1 = new Point();
@@ -784,7 +809,7 @@ namespace Tida.CAD.WPF {
             {
                 point0.X = horiPos;
                 point1.X = horiPos;
-                drawingContext.DrawLine(pen, point0, point1);
+                drawingContext.DrawLine(_gridLinePen, point0, point1);
                 horiPos += unitLength;
             }
             #endregion
@@ -799,7 +824,7 @@ namespace Tida.CAD.WPF {
             {
                 point0.Y = vertiPos;
                 point1.Y = vertiPos;
-                drawingContext.DrawLine(pen, point0, point1);
+                drawingContext.DrawLine(_gridLinePen, point0, point1);
                 vertiPos += unitLength;
             }
             #endregion
@@ -811,6 +836,19 @@ namespace Tida.CAD.WPF {
     /// </summary>
     public partial class CanvasControl
     {
+        private Pen _panPen;
+        private void RefreshPanPen()
+        {
+            if(PanBrush == null || PanThickness <= 0)
+            {
+                _panPen = null;
+            }
+            else
+            {
+                _panPen = new Pen { Brush = PanBrush, Thickness = PanThickness };
+                _panPen.Freeze();
+            }
+        }
         /// <summary>
         /// 原点的十字边长;
         /// </summary>
@@ -835,7 +873,16 @@ namespace Tida.CAD.WPF {
         }
 
         public static readonly DependencyProperty PanBrushProperty =
-            DependencyProperty.Register(nameof(PanBrush), typeof(Brush), typeof(CanvasControl), new PropertyMetadata(Brushes.White));
+            DependencyProperty.Register(nameof(PanBrush), typeof(Brush), typeof(CanvasControl), new PropertyMetadata(Brushes.White,PanBrush_PropertyChanged));
+
+        private static void PanBrush_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(d is CanvasControl canvasControl))
+            {
+                return;
+            }
+            canvasControl.RefreshPanPen();
+        }
 
 
         /// <summary>
@@ -848,7 +895,16 @@ namespace Tida.CAD.WPF {
         }
 
         public static readonly DependencyProperty PanThicknessProperty =
-            DependencyProperty.Register(nameof(PanThickness), typeof(double), typeof(CanvasControl), new PropertyMetadata(2D));
+            DependencyProperty.Register(nameof(PanThickness), typeof(double), typeof(CanvasControl), new PropertyMetadata(2D,PanThickness_PropertyChanged));
+
+        private static void PanThickness_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(d is CanvasControl canvasControl))
+            {
+                return;
+            }
+            canvasControl.RefreshPanPen();
+        }
 
 
         /// <summary>
@@ -866,7 +922,8 @@ namespace Tida.CAD.WPF {
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsRender,
                     PanScreenPosition_PropertyChanged));
 
-        private static void PanScreenPosition_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        private static void PanScreenPosition_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+        {
             if(!(d is CanvasControl canvasControl)) {
                 return;
             }
@@ -881,17 +938,19 @@ namespace Tida.CAD.WPF {
         /// <param name="drawingContext"></param>
         private void DrawPan(DrawingContext drawingContext)
         {
-            var panPen = new Pen { Brush = PanBrush,Thickness = PanThickness };
-            panPen.Freeze();
-            
+            if(_panPen == null)
+            {
+                return;
+            }
+
             drawingContext.DrawLine(
-                panPen,
+                _panPen,
                 new Point(PanScreenPosition.X - PanLength / 2, PanScreenPosition.Y),
                 new Point(PanScreenPosition.X + PanLength / 2, PanScreenPosition.Y)
             );
 
             drawingContext.DrawLine(
-                panPen,
+                _panPen,
                 new Point(PanScreenPosition.X, PanScreenPosition.Y - PanLength / 2),
                 new Point(PanScreenPosition.X, PanScreenPosition.Y + PanLength / 2)
             );
@@ -1057,7 +1116,9 @@ namespace Tida.CAD.WPF {
                     _lastPanOffsetBeforeDragging.X + mousePos.X - _lastMouseDownPointForPan.X,
                     _lastPanOffsetBeforeDragging.Y + mousePos.Y - _lastMouseDownPointForPan.Y
                 );
-                
+#if DEBUG
+                Debug.WriteLine($"PanScreenPosition:{PanScreenPosition}");
+#endif
                 return true;
 
             }
@@ -1080,7 +1141,7 @@ namespace Tida.CAD.WPF {
             {
                 _isDragging = false;
                 UpdateCursor();
-
+                
                 return true;
             }
 
@@ -1335,7 +1396,7 @@ namespace Tida.CAD.WPF {
             HandlePosition(position);
 
             //通知编辑工具按下动作;
-            CurrentEditTool.RaisePreviewMouseDown(e);
+            CurrentEditTool.RaisePreviewMouseDown(new CADMouseButtonEventArgs(position) { MouseButtonEventArgs = e });
 
             //变更上次编辑的位置;
             LastEditPosition = position;
@@ -1360,7 +1421,7 @@ namespace Tida.CAD.WPF {
 
             
             //通知编辑工具;
-            CurrentEditTool.RaisePreviewMouseMove(e);
+            CurrentEditTool.RaisePreviewMouseMove(new CADMouseEventArgs(position) { MouseEventArgs = e });
 
             return e.Handled;
         }
@@ -1378,7 +1439,7 @@ namespace Tida.CAD.WPF {
             var position = _activeSnapShape?.Position ?? CanvasScreenConverter.ToCAD(viewPosition);
 
             //通知编辑工具弹起动作;
-            CurrentEditTool.RaisePreviewMouseUp(e);
+            CurrentEditTool.RaisePreviewMouseUp(new CADMouseButtonEventArgs(position) { MouseButtonEventArgs = e });
             return true;
         }
         
@@ -1392,7 +1453,7 @@ namespace Tida.CAD.WPF {
             }
 
             //通知编辑工具按键按下;
-            CurrentEditTool.RaisePreviewKeyDown(e);
+            CurrentEditTool.RaisePreviewKeyDown(new CADKeyEventArgs { KeyEventArgs = e });
 
             return true;
         }
@@ -1408,7 +1469,7 @@ namespace Tida.CAD.WPF {
             }
 
             //通知编辑工具按键弹起;
-            CurrentEditTool.RaisePreviewKeyUp(e);
+            CurrentEditTool.RaisePreviewKeyUp(new CADKeyEventArgs { KeyEventArgs = e });
 
             return e.Handled;
         }
@@ -1423,7 +1484,7 @@ namespace Tida.CAD.WPF {
                 return false;
             }
 
-            CurrentEditTool.RaisePreviewTextInput(e);
+            CurrentEditTool.RaisePreviewTextInput(new CADTextInputEventArgs { TextCompositionEventArgs = e });
             return e.Handled;
         }
 
@@ -2872,7 +2933,7 @@ namespace Tida.CAD.WPF {
             var mouseScreenPosition = e.GetPosition(this);
             var mousePosition = CanvasScreenConverter.ToCAD(mouseScreenPosition);
             HandlePosition(mousePosition);
-            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.RaisePreviewMouseDown(eventArgs), e);
+            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.OnPreviewMouseDown(new CADMouseButtonEventArgs(mousePosition) { MouseButtonEventArgs = e }), e);
         }
 
         /// <summary>
@@ -2885,9 +2946,9 @@ namespace Tida.CAD.WPF {
             var mousePosition = CanvasScreenConverter.ToCAD(mouseScreenPosition);
 
             HandlePosition(mousePosition);
-
+            
             //与所有选中的绘制对象进行交互;
-            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.RaisePreviewMouseMove(eventArgs), e);
+            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.OnMouseMove(new CADMouseEventArgs(mousePosition) { MouseEventArgs = eventArgs }), e);
         }
 
         /// <summary>
@@ -2897,7 +2958,7 @@ namespace Tida.CAD.WPF {
         private bool KeyDownOnSelectedDrawObjects(KeyEventArgs e)
         {
             //与所有选中的绘制对象进行交互;
-            return InteractWithSelectedDrawObjects((drawObject,eventArgs) => drawObject.RaisePreviewKeyDown(eventArgs),e);
+            return InteractWithSelectedDrawObjects((drawObject,eventArgs) => drawObject.OnKeyDown(new CADKeyEventArgs { KeyEventArgs = eventArgs }),e);
         }
 
         /// <summary>
@@ -2907,7 +2968,7 @@ namespace Tida.CAD.WPF {
         private bool KeyUpOnSelectedDrawObjects(KeyEventArgs e)
         {
             //与所有选中的绘制对象进行交互;
-            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.RaisePreviewKeyUp(eventArgs), e);
+            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.OnKeyUp(new CADKeyEventArgs { KeyEventArgs = eventArgs }), e);
         }
 
         
