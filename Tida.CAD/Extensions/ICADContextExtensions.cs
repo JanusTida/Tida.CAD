@@ -9,7 +9,7 @@ namespace Tida.CAD.Extensions
     /// <summary>
     /// 画布上下文拓展;
     /// </summary>
-    public static class ICanvasContextExtensions
+    public static class ICADContextExtensions
     {
         /// <summary>
         /// 获取画布上下文中所有绘制对象;
@@ -30,17 +30,17 @@ namespace Tida.CAD.Extensions
         /// <summary>
         /// 获取画布上下文中所有可见绘制对象;
         /// </summary>
-        /// <param name="canvasContext"></param>
+        /// <param name="cadContext"></param>
         /// <returns></returns>
-        public static IEnumerable<DrawObject> GetAllVisibleDrawObjects(this ICADContext canvasContext)
+        public static IEnumerable<DrawObject> GetAllVisibleDrawObjects(this ICADContext cadContext)
         {
 
-            if (canvasContext == null)
+            if (cadContext == null)
             {
-                throw new ArgumentNullException(nameof(canvasContext));
+                throw new ArgumentNullException(nameof(cadContext));
             }
 
-            return canvasContext.Layers?.
+            return cadContext.Layers?.
                 Where(p => p.IsVisible)?.
                 SelectMany(p => p.DrawObjects)?.
                 Where(p => p.IsVisible) ?? Enumerable.Empty<DrawObject>();
@@ -61,14 +61,14 @@ namespace Tida.CAD.Extensions
         /// </summary>
         /// <param name="cadContext"></param>
         /// <returns></returns>
-        public static IEnumerable<CanvasLayer> GetVisibleLayers(this ICADContext cadContext)
+        public static IEnumerable<CADLayer> GetVisibleLayers(this ICADContext cadContext)
         {
             if (cadContext == null)
             {
                 throw new ArgumentNullException(nameof(cadContext));
             }
 
-            return cadContext.Layers?.Where(p => p.IsVisible) ?? Enumerable.Empty<CanvasLayer>();
+            return cadContext.Layers?.Where(p => p.IsVisible) ?? Enumerable.Empty<CADLayer>();
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Tida.CAD.Extensions
         /// </summary>
         /// <param name="cadContext"></param>
         /// <returns></returns>
-        public static IEnumerable<CanvasLayer> GetInteractionableLayers(this ICADContext cadContext)
+        public static IEnumerable<CADLayer> GetInteractionableLayers(this ICADContext cadContext)
         {
             if (cadContext == null)
             {
@@ -84,7 +84,7 @@ namespace Tida.CAD.Extensions
             }
 
             return cadContext.Layers?.Where(p => !p.IsLocked)?.
-                Where(p => p.IsVisible) ?? Enumerable.Empty<CanvasLayer>();
+                Where(p => p.IsVisible) ?? Enumerable.Empty<CADLayer>();
         }
 
        

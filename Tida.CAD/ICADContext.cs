@@ -12,7 +12,7 @@ namespace Tida.CAD
         /// <summary>
         /// 所有图层(内容图层);
         /// </summary>
-        IEnumerable<CanvasLayer> Layers { get; set; }
+        IEnumerable<CADLayer> Layers { get; set; }
 
         /// <summary>
         /// 坐标间进行转化契约实例;
@@ -22,12 +22,12 @@ namespace Tida.CAD
         /// <summary>
         /// 当前选定的活动图层;
         /// </summary>
-        CanvasLayer ActiveLayer { get; set; }
+        CADLayer ActiveLayer { get; set; }
 
         /// <summary>
         /// 活动图层发生变化时的事件;
         /// </summary>
-        event EventHandler<ValueChangedEventArgs<CanvasLayer>> ActiveLayerChanged;
+        event EventHandler<ValueChangedEventArgs<CADLayer>> ActiveLayerChanged;
 
         /// <summary>
         /// 放大比例;

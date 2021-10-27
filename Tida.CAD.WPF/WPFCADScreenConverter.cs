@@ -5,7 +5,7 @@ namespace Tida.CAD.WPF {
     /// <summary>
     /// <see cref="ICanvasScreenConvertable"/>的一个实现;
     /// </summary>
-    public class WPFCanvasScreenConverter : ICanvasScreenConverter {
+    public class WPFCADScreenConverter : ICADScreenConverter {
         /// <summary>
         /// Zoom为1.0时,工程数学单位和视图单位的比率;
         /// </summary>

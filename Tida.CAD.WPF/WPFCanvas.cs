@@ -13,10 +13,10 @@ namespace Tida.CAD.WPF
         /// <summary>
         /// Create an instance of WPFCanvas;
         /// </summary>
-        /// <param name="canvasScreenConverter">An converter instance</param>
-        public WPFCanvas(ICanvasScreenConverter canvasScreenConverter)
+        /// <param name="cadScreenConverter">An converter instance</param>
+        public WPFCanvas(ICADScreenConverter cadScreenConverter)
         {
-            CanvasScreenConverter = canvasScreenConverter ?? throw new ArgumentNullException(nameof(canvasScreenConverter));
+            CADScreenConverter = cadScreenConverter ?? throw new ArgumentNullException(nameof(cadScreenConverter));
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Tida.CAD.WPF
         /// <summary>
         /// The coverter instance;
         /// </summary>
-        public ICanvasScreenConverter CanvasScreenConverter { get; }
+        public ICADScreenConverter CADScreenConverter { get; }
 
         /// <summary>
         /// Validate <see cref="DrawingContext"/> is available at present;
@@ -51,8 +51,8 @@ namespace Tida.CAD.WPF
             
             ValidateDrawingContext();
 
-            var screenPoint1 = CanvasScreenConverter.ToScreen(point0);
-            var screenPoint2 = CanvasScreenConverter.ToScreen(point1);
+            var screenPoint1 = CADScreenConverter.ToScreen(point0);
+            var screenPoint2 = CADScreenConverter.ToScreen(point1);
             
             //平台转换后再进行绘制;
             DrawingContext.DrawLine(
@@ -80,19 +80,19 @@ namespace Tida.CAD.WPF
             beginangle %= (Math.PI * 2);
             angle  %= (Math.PI * 2);
 
-            var centerPoint = CanvasScreenConverter.ToScreen(center);
+            var centerPoint = CADScreenConverter.ToScreen(center);
             var endAngle = beginangle + angle;
 
             var startPoint = new Point(center.X + Math.Cos(beginangle) * radius, center.Y + Math.Sin(beginangle) * radius);
             var endPoint = new Point(center.X + Math.Cos(endAngle) * radius, center.Y + Math.Sin(endAngle) * radius);
 
-            var startScreenPoint = CanvasScreenConverter.ToScreen(startPoint);
-            var endScreenPoint = CanvasScreenConverter.ToScreen(endPoint);
+            var startScreenPoint = CADScreenConverter.ToScreen(startPoint);
+            var endScreenPoint = CADScreenConverter.ToScreen(endPoint);
 
             //求两边之叉积,由叉积的符号决定是顺时针和逆时针;
             var cross = Math.Cos(beginangle) * Math.Sin(endAngle) - Math.Sin(beginangle) * Math.Cos(endAngle);
 
-            var screenRadius = CanvasScreenConverter.ToScreen(radius);
+            var screenRadius = CADScreenConverter.ToScreen(radius);
 
             //因为数学坐标中，
             var arcGeometry = GetArcGeometry(
@@ -145,9 +145,9 @@ namespace Tida.CAD.WPF
         public void DrawEllipse(Brush brush, Pen pen, Point center, double radiusX, double radiusY) {
             ValidateDrawingContext();
 
-            radiusX = CanvasScreenConverter.ToScreen(radiusX);
-            radiusY = CanvasScreenConverter.ToScreen(radiusY);
-            center = CanvasScreenConverter.ToScreen(center);
+            radiusX = CADScreenConverter.ToScreen(radiusX);
+            radiusY = CADScreenConverter.ToScreen(radiusY);
+            center = CADScreenConverter.ToScreen(center);
             NativeDrawEllipse(brush, pen, center, radiusX, radiusY);
         }
         
@@ -160,7 +160,7 @@ namespace Tida.CAD.WPF
         /// <param name="origin"></param>
         public void DrawText(FormattedText formattedText, Point origin) {
             ValidateDrawingContext();
-            var originScreenPoint = CanvasScreenConverter.ToScreen(origin);
+            var originScreenPoint = CADScreenConverter.ToScreen(origin);
             var nativeOriginScreenPoint = originScreenPoint;
             DrawingContext.DrawText(formattedText, nativeOriginScreenPoint);
         }
@@ -176,7 +176,7 @@ namespace Tida.CAD.WPF
                 throw new ArgumentNullException(nameof(points));
             }
             
-            var screenPoints = points.Select(x => CanvasScreenConverter.ToScreen(x)).ToArray();
+            var screenPoints = points.Select(x => CADScreenConverter.ToScreen(x)).ToArray();
             var bezier = new PolyBezierSegment(screenPoints, true);
             var pathFigure = new PathFigure();
             var pathGeometry = new PathGeometry();
@@ -238,9 +238,9 @@ namespace Tida.CAD.WPF
         public void DrawRectangle(CADRect rect,Brush brush, Pen pen) {
             ValidateDrawingContext();
 
-            var topLeftInScreen = CanvasScreenConverter.ToScreen(rect.TopLeft);
-            var widthInScreen = CanvasScreenConverter.ToScreen(rect.Width);
-            var heightInScreen = CanvasScreenConverter.ToScreen(rect.Height);
+            var topLeftInScreen = CADScreenConverter.ToScreen(rect.TopLeft);
+            var widthInScreen = CADScreenConverter.ToScreen(rect.Width);
+            var heightInScreen = CADScreenConverter.ToScreen(rect.Height);
             var rectInScreen = new Rect(topLeftInScreen, new Size(widthInScreen, heightInScreen));
             DrawingContext.DrawRectangle(brush, pen, rectInScreen);
         }
@@ -268,7 +268,7 @@ namespace Tida.CAD.WPF
             ValidateDrawingContext();
             
             NativeDrawFill(
-                points.Select(p => CanvasScreenConverter.ToScreen(p)),
+                points.Select(p => CADScreenConverter.ToScreen(p)),
                 brush,
                 pen
             );

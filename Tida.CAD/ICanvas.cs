@@ -15,7 +15,7 @@ namespace Tida.CAD
         /// <summary>
         /// The converter between screen coordinates and CAD Coordinates;
         /// </summary>
-        ICanvasScreenConverter CanvasScreenConverter { get; }
+        ICADScreenConverter CADScreenConverter { get; }
 
         /// <summary>
         ///  Draws a line between the specified points using the specified <see cref="Pen"/>

@@ -5,7 +5,7 @@ namespace Tida.CAD.Extensions
 {
 
     /// <summary>
-    /// Some extended methods for <see cref="ICanvasScreenConverter"/>;
+    /// Some extended methods for <see cref="ICADScreenConverter"/>;
     /// </summary>
     public static class CanvasScreenConvertableExtension
     {
@@ -15,7 +15,7 @@ namespace Tida.CAD.Extensions
         /// <param name="canvasScreenConverter"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public static Point GetBottomRightCADPoint(this ICanvasScreenConverter canvasScreenConverter)
+        public static Point GetBottomRightCADPoint(this ICADScreenConverter canvasScreenConverter)
         {
 
             if (canvasScreenConverter == null)
@@ -32,7 +32,7 @@ namespace Tida.CAD.Extensions
         /// <param name="canvasScreenConverter"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public static Point GetTopLeftCADPoint(this ICanvasScreenConverter canvasScreenConverter)
+        public static Point GetTopLeftCADPoint(this ICADScreenConverter canvasScreenConverter)
         {
             if (canvasScreenConverter == null)
             {

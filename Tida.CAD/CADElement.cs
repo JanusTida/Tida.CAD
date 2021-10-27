@@ -46,7 +46,6 @@ namespace Tida.CAD
         //     are directly used by UI framework.
         /// </summary>
         /// <param name="canvas"></param>
-        /// <param name="canvasScreenConverter"></param>
         public virtual void Draw(ICanvas canvas) {
 
         }

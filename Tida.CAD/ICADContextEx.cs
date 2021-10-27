@@ -6,9 +6,9 @@ namespace Tida.CAD
 {
 
     /// <summary>
-    /// 画布上下文升级契约,此契约在<see cref="ICanvasContext"/>上加入了辅助规则内容;
+    /// 画布上下文升级契约,此契约在<see cref="ICADContext"/>上加入了辅助规则内容;
     /// </summary>
-    public interface ICanvasContextEx : ICanvasContext {
+    public interface ICADContextEx : ICADContext {
 
         /// <summary>
         /// 辅助规则集合;

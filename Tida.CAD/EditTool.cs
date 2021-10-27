@@ -10,7 +10,7 @@ namespace Tida.CAD
     /// <summary>
     /// 编辑工具协约;
     /// </summary>
-    public  abstract partial class EditTool:CanvasElement, IDrawable {
+    public  abstract partial class EditTool:CADElement, IDrawable {
 
         public abstract bool CanUndo { get; }
 
@@ -108,26 +108,25 @@ namespace Tida.CAD
 
         public abstract void Undo();
 
-        private ICanvasContextEx _canvasContext;
-        public ICanvasContextEx CanvasContext {
-            get => _canvasContext;
+        private ICADContextEx _cadContext;
+        public ICADContextEx CADContext {
+            get => _cadContext;
             set {
-                var oldCanvasContext = _canvasContext;
-                _canvasContext = value;
-                OnCanvasContextChanged(new ValueChangedEventArgs<ICanvasContextEx>(_canvasContext, oldCanvasContext));
+                var oldCADContext = _cadContext;
+                _cadContext = value;
+                OnCADContextChanged(new ValueChangedEventArgs<ICADContextEx>(_cadContext, oldCADContext));
             }
         }
 
         /// <summary>
-        /// 当<see cref="CanvasContext"/>发生变化时;
+        /// 当<see cref="CADContext"/>发生变化时;
         /// </summary>
         /// <param name="args"></param>
-        protected virtual void OnCanvasContextChanged(ValueChangedEventArgs<ICanvasContextEx> args) { }
+        protected virtual void OnCADContextChanged(ValueChangedEventArgs<ICADContextEx> args) { }
 
         /// <summary>
         /// 开始操作;
         /// </summary>
-        /// <param name="canvasContext"></param>
         public void BeginOperation() {
             OnBeginOperation();
             OperationBegan?.Invoke(this, EventArgs.Empty);
@@ -136,7 +135,6 @@ namespace Tida.CAD
         /// <summary>
         /// 开始操作可重写方法;
         /// </summary>
-        /// <param name="canvasContext"></param>
         protected virtual void OnBeginOperation() {
 
         }
@@ -144,7 +142,6 @@ namespace Tida.CAD
         /// <summary>
         /// 终止操作可重写方法;
         /// </summary>
-        /// <param name="canvasContext"></param>
         public void EndOperation() {
             OnEndOperation();
             OperationEnded?.Invoke(this, EventArgs.Empty);
@@ -153,7 +150,6 @@ namespace Tida.CAD
         /// <summary>
         /// 停止操作;
         /// </summary>
-        /// <param name="canvasContext"></param>
         protected virtual void OnEndOperation() {
 
         }

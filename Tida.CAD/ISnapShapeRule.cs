@@ -11,8 +11,8 @@ namespace Tida.CAD
         /// </summary>
         /// <param name="drawObjects">所有相关的绘制对象</param>
         /// <param name="position">关注的工程数学坐标</param>
-        /// <param name="canvasContext">画布上下文</param>
+        /// <param name="cadContext">画布上下文</param>
         /// <returns></returns>
-        ISnapShape MatchSnapShape(DrawObject[] drawObjects, Point position, ICanvasContext canvasContext);
+        ISnapShape MatchSnapShape(DrawObject[] drawObjects, Point position, ICADContext cadContext);
     }
 }

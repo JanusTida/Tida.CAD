@@ -20,7 +20,7 @@ namespace Tida.CAD
         /// <summary>
         /// 所处的有效矩形区域,改矩形区域将以视图坐标为准;
         /// </summary>
-        /// <param name="canvasScreenConverter">视图——工程数学坐标转换器</param>
-        Rect GetNativeBoundingRect(ICanvasScreenConverter canvasScreenConverter);
+        /// <param name="cadScreenConverter">视图——工程数学坐标转换器</param>
+        Rect GetNativeBoundingRect(ICADScreenConverter cadScreenConverter);
     }
 }

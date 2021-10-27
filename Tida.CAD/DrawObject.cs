@@ -12,24 +12,24 @@ namespace Tida.CAD {
     /// <summary>
     /// Drawobject in layer;
     /// </summary>
-    public abstract partial class DrawObject : CanvasElement,ICloneable<DrawObject> {
+    public abstract partial class DrawObject : CADElement, ICloneable<DrawObject> {
         
         /// <summary>
         /// Indicates whether the point in inside the object;
         /// </summary>
         /// <param name="point">坐标(工程数学坐标)</param>
-        /// <param name="canvasScreenConverter">视图单位转化器,可用于内部进行误差判断</param>
+        /// <param name="cadScreenConverter">视图单位转化器,可用于内部进行误差判断</param>
         /// <returns></returns>
-        public virtual bool PointInObject(Point point, ICanvasScreenConverter canvasScreenConverter) => false;
+        public virtual bool PointInObject(Point point, ICADScreenConverter cadScreenConverter) => false;
 
         /// <summary>
         /// Indicated whether the object in inside a rectangle;
         /// </summary>
         /// <param name="rect">区域(工程数学坐标为准)</param>
         /// <param name="anyPoint">是否模糊匹配,即判定相交是否满足条件</param>
-        /// <param name="canvasScreenConverter">视图单位转化器,可用于内部进行误差判断</param>
+        /// <param name="cadScreenConverter">视图单位转化器,可用于内部进行误差判断</param>
         /// <returns></returns>
-        public virtual bool ObjectInRectangle(CADRect rect, ICanvasScreenConverter canvasScreenConverter, bool anyPoint) => false;
+        public virtual bool ObjectInRectangle(CADRect rect, ICADScreenConverter cadScreenConverter, bool anyPoint) => false;
 
 
         /// <summary>
@@ -99,8 +99,8 @@ namespace Tida.CAD {
         /// <summary>
         /// 父对象;
         /// </summary>
-        public CanvasElement Parent => InternalParent;
-        internal CanvasElement InternalParent { get; set; }
+        public CADElement Parent => InternalParent;
+        internal CADElement InternalParent { get; set; }
 
         /// <summary>
         /// 本绘制对象的信息发生变更时发生;

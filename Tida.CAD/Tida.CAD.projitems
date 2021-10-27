@@ -9,17 +9,17 @@
     <Import_RootNamespace>Tida.CAD</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasElement.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CanvasLayer.cs" />
+    <Compile Include="..\Tida.CAD\CADElement.cs" />
+    <Compile Include="..\Tida.CAD\CADLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DrawObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EditTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\CanvasScreenConvertableExtension.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ICanvasContextExtensions.cs" />
+    <Compile Include="..\Tida.CAD\Extensions\ICADContextExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ICanvas.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ICanvasContext.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ICanvasContextEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ICanvasControl.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ICanvasInteractionHandler.cs" />
+    <Compile Include="..\Tida.CAD\ICADContext.cs" />
+    <Compile Include="..\Tida.CAD\ICADContextEx.cs" />
+    <Compile Include="..\Tida.CAD\ICADControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CADInteractionHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\GeometryExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\CADKeyEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\CADMouseButtonEventArgs.cs" />
@@ -27,13 +27,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Input\CADRoutedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\CADTextInputEventArgs.cs" />
     <Compile Include="..\Tida.CAD\CADRect.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ICanvasScreenConverter.cs" />
+    <Compile Include="..\Tida.CAD\ICADScreenConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ICloneable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IDrawable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IEditTransaction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IHaveEditTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IHaveVisibility.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IInteractionCanvasControl.cs" />
+    <Compile Include="..\Tida.CAD\IInteractionCADControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ISnapShape.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ISnapShapeRule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StandardEditTransaction.cs" />
