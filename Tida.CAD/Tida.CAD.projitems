@@ -9,6 +9,8 @@
     <Import_RootNamespace>Tida.CAD</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)DrawObjects\Line.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DrawObjects\LineBase.cs" />
     <Compile Include="..\Tida.CAD\CADElement.cs" />
     <Compile Include="..\Tida.CAD\CADLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DrawObject.cs" />

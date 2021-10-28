@@ -7,7 +7,10 @@
         xmlns:tidacad="https://github.com/Tida.CAD"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <tidacad:CADControl />
-    </Grid>
+    <DockPanel>
+        <UniformGrid DockPanel.Dock="Bottom">
+            <Button Click="Addline_Click">Add Line</Button>
+        </UniformGrid>
+        <tidacad:CADControl x:Name="cadControl"/>
+    </DockPanel>
 </Window>

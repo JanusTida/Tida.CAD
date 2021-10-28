@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace Tida.CAD
@@ -98,5 +99,34 @@ namespace Tida.CAD
         /// Get the top-right point of the rectangle;
         /// </summary>
         public Point TopRight => new Point(X + Width, Y + Height);
+
+        public bool Contains(Point point)
+        {
+            return (point.X - X) >= 0 && (point.X - X) <= Width && (point.Y - Y) >= 0 && (point.Y - Y) <= Height;
+        }
+
+
+        /// <summary>
+        /// Get all the vertex points of the rect(unclockwise);
+        /// </summary>
+        public IEnumerable<Point> GetVertexes()
+        {
+            yield return BottomLeft;
+            yield return BottomRight;
+            yield return TopRight;
+            yield return TopLeft;
+        }
+
+        /// <summary>
+        /// Get all the borders of the rect(unclockwise)
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<(Point start, Point end)> GetBorders()
+        {
+            yield return (BottomLeft, BottomRight);
+            yield return (BottomRight, TopRight);
+            yield return (TopRight, TopLeft);
+            yield return (TopLeft, BottomLeft);
+        }
     }
 }

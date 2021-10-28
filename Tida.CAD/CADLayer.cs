@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Tida.CAD
 {
     /// <summary>
-    /// 画布图层;
+    /// The layer of cad;
     /// </summary>
     public class CADLayer : CADElement {
         /// <summary>
-        /// 绘制本身;
+        /// Draw;
         /// </summary>
         /// <param name="canvas">画布</param>
         public override void Draw(ICanvas canvas) {
@@ -16,13 +17,13 @@ namespace Tida.CAD
         }
    
         /// <summary>
-        /// 当前图层所呈现的绘制对象;
+        /// The drawobjects of the layer;
         /// </summary>
         private readonly List<DrawObject> _drawObjects = new List<DrawObject>();
-        public IReadOnlyList<DrawObject> DrawObjects => _drawObjects;
+        public IReadOnlyList<DrawObject> DrawObjects => new ReadOnlyCollection<DrawObject>(_drawObjects);
         
         /// <summary>
-        /// 添加绘制对象;
+        /// Add draw object instance;
         /// </summary>
         /// <param name="drawObject"></param>
         public void AddDrawObject(DrawObject drawObject) {
@@ -32,7 +33,7 @@ namespace Tida.CAD
         }
         
         /// <summary>
-        /// 添加绘制对象集合;
+        /// Add a series of draw objects to the layer;
         /// </summary>
         /// <param name="drawObjects"></param>
         public void AddDrawObjects(IEnumerable<DrawObject> drawObjects) {

@@ -1867,7 +1867,7 @@ namespace Tida.CAD.WPF {
             var mouseScreenPosition = e.GetPosition(this);
             var mousePosition = CADScreenConverter.ToCAD(mouseScreenPosition);
             var mouseDownEventArgs = new CADMouseButtonEventArgs(mousePosition) { MouseButtonEventArgs = e };
-            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.OnPreviewMouseDown(eventArgs), mouseDownEventArgs);
+            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.OnMouseDown(eventArgs), mouseDownEventArgs);
         }
 
         /// <summary>

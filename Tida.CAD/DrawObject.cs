@@ -109,7 +109,7 @@ namespace Tida.CAD {
         /// <param name="canvas"></param>
         /// <param name="point"></param>
         /// <param name="snapShape"></param>
-        public void OnPreviewMouseDown(CADMouseButtonEventArgs e) {
+        public void OnMouseDown(CADMouseButtonEventArgs e) {
             PreviewMouseDown?.Invoke(this, e);
             if (e.Handled) {
                 return;
