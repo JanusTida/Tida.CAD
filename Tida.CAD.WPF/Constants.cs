@@ -24,7 +24,7 @@ namespace Tida.CAD.WPF
         public static readonly Pen AnySelectPen = PenExtensions.CreateFrozenPen(Brushes.White, 1);
 
         /// <summary>
-        /// 拖放操作中,全选的矩形画刷;
+        /// 拖放操作中,全选的矩形画刷(0x55193762);
         /// </summary>
         public static readonly Brush AllSelectBrush = BrushExtensions.CreateFrozenColorBrush(0x55193762);
 

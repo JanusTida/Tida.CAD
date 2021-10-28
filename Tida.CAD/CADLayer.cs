@@ -14,28 +14,7 @@ namespace Tida.CAD
         public override void Draw(ICanvas canvas) {
             
         }
-        
-        /// <summary>
-        /// 图层是否被锁定,当被锁定时,将无法添加,删除本图层内绘制对象(内部执行),并对本图层内对象进行修改(需外部控制);
-        /// </summary>
-        public bool IsLocked {
-            get => _isLocked;
-            set {
-                if(_isLocked == value) {
-                    return;
-                }
-
-                _isLocked = value;
-                IsLockedChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
-        private bool _isLocked;
-
-        /// <summary>
-        /// 是否被锁定状态发生变更;
-        /// </summary>
-        public event EventHandler IsLockedChanged;
-
+   
         /// <summary>
         /// 当前图层所呈现的绘制对象;
         /// </summary>

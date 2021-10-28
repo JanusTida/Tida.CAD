@@ -13,10 +13,11 @@ using System.Diagnostics;
 using Tida.CAD.Input;
 
 namespace Tida.CAD.WPF {
+
     /// <summary>
     /// <see cref="ICADControl"/> implemented with WPF;
     /// </summary>
-    public partial class CADControl : Grid , ICADControl, IInteractionCADControl {
+    public partial class CADControl : Grid , ICADControl {
         static CADControl() {
             
             BackgroundProperty.OverrideMetadata(typeof(CADControl), new FrameworkPropertyMetadata(
@@ -31,7 +32,6 @@ namespace Tida.CAD.WPF {
             _visualContainer.AddVisual(_editToolContainerVisual);
             _visualContainer.AddVisual(_snapShapeContainerVisual);
             _visualContainer.AddVisual(_dragSelectionContainerVisual);
-            _visualContainer.AddVisual(_interactionHandlerContainerVisual);
             this.Focusable = true;
 
             RefreshPanPen();
@@ -43,7 +43,6 @@ namespace Tida.CAD.WPF {
         private readonly ContainerVisual _editToolContainerVisual = new ContainerVisual();
         private readonly ContainerVisual _snapShapeContainerVisual = new ContainerVisual();
         private readonly ContainerVisual _dragSelectionContainerVisual = new ContainerVisual();
-        private readonly ContainerVisual _interactionHandlerContainerVisual = new ContainerVisual();
         
         /// <summary>
         /// <see cref="ICanvas"/> implemented with WPF;
@@ -71,16 +70,6 @@ namespace Tida.CAD.WPF {
         private readonly Dictionary<IDrawable, DrawingVisual> _visualDict = new Dictionary<IDrawable, DrawingVisual>();
 
         /// <summary>
-        /// 撤销编辑事务栈;
-        /// </summary>
-        private readonly Stack<Stack<IEditTransaction>> _undoTransactionBuffer = new Stack<Stack<IEditTransaction>>();
-
-        /// <summary>
-        /// 重做编辑事务栈;
-        /// </summary>
-        private readonly Stack<Stack<IEditTransaction>> _redoTransactionBuffer = new Stack<Stack<IEditTransaction>>();
-
-        /// <summary>
         /// 是否正在处理路由事件;
         /// </summary>
         private bool _handlingRoutedEvent = false;
@@ -91,11 +80,6 @@ namespace Tida.CAD.WPF {
         private bool _transactionStackCreatedInOneRoutedEvent = false;
 
         /// <summary>
-        /// 当前的活动的辅助图形;
-        /// </summary>
-        private ISnapShape _activeSnapShape;
-        
-        /// <summary>
         /// 当前被悬停的绘制对象集合;
         /// </summary>
         private readonly List<DrawObject> _hoveredDrawObjects = new List<DrawObject>();
@@ -104,11 +88,6 @@ namespace Tida.CAD.WPF {
         /// 内部存储维护的所有图层集合;
         /// </summary>
         private readonly List<CADLayer> _CADLayers = new List<CADLayer>();
-
-        /// <summary>
-        /// 内部存储维护的所有位置预处理器集合;
-        /// </summary>
-        private readonly List<CADInteractionHandler> _positionHandlers = new List<CADInteractionHandler>();
 
         /// <summary>
         /// 记录上一次鼠标按下的位置,在拖放选择时使用;
@@ -141,15 +120,6 @@ namespace Tida.CAD.WPF {
         /// </summary>
         public event EventHandler<DrawObjectSelectedChangedEventArgs> DrawObjectIsSelectedChanged;
         
-        /// <summary>
-        /// 编辑事务已撤销;
-        /// </summary>
-        public event EventHandler<EditTransactionUndoneEventArgs> EditTransactionUndone;
-
-        /// <summary>
-        /// 编辑事务已重做;
-        /// </summary>
-        public event EventHandler<EditTransactionRedoneEventArgs> EditTransactionRedone;
 
         /// <summary>
         /// 绘制对象被移除;
@@ -175,11 +145,6 @@ namespace Tida.CAD.WPF {
         /// 拖拽选择鼠标移动事件;
         /// </summary>
         public event EventHandler<DragSelectMouseMoveEventArgs> DrawSelectMouseMove;
-
-        /// <summary>
-        /// 通知外部,将要针对指定的绘制对象集合,将要进行某种的类型输入交互的预处理事件;
-        /// </summary>
-        public event EventHandler<PreviewDrawObjectsInteractionEventArgs> PreviewInteractionWithDrawObjects;
 
         /// <summary>
         /// 点击选取事件;
@@ -284,175 +249,6 @@ namespace Tida.CAD.WPF {
     }
 
     /// <summary>
-    /// 只读部分;
-    /// </summary>
-    public partial class CADControl {
-        /// <summary>
-        /// 是否只读,指示是否可通过UI操作数据;
-        /// </summary>
-        public bool IsReadOnly {
-            get { return (bool)GetValue(IsReadOnlyProperty); }
-            set { SetValue(IsReadOnlyProperty, value); }
-        }
-
-        public static readonly DependencyProperty IsReadOnlyProperty =
-            DependencyProperty.Register(nameof(IsReadOnly), typeof(bool), typeof(CADControl), new PropertyMetadata(false));
-    }
-
-    /// <summary>
-    /// 交互预处理部分;
-    /// </summary>
-    public partial class CADControl {
-        /// <summary>
-        /// 预处理器集合;
-        /// </summary>
-        public IEnumerable<CADInteractionHandler> InteractionHandlers {
-            get { return (IEnumerable<CADInteractionHandler>)GetValue(InteractionHandlersProperty); }
-            set { SetValue(InteractionHandlersProperty, value); }
-        }
-
-        public static readonly DependencyProperty InteractionHandlersProperty =
-            DependencyProperty.Register(nameof(InteractionHandlers),
-                typeof(IEnumerable<CADInteractionHandler>), typeof(CADControl),
-                new PropertyMetadata(null, InteractionHandlers_PropertyChanged));
-
-        private static void InteractionHandlers_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-            if (!(d is CADControl ctrl)) {
-                return;
-            }
-
-            var oldHandlers = e.OldValue as IEnumerable<CADInteractionHandler>;
-            var newHandlers = e.NewValue as IEnumerable<CADInteractionHandler>;
-            
-            //卸载/装载新/旧交互器;
-            if (oldHandlers != null) {
-                foreach (var handler in oldHandlers) {
-                    ctrl.UnSetupInteractionHandler(handler);
-                }
-            }
-
-            if (newHandlers != null) {
-                foreach (var handler in newHandlers) {
-                    ctrl.SetupInteractionHandler(handler);
-                }
-            }
-
-            if (oldHandlers is INotifyCollectionChanged oldHandlerCollection) {
-                oldHandlerCollection.CollectionChanged -= ctrl.InteractionHandlers_CollectionChanged;
-            }
-
-            if (newHandlers is INotifyCollectionChanged newHandlerCollection) {
-                newHandlerCollection.CollectionChanged += ctrl.InteractionHandlers_CollectionChanged;
-            }
-        }
-
-        /// <summary>
-        /// 对位置进行预处理;
-        /// </summary>
-        /// <param name="oriPosition"></param>
-        /// <returns></returns>
-        private void HandlePosition(Point oriPosition) {
-            if (InteractionHandlers == null) {
-                return;
-            }
-            
-            foreach (var positionHandler in InteractionHandlers) {
-                positionHandler.HandlePosition(this, oriPosition);
-            }
-        }
-
-        /// <summary>
-        /// 装载位置预处理器;
-        /// </summary>
-        /// <param name="interactionHandler"></param>
-        private void SetupInteractionHandler(CADInteractionHandler interactionHandler) {
-            if (interactionHandler == null) {
-                return;
-            }
-
-            AddDrawable(interactionHandler,_interactionHandlerContainerVisual);
-
-            interactionHandler.CADControl = this;
-
-            _positionHandlers.Remove(interactionHandler);
-        }
-
-        /// <summary>
-        /// 卸载位置预处理器;
-        /// </summary>
-        /// <param name="interactionHandler"></param>
-        private void UnSetupInteractionHandler(CADInteractionHandler interactionHandler) {
-            if (interactionHandler == null) {
-                return;
-            }
-
-            RemoveDrawable(interactionHandler,_interactionHandlerContainerVisual);
-
-            interactionHandler.CADControl = null;
-
-            _positionHandlers.Add(interactionHandler);
-        }
-
-        /// <summary>
-        /// 位置预处理器集合内容发生变化时的响应;
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void InteractionHandlers_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
-            if (!(sender is IEnumerable<CADInteractionHandler> handlers)) {
-                return;
-            }
-
-            switch (e.Action) {
-                case NotifyCollectionChangedAction.Add:
-                    foreach (var item in e.NewItems) {
-                        if (!(item is CADInteractionHandler handler)) {
-                            continue;
-                        }
-
-                        SetupInteractionHandler(handler);
-                    }
-                    break;
-
-                case NotifyCollectionChangedAction.Remove:
-                    foreach (var item in e.OldItems) {
-                        if (!(item is CADInteractionHandler handler)) {
-                            continue;
-                        }
-
-                        UnSetupInteractionHandler(handler);
-                    }
-                    break;
-
-                case NotifyCollectionChangedAction.Replace:
-                    break;
-                case NotifyCollectionChangedAction.Move:
-                    break;
-
-                case NotifyCollectionChangedAction.Reset:
-                    ///若是复位(可能是清除操作),则需将现有所有图层清除;
-                    ///再逐次添加图层;
-                    ///为避免遍历中移除元素,故使用<see cref="Enumerable.ToList{TSource}(IEnumerable{TSource})"/>
-                    _positionHandlers.ToList().ForEach(handler => {
-                        UnSetupInteractionHandler(handler);
-                    });
-
-                    if (handlers != null) {
-                        foreach (var handler in handlers) {
-                            UnSetupInteractionHandler(handler);
-                        }
-                    }
-                    break;
-
-                default:
-                    break;
-            }
-
-
-        }
-    }
-    
-    /// <summary>
     /// 鼠标,键盘动作的重写;
     /// </summary>
     public partial class CADControl
@@ -533,12 +329,8 @@ namespace Tida.CAD.WPF {
 
             //通知外部;
             yield return MouseDownOnPreview;
-            //辅助响应;
-            yield return MouseDownOnSnaping;
             //拖拽响应;
             yield return MouseDownOnDrag;
-            //编辑响应;
-            yield return OnMouseDownOnEditTool;
             //被选取对象的交互操作;
             yield return MouseDownOnSelectedDrawObjects;
             //拖放选中响应;
@@ -575,12 +367,6 @@ namespace Tida.CAD.WPF {
             //拖拽响应;
             yield return MouseMoveOnDrag;
 
-            //辅助响应;
-            yield return MouseMoveOnSnaping;
-
-            //编辑响应;
-            yield return OnMouseMoveOnEditTool;
-
             //被选取对象的交互操作;
             yield return MouseMoveOnSelectedDrawObjects;
 
@@ -616,8 +402,6 @@ namespace Tida.CAD.WPF {
 
             //拖拽响应;
             yield return MouseUpOnDrag;
-            //编辑响应;
-            yield return OnMouseUpOnEditTool;
         }
 
         /// <summary>
@@ -650,9 +434,6 @@ namespace Tida.CAD.WPF {
 
             //通知外界;
             yield return KeyDownOnPreview;
-
-            //编辑响应;
-            yield return OnKeyDownOnEditTool;
 
             //被选取对象的交互操作;
             yield return KeyDownOnSelectedDrawObjects;
@@ -689,7 +470,6 @@ namespace Tida.CAD.WPF {
             //与被选取对对象的交互操作;
             yield return KeyUpOnSelectedDrawObjects;
 
-            yield return OnKeyUpOnEditTool;
         }
 
         protected override void OnPreviewTextInput(TextCompositionEventArgs e) {
@@ -711,7 +491,6 @@ namespace Tida.CAD.WPF {
             //通知外界;
             yield return TextInputOnPreview;
 
-            yield return OnTextInputOnEditTool;
         }
     }
 
@@ -1196,519 +975,8 @@ namespace Tida.CAD.WPF {
         {
             //拖拽判断;
             yield return GetCursorOnDrag;
-            //编辑判断;
-            yield return GetCursorOnEditTool;
             //选取判断;
             yield return GetCursorOnSelect;
-        }
-    }
-
-    /// <summary>
-    /// 编辑工具以及撤销/重做部分;
-    /// </summary>
-    public partial class CADControl
-    {
-        public event EventHandler<ValueChangedEventArgs<EditTool>> CurrentEditToolChanged;
-
-        /// <summary>
-        /// 根据当前的状态,判断是否可以使用编辑工具;
-        /// </summary>
-        private bool CheckEditToolAvailable() {
-            if(CurrentEditTool == null) {
-                return false;
-            }
-
-            if (IsReadOnly) {
-                return false;
-            }
-
-            if(ActiveLayer == null) {
-                return false;
-            }
-            
-            return true;
-        }
-            
-
-        /// <summary>
-        /// 当前的编辑控件;
-        /// </summary>
-        public EditTool CurrentEditTool
-        {
-            get { return (EditTool)GetValue(CurrentEditToolProperty); }
-            set { SetValue(CurrentEditToolProperty, value); }
-        }
-
-        public static readonly DependencyProperty CurrentEditToolProperty =
-            DependencyProperty.Register(
-                nameof(CurrentEditTool),
-                typeof(EditTool),
-                typeof(CADControl),
-                new FrameworkPropertyMetadata(null,
-                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault
-                    , CurrentEditTool_PropertyChanged)
-            );
-
-        /// <summary>
-        /// 当前编辑工具发生变化时;
-        /// </summary>
-        /// <param name="d"></param>
-        /// <param name="e"></param>
-        private static void CurrentEditTool_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (!(d is CADControl ctrl))
-            {
-                return;
-            }
-
-            EditTool oldEditTool = e.OldValue as EditTool;
-            EditTool newEditTool = e.NewValue as EditTool;
-
-            //处理原编辑工具;
-            if (oldEditTool != null)
-            {
-                ctrl.UnSetupEditTool(oldEditTool);
-            }
-
-            //处理新编辑工具;
-            if (newEditTool != null)
-            {
-                ctrl.SetupEditTool(newEditTool);
-            }
-            
-            ctrl.OnEditToolChanged();
-
-            //通知当前编辑工具发生了变化;
-            ctrl.CurrentEditToolChanged?.Invoke(ctrl, new ValueChangedEventArgs<EditTool>(newEditTool, oldEditTool));
-        }
-
-        /// <summary>
-        /// 当前编辑工具发生变化时;
-        /// </summary>
-        private void OnEditToolChanged()
-        {
-            //拖放选取状态处理;
-            EditToolChangedOnDragingSelectDrawObject();
-            //更新Cursor;
-            UpdateCursor();
-            
-        }
-
-
-        /// <summary>
-        /// 装载编辑工具,添加视觉元素,订阅事件等;
-        /// </summary>
-        /// <param name="editTool"></param>
-        private void SetupEditTool(EditTool editTool)
-        {
-            //添加视觉元素;
-            AddDrawable(editTool,_editToolContainerVisual);
-
-            editTool.TransactionCommited += EditTool_TransactionCommited;
-            editTool.CanUndoChanged += EditTool_CanUndoChanged;
-            editTool.CanRedoChanged += EditTool_CanRedoChanged;
-
-
-            RaiseCanUndoRedoChangedEvents();
-
-            LastEditPosition = null;
-
-            editTool.CADContext = this;
-            editTool.BeginOperation();
-        }
-
-        /// <summary>
-        /// 卸载编辑工具;
-        /// </summary>
-        /// <param name="editTool"></param>
-        private void UnSetupEditTool(EditTool editTool)
-        {
-            if(editTool == null) {
-                return;
-            }
-
-            //通知递交更改;
-            editTool.Commit();
-            
-            RemoveDrawable(editTool,_editToolContainerVisual);
-
-            editTool.TransactionCommited -= EditTool_TransactionCommited;
-            editTool.CanUndoChanged -= EditTool_CanUndoChanged;
-            editTool.CanRedoChanged -= EditTool_CanRedoChanged;
-
-            RaiseCanUndoRedoChangedEvents();
-            
-            LastEditPosition = null;
-
-            editTool.EndOperation();
-            editTool.CADContext = null;
-        }
-        
-        /// <summary>
-        /// 编辑工具的可重做状态变更时,触发事件;
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EditTool_CanRedoChanged(object sender, CanRedoChangedEventArgs e)
-        {
-            RaiseCanUndoRedoChangedEvents();
-        }
-
-        /// <summary>
-        /// 编辑工具的可撤销状态变更时,触发事件;
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EditTool_CanUndoChanged(object sender, CanUndoChangedEventArgs e)
-        {
-            RaiseCanUndoRedoChangedEvents();
-        }
-
-        /// <summary>
-        /// 编辑工具呈递事务时发生;
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EditTool_TransactionCommited(object sender, IEditTransaction e)
-        {
-            if (e == null)
-            {
-                return;
-            }
-
-            //保留到事务缓冲区中;便于撤销/重做操作;
-            CommitTransaction(e);
-        }
-
-        /// <summary>
-        /// 鼠标按下的编辑处理;
-        /// </summary>
-        /// <param name="e"></param>
-        private bool OnMouseDownOnEditTool(MouseButtonEventArgs e) {
-            if (!CheckEditToolAvailable()) {
-                return false;
-            }
-            
-            var viewPosition = e.GetPosition(this);
-            var position = _activeSnapShape?.Position ?? CADScreenConverter.ToCAD(viewPosition);
-            
-            //预处理位置;
-            HandlePosition(position);
-
-            //通知编辑工具按下动作;
-            CurrentEditTool.RaisePreviewMouseDown(new CADMouseButtonEventArgs(position) { MouseButtonEventArgs = e });
-
-            //变更上次编辑的位置;
-            LastEditPosition = position;
-
-            return e.Handled;
-        }
-        
-        /// <summary>
-        /// 鼠标移动时的编辑处理;
-        /// </summary>
-        /// <param name="e"></param>
-        private bool OnMouseMoveOnEditTool(MouseEventArgs e) {
-            if (!CheckEditToolAvailable()) {
-                return false;
-            }
-
-            var viewPosition = e.GetPosition(this);
-            var position = _activeSnapShape?.Position ?? CADScreenConverter.ToCAD(viewPosition);
-
-            //预处理位置;
-            HandlePosition(position);
-
-            
-            //通知编辑工具;
-            CurrentEditTool.RaisePreviewMouseMove(new CADMouseEventArgs(position) { MouseEventArgs = e });
-
-            return e.Handled;
-        }
-
-        /// <summary>
-        /// 鼠标弹起时的编辑处理;
-        /// </summary>
-        /// <param name="e"></param>
-        private bool OnMouseUpOnEditTool(MouseButtonEventArgs e) {
-            if (!CheckEditToolAvailable()) {
-                return false;
-            }
-
-            var viewPosition = e.GetPosition(this);
-            var position = _activeSnapShape?.Position ?? CADScreenConverter.ToCAD(viewPosition);
-
-            //通知编辑工具弹起动作;
-            CurrentEditTool.RaisePreviewMouseUp(new CADMouseButtonEventArgs(position) { MouseButtonEventArgs = e });
-            return true;
-        }
-        
-        /// <summary>
-        /// 键盘按下时的编辑处理;
-        /// </summary>
-        /// <param name="e"></param>
-        private bool OnKeyDownOnEditTool(KeyEventArgs e) {
-            if (!CheckEditToolAvailable()) {
-                return false;
-            }
-
-            //通知编辑工具按键按下;
-            CurrentEditTool.RaisePreviewKeyDown(new CADKeyEventArgs { KeyEventArgs = e });
-
-            return true;
-        }
-
-        /// <summary>
-        /// 键盘弹起时的编辑处理;
-        /// </summary>
-        /// <param name="e"></param>
-        /// <returns></returns>
-        private bool OnKeyUpOnEditTool(KeyEventArgs e) {
-            if (!CheckEditToolAvailable()) {
-                return false;
-            }
-
-            //通知编辑工具按键弹起;
-            CurrentEditTool.RaisePreviewKeyUp(new CADKeyEventArgs { KeyEventArgs = e });
-
-            return e.Handled;
-        }
-        
-        /// <summary>
-        /// 键盘键入时的编辑处理;
-        /// </summary>
-        /// <param name="e"></param>
-        /// <returns></returns>
-        private bool OnTextInputOnEditTool(TextCompositionEventArgs e) {
-            if (!CheckEditToolAvailable()) {
-                return false;
-            }
-
-            CurrentEditTool.RaisePreviewTextInput(new CADTextInputEventArgs { TextCompositionEventArgs = e });
-            return e.Handled;
-        }
-
-
-        /// <summary>
-        /// 根据当前是否处于编辑状态设定Cursor;
-        /// </summary>
-        /// <param name="e"></param>
-        private Cursor GetCursorOnEditTool()
-        {
-            if (CurrentEditTool != null)
-            {
-                return Cursors.Cross;
-            }
-            return null;
-        }
-
-
-        /// <summary>
-        /// 上次编辑的标识位置;
-        /// </summary>
-        public Point? LastEditPosition { get;private set; }
-
-        /// <summary>
-        /// 当当前编辑工具不为空,且指示<see cref="EditTool.IsEditing"/>为假时,不能显示辅助图形;
-        /// </summary>
-        /// <returns></returns>
-        private CanSnapShowResult CanShowSnapOnEditTool()
-        {
-            if (CurrentEditTool != null)
-            {
-                return new CanSnapShowResult
-                {
-                    CanShow = CurrentEditTool.IsEditing,
-                    Handled = true
-                };
-            }
-
-            return new CanSnapShowResult (true, false);
-        }
-
-        
-        
-    }
-
-    /// <summary>
-    /// 撤销/重做部分;
-    /// </summary>
-    public partial class CADControl {
-
-        /*撤销/重做部分*/
-
-        /// <summary>
-        /// 能否撤销;
-        /// </summary>
-        public bool CanUndo {
-            get {
-                //可撤销状态将根据是否处于编辑状态分为两种情况;
-                if (CurrentEditTool != null) {
-                    return CurrentEditTool.CanUndo;
-                }
-                return _undoTransactionBuffer.Count != 0;
-            }
-        }
-
-
-        /// <summary>
-        /// 能否重做;
-        /// </summary>
-        public bool CanRedo {
-            get {
-                //可重做状态将根据是否处于编辑状态分为两种情况;
-                if (CurrentEditTool != null) {
-                    return CurrentEditTool.CanRedo;
-                }
-
-                return _redoTransactionBuffer.Count != 0;
-            }
-        }
-
-        /// <summary>
-        /// 可撤销状态发生变化;
-        /// </summary>
-        public event EventHandler<CanUndoChangedEventArgs> CanUndoChanged;
-
-
-        /// <summary>
-        /// 重做;
-        /// </summary>
-        public void Redo() {
-            //若处于重做或撤销状态则不能重做;
-            if (_isRedoing || _isUndoing) {
-                return;
-            }
-
-            _isRedoing = true;
-
-            try {
-                //重做操作将根据是否处于编辑状态分为两种情况;
-                if (CurrentEditTool != null) {
-                    CurrentEditTool.Redo();
-                }
-                else if (_redoTransactionBuffer.Count != 0) {
-                    //拿取上次的重做事务集合,进行重做操作;
-                    var lastRedoTransactions = _redoTransactionBuffer.Pop();
-
-                    foreach (var transaction in lastRedoTransactions) {
-                        if (transaction.CanRedo) {
-                            transaction.Redo();
-                        }
-                    }
-
-                    //触发事件;
-                    EditTransactionRedone?.Invoke(this, new EditTransactionRedoneEventArgs(lastRedoTransactions));
-
-                    //加入到撤销栈中;
-                    var stack = new Stack<IEditTransaction>(lastRedoTransactions.Reverse());
-                    _undoTransactionBuffer.Push(stack);
-                }
-            }
-            finally {
-                _isRedoing = false;
-            }
-
-            RaiseCanUndoRedoChangedEvents();
-        }
-
-        /// <summary>
-        /// 撤销操作;
-        /// </summary>
-        public void Undo() {
-            //若处于重做或撤销状态则不能撤销;
-            if(_isRedoing || _isUndoing) {
-                return;
-            }
-
-            _isUndoing = true;
-            try {
-                //撤销操作将根据是否处于编辑状态分为两种情况;
-                if (CurrentEditTool != null) {
-                    CurrentEditTool.Undo();
-                }
-                else if (_undoTransactionBuffer.Count != 0) {
-                    var lastUndoTransactions = _undoTransactionBuffer.Pop();
-                    foreach (var transaction in lastUndoTransactions) {
-                        transaction.Undo();
-                    }
-
-                    //触发事件;
-                    EditTransactionUndone?.Invoke(this, new EditTransactionUndoneEventArgs(lastUndoTransactions));
-
-                    //加入到重做栈中;
-                    var stack = new Stack<IEditTransaction>(lastUndoTransactions.Reverse());
-                    _redoTransactionBuffer.Push(stack);
-                }
-            }
-            finally {
-                _isUndoing = false;
-            }
-
-
-            RaiseCanUndoRedoChangedEvents();
-        }
-
-
-        /// <summary>
-        /// 可重做状态发生变化;
-        /// </summary>
-        public event EventHandler<CanRedoChangedEventArgs> CanRedoChanged;
-
-        /// <summary>
-        /// 触发可撤销/重做状态变更事件;
-        /// </summary>
-        private void RaiseCanUndoRedoChangedEvents() {
-            CanRedoChanged?.Invoke(this, new CanRedoChangedEventArgs(CanRedo));
-            CanUndoChanged?.Invoke(this, new CanUndoChangedEventArgs(CanUndo));
-        }
-
-
-        /// <summary>
-        /// 添加事务;将事务添加至撤销栈内;
-        /// </summary>
-        /// <param name="editTransaction"></param>
-        public void CommitTransaction(IEditTransaction editTransaction) {
-            if (editTransaction == null) {
-                throw new ArgumentNullException(nameof(editTransaction));
-            }
-
-            //若处于重做或撤销状态则不能呈递事务;
-            if (_isRedoing || _isUndoing) {
-                return;
-            }
-
-            //若正在处理路由事件,且已经建立了上一个事务栈,则直接附加到上一次的事务栈中;
-            if (_handlingRoutedEvent && _undoTransactionBuffer.Count != 0 && _transactionStackCreatedInOneRoutedEvent) {
-                var lastActions = _undoTransactionBuffer.Peek();
-                lastActions.Push(editTransaction);
-
-                _redoTransactionBuffer.Clear();
-            }
-            else {
-                var stack = new Stack<IEditTransaction>();
-                stack.Push(editTransaction);
-                _undoTransactionBuffer.Push(stack);
-                //当有新的事务入栈时,将清除重做栈;
-                _redoTransactionBuffer.Clear();
-
-                _transactionStackCreatedInOneRoutedEvent = true;
-
-                //指示应附加到上次的事务集合中;
-                //在无其他干预时，在下次添加事务时，新加入的事务将会附加到上一次被添加到撤销栈的事务集合中;
-                //_handlingRoutedEvent = false;
-            }
-
-            RaiseCanUndoRedoChangedEvents();
-        }
-
-        /// <summary>
-        /// 清除所有事务;
-        /// </summary>
-        public void ClearTransactions() {
-            _undoTransactionBuffer.Clear();
-            _redoTransactionBuffer.Clear();
-            RaiseCanUndoRedoChangedEvents();
         }
     }
 
@@ -1982,9 +1250,7 @@ namespace Tida.CAD.WPF {
                 AddDrawable(drawObject,containerVisual);
 
                 drawObject.IsVisibleChanged += DrawObject_IsVisibleChanged;
-                drawObject.EditTransActionCommited += DrawObject_EditTransActionCommited;
                 drawObject.IsSelectedChanged += DrawObject_IsSelectedChanged;
-                drawObject.IsEditingChanged += DrawObject_IsEditingChanged;
             }
 
             DrawObjectsAdded?.Invoke(this, new DrawObjectsAddedEventArgs(drawObjects));
@@ -2014,9 +1280,7 @@ namespace Tida.CAD.WPF {
                 RemoveDrawable(drawObject, containerVisual);
 
                 drawObject.IsVisibleChanged -= DrawObject_IsVisibleChanged;
-                drawObject.EditTransActionCommited -= DrawObject_EditTransActionCommited;
                 drawObject.IsSelectedChanged -= DrawObject_IsSelectedChanged;
-                drawObject.IsEditingChanged -= DrawObject_IsEditingChanged;
             }
 
             DrawObjectsRemoved?.Invoke(this, new DrawObjectsRemovedEventArgs(drawObjects));
@@ -2037,19 +1301,6 @@ namespace Tida.CAD.WPF {
             DrawDrawable(drawObject);
         }
 
-        /// <summary>
-        /// 绘制对象呈递事务时加入到撤销栈中;
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void DrawObject_EditTransActionCommited(object sender, IEditTransaction e)
-        {
-            if (e == null)
-            {
-                return;
-            }
-            CommitTransaction(e);
-        }
 
         /// <summary>
         /// 绘制对象选中状态发生变化时,触发相关事件;
@@ -2064,18 +1315,7 @@ namespace Tida.CAD.WPF {
             DrawObjectIsSelectedChanged?.Invoke(this,new DrawObjectSelectedChangedEventArgs(drawObject,e.NewValue,e.OldValue));
         }
 
-        /// <summary>
-        /// 绘制对象是否被编辑状态发生变化时,触发相关事件;
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void DrawObject_IsEditingChanged(object sender, ValueChangedEventArgs<bool> e) {
-            if (!(sender is DrawObject drawObject)) {
-                return;
-            }
-            
-            DrawObjectIsEditingChanged?.Invoke(this, new DrawObjectIsEditingChangedEventArgs(drawObject, e.NewValue, e.OldValue));
-        }
+        
 
         /// <summary>
         /// 图层内可绘制元素被移除时的响应;
@@ -2260,221 +1500,6 @@ namespace Tida.CAD.WPF {
             DrawDrawable(drawable);
         }
 
-        /// <summary>
-        /// 根据当前是否存在绘制对象在自编辑的状态,指示是否可以显示辅助图形,
-        /// </summary>
-        /// <returns></returns>
-        private CanSnapShowResult CanShowSnapOnLayersAndDrawObjects()
-        {
-            ///当存在绘制对象处于自编辑状态时 < see cref = "DrawObject.IsEditing" />,可以显示辅助图形,并指示已处理;
-            if (this.GetInteractionableLayers()?.SelectMany(p => p.DrawObjects).Any(p => p.IsEditing) ?? false)
-            {
-                return new CanSnapShowResult(true, true);
-            }
-
-            return new CanSnapShowResult(false, false);
-        }
-    }
-
-    /// <summary>
-    /// 辅助规则部分;
-    /// </summary>
-    public partial class CADControl
-    {
-        /// <summary>
-        /// 辅助是否可用;
-        /// </summary>
-        public bool IsSnapingEnabled
-        {
-            get { return (bool)GetValue(IsSnapingEnabledProperty); }
-            set { SetValue(IsSnapingEnabledProperty, value); }
-        }
-
-        public static readonly DependencyProperty IsSnapingEnabledProperty =
-            DependencyProperty.Register(nameof(IsSnapingEnabled), typeof(bool), typeof(CADControl), new PropertyMetadata(true));
-        
-        /// <summary>
-        /// 辅助规则集合;
-        /// </summary>
-        public IEnumerable<ISnapShapeRule> SnapShapeRules
-        {
-            get { return (IEnumerable<ISnapShapeRule>)GetValue(SnapShapeRulesProperty); }
-            set { SetValue(SnapShapeRulesProperty, value); }
-        }
-
-        public static readonly DependencyProperty SnapShapeRulesProperty =
-            DependencyProperty.Register(nameof(SnapShapeRules), typeof(IEnumerable<ISnapShapeRule>), typeof(CADControl), new PropertyMetadata(null));
-
-
-        /// <summary>
-        /// 鼠标移动时,辅助的判断;
-        /// </summary>
-        /// <param name="e"></param>
-        private bool MouseMoveOnSnaping(MouseEventArgs e)
-        {
-            SetSnapStateOnMouse(e);
-            return false;
-        }
-
-
-        /// <summary>
-        /// 鼠标按下时,辅助的判断;
-        /// </summary>
-        /// <param name="e"></param>
-        private bool MouseDownOnSnaping(MouseEventArgs e)
-        {
-
-            SetSnapStateOnMouse(e);
-            
-            return false;
-        }
-        
-
-        /// <summary>
-        /// 根据鼠标的位置设定当前的辅助图形;
-        /// </summary>
-        /// <param name="e"></param>
-        private void SetSnapStateOnMouse(MouseEventArgs e)
-        {
-            if (_activeSnapShape != null)
-            {
-                RemoveDrawable(_activeSnapShape,_snapShapeContainerVisual);
-            }
-
-            var position = CADScreenConverter.ToCAD(e.GetPosition(this));
-
-            //预处理位置;
-            HandlePosition(position);
-
-            var activeSnapShape = GetSnapShape(position);
-
-            if (activeSnapShape != null)
-            {
-                var canShow = true;
-
-                //遍历能否显示辅助图形的指示器队列,直到某一个指示器指示处理完成或完成遍历;
-                foreach (var getter in GetCanShowSnapShapeGetters())
-                {
-                    var tuple = getter();
-                    canShow = tuple.CanShow;
-
-                    if (tuple.Handled)
-                    {
-                        break;
-                    }
-                }
-
-                if (canShow)
-                {
-                    AddDrawable(activeSnapShape,_snapShapeContainerVisual);
-                }
-            }
-            
-            //通知事件;
-            MouseHoverSnapShapeChanged?.Invoke(this, new ValueChangedEventArgs<ISnapShape>(activeSnapShape, _activeSnapShape));
-
-            _activeSnapShape = activeSnapShape;
-        }
-
-        /// <summary>
-        /// 获取是否能够显示辅助图形的结果;
-        /// </summary>
-        struct CanSnapShowResult
-        {
-            public CanSnapShowResult(bool canShow,bool handled)
-            {
-                CanShow = canShow;
-                Handled = handled;
-            }
-            
-            /// <summary>
-            /// 是否能够显示;
-            /// </summary>
-            public bool CanShow { get; set; }
-
-            /// <summary>
-            /// 是否已经处理;
-            /// </summary>
-            public bool Handled { get; set; }
-        }
-
-        /// <summary>
-        /// 获取是否能够显示辅助图形的设定器集合;
-        /// </summary>
-        /// <returns></returns>
-        private IEnumerable<Func<CanSnapShowResult>> GetCanShowSnapShapeGetters()
-        {
-            yield return CanShowSnapOnEditTool;
-            yield return CanShowSnapOnLayersAndDrawObjects;
-        }
-
-        
-
-        /// <summary>
-        /// 鼠标所处的辅助节点发生变化时;
-        /// </summary>
-        public event EventHandler<ValueChangedEventArgs<ISnapShape>> MouseHoverSnapShapeChanged;
-
-
-        /// <summary>
-        /// 根据关注点的位置,获得辅助图形;
-        /// </summary>
-        /// <param name="point"></param>
-        /// <returns></returns>
-        private ISnapShape GetSnapShape(Point point)
-        {
-#if DEBUG
-            //return null;
-#endif
-
-            if (!IsSnapingEnabled)
-            {
-                return null;
-            }
-
-            if (Layers == null)
-            {
-                return null;
-            }
-
-#if DEBUG
-            //var scp = new Vector(CanvasProxy.ToScreen(point.X), CanvasProxy.ToScreen(point.Y));
-            //if (scp.X < -2 && scp.X > 2 && scp.Y < -2 && scp.Y > 2)
-            //{
-
-            //}
-#endif
-            //获取所有绘制对象,进行辅助判断;
-            var drawObjects = this.Layers.
-                Where(p => p.IsVisible).SelectMany(p => p.DrawObjects).
-                Where(p => p.IsVisible).Where(p => p.PointInObject(point, CADScreenConverter) || p.IsEditing).
-                OrderByDescending(p => p.IsSelected);
-
-            //触发辅助判断的事件;
-            var snapingEventArgs = new SnapingEventArgs(drawObjects);
-            Snaping?.Invoke(this, snapingEventArgs);
-
-            var drawObjectsToSnaping = snapingEventArgs.DrawObjects.ToArray();
-
-            if (SnapShapeRules != null)
-            {
-                foreach (var snapShapeRule in SnapShapeRules)
-                {
-                    var snapShape = snapShapeRule.MatchSnapShape(drawObjectsToSnaping, point, this);
-                    if (snapShape != null)
-                    {
-                        return snapShape;
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// 正在判断辅助的事件;
-        /// </summary>
-        public event EventHandler<SnapingEventArgs> Snaping;
     }
 
     /// <summary>
@@ -2533,23 +1558,12 @@ namespace Tida.CAD.WPF {
             var clickedDrawObjects = this.GetAllVisibleDrawObjects().
                 Where(p => p.PointInObject(mousePosition, CADScreenConverter)).ToArray();
 
-            bool canApplySelect = true;
-
-            //若当前编辑工具不为空,由其指示是否能够应用点击选中;
-            if (CurrentEditTool != null) {
-                var clickArgs = new ClickSelectEventArgs(mousePosition, clickedDrawObjects);
-                ClickSelect?.Invoke(this, clickArgs);
-                //若当前编辑工具指示取消,则不能应用拖放选中;
-                canApplySelect = !clickArgs.Cancel;
+            foreach (var drawObject in clickedDrawObjects)
+            {
+                drawObject.IsSelected = !drawObject.IsSelected;
+                return true;
             }
 
-            if (canApplySelect) {
-                foreach (var drawObject in clickedDrawObjects) {
-                    drawObject.IsSelected = !drawObject.IsSelected;
-                    return true;
-                }
-            }
-            
             return false;
         }
 
@@ -2681,20 +1695,10 @@ namespace Tida.CAD.WPF {
                 var selectedObjects = this.GetVisibleLayers().SelectMany(p => p.DrawObjects).Where(p => p.IsVisible).
                         Where(p => p.ObjectInRectangle(rect.Value, CADScreenConverter, _anyPointSelectForDragSelect)).ToArray();
 
-                bool canApplySelect = true;
 
-                //若当前编辑工具不为空,由其指示是否能够应用拖放选中;
-                if (CurrentEditTool != null) {
-                    var dragArgs = new DragSelectEventArgs(mousePosition, rect.Value, selectedObjects);
-                    DragSelect?.Invoke(this, dragArgs);
-                    //若当前编辑工具指示取消,则不能应用拖放选中;
-                    canApplySelect = !dragArgs.Cancel;
-                }
-
-                if (canApplySelect) {
-                    foreach (var drawObject in selectedObjects) {
-                        drawObject.IsSelected = true;
-                    }
+                foreach (var drawObject in selectedObjects)
+                {
+                    drawObject.IsSelected = true;
                 }
 
                 //将选中矩形的数据置空;
@@ -2820,13 +1824,8 @@ namespace Tida.CAD.WPF {
             {
                 return;
             }
-            
-            //当前编辑工具若不为空,则由其指示是否为任意选中;
-            if (CurrentEditTool != null)
-            {
-                DrawSelectMouseMove?.Invoke(this, dragArgs);
-            }
-            
+
+            DrawSelectMouseMove?.Invoke(this, dragArgs);
             //若未指示,则根据鼠标的走向判断;
             _anyPointSelectForDragSelect = dragArgs.IsAnyPoint ?? (dragArgs.Position.X < _lastMouseDownPositionForDragSelecting.Value.X);
             
@@ -2838,85 +1837,20 @@ namespace Tida.CAD.WPF {
     /// </summary>
     public partial class CADControl
     {
-        /// <summary>
-        /// 当前正在与之交互的绘制对象集合缓存;
-        /// </summary>
-        private readonly List<DrawObject> _selectedDrawObjectsToBeInteracted = new List<DrawObject>();
-        /// <summary>
-        /// 根据当前的状态,判断是否可以与被选择绘制对象交互;
-        /// </summary>
-        /// <returns></returns>
-        private bool CheckInteractWithSelectedDrawObjectsEnabled() {
-            if (Layers == null) {
-                return false;
-            }
-            
-            if (IsReadOnly) {
-                return false;
-            }
-
-            return true;
-        }
-        
         private bool InteractWithSelectedDrawObjects<TEventArgs>(
             Action<DrawObject,TEventArgs> handler,
             TEventArgs eventArgs)
-            where TEventArgs:RoutedEventArgs {
+            where TEventArgs:CADRoutedEventArgs {
 
-            if (!CheckInteractWithSelectedDrawObjectsEnabled()) {
-                return false;
-            }
-            
-            //与所有被选中的绘制对象进行交互;
-            var selectedDrawObjects = this.GetAllVisibleDrawObjects().Where(q => q.IsSelected);
-
-            var previewArgs = new PreviewDrawObjectsInteractionEventArgs(selectedDrawObjects);
-            //通知外部,将要和选定的绘制对象进行交互;
-            PreviewInteractionWithDrawObjects?.Invoke(this, previewArgs);
-            //若外部指示已处理,则不继续处理;
-            if (previewArgs.Cancel) {
-                return false;
-            }
-
-            var handled = false;
-            var editingDrawObjectsHandled = false;
-
-            void HandleWithDrawObject(DrawObject drawObject) {
+            foreach (var drawObject in this.GetAllVisibleDrawObjects())
+            {
                 handler(drawObject, eventArgs);
-                //若内部指示被处理,则将外部的状态置为被处理;
-                if (eventArgs.Handled) {
-                    handled = true;
+                if (eventArgs.Handled)
+                {
+                    return true;
                 }
-
-                eventArgs.Handled = false;
             }
-
-            _selectedDrawObjectsToBeInteracted.Clear();
-            ///为了防止在遍历过程中可能出现的迭代对象被更改或列表集合状态发生更改的情况,导致异常产生,
-            ///先行将使用的对象保存到缓存集合<see cref="_selectedDrawObjectsToBeInteracted"/>中;下同;
-            _selectedDrawObjectsToBeInteracted.AddRange(selectedDrawObjects.Where(p => p.IsEditing));
-
-            //优先与正在被编辑的绘制对象交互;
-            _selectedDrawObjectsToBeInteracted.ForEach(editingDrawObject => {
-                HandleWithDrawObject(editingDrawObject);
-                //若任意一个绘制对象的正在编辑状态变为了否,则指示已经处理了,后继其他非正在被编辑的对象不能继续被交互;
-                if (!editingDrawObject.IsEditing) {
-                    editingDrawObjectsHandled = true;
-                }
-            });
-
-            ///同上;
-            _selectedDrawObjectsToBeInteracted.Clear();
-            _selectedDrawObjectsToBeInteracted.AddRange(selectedDrawObjects.Where(p => !p.IsEditing));
-            
-            //若未指示已处理,则仍能与未被编辑的绘制对象处理;
-            if (!editingDrawObjectsHandled) {
-                _selectedDrawObjectsToBeInteracted.ForEach(nonEditingDrawObject => {
-                    HandleWithDrawObject(nonEditingDrawObject);
-                });
-            }
-            
-            return handled;
+            return false;
         }
 
         /// <summary>
@@ -2932,8 +1866,8 @@ namespace Tida.CAD.WPF {
             
             var mouseScreenPosition = e.GetPosition(this);
             var mousePosition = CADScreenConverter.ToCAD(mouseScreenPosition);
-            HandlePosition(mousePosition);
-            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.OnPreviewMouseDown(new CADMouseButtonEventArgs(mousePosition) { MouseButtonEventArgs = e }), e);
+            var mouseDownEventArgs = new CADMouseButtonEventArgs(mousePosition) { MouseButtonEventArgs = e };
+            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.OnPreviewMouseDown(eventArgs), mouseDownEventArgs);
         }
 
         /// <summary>
@@ -2944,11 +1878,9 @@ namespace Tida.CAD.WPF {
         {
             var mouseScreenPosition = e.GetPosition(this);
             var mousePosition = CADScreenConverter.ToCAD(mouseScreenPosition);
-
-            HandlePosition(mousePosition);
-            
+            var mouseMoveEventArgs = new CADMouseEventArgs(mousePosition) { MouseEventArgs = e };
             //与所有选中的绘制对象进行交互;
-            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.OnMouseMove(new CADMouseEventArgs(mousePosition) { MouseEventArgs = eventArgs }), e);
+            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.OnMouseMove(mouseMoveEventArgs), mouseMoveEventArgs);
         }
 
         /// <summary>
@@ -2957,8 +1889,9 @@ namespace Tida.CAD.WPF {
         /// <param name="e"></param>
         private bool KeyDownOnSelectedDrawObjects(KeyEventArgs e)
         {
+            var keyEventArgs = new CADKeyEventArgs { KeyEventArgs = e };
             //与所有选中的绘制对象进行交互;
-            return InteractWithSelectedDrawObjects((drawObject,eventArgs) => drawObject.OnKeyDown(new CADKeyEventArgs { KeyEventArgs = eventArgs }),e);
+            return InteractWithSelectedDrawObjects((drawObject,eventArgs) => drawObject.OnKeyDown(eventArgs), keyEventArgs);
         }
 
         /// <summary>
@@ -2967,8 +1900,9 @@ namespace Tida.CAD.WPF {
         /// <param name="e"></param>
         private bool KeyUpOnSelectedDrawObjects(KeyEventArgs e)
         {
+            var keyEventArgs = new CADKeyEventArgs { KeyEventArgs = e };
             //与所有选中的绘制对象进行交互;
-            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.OnKeyUp(new CADKeyEventArgs { KeyEventArgs = eventArgs }), e);
+            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.OnKeyUp(eventArgs), keyEventArgs);
         }
 
         
@@ -3011,37 +1945,30 @@ namespace Tida.CAD.WPF {
     /// 原生对象部分;
     /// </summary>
     public partial class CADControl {
-        public void AddUIObject(object nativeVisual) {
-            if (nativeVisual == null) {
-                throw new ArgumentNullException(nameof(nativeVisual));
+        public void AddUIElement(UIElement child) {
+            if (child == null) {
+                throw new ArgumentNullException(nameof(child));
             }
 
-            if(!(nativeVisual is UIElement uiElem)) {
+            if (this.Children.Contains(child)) {
                 return;
             }
 
-            if (this.Children.Contains(uiElem)) {
-                return;
-            }
-
-            this.Children.Add(uiElem);
+            this.Children.Add(child);
         }
 
-        public void RemoveUIObject(object nativeVisual) {
+        public void RemoveUIElement(UIElement child) {
 
-            if (nativeVisual == null) {
-                throw new ArgumentNullException(nameof(nativeVisual));
+            if (child == null) {
+                throw new ArgumentNullException(nameof(child));
             }
 
-            if (!(nativeVisual is UIElement uiElem)) {
+            
+            if (!this.Children.Contains(child)) {
                 return;
             }
 
-            if (!this.Children.Contains(uiElem)) {
-                return;
-            }
-
-            this.Children.Remove(uiElem);
+            this.Children.Remove(child);
         }
     }
     

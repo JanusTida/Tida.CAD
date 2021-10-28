@@ -11,7 +11,7 @@ namespace Tida.CAD.WPF {
     /// <summary>
     /// The simple implementation to draw a rect,used to drag and select;
     /// </summary>
-    class SimpleRectangle : IDrawable {
+    class SimpleRectangle : CADElement {
         /// <summary>
         /// 矩形数据;
         /// </summary>
@@ -22,7 +22,7 @@ namespace Tida.CAD.WPF {
             }
             set {
                 _rectangle = value;
-                VisualChanged?.Invoke(this, EventArgs.Empty);
+                RaiseVisualChanged();
             }
         }
 
@@ -34,7 +34,7 @@ namespace Tida.CAD.WPF {
             get { return _fill; }
             set {
                 _fill = value;
-                VisualChanged?.Invoke(this, EventArgs.Empty);
+                RaiseVisualChanged();
             }
         }
 
@@ -47,14 +47,11 @@ namespace Tida.CAD.WPF {
             get { return _pen; }
             set {
                 _pen = value;
-                VisualChanged?.Invoke(this, EventArgs.Empty);
+                RaiseVisualChanged();
             }
         }
-
-
-        public event EventHandler VisualChanged;
-
-        public void Draw(ICanvas canvas) {
+       
+        public override void Draw(ICanvas canvas) {
             if(Fill == null) {
                 return;
             }

@@ -7,7 +7,7 @@ using System.Windows.Media;
 namespace Tida.CAD.WPF
 {
     /// <summary>
-    /// 可视化对象，实现了向界面上添加可视化对象的功能，并且能够获取可视化对象的数量
+    /// Visible element;
     /// </summary>
     public class VisualContainer : FrameworkElement {
         public VisualContainer() {
@@ -18,8 +18,10 @@ namespace Tida.CAD.WPF
         /// 当前所有的可见对象
         /// </summary>
         private readonly List<Visual> _visuals = new List<Visual>();
-        
-        //获取Visual的个数
+
+        /// <summary>
+        /// 获取Visual的个数
+        /// </summary>
         protected override int VisualChildrenCount => _visuals.Count;
 
         /// <summary>

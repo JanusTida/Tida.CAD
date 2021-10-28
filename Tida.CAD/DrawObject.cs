@@ -12,7 +12,7 @@ namespace Tida.CAD {
     /// <summary>
     /// Drawobject in layer;
     /// </summary>
-    public abstract partial class DrawObject : CADElement, ICloneable<DrawObject> {
+    public abstract partial class DrawObject : CADElement {
         
         /// <summary>
         /// Indicates whether the point in inside the object;
@@ -75,119 +75,11 @@ namespace Tida.CAD {
         public event EventHandler<ValueChangedEventArgs<bool>> IsSelectedChanged;
         
         /// <summary>
-        /// 是否正在被编辑修改;
-        /// </summary>
-        public virtual bool IsEditing { get; }
-
-        /// <summary>
-        /// 是否正在被编辑发生了变化;
-        /// </summary>
-        public event EventHandler<ValueChangedEventArgs<bool>> IsEditingChanged;
-
-        /// <summary>
-        /// 触发是否正在被编辑变化事件;
-        /// </summary>
-        protected void RaiseIsEditingChanged(ValueChangedEventArgs<bool> e) {
-
-            if (e == null) {
-                throw new ArgumentNullException(nameof(e));
-            }
-            
-            IsEditingChanged?.Invoke(this, e);
-        }
-
-        /// <summary>
         /// 父对象;
         /// </summary>
         public CADElement Parent => InternalParent;
         internal CADElement InternalParent { get; set; }
 
-        /// <summary>
-        /// 本绘制对象的信息发生变更时发生;
-        /// </summary>
-        public event EventHandler<IEditTransaction> EditTransActionCommited;
-        
-
-        /// <summary>
-        /// 触发绘制对象信息变更事务,由子类调用;
-        /// </summary>
-        /// <param name="editTransaction"></param>
-        protected void RaiseEditTransActionCommited(IEditTransaction editTransaction) {
-            if(editTransaction == null) {
-                throw new ArgumentNullException(nameof(editTransaction));
-            }
-
-            EditTransActionCommited?.Invoke(this, editTransaction);
-        }
-
-        /// <summary>
-        /// 复制自身;
-        /// </summary>
-        /// <returns></returns>
-        public virtual DrawObject Clone() => null;
-        
-        /// <summary>
-        /// 设定字段值,
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="canBeNull">值能否为空</param>
-        /// <param name="commitTransaction">是否呈递标准事务;</param>
-        /// <param name="getField">获取字段值</param>
-        /// <param name="setField">设定字段值</param>
-        /// <param name="raiseVisualChanged">是否触发视觉变化事件</param>
-        protected void SetProperty<T>(Action<T> setField, Func<T> getField, T value, bool commitTransaction = true,bool raiseVisualChanged = true) {
-            SetProperty(setField, getField, value, new SetPropertySettings {
-                CommitTransaction= commitTransaction,
-                RaiseVisualChanged = raiseVisualChanged
-            });
-        }
-
-        protected void SetProperty<T>(Action<T> setField, Func<T> getField,T value, SetPropertySettings settings) {
-            var oldValue = getField();
-            if (Equals(oldValue,value)) {
-                return;
-            }
-
-            setField(value);
-
-            if (settings.RaiseVisualChanged) {
-                RaiseVisualChanged();
-            }
-
-            void Undo() {
-                setField(oldValue);
-                if (settings.RaiseVisualChanged) {
-                    RaiseVisualChanged();
-                }
-            }
-
-            void Redo() {
-                setField(value);
-                if (settings.RaiseVisualChanged) {
-                    RaiseVisualChanged();
-                }
-            }
-
-            if (settings.CommitTransaction) {
-                //呈递事务;
-                RaiseEditTransActionCommited(new StandardEditTransaction(Undo, Redo));
-            }
-        }
-        
-        /// <summary>
-        /// 设定字段值所使用的设定;
-        /// </summary>
-        public struct SetPropertySettings {
-            /// <summary>
-            /// 是否呈递事务;
-            /// </summary>
-            public bool CommitTransaction { get; set; }
-
-            /// <summary>
-            /// 是否触发视觉变化事件;
-            /// </summary>
-            public bool RaiseVisualChanged { get; set; }
-        }
     }
 
     /// <summary>

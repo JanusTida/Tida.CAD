@@ -9,14 +9,14 @@ namespace Tida.CAD.Extensions
     /// <summary>
     /// 画布上下文拓展;
     /// </summary>
-    public static class ICADContextExtensions
+    public static class ICADControlExtensions
     {
         /// <summary>
         /// 获取画布上下文中所有绘制对象;
         /// </summary>
         /// <param name="cadContext"></param>
         /// <returns></returns>
-        public static IEnumerable<DrawObject> GetAllDrawObjects(this ICADContext cadContext)
+        public static IEnumerable<DrawObject> GetAllDrawObjects(this ICADControl cadContext)
         {
 
             if (cadContext == null)

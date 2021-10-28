@@ -3,9 +3,9 @@
 namespace Tida.CAD
 {
     /// <summary>
-    /// The base class of sort things like Layer and drawobjects;
+    /// The base class of things like Layer and drawobjects;
     /// </summary>
-    public abstract class CADElement : IHaveVisibility,IDrawable {
+    public abstract class CADElement : IDrawable {
         private bool _isVisible = true;
         /// <summary>
         /// IsVisible;

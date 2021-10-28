@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using Tida.CAD.Events;
 
@@ -6,76 +7,13 @@ namespace Tida.CAD
 {
 
     /// <summary>
-    /// 画布控件协约;
+    /// ICADControl;
     /// </summary>
-    public interface ICADControl : 
-        IHaveEditTool , 
-        ICADContextEx
+    public interface ICADControl :  
 #if WPF
-        ,IInputElement
+        IInputElement
 #endif
     {
-        /// <summary>
-        /// 是否是只读的,当此值设置为真时,本控件及其内容将无法通过输入设备被操作;
-        /// </summary>
-        bool IsReadOnly { get; set; }
-        
-        /// <summary>
-        /// 撤销;
-        /// </summary>
-        void Undo();
-
-        /// <summary>
-        /// 能否撤销;
-        /// </summary>
-        bool CanUndo { get; }
-
-        /// <summary>
-        /// 可撤销状态发生变化;
-        /// </summary>
-        event EventHandler<CanUndoChangedEventArgs> CanUndoChanged;
-
-        /// <summary>
-        /// 重做;
-        /// </summary>
-        void Redo();
-
-        /// <summary>
-        /// 能否重做;
-        /// </summary>
-        bool CanRedo { get; }
-
-        /// <summary>
-        /// 可重做状态发生变化;
-        /// </summary>
-        event EventHandler<CanRedoChangedEventArgs> CanRedoChanged;
-
-        /// <summary>
-        /// 清除栈内所有事务;
-        /// </summary>
-        void ClearTransactions();
-
-        /// <summary>
-        /// 添加事务操作;
-        /// </summary>
-        /// <param name="editTranaction"></param>
-        void CommitTransaction(IEditTransaction editTransaction);
-
-        /// <summary>
-        /// 事务已经回撤;
-        /// </summary>
-        event EventHandler<EditTransactionUndoneEventArgs> EditTransactionUndone;
-
-        /// <summary>
-        /// 事务已经重做;
-        /// </summary>
-        event EventHandler<EditTransactionRedoneEventArgs> EditTransactionRedone;
-        
-        /// <summary>
-        /// 聚焦;
-        /// </summary>
-        bool Focus();
-
         /// <summary>
         /// 是否被聚焦;          
         /// </summary>
@@ -97,9 +35,65 @@ namespace Tida.CAD
         event EventHandler<DrawObjectsAddedEventArgs> DrawObjectsAdded;
 
         /// <summary>
-        /// 绘制对象是否正在被编辑发生了变化事件;
+        /// 所有图层(内容图层);
         /// </summary>
-        event EventHandler<DrawObjectIsEditingChangedEventArgs> DrawObjectIsEditingChanged;
+        IEnumerable<CADLayer> Layers { get; set; }
+
+        /// <summary>
+        /// 坐标间进行转化契约实例;
+        /// </summary>
+        ICADScreenConverter CADScreenConverter { get; }
+
+        /// <summary>
+        /// 当前选定的活动图层;
+        /// </summary>
+        CADLayer ActiveLayer { get; set; }
+
+        /// <summary>
+        /// 活动图层发生变化时的事件;
+        /// </summary>
+        event EventHandler<ValueChangedEventArgs<CADLayer>> ActiveLayerChanged;
+
+        /// <summary>
+        /// 放大比例;
+        /// </summary>
+        double Zoom { get; set; }
+
+        /// <summary>
+        /// 原点所在的视图坐标位置;
+        /// </summary>
+        Point PanScreenPosition { get; set; }
+
+        /// <summary>
+        /// 拖拽选择事件;
+        /// </summary>
+        event EventHandler<DragSelectEventArgs> DragSelect;
+
+        /// <summary>
+        /// 拖拽选择鼠标移动事件;
+        /// </summary>
+        event EventHandler<DragSelectMouseMoveEventArgs> DrawSelectMouseMove;
+
+        /// <summary>
+        /// 点击选取事件;
+        /// </summary>
+        event EventHandler<ClickSelectEventArgs> ClickSelect;
+
+
+#if WPF
+        /// <summary>
+        /// Add an instance of <see cref="UIElement"/> to the control;
+        /// </summary>
+        /// <param name="child"></param>
+        void AddUIElement(UIElement child);
+
+        /// <summary>
+        /// Remove a instance of <see cref="UIElement"/> from the control;
+        /// </summary>
+        /// <param name="child"></param>
+        void RemoveUIElement(UIElement child);
+#endif
+
     }
 
 }
