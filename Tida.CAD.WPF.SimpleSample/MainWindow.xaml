@@ -6,11 +6,9 @@
         xmlns:local="clr-namespace:Tida.CAD.WPF.SimpleSample"
         xmlns:tidacad="https://github.com/Tida.CAD"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <DockPanel>
-        <UniformGrid DockPanel.Dock="Bottom">
-            <Button Click="Addline_Click">Add Line</Button>
-        </UniformGrid>
-        <tidacad:CADControl x:Name="cadControl"/>
-    </DockPanel>
+        Title="Tida.CAD.WPF.SimpleSample" Height="450" Width="800">
+    <UniformGrid x:Name="uniformGrid">
+
+    </UniformGrid>
+    
 </Window>

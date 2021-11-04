@@ -1649,26 +1649,42 @@ namespace Tida.CAD.WPF {
     }
 
     /// <summary>
-    /// 绘制对象的选取(拖放)部分;
+    /// Drag select with left mouse button;
     /// </summary>
     public partial class CADControl
     {
         /// <summary>
-        /// 将拖放选中图形加入到<see cref="_visualDict"/>
+        /// This value indicate the drag selection behavior is enabled or not,default value is true;
+        /// </summary>
+        public bool DragSelectEnabled
+        {
+            get { return (bool)GetValue(DragSelectEnabledProperty); }
+            set { SetValue(DragSelectEnabledProperty, value); }
+        }
+
+        public static readonly DependencyProperty DragSelectEnabledProperty =
+            DependencyProperty.Register(nameof(DragSelectEnabled), typeof(bool), typeof(CADControl), new PropertyMetadata(true));
+
+        /// <summary>
+        /// Add selected rectangle to <see cref="_visualDict"/>;
         /// </summary>
         private void AddSelectRectangleToDict() {
             if (!_visualDict.ContainsKey(_dragSelectRectangle)) {
-                //将拖放选择的高亮矩形加入到视觉树中;
+                //Add highlighted rect to visual tree;
                 AddDrawable(_dragSelectRectangle,_dragSelectionContainerVisual);
             }
         }
 
         /// <summary>
-        /// 鼠标按下时拖放选取绘制对象的处理;
+        /// Handle mousedown operation for dargged drawobjects while mouse is pressed;
         /// </summary>
         /// <param name="e"></param>
         private bool MouseDownOnDragingSelectDrawObject(MouseEventArgs e)
         {
+            if (!DragSelectEnabled)
+            {
+                return false;
+            }
             var mousePosition = CADScreenConverter.ToCAD(e.GetPosition(this));
             //若上次点击位置不为空,则进行拖放选中操作;
             if (_lastMouseDownPositionForDragSelecting != null)
@@ -1722,11 +1738,15 @@ namespace Tida.CAD.WPF {
         }
 
         /// <summary>
-        /// 鼠标移动时拖放选取绘制对象的处理;
+        /// Handle mousemove operation for dargged drawobjects while mouse is pressed;
         /// </summary>
         /// <param name="e"></param>
         private bool MouseMoveOnDragingSelectDrawObject(MouseEventArgs e)
         {
+            if (!DragSelectEnabled)
+            {
+                return false;
+            }
             var mousePosition = CADScreenConverter.ToCAD(e.GetPosition(this));
 
             //若鼠标上次按下的位置不为空,则绘制选择矩形;
@@ -1775,7 +1795,7 @@ namespace Tida.CAD.WPF {
         }
 
         /// <summary>
-        /// 键盘弹起时拖放选取绘制对象的处理;
+        /// Handle keydown operation for dargged drawobjects while mouse is pressed;
         /// </summary>
         /// <param name="e"></param>
         private bool KeyDownOnDragingSelectDrawObject(KeyEventArgs e)
@@ -1799,19 +1819,7 @@ namespace Tida.CAD.WPF {
         }
 
         /// <summary>
-        /// 当前编辑编辑工具发生变化时;拖放选取绘制对象的处理;
-        /// </summary>
-        /// <param name="editTool"></param>
-        private void EditToolChangedOnDragingSelectDrawObject()
-        {
-            //清除所有绘制对象的状态;
-            _lastMouseDownPositionForDragSelecting = null;
-            _dragSelectRectangle.Rectangle = null;
-        }
-
-        /// <summary>
-        /// 设置拖放选取时鼠标移动参数;
-        /// <paramref name="mousePosition">鼠标的当前位置</paramref>
+        /// Handle drag selection while mouse is moving;
         /// </summary>
         private void HandleDragSelectOnMouseMove(DragSelectMouseMoveEventArgs dragArgs)
         {
@@ -1826,7 +1834,7 @@ namespace Tida.CAD.WPF {
             }
 
             DrawSelectMouseMove?.Invoke(this, dragArgs);
-            //若未指示,则根据鼠标的走向判断;
+            
             _anyPointSelectForDragSelect = dragArgs.IsAnyPoint ?? (dragArgs.Position.X < _lastMouseDownPositionForDragSelecting.Value.X);
             
         }

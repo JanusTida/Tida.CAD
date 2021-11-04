@@ -68,13 +68,13 @@ namespace Tida.CAD.DrawObjects {
 
         public override void Draw(ICanvas canvas) {
            
-            //绘制自身;
+            //Draw main line;
             canvas.DrawLine(Pen, Start,End);
         }
 
         private Pen _pen;
         /// <summary>
-        /// 绘制线段的笔;
+        /// The pen used when drawing the line;
         /// </summary>
         public Pen Pen {
             get => _pen;

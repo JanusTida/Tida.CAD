@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,18 +21,32 @@ namespace Tida.CAD.WPF.SimpleSample
     /// </summary>
     public partial class MainWindow : Window
     {
+     
         public MainWindow()
         {
             InitializeComponent();
-            _cadLayer = new CADLayer();
-            cadControl.Layers = new CADLayer[] { _cadLayer };
-        }
-        private readonly CADLayer _cadLayer;
-        private void Addline_Click(object sender, RoutedEventArgs e)
-        {
-            var line = new Line(new Point(0, 0), new Point(10, 10));
-            line.Pen = new Pen { Thickness = 2, Brush = Brushes.White };
-            _cadLayer.AddDrawObject(line);
+
+            //使用反射获取所有测试命令;
+            var types = Assembly.GetExecutingAssembly().GetTypes();
+            var testCommandTypes = types.Where(type => type != typeof(ITestCommand) && typeof(ITestCommand).IsAssignableFrom(type));
+            var testCommands = testCommandTypes.Select(commandType => Activator.CreateInstance(commandType) as ITestCommand).OrderBy(p => p.Order);
+            foreach (var testCommand in testCommands)
+            {
+                var button = new Button
+                {
+                    Content = new Viewbox { Child = new TextBlock { Text = testCommand.Name } }
+                };
+                button.Click += delegate
+                {
+                    var executeContext = new TestExecuteContext
+                    {
+                        MainWindow = this
+                    };
+                    testCommand.Execute(executeContext);
+                };
+                uniformGrid.Children.Add(button);
+            }
+
         }
     }
 }

@@ -1,0 +1,16 @@
+﻿<Window x:Class="Tida.CAD.WPF.SimpleSample.Views.DragSelect"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tida.CAD.WPF.SimpleSample.Views"
+        xmlns:tidacad="https://github.com/Tida.CAD"
+        mc:Ignorable="d"
+        Title="DragSelect" Height="450" Width="800">
+    <DockPanel>
+        <UniformGrid DockPanel.Dock="Bottom">
+            <CheckBox x:Name="checkBox" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked">Drag Select Enabled</CheckBox>
+        </UniformGrid>
+        <tidacad:CADControl x:Name="cadControl"/>
+    </DockPanel>
+</Window>
