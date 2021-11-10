@@ -17,37 +17,38 @@ namespace Tida.CAD {
         /// <summary>
         /// Indicates whether the point in inside the object;
         /// </summary>
-        /// <param name="point">坐标(工程数学坐标)</param>
-        /// <param name="cadScreenConverter">视图单位转化器,可用于内部进行误差判断</param>
+        /// <param name="point">The posion in cad coordinates</param>
+        /// <param name="cadScreenConverter"></param>
         /// <returns></returns>
         public virtual bool PointInObject(Point point, ICADScreenConverter cadScreenConverter) => false;
 
         /// <summary>
         /// Indicated whether the object in inside a rectangle;
         /// </summary>
-        /// <param name="rect">区域(工程数学坐标为准)</param>
-        /// <param name="anyPoint">是否模糊匹配,即判定相交是否满足条件</param>
-        /// <param name="cadScreenConverter">视图单位转化器,可用于内部进行误差判断</param>
+        /// <param name="rect">The selection rectangle</param>
+        /// <param name="anyPoint">To indicate whether the drawobject should be hit when the rect just intersets with the drawobject that is not inside the rect</param>
+        /// <param name="cadScreenConverter"></param>
         /// <returns></returns>
         public virtual bool ObjectInRectangle(CADRect rect, ICADScreenConverter cadScreenConverter, bool anyPoint) => false;
 
 
         /// <summary>
-        /// 获取绘制对象有效的区域范围,该区域以工程坐标为准;
+        /// Get the bounding rect for the drawobject;
         /// </summary>
         /// <returns></returns>
         public virtual CADRect? GetBoundingRect() => null;
         
         private bool _isSelected;
         /// <summary>
-        /// 是否被选中;
+        /// IsSelected;
         /// </summary>
-        public bool IsSelected {
-            get {
-                return _isSelected;
-            }
-            set{
-                if(_isSelected == value) {
+        public bool IsSelected 
+        {
+            get => _isSelected;
+            set
+            {
+                if(_isSelected == value) 
+                {
                     return;
                 }
                 _isSelected = value;
@@ -56,13 +57,13 @@ namespace Tida.CAD {
                 OnSelectedChanged(e);
                 IsSelectedChanged?.Invoke(this, e);
 
-                //通知图像发生了变化;
+                
                 RaiseVisualChanged();
             }
         }
         
         /// <summary>
-        /// 选定状态发生变化的可重载方法;
+        /// The protected virtual method invoked while IsSelected changed;
         /// </summary>
         /// <param name="e"></param>
         protected virtual void OnSelectedChanged(ValueChangedEventArgs<bool> e) {
@@ -70,27 +71,28 @@ namespace Tida.CAD {
         }
         
         /// <summary>
-        /// 选中状态发生变化后事件;
+        /// The event raised when IsSelected changed;
         /// </summary>
         public event EventHandler<ValueChangedEventArgs<bool>> IsSelectedChanged;
         
         /// <summary>
-        /// 父对象;
+        /// The parent layer of the drawobject;
         /// </summary>
-        public CADElement Parent => InternalParent;
-        internal CADElement InternalParent { get; set; }
+        public CADLayer Layer => InternalLayer;
+        internal CADLayer InternalLayer { get; set; }
 
     }
 
     /// <summary>
-    /// 交互响应(当且仅当<see cref="IsSelected"/>为True时，以下交互动作才可能被调用);
+    /// The interaction of the drawobject (These interactions are availabel only when <see cref="IsSelected"/> is True);
     /// </summary>
     public abstract partial class DrawObject {
         /// <summary>
-        /// 鼠标移动响应;
+        /// The method invoked while mouse is moving;
         /// </summary>
         /// <param name="canvas"></param>
         /// <param name="point"></param>
+        /// <remarks>This interaction are availabel only when <see cref="IsSelected"/> is True</remarks>
         public void OnMouseMove(CADMouseEventArgs e) 
         {
             PreviewMouseMove?.Invoke(this, e);
@@ -104,11 +106,10 @@ namespace Tida.CAD {
         protected virtual void OnMouseMoveCore(CADMouseEventArgs e) { }
 
         /// <summary>
-        /// 鼠标按下响应;
+        /// The method invoked while mouse is pressed;
         /// </summary>
         /// <param name="canvas"></param>
-        /// <param name="point"></param>
-        /// <param name="snapShape"></param>
+        /// <remarks>This interaction are availabel only when <see cref="IsSelected"/> is True</remarks>
         public void OnMouseDown(CADMouseButtonEventArgs e) {
             PreviewMouseDown?.Invoke(this, e);
             if (e.Handled) {
@@ -121,11 +122,12 @@ namespace Tida.CAD {
         protected virtual void OnMouseDownCore(CADMouseButtonEventArgs e) { }
 
         /// <summary>
-        /// 鼠标弹起响应;
+        /// The method invoked while the mouse is released;
         /// </summary>
         /// <param name="canvas"></param>
         /// <param name="point"></param>
         /// <param name="snapShape"></param>
+        /// <remarks>This interaction are availabel only when <see cref="IsSelected"/> is True</remarks>
         public void OnMouseUp(CADMouseButtonEventArgs e) {
             PreviewMouseUp?.Invoke(this, e);
             if(e.Handled) {
@@ -139,10 +141,10 @@ namespace Tida.CAD {
         protected virtual void OnMouseUpCore(CADMouseButtonEventArgs e) { }
 
         /// <summary>
-        /// 键盘按键响应;
+        /// The method invoked while the mouse is released;
         /// </summary>
         /// <param name="canvas"></param>
-        /// <param name="e"></param>
+        /// <remarks>This interaction are availabel only when <see cref="IsSelected"/> is True</remarks>
         public void OnKeyDown(CADKeyEventArgs e) {
             PreviewKeyDown?.Invoke(this, e);
             if (e.Handled) {

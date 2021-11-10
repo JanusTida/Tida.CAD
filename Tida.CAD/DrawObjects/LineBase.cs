@@ -66,7 +66,8 @@ namespace Tida.CAD.DrawObjects {
         }
         
 
-        public override void Draw(ICanvas canvas) {
+        public override void Draw(ICanvas canvas) 
+        {
            
             //Draw main line;
             canvas.DrawLine(Pen, Start,End);
@@ -76,9 +77,11 @@ namespace Tida.CAD.DrawObjects {
         /// <summary>
         /// The pen used when drawing the line;
         /// </summary>
-        public Pen Pen {
+        public Pen Pen 
+        {
             get => _pen;
-            set {
+            set 
+            {
                 _pen = value;
                 RaiseVisualChanged();
             }

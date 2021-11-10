@@ -59,12 +59,12 @@ namespace Tida.CAD
             }
 
             //检查是否是独立的绘制元素;
-            if (drawObject.Parent != null) {
+            if (drawObject.Layer != null) {
                 throw new InvalidOperationException("Please remove the drawObject from its parent first.");
             }
             
             _drawObjects.Add(drawObject);
-            drawObject.InternalParent = this;
+            drawObject.InternalLayer = this;
             
         }
 
@@ -90,7 +90,7 @@ namespace Tida.CAD
             }
 
             foreach (var drawObject in drawObjects) {
-                if (_drawObjects.Contains(drawObject) && drawObject.Parent == this) {
+                if (_drawObjects.Contains(drawObject) && drawObject.Layer == this) {
                     RemoveDrawObjectCore(drawObject);
                 }
             }
@@ -109,12 +109,12 @@ namespace Tida.CAD
             }
 
             //检查绘制元素是否属于本实例;
-            if (drawObject.Parent != this) {
+            if (drawObject.Layer != this) {
                 throw new InvalidOperationException("This instance doesn't own the drawObject.");
             }
             
             _drawObjects.Remove(drawObject);
-            drawObject.InternalParent = null;
+            drawObject.InternalLayer = null;
 
             
         }
@@ -126,7 +126,7 @@ namespace Tida.CAD
             DrawObjectsClearing?.Invoke(this, EventArgs.Empty);
 
             foreach (var drawObject in DrawObjects) {
-                drawObject.InternalParent = null;
+                drawObject.InternalLayer = null;
             }
             
             _drawObjects.Clear();

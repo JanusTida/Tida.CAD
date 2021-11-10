@@ -8,12 +8,12 @@ using System.Windows;
 namespace Tida.CAD.WPF.SimpleSample
 {
     /// <summary>
-    /// 测试执行的上下文信息;
+    /// The execution context for command;
     /// </summary>
     struct TestExecuteContext
     {
         /// <summary>
-        /// 主窗体;
+        /// The main window;
         /// </summary>
         public Window MainWindow { get; set; }
     }

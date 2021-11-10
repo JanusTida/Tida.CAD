@@ -7,23 +7,23 @@ using System.Threading.Tasks;
 namespace Tida.CAD.WPF.SimpleSample
 {
     /// <summary>
-    /// 测试命令;
+    /// The command to test;
     /// </summary>
     interface ITestCommand
     {
         /// <summary>
-        /// 命令名称;
+        /// The command name;
         /// </summary>
         string Name { get; }
 
         /// <summary>
-        /// 执行命令;
+        /// The method to execute the command;
         /// </summary>
         /// <param name="testExecuteContext"></param>
         void Execute(TestExecuteContext testExecuteContext);
 
         /// <summary>
-        /// 排序;
+        /// Sort;
         /// </summary>
         int Order { get; }
     }

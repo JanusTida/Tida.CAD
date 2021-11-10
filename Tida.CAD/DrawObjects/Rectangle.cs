@@ -10,15 +10,34 @@ namespace Tida.CAD.DrawObjects {
     /// DrawObject——Rectangle;
     /// </summary>
     public class Rectangle : DrawObject {
-        static Rectangle()
+
+        private Pen _pen;
+        /// <summary>
+        /// The pen used for borders;
+        /// </summary>
+        public Pen Pen 
         {
-            NormalRectPen.Freeze();
+            get => _pen;
+            set
+            {
+                _pen = value;
+                RaiseVisualChanged();
+            }
         }
 
-        public const double TolerantedScreenLength = 8.0D;
-
-        public static readonly Pen NormalRectPen = new Pen(Brushes.White, 1);
-
+        private Brush _background;
+        /// <summary>
+        /// The background brush;
+        /// </summary>
+        public Brush Background
+        {
+            get => _background;
+            set
+            {
+                _background = value;
+                RaiseVisualChanged();
+            }
+        }
         public Rectangle(CADRect rect) 
         {
             this.Rectangle2D = rect;
@@ -45,7 +64,6 @@ namespace Tida.CAD.DrawObjects {
 
         public override bool ObjectInRectangle(CADRect rect, ICADScreenConverter cadScreenConverter, bool anyPoint) 
         {
-            //根据四个顶点的位置判断与指定矩形的包含关系;
             if (anyPoint) {
                 return Rectangle2D.GetVertexes()?.Any(p => rect.Contains(p)) ?? false;
             }
@@ -67,7 +85,7 @@ namespace Tida.CAD.DrawObjects {
             if (canvas == null) {
                 throw new ArgumentNullException(nameof(canvas));
             }
-            canvas.DrawRectangle(Rectangle2D, null, NormalRectPen);
+            canvas.DrawRectangle(Rectangle2D, Background, Pen);
 
 
             base.Draw(canvas);

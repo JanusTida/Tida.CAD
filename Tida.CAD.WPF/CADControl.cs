@@ -1445,7 +1445,7 @@ namespace Tida.CAD.WPF {
                 {
                     return false;
                 }
-                return drawObject.Parent == CADLayer;
+                return drawObject.Layer == CADLayer;
             });
 
             RemoveDrawObjects(removeVisualPairs.Select(p => p.Key).OfType<DrawObject>().ToList(),CADLayer);

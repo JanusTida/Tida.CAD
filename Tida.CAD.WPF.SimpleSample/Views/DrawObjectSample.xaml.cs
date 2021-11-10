@@ -35,9 +35,20 @@ namespace Tida.CAD.WPF.SimpleSample.Views
 
         private void AddRect_Click(object sender, RoutedEventArgs e)
         {
-            var rect = new Rectangle(new CADRect(new Point(-2, -2), new Size(4, 4)));
+            var rectPen = new Pen(Brushes.White, 2);
+            var rectBackground = Brushes.Orange;
+            rectPen.Freeze();
+
+            var rect = new Rectangle(new CADRect(new Point(-2, -2), new Size(4, 4)))
+            {
+                Pen = rectPen,
+                Background = rectBackground
+            };
+
             _cadLayer.AddDrawObject(rect);
         }
+
+
         private void Clear_Click(object sender, RoutedEventArgs e)
         {
             _cadLayer.Clear();
