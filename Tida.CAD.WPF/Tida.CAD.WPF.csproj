@@ -16,8 +16,4 @@
 
   <Import Project="..\Tida.CAD\Tida.CAD.projitems" Label="Shared" />
 
-  <ItemGroup>
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-  </ItemGroup>
-
 </Project>

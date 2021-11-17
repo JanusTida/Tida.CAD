@@ -7,12 +7,12 @@ using Tida.CAD.WPF.SimpleSample.Views;
 
 namespace Tida.CAD.WPF.SimpleSample.TestCommands
 {
-    internal class DragSelectTestCommand : ITestCommand
+    internal class EnabledPropertiesTestCommand : ITestCommand
     {
-        public string Name => "DragSelect";
+        public string Name => "EnabledProperties";
 
         public int Order => 4;
 
-        public void Execute(TestExecuteContext testExecuteContext) => new DragSelect().ShowDialog();
+        public void Execute(TestExecuteContext testExecuteContext) => new EnabledProperties().ShowDialog();
     }
 }

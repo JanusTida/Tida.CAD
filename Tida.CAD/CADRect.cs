@@ -116,17 +116,17 @@ namespace Tida.CAD
             yield return TopRight;
             yield return TopLeft;
         }
-
+        
         /// <summary>
         /// Get all the borders of the rect(unclockwise)
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<(Point start, Point end)> GetBorders()
+        public IEnumerable<CADLine> GetBorders()
         {
-            yield return (BottomLeft, BottomRight);
-            yield return (BottomRight, TopRight);
-            yield return (TopRight, TopLeft);
-            yield return (TopLeft, BottomLeft);
+            yield return new CADLine(BottomLeft, BottomRight);
+            yield return new CADLine(BottomRight, TopRight);
+            yield return new CADLine(TopRight, TopLeft);
+            yield return new CADLine(TopLeft, BottomLeft);
         }
     }
 }
