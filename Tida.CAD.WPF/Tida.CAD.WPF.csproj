@@ -16,6 +16,8 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DefineConstants>$(DefineConstants)TRACE;WPF</DefineConstants>
+	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	  <DebugType>none</DebugType>
   </PropertyGroup>
 
   <Import Project="..\Tida.CAD\Tida.CAD.projitems" Label="Shared" />
