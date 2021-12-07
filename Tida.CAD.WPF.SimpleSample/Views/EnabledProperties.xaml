@@ -1,4 +1,4 @@
-﻿<Window x:Class="Tida.CAD.WPF.SimpleSample.Views.DragSelect"
+﻿<Window x:Class="Tida.CAD.WPF.SimpleSample.Views.EnabledProperties"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,7 +9,9 @@
         Title="DragSelect" Height="450" Width="800">
     <DockPanel>
         <UniformGrid DockPanel.Dock="Bottom">
-            <CheckBox x:Name="checkBox" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked">Drag Select Enabled</CheckBox>
+            <CheckBox IsChecked="{Binding ElementName=cadControl,Path=IsDragSelectEnabled}">Drag Select Enabled</CheckBox>
+            <CheckBox IsChecked="{Binding ElementName=cadControl,Path=IsZoomEnabled}">Zoom Enabled</CheckBox>
+            <CheckBox IsChecked="{Binding ElementName=cadControl,Path=IsDragEnabled}">Drag Enabled</CheckBox>
         </UniformGrid>
         <tidacad:CADControl x:Name="cadControl"/>
     </DockPanel>

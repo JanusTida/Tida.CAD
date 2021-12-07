@@ -17,12 +17,11 @@ namespace Tida.CAD.WPF.SimpleSample.Views
     /// <summary>
     /// Interaction logic for DragSelect.xaml
     /// </summary>
-    public partial class DragSelect : Window
+    public partial class EnabledProperties 
     {
-        public DragSelect()
+        public EnabledProperties()
         {
             InitializeComponent();
-            checkBox.IsChecked = cadControl.DragSelectEnabled;
 
             var cadLayer = new CADLayer();
             cadControl.Layers = new CADLayer[] { cadLayer };
@@ -31,14 +30,6 @@ namespace Tida.CAD.WPF.SimpleSample.Views
             cadLayer.AddDrawObject(line);
         }
 
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            cadControl.DragSelectEnabled = true;
-        }
-
-        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            cadControl.DragSelectEnabled = false;
-        }
+       
     }
 }

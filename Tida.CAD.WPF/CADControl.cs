@@ -33,7 +33,7 @@ namespace Tida.CAD.WPF {
             _visualContainer.AddVisual(_snapShapeContainerVisual);
             _visualContainer.AddVisual(_dragSelectionContainerVisual);
             this.Focusable = true;
-
+            
             RefreshPanPen();
             RefreshGridLinePen();
         }
@@ -70,16 +70,6 @@ namespace Tida.CAD.WPF {
         private readonly Dictionary<IDrawable, DrawingVisual> _visualDict = new Dictionary<IDrawable, DrawingVisual>();
 
         /// <summary>
-        /// 是否正在处理路由事件;
-        /// </summary>
-        private bool _handlingRoutedEvent = false;
-
-        /// <summary>
-        /// 在一次路由事件的处理时间内中,指示是否已经创建了一个事务栈;
-        /// </summary>
-        private bool _transactionStackCreatedInOneRoutedEvent = false;
-
-        /// <summary>
         /// 当前被悬停的绘制对象集合;
         /// </summary>
         private readonly List<DrawObject> _hoveredDrawObjects = new List<DrawObject>();
@@ -106,16 +96,6 @@ namespace Tida.CAD.WPF {
 
 
         /// <summary>
-        /// 是否处于重做中;
-        /// </summary>
-        private bool _isRedoing = false;
-
-        /// <summary>
-        /// 是否处于撤销中;
-        /// </summary>
-        private bool _isUndoing = false;
-
-        /// <summary>
         /// 画布内绘制对象选定状态发生了变化事件;
         /// </summary>
         public event EventHandler<DrawObjectSelectedChangedEventArgs> DrawObjectIsSelectedChanged;
@@ -130,11 +110,6 @@ namespace Tida.CAD.WPF {
         /// 绘制对象被添加;
         /// </summary>
         public event EventHandler<DrawObjectsAddedEventArgs> DrawObjectsAdded;
-
-        /// <summary>
-        /// 绘制对象是否正在被编辑变化;
-        /// </summary>
-        public event EventHandler<DrawObjectIsEditingChangedEventArgs> DrawObjectIsEditingChanged;
 
         /// <summary>
         /// 拖拽选择事件;
@@ -264,9 +239,6 @@ namespace Tida.CAD.WPF {
             IEnumerable<Predicate<TEventArgs>> handlers
         ) where TEventArgs : RoutedEventArgs
         {
-            //指示正在处理路由事件;
-            _handlingRoutedEvent = true;
-
             if (handlers == null)
             {
                 return;
@@ -280,8 +252,6 @@ namespace Tida.CAD.WPF {
                 }
             }
 
-            //指示处理路由事件结束;
-            _handlingRoutedEvent = false;
         }
 
         
@@ -301,8 +271,6 @@ namespace Tida.CAD.WPF {
         /// <returns></returns>
         private IEnumerable<Predicate<MouseWheelEventArgs>> GetMouseWheelEventHandlers()
         {
-            yield return e => _transactionStackCreatedInOneRoutedEvent = false;
-
             //缩放响应;
             yield return MouseWheelOnZoom;
         }
@@ -324,9 +292,6 @@ namespace Tida.CAD.WPF {
         /// <returns></returns>
         private IEnumerable<Predicate<MouseButtonEventArgs>> GetMouseDownEventHandlers()
         {
-            //指示需添加新的事务集合;
-            yield return e => _transactionStackCreatedInOneRoutedEvent = false;
-
             //通知外部;
             yield return MouseDownOnPreview;
             //拖拽响应;
@@ -355,9 +320,6 @@ namespace Tida.CAD.WPF {
         /// <returns></returns>
         private IEnumerable<Predicate<MouseEventArgs>> GetMouseMoveEventHandlers()
         {
-            //指示需添加新的事务集合;
-            yield return e => _transactionStackCreatedInOneRoutedEvent = false;
-
             //通知外界;
             yield return MouseMoveOnPreview;
 
@@ -394,9 +356,6 @@ namespace Tida.CAD.WPF {
         /// <returns></returns>
         private IEnumerable<Predicate<MouseButtonEventArgs>> GetMouseUpEventHandlers()
         {
-            //指示需添加新的事务集合;
-            yield return e => _transactionStackCreatedInOneRoutedEvent = false;
-
             //通知外界;
             yield return MouseUpOnPreview;
 
@@ -429,9 +388,6 @@ namespace Tida.CAD.WPF {
         /// <returns></returns>
         private IEnumerable<Predicate<KeyEventArgs>> GetKeyDownEventHandlers()
         {
-            //指示需添加新的事务集合;
-            yield return e => _transactionStackCreatedInOneRoutedEvent = false;
-
             //通知外界;
             yield return KeyDownOnPreview;
 
@@ -461,9 +417,6 @@ namespace Tida.CAD.WPF {
         /// <returns></returns>
         private IEnumerable<Predicate<KeyEventArgs>> GetKeyUpEventHandlers()
         {
-            //指示需添加新的事务集合;
-            yield return e => _transactionStackCreatedInOneRoutedEvent = false;
-
             //通知外界;
             yield return KeyUpOnPreview;
 
@@ -484,10 +437,9 @@ namespace Tida.CAD.WPF {
         /// 获取内部所有键盘键入文字事件;
         /// </summary>
         /// <returns></returns>
-        private IEnumerable<Predicate<TextCompositionEventArgs>> GetTextInputEventHandlers() {
-            //指示需添加新的事务集合;
-            yield return e => _transactionStackCreatedInOneRoutedEvent = false;
-
+        private IEnumerable<Predicate<TextCompositionEventArgs>> GetTextInputEventHandlers() 
+        {
+            
             //通知外界;
             yield return TextInputOnPreview;
 
@@ -781,6 +733,20 @@ namespace Tida.CAD.WPF {
             canvasControl.UpdateCanvasScreenConverter();
         }
 
+
+        /// <summary>
+        /// Get or set is zoom enabled;
+        /// </summary>
+        public bool IsZoomEnabled
+        {
+            get { return (bool)GetValue(IsZoomEnabledProperty); }
+            set { SetValue(IsZoomEnabledProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsZoomEnabledProperty =
+            DependencyProperty.Register(nameof(IsZoomEnabled), typeof(bool), typeof(CADControl), new PropertyMetadata(true));
+
+
         /// <summary>
         /// 鼠标滚动时的缩放响应;
         /// </summary>
@@ -791,7 +757,10 @@ namespace Tida.CAD.WPF {
             {
                 return false;
             }
-
+            if (!IsZoomEnabled)
+            {
+                return false;
+            }
             //根据鼠标的位置响应缩放;
             var mouseUnitPos = CADScreenConverter.ToCAD(e.GetPosition(this));
 
@@ -840,12 +809,30 @@ namespace Tida.CAD.WPF {
     /// </summary>
     public partial class CADControl
     {
+
+        /// <summary>
+        /// Get or set is drag behavior enabled;
+        /// </summary>
+        public bool IsDragEnabled
+        {
+            get { return (bool)GetValue(IsDragEnabledProperty); }
+            set { SetValue(IsDragEnabledProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsDragEnabledProperty =
+            DependencyProperty.Register(nameof(IsDragEnabled), typeof(bool), typeof(CADControl), new PropertyMetadata(true));
+
+
         /// <summary>
         /// 鼠标按下时的拖拽响应;
         /// </summary>
         /// <param name="e"></param>
         private bool MouseDownOnDrag(MouseButtonEventArgs e)
         {
+            if (!IsDragEnabled)
+            {
+                return false;
+            }
             //拖拽视图时使用;
             _lastMouseDownPointForPan = e.GetPosition(this);
 
@@ -880,6 +867,10 @@ namespace Tida.CAD.WPF {
         /// <param name="e"></param>
         private bool MouseMoveOnDrag(MouseEventArgs e)
         {
+            if (!IsDragEnabled)
+            {
+                return false;
+            }
             //若未处于正在拖动状态,则退出;
             if (!_isDragging)
             {
@@ -911,6 +902,10 @@ namespace Tida.CAD.WPF {
         /// <param name="e"></param>
         private bool MouseUpOnDrag(MouseButtonEventArgs e)
         {
+            if (!IsDragEnabled)
+            {
+                return false;
+            }
             if (!_isDragging)
             {
                 return false;
@@ -1656,14 +1651,14 @@ namespace Tida.CAD.WPF {
         /// <summary>
         /// This value indicate the drag selection behavior is enabled or not,default value is true;
         /// </summary>
-        public bool DragSelectEnabled
+        public bool IsDragSelectEnabled
         {
             get { return (bool)GetValue(DragSelectEnabledProperty); }
             set { SetValue(DragSelectEnabledProperty, value); }
         }
 
         public static readonly DependencyProperty DragSelectEnabledProperty =
-            DependencyProperty.Register(nameof(DragSelectEnabled), typeof(bool), typeof(CADControl), new PropertyMetadata(true));
+            DependencyProperty.Register(nameof(IsDragSelectEnabled), typeof(bool), typeof(CADControl), new PropertyMetadata(true));
 
         /// <summary>
         /// Add selected rectangle to <see cref="_visualDict"/>;
@@ -1681,7 +1676,7 @@ namespace Tida.CAD.WPF {
         /// <param name="e"></param>
         private bool MouseDownOnDragingSelectDrawObject(MouseEventArgs e)
         {
-            if (!DragSelectEnabled)
+            if (!IsDragSelectEnabled)
             {
                 return false;
             }
@@ -1743,7 +1738,7 @@ namespace Tida.CAD.WPF {
         /// <param name="e"></param>
         private bool MouseMoveOnDragingSelectDrawObject(MouseEventArgs e)
         {
-            if (!DragSelectEnabled)
+            if (!IsDragSelectEnabled)
             {
                 return false;
             }

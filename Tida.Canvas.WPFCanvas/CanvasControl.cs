@@ -37,6 +37,7 @@ namespace Tida.Canvas.WPFCanvas {
             _visualContainer.AddVisual(_dragSelectionContainerVisual);
             _visualContainer.AddVisual(_interactionHandlerContainerVisual);
             this.Focusable = true;    
+            
         }
         
         private readonly VisualContainer _visualContainer = new VisualContainer();

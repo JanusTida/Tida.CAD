@@ -59,7 +59,7 @@ namespace Tida.CAD.DrawObjects {
             //or if anypoint is true,check the line is interesecting with any border of the rect;
             else if (anyPoint)
             {               
-                return rect.GetBorders()?.Any(p => GeometryExtensions.GetIntersectPoint(p.start,p.end,Start,End) != null) ?? false;
+                return rect.GetBorders()?.Any(p => GeometryExtensions.GetIntersectPoint(p.Start,p.End,Start,End) != null) ?? false;
             }
 
             return false;
