@@ -5,6 +5,9 @@
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
 	<Version>0.5</Version>
+	  <Company>JanusTida</Company>
+	  <Copyright>@JanusTida 2021</Copyright>
+	<Description>This assembly in a cad control library implemented with wpf</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
