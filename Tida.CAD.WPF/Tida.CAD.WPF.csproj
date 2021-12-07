@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net46;net47;net5.0-windows;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net46;net5.0-windows;netcoreapp3.1</TargetFrameworks>
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
 	<Version>0.5</Version>
