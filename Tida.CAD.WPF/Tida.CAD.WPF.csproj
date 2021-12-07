@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5.0-windows;net461;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net46;net47;net5.0-windows;netcoreapp3.1</TargetFrameworks>
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
+	<Version>0.5</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -16,7 +17,7 @@
 
   <Import Project="..\Tida.CAD\Tida.CAD.projitems" Label="Shared" />
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 
