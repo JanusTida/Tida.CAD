@@ -17,7 +17,7 @@ namespace Tida.CAD.WPF {
     /// <summary>
     /// <see cref="ICADControl"/> implemented with WPF;
     /// </summary>
-    public partial class CADControl : Grid , ICADControl {
+    public partial class CADControl : Panel, ICADControl {
         static CADControl() {
             
             BackgroundProperty.OverrideMetadata(typeof(CADControl), new FrameworkPropertyMetadata(
@@ -454,8 +454,9 @@ namespace Tida.CAD.WPF {
         private Pen _gridLinePen;
         private void RefreshGridLinePen()
         {
-            if(GridLineBrush == null || GridLineThickness <= 0)
+            if(GridLineBrush == null || GridLineThickness <= 0 || !ShowGridLines)
             {
+                _gridLinePen = null;
                 return;
             }
 
@@ -464,7 +465,7 @@ namespace Tida.CAD.WPF {
         }
 
         /// <summary>
-        /// 网格线颜色;
+        /// The brush of grid lines;
         /// </summary>
         public Brush GridLineBrush
         {
@@ -489,7 +490,7 @@ namespace Tida.CAD.WPF {
         }
 
         /// <summary>
-        /// 网格线宽度;
+        /// The thickness of grid lines;
         /// </summary>
         public double GridLineThickness
         {
@@ -501,6 +502,28 @@ namespace Tida.CAD.WPF {
             DependencyProperty.Register(nameof(GridLineThickness), typeof(double), typeof(CADControl), new FrameworkPropertyMetadata(0.2D,FrameworkPropertyMetadataOptions.AffectsRender,GridLineThickness_PropertyChanged));
 
         private static void GridLineThickness_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(d is CADControl canvasControl))
+            {
+                return;
+            }
+            canvasControl.RefreshGridLinePen();
+        }
+
+
+        /// <summary>
+        /// Get or set whether grid lines should be shown;
+        /// </summary>
+        public bool ShowGridLines
+        {   
+            get { return (bool)GetValue(ShowGridLinesProperty); }
+            set { SetValue(ShowGridLinesProperty, value); }
+        }
+
+        public static readonly DependencyProperty ShowGridLinesProperty =
+            DependencyProperty.Register(nameof(ShowGridLines), typeof(bool), typeof(CADControl), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender, ShowGridLines_PropertyChanged));
+
+        private static void ShowGridLines_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (!(d is CADControl canvasControl))
             {

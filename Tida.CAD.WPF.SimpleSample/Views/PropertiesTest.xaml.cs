@@ -17,9 +17,9 @@ namespace Tida.CAD.WPF.SimpleSample.Views
     /// <summary>
     /// Interaction logic for DragSelect.xaml
     /// </summary>
-    public partial class EnabledProperties 
+    public partial class PropertiesTest
     {
-        public EnabledProperties()
+        public PropertiesTest()
         {
             InitializeComponent();
 

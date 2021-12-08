@@ -7,12 +7,12 @@ using Tida.CAD.WPF.SimpleSample.Views;
 
 namespace Tida.CAD.WPF.SimpleSample.TestCommands
 {
-    internal class EnabledPropertiesTestCommand : ITestCommand
+    internal class PropertiesTestCommand : ITestCommand
     {
-        public string Name => "EnabledProperties";
+        public string Name => "PropertiesTest";
 
         public int Order => 4;
 
-        public void Execute(TestExecuteContext testExecuteContext) => new EnabledProperties().ShowDialog();
+        public void Execute(TestExecuteContext testExecuteContext) => new PropertiesTest().ShowDialog();
     }
 }

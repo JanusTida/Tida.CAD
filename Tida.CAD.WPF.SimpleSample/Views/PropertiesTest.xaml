@@ -1,4 +1,4 @@
-﻿<Window x:Class="Tida.CAD.WPF.SimpleSample.Views.EnabledProperties"
+﻿<Window x:Class="Tida.CAD.WPF.SimpleSample.Views.PropertiesTest"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,6 +12,11 @@
             <CheckBox IsChecked="{Binding ElementName=cadControl,Path=IsDragSelectEnabled}">Drag Select Enabled</CheckBox>
             <CheckBox IsChecked="{Binding ElementName=cadControl,Path=IsZoomEnabled}">Zoom Enabled</CheckBox>
             <CheckBox IsChecked="{Binding ElementName=cadControl,Path=IsDragEnabled}">Drag Enabled</CheckBox>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>GridLineThickness</TextBlock>
+                <TextBox Text="{Binding ElementName=cadControl,Path=GridLineThickness}"/>
+            </StackPanel>
+            <CheckBox IsChecked="{Binding ElementName=cadControl,Path=ShowGridLines}">Show Grid lines</CheckBox>
         </UniformGrid>
         <tidacad:CADControl x:Name="cadControl"/>
     </DockPanel>
