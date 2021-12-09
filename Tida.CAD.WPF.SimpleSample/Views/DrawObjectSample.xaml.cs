@@ -54,5 +54,16 @@ namespace Tida.CAD.WPF.SimpleSample.Views
             _cadLayer.Clear();
         }
 
+        private void ChangeLayerBackground_Click(object sender, RoutedEventArgs e)
+        {
+            if(_cadLayer.Background == null)
+            {
+                _cadLayer.Background = Brushes.Blue;
+            }
+            else
+            {
+                _cadLayer.Background = null;
+            }
+        }
     }
 }

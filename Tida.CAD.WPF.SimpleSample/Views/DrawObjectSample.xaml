@@ -10,6 +10,7 @@
         <UniformGrid DockPanel.Dock="Bottom">
             <Button Click="Addline_Click">Add Line</Button>
             <Button Click="AddRect_Click">Add Rect</Button>
+            <Button Click="ChangeLayerBackground_Click">Change LayerBackground</Button>
             <Button Click="Clear_Click">Clear</Button>
         </UniformGrid>
         <tidacad:CADControl x:Name="cadControl"/>

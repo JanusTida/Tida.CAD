@@ -28,20 +28,16 @@ namespace Tida.CAD.WPF {
         }
 
         public CADControl() {
-            this.Children.Add(_visualContainer);
-            _visualContainer.AddVisual(_editToolContainerVisual);
-            _visualContainer.AddVisual(_snapShapeContainerVisual);
-            _visualContainer.AddVisual(_dragSelectionContainerVisual);
+            this.Children.Add(VisualContainer);
+            VisualContainer.AddVisual(_dragSelectionContainerVisual);
             this.Focusable = true;
             
             RefreshPanPen();
             RefreshGridLinePen();
         }
         
-        private readonly VisualContainer _visualContainer = new VisualContainer();
+        protected readonly VisualContainer VisualContainer = new VisualContainer();
         private readonly Dictionary<CADLayer, ContainerVisual> _layerContainerVisualDict = new Dictionary<CADLayer, ContainerVisual>();
-        private readonly ContainerVisual _editToolContainerVisual = new ContainerVisual();
-        private readonly ContainerVisual _snapShapeContainerVisual = new ContainerVisual();
         private readonly ContainerVisual _dragSelectionContainerVisual = new ContainerVisual();
         
         /// <summary>
@@ -174,7 +170,7 @@ namespace Tida.CAD.WPF {
                     Height = this.ActualHeight
                 }
             );
-
+            
             foreach (var pair in _visualDict) {
                 pair.Value.Clip = clipGeometry;
                 DrawDrawableCore(pair.Key, pair.Value);
@@ -1167,10 +1163,8 @@ namespace Tida.CAD.WPF {
             }
             var layerContainerVisual = new ContainerVisual();
             _layerContainerVisualDict.Add(CADLayer, layerContainerVisual);
-            _visualContainer.InsertVisual(_layerContainerVisualDict.Count - 1, layerContainerVisual);
-            //添加画布内容;
+            VisualContainer.InsertVisual(_layerContainerVisualDict.Count - 1, layerContainerVisual);
             AddDrawable(CADLayer,layerContainerVisual);
-
             AddDrawObjects(CADLayer.DrawObjects,CADLayer);
           
             //图层内绘制对象增减清除时,延长/缩减/清除绘制对象的缓冲池;
@@ -1356,58 +1350,43 @@ namespace Tida.CAD.WPF {
         }
 
         /// <summary>
-        /// 添加Drawble对象,扩充缓冲区以及VisualTree等操作;
+        /// Add a drawble object to cache <see cref="_visualDict"/> and visual tree;
         /// </summary>
         /// <param name="drawable"></param>
         private void AddDrawable(IDrawable drawable,ContainerVisual containerVisual)
         {
-            //若缓存中包含当前该绘制对象,则返回;
             if (_visualDict.ContainsKey(drawable))
             {
                 return;
             }
             
-            //若不包含,则加入缓存队列中;
             var drawingVisual = new DrawingVisual
             {
                 Clip = new RectangleGeometry(new Rect
                 {
-                    Width = this.ActualWidth,
-                    Height = this.ActualHeight
+                    Width = ActualWidth,
+                    Height = ActualHeight
                 })
             };
 
             _visualDict.Add(drawable, drawingVisual);
-
-            //加入Visual Tree;
             containerVisual.Children.Add(drawingVisual);
-
-            //订阅该对象的视觉变化事件;
             drawable.VisualChanged += Drawable_VisualChanged;
-
-            //绘制该对象;
             DrawDrawable(drawable);
         }
 
         /// <summary>
-        /// 移除Drawable对象,删减缓冲区以及VisualTree等操作;
+        /// remove a drawable object from cache and visual tree;
         /// </summary>
         /// <param name="drawable"></param>
         private void RemoveDrawable(IDrawable drawable,ContainerVisual containerVisual)
         {
-            //若缓存中不包含当前该绘制对象,则返回;
-            if (!_visualDict.ContainsKey(drawable))
+            if (!_visualDict.TryGetValue(drawable,out var drawingVisual))
             {
                 return;
             }
-            //从缓存队列中移除;
-            var drawingVisual = _visualDict[drawable];
             _visualDict.Remove(drawable);
-
-            //从Viusal Tree中移除;
             containerVisual.Children.Remove(drawingVisual);
-
-            //退订视觉变化事件;
             drawable.VisualChanged -= Drawable_VisualChanged;
         }
 
