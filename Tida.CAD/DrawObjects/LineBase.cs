@@ -13,11 +13,6 @@ namespace Tida.CAD.DrawObjects {
     /// </summary>
     public abstract class LineBase : DrawObject 
     {
-        public LineBase(Point start, Point end) 
-        {
-            Start = start;
-            End = end;
-        }
         
         private Point _start;
         public Point Start

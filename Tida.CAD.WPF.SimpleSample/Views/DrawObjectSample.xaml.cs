@@ -28,7 +28,7 @@ namespace Tida.CAD.WPF.SimpleSample.Views
         private readonly CADLayer _cadLayer;
         private void Addline_Click(object sender, RoutedEventArgs e)
         {
-            var line = new Line(new Point(0, 0), new Point(10, 10));
+            var line = new Line { Start = new Point(0, 0), End = new Point(10, 10) };
             line.Pen = new Pen { Thickness = 2, Brush = Brushes.White };
             _cadLayer.AddDrawObject(line);
         }

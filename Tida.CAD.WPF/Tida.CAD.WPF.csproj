@@ -4,10 +4,12 @@
     <TargetFrameworks>net46;net5.0-windows;netcoreapp3.1</TargetFrameworks>
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
-	<Version>0.5</Version>
+	<Version>0.6</Version>
 	  <Company>JanusTida</Company>
 	  <Copyright>@JanusTida 2021</Copyright>
 	<Description>This assembly is a cad control library implemented with wpf</Description>
+	<AssemblyVersion>0.6</AssemblyVersion>
+	<FileVersion>0.6</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
