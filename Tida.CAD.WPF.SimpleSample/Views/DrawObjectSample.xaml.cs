@@ -65,5 +65,27 @@ namespace Tida.CAD.WPF.SimpleSample.Views
                 _cadLayer.Background = null;
             }
         }
+
+        private void AddPolygon_Click(object sender, RoutedEventArgs e)
+        {
+            var polygon = new Polygon
+            {
+                Points = new[]
+                {
+                    new Point(2,0),
+                    new Point(4,0),
+                    new Point(6,2),
+                    new Point(6,4),
+                    new Point(4,6),
+                    new Point(2,6),
+                    new Point(0,4),
+                    new Point(0,2),
+                    new Point(2,0)
+                },
+                Pen = new Pen(Brushes.White,2),
+                Brush = null
+            };
+            _cadLayer.AddDrawObject(polygon);
+        }
     }
 }

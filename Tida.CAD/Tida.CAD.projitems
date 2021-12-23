@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)CADLine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DrawObjects\Line.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DrawObjects\LineBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DrawObjects\Polygon.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DrawObjects\Rectangle.cs" />
     <Compile Include="..\Tida.CAD\CADElement.cs" />
     <Compile Include="..\Tida.CAD\CADLayer.cs" />
