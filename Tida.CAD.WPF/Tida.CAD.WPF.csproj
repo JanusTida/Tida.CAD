@@ -4,7 +4,7 @@
     <TargetFrameworks>net46;net5.0-windows;netcoreapp3.1</TargetFrameworks>
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
-	<Version>0.6</Version>
+	<Version>0.65</Version>
 	  <Company>JanusTida</Company>
 	  <Copyright>@JanusTida 2021</Copyright>
 	<Description>This assembly is a cad control library implemented with wpf</Description>
