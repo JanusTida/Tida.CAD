@@ -476,7 +476,8 @@ namespace Tida.Canvas.WPFCanvas {
             //若偏转角度数不为圆周整数整除,则应用偏转角变化;
             if (angle % Math.PI * 2 != 0) {
                 
-                var rotateTransform = new SystemMedia.RotateTransform {
+                var rotateTransform = new SystemMedia.RotateTransform 
+                {
                     
                     Angle = Extension.RadToDeg(angle),
                     

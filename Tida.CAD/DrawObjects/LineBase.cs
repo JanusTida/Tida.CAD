@@ -49,6 +49,18 @@ namespace Tida.CAD.DrawObjects {
             return new CADRect(bottomLeft,new Size(width,height));
         }
 
+        public override bool PointInObject(Point point, ICADScreenConverter cadScreenConverter)
+        {
+            if(Pen == null)
+            {
+                return false;
+            }
+
+            var penThicknessInCAD = cadScreenConverter.ToCAD(Pen.Thickness);
+            
+            return base.PointInObject(point, cadScreenConverter);
+        }
+
         public override bool ObjectInRectangle(CADRect rect, ICADScreenConverter cadScreenConverter, bool anyPoint)
         {
             //if both two points in inside the rect,then return true;

@@ -93,7 +93,7 @@ namespace Tida.Canvas.Shell.CanvasExport {
             var encoder = new PngBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(renderTargetBitMap));
             encoder.Save(stream);
-
+            
 #if DEBUG
             //if (stream.Length > 0)
             //{

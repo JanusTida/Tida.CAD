@@ -42,6 +42,7 @@ namespace Tida.CAD.WPF.SimpleSample.Views
             var rect = new Rectangle(new CADRect(new Point(-2, -2), new Size(4, 4)))
             {
                 Pen = rectPen,
+                IsSelected = true,
                 Background = rectBackground
             };
 

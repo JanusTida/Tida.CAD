@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Media;
 using Tida.CAD;
 using Tida.CAD.Extensions;
+using Tida.CAD.Input;
 
 namespace Tida.CAD.DrawObjects {
     /// <summary>
@@ -91,6 +92,10 @@ namespace Tida.CAD.DrawObjects {
             base.Draw(canvas);
         }
 
-       
+        protected override void OnMouseUpCore(CADMouseButtonEventArgs e)
+        {
+            base.OnMouseUpCore(e);
+        }
+
     }
 }

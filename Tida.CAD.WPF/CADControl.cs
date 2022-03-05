@@ -361,6 +361,9 @@ namespace Tida.CAD.WPF {
 
             //拖拽响应;
             yield return MouseUpOnDrag;
+
+            //被选取对象的交互操作;
+            yield return MouseUpOnSelectedDrawObjects;
         }
 
         /// <summary>
@@ -1562,7 +1565,6 @@ namespace Tida.CAD.WPF {
             return false;
         }
 
-
         /// <summary>
         /// 键盘按下时选取的处理;
         /// </summary>
@@ -1862,11 +1864,6 @@ namespace Tida.CAD.WPF {
         /// <param name="e"></param>
         private bool MouseDownOnSelectedDrawObjects(MouseButtonEventArgs e)
         {
-            if (e.LeftButton != MouseButtonState.Pressed)
-            {
-                return false;
-            }
-            
             var mouseScreenPosition = e.GetPosition(this);
             var mousePosition = CADScreenConverter.ToCAD(mouseScreenPosition);
             var mouseDownEventArgs = new CADMouseButtonEventArgs(mousePosition) { MouseButtonEventArgs = e };
@@ -1884,6 +1881,19 @@ namespace Tida.CAD.WPF {
             var mouseMoveEventArgs = new CADMouseEventArgs(mousePosition) { MouseEventArgs = e };
             //与所有选中的绘制对象进行交互;
             return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.OnMouseMove(mouseMoveEventArgs), mouseMoveEventArgs);
+        }
+
+
+        /// <summary>
+        /// The interaction for drawobjects while a mouse is released;
+        /// </summary>
+        /// <param name="e"></param>
+        private bool MouseUpOnSelectedDrawObjects(MouseButtonEventArgs e)
+        {
+            var mouseScreenPosition = e.GetPosition(this);
+            var mousePosition = CADScreenConverter.ToCAD(mouseScreenPosition);
+            var mouseUpEventArgs = new CADMouseButtonEventArgs(mousePosition) { MouseButtonEventArgs = e };
+            return InteractWithSelectedDrawObjects((drawObject, eventArgs) => drawObject.OnMouseUp(eventArgs), mouseUpEventArgs);
         }
 
         /// <summary>
