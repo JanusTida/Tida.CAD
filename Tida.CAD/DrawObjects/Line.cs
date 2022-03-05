@@ -7,7 +7,7 @@ namespace Tida.CAD.DrawObjects {
     /// DrawObject-Line;
     /// </summary>
     public class Line: LineBase {
-        public Line(Point start, Point end) : base(start, end) { }
+        public Line() : base() { }
         
 
     }

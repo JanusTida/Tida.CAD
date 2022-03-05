@@ -72,10 +72,6 @@ namespace Tida.CAD.WPF
         /// <param name="beginangle"></param>
         /// <param name="angle"></param>
         public void DrawArc(Pen pen, Point center, double radius, double beginangle, double angle,bool smallAngle) {
-            if(pen == null) {
-                throw new ArgumentNullException(nameof(pen));
-            }
-
             ValidateDrawingContext();
             beginangle %= (Math.PI * 2);
             angle  %= (Math.PI * 2);
@@ -205,10 +201,7 @@ namespace Tida.CAD.WPF
         /// <param name="pen"></param>
         /// <param name="points"></param>
         public void DrawCurve(Pen pen, IEnumerable<Point> points) {
-            if (pen == null) {
-                throw new ArgumentNullException(nameof(pen));
-            }
-
+           
             ValidateDrawingContext();
             
             ////使用一个变量存储上一次的视图点;
@@ -261,9 +254,6 @@ namespace Tida.CAD.WPF
             if(points == null) {
                 throw new ArgumentNullException(nameof(points));
             }
-            if(pen == null) {
-                throw new ArgumentNullException(nameof(pen));
-            }
 
             ValidateDrawingContext();
             
@@ -285,14 +275,9 @@ namespace Tida.CAD.WPF
             if (screenPoints == null) {
                 throw new ArgumentNullException(nameof(screenPoints));
             }
-            if (pen == null) {
-                throw new ArgumentNullException(nameof(pen));
-            }
 
             ValidateDrawingContext();
 
-            pen.Freeze();
-            
             //操作PathGeometry中的Figures以绘制(封闭)区域
             var paths = new PathGeometry();
 

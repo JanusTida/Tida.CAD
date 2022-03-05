@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Media;
 
 namespace Tida.CAD
 {
@@ -8,14 +10,37 @@ namespace Tida.CAD
     /// The layer of cad;
     /// </summary>
     public class CADLayer : CADElement {
+
         /// <summary>
         /// Draw;
         /// </summary>
         /// <param name="canvas">画布</param>
-        public override void Draw(ICanvas canvas) {
-            
+        public override void Draw(ICanvas canvas) 
+        {
+            if(Background == null)
+            {
+                return;
+            }
+
+            var topLeftPoint = canvas.CADScreenConverter.ToCAD(new Point(0, 0));
+            var bottomRightPoint = canvas.CADScreenConverter.ToCAD(new Point(canvas.CADScreenConverter.ActualWidth, canvas.CADScreenConverter.ActualHeight));
+
+            canvas.DrawRectangle(new CADRect(topLeftPoint, bottomRightPoint), Background, null);
         }
-   
+        private Brush _background;
+        public Brush Background 
+        {
+            get => _background;
+            set 
+            {
+                if(_background == value)
+                {
+                    return;
+                }
+                _background = value;
+                RaiseVisualChanged();
+            }
+        }
         /// <summary>
         /// The drawobjects of the layer;
         /// </summary>

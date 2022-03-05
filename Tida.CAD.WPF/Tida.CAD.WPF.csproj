@@ -1,9 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5.0-windows;net461;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net46;net5.0-windows;netcoreapp3.1</TargetFrameworks>
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
+	<Version>0.65</Version>
+	  <Company>JanusTida</Company>
+	  <Copyright>@JanusTida 2021</Copyright>
+	<Description>This assembly is a cad control library implemented with wpf</Description>
+	<AssemblyVersion>0.65</AssemblyVersion>
+	<FileVersion>0.65</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -12,6 +18,8 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DefineConstants>$(DefineConstants)TRACE;WPF</DefineConstants>
+	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	  <DebugType>none</DebugType>
   </PropertyGroup>
 
   <Import Project="..\Tida.CAD\Tida.CAD.projitems" Label="Shared" />

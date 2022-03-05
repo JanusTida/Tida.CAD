@@ -28,7 +28,7 @@ namespace Tida.CAD.WPF.SimpleSample.Views
         private readonly CADLayer _cadLayer;
         private void Addline_Click(object sender, RoutedEventArgs e)
         {
-            var line = new Line(new Point(0, 0), new Point(10, 10));
+            var line = new Line { Start = new Point(0, 0), End = new Point(10, 10) };
             line.Pen = new Pen { Thickness = 2, Brush = Brushes.White };
             _cadLayer.AddDrawObject(line);
         }
@@ -55,5 +55,38 @@ namespace Tida.CAD.WPF.SimpleSample.Views
             _cadLayer.Clear();
         }
 
+        private void ChangeLayerBackground_Click(object sender, RoutedEventArgs e)
+        {
+            if(_cadLayer.Background == null)
+            {
+                _cadLayer.Background = Brushes.Blue;
+            }
+            else
+            {
+                _cadLayer.Background = null;
+            }
+        }
+
+        private void AddPolygon_Click(object sender, RoutedEventArgs e)
+        {
+            var polygon = new Polygon
+            {
+                Points = new[]
+                {
+                    new Point(2,0),
+                    new Point(4,0),
+                    new Point(6,2),
+                    new Point(6,4),
+                    new Point(4,6),
+                    new Point(2,6),
+                    new Point(0,4),
+                    new Point(0,2),
+                    new Point(2,0)
+                },
+                Pen = new Pen(Brushes.White,2),
+                Brush = null
+            };
+            _cadLayer.AddDrawObject(polygon);
+        }
     }
 }
