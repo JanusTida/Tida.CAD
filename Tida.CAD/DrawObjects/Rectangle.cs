@@ -11,6 +11,17 @@ namespace Tida.CAD.DrawObjects {
     /// DrawObject——Rectangle;
     /// </summary>
     public class Rectangle : DrawObject {
+        static Rectangle()
+        {
+            _defaultSelectionPen = new Pen
+            {
+                Brush = Brushes.Blue,
+                Thickness = 3
+            };
+            _defaultSelectionPen.Freeze();
+        }
+
+        private static Pen _defaultSelectionPen;
 
         private Pen _pen;
         /// <summary>
@@ -22,6 +33,20 @@ namespace Tida.CAD.DrawObjects {
             set
             {
                 _pen = value;
+                RaiseVisualChanged();
+            }
+        }
+
+        private Pen _selectionPen = _defaultSelectionPen;
+        /// <summary>
+        /// The pen used for borders when selected;
+        /// </summary>
+        public Pen SelectionPen
+        {
+            get => _selectionPen;
+            set
+            {
+                _selectionPen = value;
                 RaiseVisualChanged();
             }
         }
@@ -75,10 +100,7 @@ namespace Tida.CAD.DrawObjects {
 
         public override bool PointInObject(Point point, ICADScreenConverter cadScreenConverter) 
         {
-            if(cadScreenConverter == null) {
-                throw new ArgumentNullException(nameof(cadScreenConverter));
-            }
-            return false;
+            return Rectangle2D.Contains(point);
         }
 
         public override void Draw(ICanvas canvas)
@@ -86,9 +108,14 @@ namespace Tida.CAD.DrawObjects {
             if (canvas == null) {
                 throw new ArgumentNullException(nameof(canvas));
             }
-            canvas.DrawRectangle(Rectangle2D, Background, Pen);
-
-
+            if (IsSelected)
+            {
+                canvas.DrawRectangle(Rectangle2D, Background, SelectionPen);
+            }
+            else
+            {
+                canvas.DrawRectangle(Rectangle2D, Background, Pen);
+            }
             base.Draw(canvas);
         }
 

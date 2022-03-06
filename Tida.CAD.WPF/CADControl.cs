@@ -11,6 +11,7 @@ using Tida.CAD.Events;
 using Tida.CAD.Extensions;
 using System.Diagnostics;
 using Tida.CAD.Input;
+using Tida.CAD.DrawObjects;
 
 namespace Tida.CAD.WPF {
 
@@ -116,11 +117,6 @@ namespace Tida.CAD.WPF {
         /// 拖拽选择鼠标移动事件;
         /// </summary>
         public event EventHandler<DragSelectMouseMoveEventArgs> DrawSelectMouseMove;
-
-        /// <summary>
-        /// 点击选取事件;
-        /// </summary>
-        public event EventHandler<ClickSelectEventArgs> ClickSelect;
 
         private bool _panInitialized;
         /// <summary>
@@ -1507,6 +1503,35 @@ namespace Tida.CAD.WPF {
     /// </summary>
     public partial class CADControl
     {
+        /// <summary>
+        /// The event fired while selecing drawobjects on clicking;
+        /// </summary>
+        public event EventHandler<ClickSelectingEventArgs> ClickSelecting;
+
+        /// <summary>
+        /// The event fired while unselecing drawobjects on clicking;
+        /// </summary>
+        public event EventHandler<ClickUnselectingEventArgs> ClickUnselecting;
+
+        /// <summary>
+        /// The event fired after selecing drawobjects on clicking;
+        /// </summary>
+        public event EventHandler<ClickSelectedEventArgs> ClickSelected;
+
+        /// <summary>
+        /// The event fired after unselecing drawobjects on clicking;
+        /// </summary>
+        public event EventHandler<ClickUnselectedEventArgs> ClickUnselected;
+
+        public ClickSelectMode ClickSelectMode
+        {
+            get { return (ClickSelectMode)GetValue(ClickSelectModeProperty); }
+            set { SetValue(ClickSelectModeProperty, value); }
+        }
+
+        public static readonly DependencyProperty ClickSelectModeProperty =
+            DependencyProperty.Register(nameof(ClickSelectMode), typeof(ClickSelectMode), typeof(CADControl), new PropertyMetadata(ClickSelectMode.Multiple));
+
 
         /// <summary>
         /// 鼠标移动时绘制对象的可选取状态的感应处理;
@@ -1554,16 +1579,81 @@ namespace Tida.CAD.WPF {
 
             //将所有被悬停的元素置为被选择状态;
             var mousePosition = CADScreenConverter.ToCAD(e.GetPosition(this));
+            var result = false;
 
-            var clickedDrawObjects = this.GetAllVisibleDrawObjects().
-                Where(p => p.PointInObject(mousePosition, CADScreenConverter)).ToArray();
+            if (ClickSelectMode == ClickSelectMode.Multiple)
+            { 
+                var clickedDrawObjects = this.GetAllVisibleDrawObjects().Where(p => p.PointInObject(mousePosition, CADScreenConverter));
+                var clickSelectedDrawObjects = clickedDrawObjects.Where(p => !p.IsSelected).ToList();
+                var clickUnselectedDrawObjects = clickedDrawObjects.Where(p => p.IsSelected).ToList();
+                
+                if (clickSelectedDrawObjects.Count != 0)
+                {
+                    var selectingEventArgs = new ClickSelectingEventArgs(mousePosition, clickSelectedDrawObjects);
+                    ClickSelecting?.Invoke(this, selectingEventArgs);
+                    if (!selectingEventArgs.Cancel)
+                    {
+                        foreach (var drawObject in clickSelectedDrawObjects)
+                        {
+                            drawObject.IsSelected = true;
+                        }
+                    }
+                    ClickSelected?.Invoke(this, new ClickSelectedEventArgs(mousePosition,clickSelectedDrawObjects));
+                    result = true;
+                }
 
-            foreach (var drawObject in clickedDrawObjects)
-            {
-                drawObject.IsSelected = !drawObject.IsSelected;
-                return true;
+                if (clickUnselectedDrawObjects.Count != 0)
+                {
+                    var unSelectingEventArgs = new ClickUnselectingEventArgs(mousePosition, clickUnselectedDrawObjects);
+                    ClickUnselecting?.Invoke(this, unSelectingEventArgs);
+                    if (!unSelectingEventArgs.Cancel)
+                    {
+                        foreach (var drawObject in clickUnselectedDrawObjects)
+                        {
+                            drawObject.IsSelected = false;
+                        }
+                    }
+                    ClickUnselected?.Invoke(this, new ClickUnselectedEventArgs(mousePosition, clickUnselectedDrawObjects));
+                    result = true;
+                }
+
+                return result;
             }
+            else if(ClickSelectMode == ClickSelectMode.Single)
+            {
+                var clickedDrawObject = this.GetAllVisibleDrawObjects().Where(p => p.PointInObject(mousePosition, CADScreenConverter)).FirstOrDefault(p => p != null);
+                var currentSelectedDrawObjects = this.GetAllVisibleDrawObjects().Where(p => p.IsSelected).ToList();
+                if(clickedDrawObject == null)
+                {
+                    return false;
+                }
+                if (!clickedDrawObject.IsSelected)
+                {
+                    var drawObjectsToSelect = new List<DrawObject> { clickedDrawObject };
+                    var selectingEventArgs = new ClickSelectingEventArgs(mousePosition,drawObjectsToSelect);
+                    ClickSelecting?.Invoke(this,selectingEventArgs);
+                    if (!selectingEventArgs.Cancel)
+                    {
+                        foreach (var drawObject in drawObjectsToSelect)
+                        {
+                            drawObject.IsSelected = true;
+                        }
+                        ClickSelected?.Invoke(this, new ClickSelectedEventArgs(mousePosition,drawObjectsToSelect));
+                    }
+                }
 
+                var unselectingEventArgs = new ClickUnselectingEventArgs(mousePosition, currentSelectedDrawObjects);
+                ClickUnselecting?.Invoke(this, unselectingEventArgs);
+                if (!unselectingEventArgs.Cancel)
+                {
+                    foreach (var drawObject in currentSelectedDrawObjects)
+                    {
+                        drawObject.IsSelected = false;
+                    }
+                }
+                ClickUnselected?.Invoke(this, new ClickUnselectedEventArgs(mousePosition, currentSelectedDrawObjects));
+            }
+            
             return false;
         }
 

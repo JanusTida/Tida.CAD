@@ -16,7 +16,5 @@
         <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static shell:Constants.RegionName_Ribbon}"/>
         <ContentControl DockPanel.Dock="Bottom" prism:RegionManager.RegionName="{x:Static shell:Constants.RegionName_StatusBar}"/>
         <ContentControl prism:RegionManager.RegionName="{x:Static shell:Constants.RegionName_MainPage}"/>
-        
-        
     </DockPanel>
 </Window>

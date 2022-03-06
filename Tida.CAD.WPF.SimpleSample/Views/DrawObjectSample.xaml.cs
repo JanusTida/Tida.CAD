@@ -23,8 +23,9 @@ namespace Tida.CAD.WPF.SimpleSample.Views
         {
             InitializeComponent();
             _cadLayer = new CADLayer();
-            cadControl.Layers = new CADLayer[] { _cadLayer };
+            cadControl.Layers = new CADLayer[] { _cadLayer };   
         }
+
         private readonly CADLayer _cadLayer;
         private void Addline_Click(object sender, RoutedEventArgs e)
         {

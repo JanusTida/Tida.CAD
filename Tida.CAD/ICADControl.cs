@@ -77,7 +77,7 @@ namespace Tida.CAD
         /// <summary>
         /// 点击选取事件;
         /// </summary>
-        event EventHandler<ClickSelectEventArgs> ClickSelect;
+        event EventHandler<ClickSelectingEventArgs> ClickSelecting;
 
 
 #if WPF

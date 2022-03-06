@@ -11,7 +11,7 @@ namespace Tida.CAD.WPF.SimpleSample.TestCommands
     {
         public string Name => "DrawObjectSample";
 
-        public int Order => 2;
+        public int Order => 1;
 
         public void Execute(TestExecuteContext testExecuteContext) => new DrawObjectSample().ShowDialog();
     }

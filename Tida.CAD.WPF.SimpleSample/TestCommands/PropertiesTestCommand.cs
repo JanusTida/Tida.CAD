@@ -11,7 +11,7 @@ namespace Tida.CAD.WPF.SimpleSample.TestCommands
     {
         public string Name => "PropertiesTest";
 
-        public int Order => 4;
+        public int Order => 2;
 
         public void Execute(TestExecuteContext testExecuteContext) => new PropertiesTest().ShowDialog();
     }
