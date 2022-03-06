@@ -22,7 +22,7 @@ namespace Tida.CAD.WPF {
         static CADControl() {
             
             BackgroundProperty.OverrideMetadata(typeof(CADControl), new FrameworkPropertyMetadata(
-                Constants.DefaultCanvasBackground,
+                Constants.DefaultCADBackground,
                 FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits
             ));
             
@@ -175,7 +175,7 @@ namespace Tida.CAD.WPF {
         
         protected override Size ArrangeOverride(Size arrangeSize) {
             InitializePanScreenPosition(arrangeSize);
-            UpdateCanvasScreenConverter(arrangeSize);
+            UpdateCADScreenConverter(arrangeSize);
             return base.ArrangeOverride(arrangeSize);
         }
     }
@@ -202,7 +202,7 @@ namespace Tida.CAD.WPF {
         /// <summary>
         /// 更新<see cref="_cadScreenConverter"/>中的关键参数;
         /// </summary>
-        private void UpdateCanvasScreenConverter(Size? actualSize = null) {
+        private void UpdateCADScreenConverter(Size? actualSize = null) {
             if(actualSize != null)
             {
                 _cadScreenConverter.ActualHeight = actualSize.Value.Height;
@@ -477,11 +477,11 @@ namespace Tida.CAD.WPF {
 
         private static void GridLineBrush_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is CADControl canvasControl))
+            if (!(d is CADControl cadControl))
             {
                 return;
             }
-            canvasControl.RefreshGridLinePen();
+            cadControl.RefreshGridLinePen();
         }
 
         /// <summary>
@@ -498,11 +498,11 @@ namespace Tida.CAD.WPF {
 
         private static void GridLineThickness_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is CADControl canvasControl))
+            if (!(d is CADControl cadControl))
             {
                 return;
             }
-            canvasControl.RefreshGridLinePen();
+            cadControl.RefreshGridLinePen();
         }
 
 
@@ -520,11 +520,11 @@ namespace Tida.CAD.WPF {
 
         private static void ShowGridLines_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is CADControl canvasControl))
+            if (!(d is CADControl cadControl))
             {
                 return;
             }
-            canvasControl.RefreshGridLinePen();
+            cadControl.RefreshGridLinePen();
         }
 
         /// <summary>
@@ -626,11 +626,11 @@ namespace Tida.CAD.WPF {
 
         private static void PanBrush_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is CADControl canvasControl))
+            if (!(d is CADControl cadControl))
             {
                 return;
             }
-            canvasControl.RefreshPanPen();
+            cadControl.RefreshPanPen();
         }
 
 
@@ -648,11 +648,11 @@ namespace Tida.CAD.WPF {
 
         private static void PanThickness_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is CADControl canvasControl))
+            if (!(d is CADControl cadControl))
             {
                 return;
             }
-            canvasControl.RefreshPanPen();
+            cadControl.RefreshPanPen();
         }
 
 
@@ -673,11 +673,11 @@ namespace Tida.CAD.WPF {
 
         private static void PanScreenPosition_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
         {
-            if(!(d is CADControl canvasControl)) {
+            if(!(d is CADControl cadControl)) {
                 return;
             }
 
-            canvasControl.UpdateCanvasScreenConverter();
+            cadControl.UpdateCADScreenConverter();
         }
 
 
@@ -744,11 +744,11 @@ namespace Tida.CAD.WPF {
             );
 
         private static void Zoom_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs args) {
-            if(!(d is CADControl canvasControl)) {
+            if(!(d is CADControl cadControl)) {
                 return;
             }
 
-            canvasControl.UpdateCanvasScreenConverter();
+            cadControl.UpdateCADScreenConverter();
         }
 
 
@@ -2085,33 +2085,33 @@ namespace Tida.CAD.WPF {
         /// <summary>
         /// 鼠标按下事件;
         /// </summary>
-        public event EventHandler<MouseEventArgs> CanvasPreviewMouseDown;
+        public event EventHandler<MouseEventArgs> CADPreviewMouseDown;
 
         /// <summary>
         /// 鼠标移动事件;
         /// </summary>
-        public event EventHandler<MouseEventArgs> CanvasPreviewMouseMove;
+        public event EventHandler<MouseEventArgs> CADPreviewMouseMove;
 
 
         /// <summary>
         /// 鼠标弹起事件;
         /// </summary>
-        public event EventHandler<MouseEventArgs> CanvasPreviewMouseUp;
+        public event EventHandler<MouseEventArgs> CADPreviewMouseUp;
 
         /// <summary>
         /// 键盘按下事件;
         /// </summary>
-        public event EventHandler<KeyEventArgs> CanvasPreviewKeyDown;
+        public event EventHandler<KeyEventArgs> CADPreviewKeyDown;
 
         /// <summary>
         /// 键盘弹起事件;
         /// </summary>
-        public event EventHandler<KeyEventArgs> CanvasPreviewKeyUp;
+        public event EventHandler<KeyEventArgs> CADPreviewKeyUp;
 
         /// <summary>
         /// 键盘输入事件;
         /// </summary>
-        public event EventHandler<TextCompositionEventArgs> CanvasPreviewTextInput;
+        public event EventHandler<TextCompositionEventArgs> CADPreviewTextInput;
 
         
         
@@ -2120,33 +2120,33 @@ namespace Tida.CAD.WPF {
         /// </summary>
         /// <param name="e"></param>
         private bool MouseDownOnPreview(MouseButtonEventArgs e) {
-            CanvasPreviewMouseDown?.Invoke(this, e);
+            CADPreviewMouseDown?.Invoke(this, e);
             return e.Handled;
         }
         
         private bool MouseMoveOnPreview(MouseEventArgs e) {
-            CanvasPreviewMouseMove?.Invoke(this, e);
+            CADPreviewMouseMove?.Invoke(this, e);
             return e.Handled;
         }
 
         private bool MouseUpOnPreview(MouseButtonEventArgs e) {
-            CanvasPreviewMouseUp?.Invoke(this, e);
+            CADPreviewMouseUp?.Invoke(this, e);
             return e.Handled;
         }
 
         private bool KeyDownOnPreview(KeyEventArgs e) {
-            CanvasPreviewKeyDown?.Invoke(this, e);
+            CADPreviewKeyDown?.Invoke(this, e);
             return e.Handled;
         }
 
         private bool KeyUpOnPreview(KeyEventArgs e) {
-            CanvasPreviewKeyUp?.Invoke(this, e);
+            CADPreviewKeyUp?.Invoke(this, e);
             return e.Handled;
         }
         
 
         private bool TextInputOnPreview(TextCompositionEventArgs e) {
-            CanvasPreviewTextInput?.Invoke(this, e);
+            CADPreviewTextInput?.Invoke(this, e);
             return e.Handled;
         }
 

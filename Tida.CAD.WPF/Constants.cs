@@ -11,7 +11,7 @@ namespace Tida.CAD.WPF
         /// <summary>
         /// The default background for cad control(#ff013939);
         /// </summary>
-        public static readonly Brush DefaultCanvasBackground = BrushExtensions.CreateFrozenColorBrush(0xff, 0x1, 0x39, 0x39);
+        public static readonly Brush DefaultCADBackground = BrushExtensions.CreateFrozenColorBrush(0xff, 0x1, 0x39, 0x39);
 
         /// <summary>
         /// The brush used to show "any selection" state(0x55195B31);
