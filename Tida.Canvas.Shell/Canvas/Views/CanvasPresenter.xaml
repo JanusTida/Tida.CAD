@@ -20,7 +20,6 @@
         </ResourceDictionary>
     </ContentControl.Resources>
     <DockPanel>
-
         <canvas:CanvasControl x:Name="canvasControl" 
         InputMethod.IsInputMethodEnabled="False"
         Layers="{Binding Layers}"

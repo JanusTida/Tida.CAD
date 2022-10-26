@@ -39,7 +39,6 @@ namespace Tida.Canvas.Shell.ComponentModel.Views {
             set { SetValue(Ellipse2DProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Ellipse2DProperty =
             DependencyProperty.Register(nameof(Ellipse2D), typeof(Ellipse2D), typeof(Ellipse2DEditor), new FrameworkPropertyMetadata(null,FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,Ellipse2D_PropertyChanged));
 

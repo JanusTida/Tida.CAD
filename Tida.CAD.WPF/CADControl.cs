@@ -708,12 +708,12 @@ namespace Tida.CAD.WPF {
     }
 
     /// <summary>
-    /// 缩放部分;
+    /// Part of Zoom;
     /// </summary>
     public partial class CADControl
     {
         /// <summary>
-        /// 最小的放大等级;
+        /// The minimum value of <see cref="Zoom"/>
         /// </summary>
         public double MinZoom
         {
@@ -721,13 +721,18 @@ namespace Tida.CAD.WPF {
             set { SetValue(MinZoomProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for MinZoom.  This enables animation, styling, binding, etc...
+        /// <summary>
+        /// The default value of <see cref="MinZoom"/>
+        /// </summary>
+        public const double DefaultMinZoom = 0.0005;
+        /// <summary>
+        /// The minimum zoom value for <see cref="Zoom"/>
+        /// </summary>
         public static readonly DependencyProperty MinZoomProperty =
-            DependencyProperty.Register(nameof(MinZoom), typeof(double), typeof(CADControl), new PropertyMetadata(0.0005));
-
+            DependencyProperty.Register(nameof(MinZoom), typeof(double), typeof(CADControl), new PropertyMetadata(DefaultMinZoom));
 
         /// <summary>
-        /// 缩放等级;
+        /// The value of zoom level;
         /// </summary>
         public double Zoom
         {
@@ -735,6 +740,9 @@ namespace Tida.CAD.WPF {
             set { SetValue(ZoomProperty, value); }
         }
 
+        /// <summary>
+        /// The value of zoom level;
+        /// </summary>
         public static readonly DependencyProperty ZoomProperty =
             DependencyProperty.Register(
                 nameof(Zoom),
@@ -751,22 +759,24 @@ namespace Tida.CAD.WPF {
             cadControl.UpdateCADScreenConverter();
         }
 
-
         /// <summary>
-        /// Get or set is zoom enabled;
+        /// Get or set whether user can to change zoom by mouse wheeling;
         /// </summary>
-        public bool IsZoomEnabled
+        public bool IsMouseWheelingZoomEnabled
         {
-            get { return (bool)GetValue(IsZoomEnabledProperty); }
-            set { SetValue(IsZoomEnabledProperty, value); }
+            get { return (bool)GetValue(IsMouseWheelingOnZoomEnabledProperty); }
+            set { SetValue(IsMouseWheelingOnZoomEnabledProperty, value); }
         }
 
-        public static readonly DependencyProperty IsZoomEnabledProperty =
-            DependencyProperty.Register(nameof(IsZoomEnabled), typeof(bool), typeof(CADControl), new PropertyMetadata(true));
+        /// <summary>
+        /// Get or set whether user can to change zoom by mouse wheeling;
+        /// </summary>
+        public static readonly DependencyProperty IsMouseWheelingOnZoomEnabledProperty =
+            DependencyProperty.Register(nameof(IsMouseWheelingZoomEnabled), typeof(bool), typeof(CADControl), new PropertyMetadata(true));
 
 
         /// <summary>
-        /// 鼠标滚动时的缩放响应;
+        /// To change the zoom level on mouse wheeling;
         /// </summary>
         /// <param name="e"></param>
         private bool MouseWheelOnZoom(MouseWheelEventArgs e)
@@ -775,7 +785,7 @@ namespace Tida.CAD.WPF {
             {
                 return false;
             }
-            if (!IsZoomEnabled)
+            if (!IsMouseWheelingZoomEnabled)
             {
                 return false;
             }

@@ -142,7 +142,7 @@ namespace Tida.Canvas.Shell.CanvasExport {
                     actualHeight / 2 + GetScreenLength(middleY,scope.Zoom)
                 );
             }
-
+            
             return scope;
         }
 

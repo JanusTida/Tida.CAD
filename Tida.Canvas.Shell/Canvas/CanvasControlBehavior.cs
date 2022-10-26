@@ -16,15 +16,20 @@ namespace Tida.Canvas.Shell.Canvas
             set { SetValue(CanvasProxyProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CanvasProxyProperty =
-            DependencyProperty.Register("CanvasProxy", typeof(ICanvasScreenConvertable), typeof(CanvasControlBehavior), new FrameworkPropertyMetadata(null) { BindsTwoWayByDefault = true});
+            DependencyProperty.Register(nameof(CanvasProxy), typeof(ICanvasScreenConvertable), typeof(CanvasControlBehavior), new FrameworkPropertyMetadata(null) { BindsTwoWayByDefault = true});
 
 
         protected override void OnAttached()
         {
             CanvasProxy = AssociatedObject.CanvasProxy;
             base.OnAttached();
+        }
+
+        protected override void OnDetaching()
+        {
+            CanvasProxy = null;
+            base.OnDetaching();
         }
     }
 }

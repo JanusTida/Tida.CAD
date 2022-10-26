@@ -230,7 +230,7 @@ namespace Tida.Canvas.Shell.Contracts.Canvas {
         }
 
         /// <summary>
-        /// 将当前<paramref name="canvasDataContext"/>中的未完成编辑完成,并将<see cref="ICanvasDataContext.CurrentEditTool"/>置空;
+        /// Commit unfinished transactions,and set <see cref="ICanvasDataContext.CurrentEditTool"/> to null;
         /// </summary>
         /// <param name="canvasDataContext"></param>
         public static void CommitEdit(this ICanvasDataContext canvasDataContext) {
