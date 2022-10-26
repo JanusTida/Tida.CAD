@@ -1,8 +1,7 @@
 # Tida.CAD
-English:Tida.CAD is a CAD framework built on .net platform,Which aims at highlt extensibility,MVVM,high performance.
+English:Tida.CAD is a CAD framework built on .net platform,Which targets on highlt extensibility,MVVM,high performance.
 
-This framework consists of these parts:
-
+This project consists of these parts:
 		1.Core parts is constructed by Tida.Canvas.Contracts and Tida.Canvas.Infrastructure,the previous one defines the basic concepts for a Canvas(ICanvasControl,DrawObject,CanvasLayer,EditTool...),input(Mouse and keyboard),media(Color
 		,Pen..).the latter one provides the common codes(like LineBase,PointBase) that user codes might leverage.to make these codes platform-independent,both parts are built on .Net Standard platform.
 		
