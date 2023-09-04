@@ -89,5 +89,17 @@ namespace Tida.CAD.WPF.SimpleSample.Views
             };
             _cadLayer.AddDrawObject(polygon);
         }
+
+        private void AddArc_Click(object sender, RoutedEventArgs e)
+        {
+            var arc = new Arc
+            {
+                Pen = new Pen { Brush = Brushes.White,Thickness = 2 },
+                BeginAngle = 0,
+                Angle = (double)185 / 180 * Math.PI,
+                Radius = 2
+            };
+            _cadLayer.AddDrawObject(arc);
+        }
     }
 }

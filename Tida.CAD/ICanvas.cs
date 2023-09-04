@@ -35,7 +35,7 @@ namespace Tida.CAD
         /// <param name="radius">The radius of the arc</param>
         /// <param name="beginangle">The start angle of the arc,this angle starts from the 3 o'clock</param>
         /// <param name="angle">The angle in unclockwise,unit in rad</param>
-        void DrawArc(Pen pen, Point center, double radius, double beginangle, double angle,bool smallAngle);
+        void DrawArc(Pen pen, Point center, double radius, double beginangle, double angle);
 
         /// <summary>
         /// Draw a Polygon;

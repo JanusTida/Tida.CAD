@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)CADLine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ClickSelectMode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DrawObjects\Arc.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DrawObjects\Line.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DrawObjects\LineBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DrawObjects\Polygon.cs" />

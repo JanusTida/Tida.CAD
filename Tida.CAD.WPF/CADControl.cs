@@ -1425,7 +1425,7 @@ namespace Tida.CAD.WPF {
         private void DrawDrawableCore(IDrawable drawable, DrawingVisual drawingVisual)
         {
             var dc = drawingVisual.RenderOpen();
-            InternalCanvas.DrawingContext = dc;
+            InternalCanvas.InernalDrawingContext = dc;
 
             if (!(drawable is CADElement canvasElement) || canvasElement.IsVisible)
             {
@@ -1434,7 +1434,7 @@ namespace Tida.CAD.WPF {
 
 
             dc.Close();
-            InternalCanvas.DrawingContext = null;
+            InternalCanvas.InernalDrawingContext = null;
         }
 
         

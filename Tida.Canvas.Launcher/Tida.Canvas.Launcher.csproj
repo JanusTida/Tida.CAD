@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tida.Canvas.Shell.Contracts\Tida.Canvas.Shell.Contracts.csproj" />
-    <ProjectReference Include="..\Tida.Canvas.Shell\Tida.Canvas.Shell.csproj" />
   </ItemGroup>
 
   <ItemGroup>
