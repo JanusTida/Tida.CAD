@@ -27,8 +27,8 @@ namespace Tida.CAD
 
             canvas.DrawRectangle(new CADRect(topLeftPoint, bottomRightPoint), Background, null);
         }
-        private Brush _background;
-        public Brush Background 
+        private Brush? _background;
+        public Brush? Background 
         {
             get => _background;
             set 

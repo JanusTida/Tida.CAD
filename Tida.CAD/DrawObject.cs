@@ -73,13 +73,13 @@ namespace Tida.CAD {
         /// <summary>
         /// The event raised when IsSelected changed;
         /// </summary>
-        public event EventHandler<ValueChangedEventArgs<bool>> IsSelectedChanged;
+        public event EventHandler<ValueChangedEventArgs<bool>>? IsSelectedChanged;
         
         /// <summary>
         /// The parent layer of the drawobject;
         /// </summary>
-        public CADLayer Layer => InternalLayer;
-        internal CADLayer InternalLayer { get; set; }
+        public CADLayer? Layer => InternalLayer;
+        internal CADLayer? InternalLayer { get; set; }
 
     }
 
