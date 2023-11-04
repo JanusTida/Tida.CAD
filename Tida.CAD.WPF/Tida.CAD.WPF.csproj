@@ -4,6 +4,7 @@
 		<Nullable>disable</Nullable>
 		<UseWPF>true</UseWPF>
 		<Version>0.65</Version>
+		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 		<Company>JanusTida</Company>
 		<Copyright>@JanusTida 2021</Copyright>

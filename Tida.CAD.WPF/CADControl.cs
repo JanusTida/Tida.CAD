@@ -153,20 +153,22 @@ namespace Tida.CAD.WPF {
             //DrawBackground(drawingContext);
             //绘制网格;
             DrawGridLines(drawingContext);
-            //绘制原点十字;
-            DrawPan(drawingContext);
-
-            AddSelectRectangleToDict();
-            /*重绘元素*/
-
             //因为尺寸可能发生了变化,故需重新设定裁剪区域;
             var clipGeometry = new RectangleGeometry(
-                new Rect {
+                new Rect
+                {
                     Width = this.ActualWidth,
                     Height = this.ActualHeight
                 }
             );
-            
+
+            //绘制原点十字;
+            DrawPan(drawingContext,clipGeometry);
+
+            AddSelectRectangleToDict();
+            /*重绘元素*/
+
+          
             foreach (var pair in _visualDict) {
                 pair.Value.Clip = clipGeometry;
                 DrawDrawableCore(pair.Key, pair.Value);
@@ -685,13 +687,13 @@ namespace Tida.CAD.WPF {
         /// 绘制原点十字;
         /// </summary>
         /// <param name="drawingContext"></param>
-        private void DrawPan(DrawingContext drawingContext)
+        private void DrawPan(DrawingContext drawingContext, RectangleGeometry clipGeometry)
         {
             if(_panPen == null)
             {
                 return;
             }
-
+            drawingContext.PushClip(clipGeometry);
             drawingContext.DrawLine(
                 _panPen,
                 new Point(PanScreenPosition.X - PanLength / 2, PanScreenPosition.Y),
@@ -703,6 +705,7 @@ namespace Tida.CAD.WPF {
                 new Point(PanScreenPosition.X, PanScreenPosition.Y - PanLength / 2),
                 new Point(PanScreenPosition.X, PanScreenPosition.Y + PanLength / 2)
             );
+            drawingContext.Pop();
 
         }
     }
