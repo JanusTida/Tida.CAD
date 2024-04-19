@@ -5,6 +5,9 @@
     <TargetFrameworks>netcoreapp3.1;net46;net5.0-windows</TargetFrameworks>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
+	<PropertyGroup>
+		<NoWarn>1701;1702;NETSDK1138</NoWarn>
+	</PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Tida.Canvas.Contracts\Tida.Canvas.Contracts.csproj" />

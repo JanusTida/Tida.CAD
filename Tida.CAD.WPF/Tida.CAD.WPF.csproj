@@ -21,7 +21,9 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<DebugType>none</DebugType>
 	</PropertyGroup>
-
+	<PropertyGroup>
+	  <NoWarn>1701;1702;NETSDK1138</NoWarn>
+	</PropertyGroup>
 	<Import Project="..\Tida.CAD\Tida.CAD.projitems" Label="Shared" />
 
 </Project>

@@ -6,7 +6,9 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
-
+	<PropertyGroup>
+		<NoWarn>1701;1702;NETSDK1138</NoWarn>
+	</PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>$(DefineConstants)TRACE;</DefineConstants>
   </PropertyGroup>
