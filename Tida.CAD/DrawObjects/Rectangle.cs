@@ -23,11 +23,11 @@ namespace Tida.CAD.DrawObjects {
 
         private static Pen _defaultSelectionPen;
 
-        private Pen _pen;
+        private Pen? _pen;
         /// <summary>
         /// The pen used for borders;
         /// </summary>
-        public Pen Pen 
+        public Pen? Pen 
         {
             get => _pen;
             set
@@ -51,11 +51,11 @@ namespace Tida.CAD.DrawObjects {
             }
         }
 
-        private Brush _background;
+        private Brush? _background;
         /// <summary>
         /// The background brush;
         /// </summary>
-        public Brush Background
+        public Brush? Background
         {
             get => _background;
             set

@@ -11,8 +11,8 @@ namespace Tida.CAD.DrawObjects
     /// </summary>
     public class Polygon:DrawObject
     {
-        private IEnumerable<Point> _points;
-        public IEnumerable<Point> Points 
+        private IEnumerable<Point>? _points;
+        public IEnumerable<Point>? Points 
         { 
             get => _points;
             set
@@ -22,8 +22,8 @@ namespace Tida.CAD.DrawObjects
             }
         }
 
-        private Pen _pen;
-        public Pen Pen
+        private Pen? _pen;
+        public Pen? Pen
         {
             get => _pen;
             set
@@ -33,9 +33,9 @@ namespace Tida.CAD.DrawObjects
             }
         }
 
-        private Brush _brush;
+        private Brush? _brush;
 
-        public Brush Brush
+        public Brush? Brush
         {
             get { return _brush; }
             set 

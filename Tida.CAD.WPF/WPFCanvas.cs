@@ -15,7 +15,7 @@ namespace Tida.CAD.WPF
         /// Create an instance of WPFCanvas;
         /// </summary>
         /// <param name="cadScreenConverter">An converter instance</param>
-        public WPFCanvas(ICADScreenConverter cadScreenConverter)
+        public WPFCanvas(ICADScreenConverter? cadScreenConverter)
         {
             CADScreenConverter = cadScreenConverter ?? throw new ArgumentNullException(nameof(cadScreenConverter));
         }
@@ -49,7 +49,7 @@ namespace Tida.CAD.WPF
         /// Draw a line;
         /// </summary>
         /// <param name="pen"></param>
-        public void DrawLine(Pen pen, Point point0, Point point1)
+        public void DrawLine(Pen? pen, Point point0, Point point1)
         {
             if (pen == null)
             {
@@ -78,7 +78,7 @@ namespace Tida.CAD.WPF
         /// <param name="radius"></param>
         /// <param name="beginangle"></param>
         /// <param name="angle"></param>
-        public void DrawArc(Pen pen, Point center, double radius, double beginangle, double angle)
+        public void DrawArc(Pen? pen, Point center, double radius, double beginangle, double angle)
         {
             ValidateDrawingContext();
             beginangle %= (Math.PI * 2);
@@ -144,7 +144,7 @@ namespace Tida.CAD.WPF
         /// <param name="center"></param>
         /// <param name="radiusX"></param>
         /// <param name="radiusY"></param>
-        public void DrawEllipse(Brush brush, Pen pen, Point center, double radiusX, double radiusY)
+        public void DrawEllipse(Brush? brush, Pen? pen, Point center, double radiusX, double radiusY)
         {
             ValidateDrawingContext();
 
@@ -161,7 +161,7 @@ namespace Tida.CAD.WPF
         /// <param name="emSize"></param>
         /// <param name="foreground"></param>
         /// <param name="origin"></param>
-        public void DrawText(FormattedText formattedText, Point origin)
+        public void DrawText(FormattedText? formattedText, Point origin)
         {
             ValidateDrawingContext();
             var originScreenPoint = CADScreenConverter.ToScreen(origin);
@@ -211,7 +211,7 @@ namespace Tida.CAD.WPF
         /// </summary>
         /// <param name="pen"></param>
         /// <param name="points"></param>
-        public void DrawCurve(Pen pen, IEnumerable<Point> points)
+        public void DrawCurve(Pen? pen, IEnumerable<Point> points)
         {
 
             ValidateDrawingContext();
@@ -240,7 +240,7 @@ namespace Tida.CAD.WPF
         /// <param name="brush">The brush to fill the rect</param>
         /// <param name="pen">The pen to decorate the border of the rect</param>
         /// <param name="rect"></param>
-        public void DrawRectangle(CADRect rect, Brush brush, Pen pen)
+        public void DrawRectangle(CADRect rect, Brush? brush, Pen? pen)
         {
             ValidateDrawingContext();
 
@@ -251,7 +251,7 @@ namespace Tida.CAD.WPF
             DrawingContext.DrawRectangle(brush, pen, rectInScreen);
         }
 
-        public void DrawPolygon(IEnumerable<Point> points, Brush brush, Pen pen)
+        public void DrawPolygon(IEnumerable<Point> points, Brush? brush, Pen? pen)
         {
             ValidateDrawingContext();
             DrawFill(points, brush, pen);
@@ -262,7 +262,7 @@ namespace Tida.CAD.WPF
         /// </summary>
         /// <param name="points">所有的顶点坐标</param>
         /// <param name="brush">区域颜色</param>
-        private void DrawFill(IEnumerable<Point> points, Brush brush, Pen pen)
+        private void DrawFill(IEnumerable<Point> points, Brush? brush, Pen? pen)
         {
 
             if (points == null)
@@ -286,7 +286,7 @@ namespace Tida.CAD.WPF
         /// <param name="screenPoints"></param>
         /// <param name="brush"></param>
         /// <param name="pen"></param>
-        private void NativeDrawFill(IEnumerable<Point> screenPoints, Brush brush, Pen pen)
+        private void NativeDrawFill(IEnumerable<Point> screenPoints, Brush? brush, Pen? pen)
         {
             if (screenPoints == null)
             {
@@ -332,7 +332,7 @@ namespace Tida.CAD.WPF
         /// </summary>
         /// <param name="brush">填充色</param>
         /// <param name="pen">笔</param>
-        public void NativeDrawEllipse(Brush brush, Pen pen, Point center, double radiusX, double radiusY)
+        public void NativeDrawEllipse(Brush? brush, Pen? pen, Point center, double radiusX, double radiusY)
         {
             DrawingContext.DrawEllipse(
                 brush,

@@ -29,8 +29,8 @@ namespace Tida.CAD.WPF {
         /// <summary>
         /// 填充画刷;
         /// </summary>
-        private Brush _fill;
-        public Brush Fill {
+        private Brush? _fill;
+        public Brush? Fill {
             get { return _fill; }
             set {
                 _fill = value;
@@ -41,9 +41,9 @@ namespace Tida.CAD.WPF {
         /// <summary>
         /// 笔;
         /// </summary>
-        private Pen _pen;
+        private Pen? _pen;
 
-        public Pen Pen {
+        public Pen? Pen {
             get { return _pen; }
             set {
                 _pen = value;

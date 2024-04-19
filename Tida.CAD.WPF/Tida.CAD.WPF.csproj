@@ -10,6 +10,7 @@
 		<Description>This assembly is a cad control library implemented with wpf</Description>
 		<AssemblyVersion>0.65</AssemblyVersion>
 		<FileVersion>0.65</FileVersion>
+		<WarningsAsErrors>true</WarningsAsErrors>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

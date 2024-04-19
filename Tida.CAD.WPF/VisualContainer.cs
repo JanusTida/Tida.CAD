@@ -34,7 +34,7 @@ namespace Tida.CAD.WPF
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        protected override Visual GetVisualChild(int index) {
+        protected override Visual? GetVisualChild(int index) {
             if (index < 0 || index >= this._visuals.Count) {
 
                 return null;
@@ -93,7 +93,7 @@ namespace Tida.CAD.WPF
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
-        protected Visual GetVisual(Point point) {
+        protected Visual? GetVisual(Point point) {
             HitTestResult hitResult = VisualTreeHelper.HitTest(this, point);
             return hitResult.VisualHit as Visual;
         }

@@ -80,11 +80,11 @@ namespace Tida.CAD.DrawObjects {
             canvas.DrawLine(Pen, Start,End);
         }
 
-        private Pen _pen;
+        private Pen? _pen;
         /// <summary>
         /// The pen used when drawing the line;
         /// </summary>
-        public Pen Pen 
+        public Pen? Pen 
         {
             get => _pen;
             set 

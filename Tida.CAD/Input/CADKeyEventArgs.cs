@@ -14,7 +14,7 @@ namespace Tida.CAD.Input
         /// <summary>
         /// KeyEventArgs in WPF;
         /// </summary>
-        public KeyEventArgs KeyEventArgs { get; set; }
+        public KeyEventArgs? KeyEventArgs { get; set; }
 #endif
     }
 }

@@ -9,7 +9,7 @@ namespace Tida.CAD
         /// <summary>
         /// 本身图像已经发生了变化的事件;
         /// </summary>
-        event EventHandler VisualChanged;
+        event EventHandler? VisualChanged;
         
         /// <summary>
         /// 绘制自身;
