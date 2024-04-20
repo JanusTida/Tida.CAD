@@ -183,12 +183,12 @@ namespace Tida.CAD {
             
         }
 
-        public event EventHandler<CADMouseButtonEventArgs> PreviewMouseDown;
-        public event EventHandler<CADMouseEventArgs> PreviewMouseMove;
-        public event EventHandler<CADMouseButtonEventArgs> PreviewMouseUp;
-        public event EventHandler<CADKeyEventArgs> PreviewKeyDown;
-        public event EventHandler<CADKeyEventArgs> PreviewKeyUp;
-        public event EventHandler<TextCompositionEventArgs> PreviewTextInput;
+        public event EventHandler<CADMouseButtonEventArgs>? PreviewMouseDown;
+        public event EventHandler<CADMouseEventArgs>? PreviewMouseMove;
+        public event EventHandler<CADMouseButtonEventArgs>? PreviewMouseUp;
+        public event EventHandler<CADKeyEventArgs>? PreviewKeyDown;
+        public event EventHandler<CADKeyEventArgs>? PreviewKeyUp;
+        public event EventHandler<TextCompositionEventArgs>? PreviewTextInput;
     }
 
 }

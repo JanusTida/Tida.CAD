@@ -21,7 +21,7 @@ namespace Tida.CAD.WPF.Extensions
         /// <param name="thickness"></param>
         /// <param name="dashStyle"></param>
         /// <returns></returns>
-        public static Pen CreateFrozenPen(Brush brush, double thickness, DashStyle dashStyle)
+        public static Pen CreateFrozenPen(Brush brush, double thickness, DashStyle? dashStyle)
         {
             var pen = new Pen
             {

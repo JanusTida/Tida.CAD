@@ -1,4 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:local="clr-namespace:Tida.Canvas.Shell.CanvasExport.Languages">
-  <sys:String x:Key="MsgText_ConfirmToShowExportedDirectory">导出完成,是否打开导出文件夹?</sys:String>
-</ResourceDictionary>

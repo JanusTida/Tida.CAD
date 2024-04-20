@@ -44,9 +44,9 @@ namespace Tida.CAD.WPF {
         /// <summary>
         /// <see cref="ICanvas"/> implemented with WPF;
         /// </summary>
-        private WPFCanvas InternalCanvas => _canvas ?? (_canvas = new WPFCanvas(this.CADScreenConverter));
+        private WPFCanvas InternalCanvas => _canvas ??= new WPFCanvas(this.CADScreenConverter);
         
-        private WPFCanvas _canvas;
+        private WPFCanvas? _canvas;
         
         /// <summary>
         /// 记录鼠标按下的位置,拖拽画布时使用;
@@ -95,28 +95,28 @@ namespace Tida.CAD.WPF {
         /// <summary>
         /// 画布内绘制对象选定状态发生了变化事件;
         /// </summary>
-        public event EventHandler<DrawObjectSelectedChangedEventArgs> DrawObjectIsSelectedChanged;
+        public event EventHandler<DrawObjectSelectedChangedEventArgs>? DrawObjectIsSelectedChanged;
         
 
         /// <summary>
         /// 绘制对象被移除;
         /// </summary>
-        public event EventHandler<DrawObjectsRemovedEventArgs> DrawObjectsRemoved;
+        public event EventHandler<DrawObjectsRemovedEventArgs>? DrawObjectsRemoved;
 
         /// <summary>
         /// 绘制对象被添加;
         /// </summary>
-        public event EventHandler<DrawObjectsAddedEventArgs> DrawObjectsAdded;
+        public event EventHandler<DrawObjectsAddedEventArgs>? DrawObjectsAdded;
 
         /// <summary>
         /// 拖拽选择事件;
         /// </summary>
-        public event EventHandler<DragSelectEventArgs> DragSelect;
+        public event EventHandler<DragSelectEventArgs>? DragSelect;
 
         /// <summary>
         /// 拖拽选择鼠标移动事件;
         /// </summary>
-        public event EventHandler<DragSelectMouseMoveEventArgs> DrawSelectMouseMove;
+        public event EventHandler<DragSelectMouseMoveEventArgs>? DrawSelectMouseMove;
 
         private bool _panInitialized;
         /// <summary>
@@ -448,7 +448,7 @@ namespace Tida.CAD.WPF {
     /// </summary>
     public partial class CADControl
     {
-        private Pen _gridLinePen;
+        private Pen? _gridLinePen;
         private void RefreshGridLinePen()
         {
             if(GridLineBrush == null || GridLineThickness <= 0 || !ShowGridLines)
@@ -479,7 +479,7 @@ namespace Tida.CAD.WPF {
 
         private static void GridLineBrush_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is CADControl cadControl))
+            if (d is not CADControl cadControl)
             {
                 return;
             }
@@ -500,7 +500,7 @@ namespace Tida.CAD.WPF {
 
         private static void GridLineThickness_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is CADControl cadControl))
+            if (d is not CADControl cadControl)
             {
                 return;
             }
@@ -522,7 +522,7 @@ namespace Tida.CAD.WPF {
 
         private static void ShowGridLines_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is CADControl cadControl))
+            if (d is not CADControl cadControl)
             {
                 return;
             }
@@ -587,7 +587,7 @@ namespace Tida.CAD.WPF {
     /// </summary>
     public partial class CADControl
     {
-        private Pen _panPen;
+        private Pen? _panPen;
         private void RefreshPanPen()
         {
             if(PanBrush == null || PanThickness <= 0)
@@ -628,7 +628,7 @@ namespace Tida.CAD.WPF {
 
         private static void PanBrush_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is CADControl cadControl))
+            if (d is not CADControl cadControl)
             {
                 return;
             }
@@ -650,7 +650,7 @@ namespace Tida.CAD.WPF {
 
         private static void PanThickness_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is CADControl cadControl))
+            if (d is not CADControl cadControl)
             {
                 return;
             }
@@ -675,7 +675,7 @@ namespace Tida.CAD.WPF {
 
         private static void PanScreenPosition_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
         {
-            if(!(d is CADControl cadControl)) {
+            if(d is not CADControl cadControl) {
                 return;
             }
 
@@ -755,7 +755,7 @@ namespace Tida.CAD.WPF {
             );
 
         private static void Zoom_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs args) {
-            if(!(d is CADControl cadControl)) {
+            if(d is not CADControl cadControl) {
                 return;
             }
 
@@ -882,7 +882,7 @@ namespace Tida.CAD.WPF {
         /// 根据当前是否处于拖拽状态设定Cursor;
         /// </summary>
         /// <param name="e"></param>
-        private Cursor GetCursorOnDrag()
+        private Cursor? GetCursorOnDrag()
         {
             if (Mouse.MiddleButton == MouseButtonState.Pressed)
             {
@@ -997,7 +997,7 @@ namespace Tida.CAD.WPF {
         /// 获取所有设定Cursor的设置器;
         /// </summary>
         /// <returns></returns>
-        private IEnumerable<Func<Cursor>> GetAllCursorGetters()
+        private IEnumerable<Func<Cursor?>> GetAllCursorGetters()
         {
             //拖拽判断;
             yield return GetCursorOnDrag;
@@ -1031,24 +1031,27 @@ namespace Tida.CAD.WPF {
                 )
             );
 
-        private static void ActiveLayer_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-            if(d is CADControl ctrl) {
-                ctrl.ActiveLayerChanged?.Invoke(
-                    ctrl,
-                    new ValueChangedEventArgs<CADLayer>(e.OldValue as CADLayer, e.NewValue as CADLayer)
-                );
+        private static void ActiveLayer_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
+        {
+            if(d is not CADControl ctrl) 
+            {
+                return;
             }
+            var oldLayer = e.OldValue as CADLayer;
+            var newLayer = e.NewValue as CADLayer;
+            var args = new ValueChangedEventArgs<CADLayer>(oldLayer, newLayer);
+            ctrl.ActiveLayerChanged?.Invoke(ctrl,args);
         }
 
-        public event EventHandler<ValueChangedEventArgs<CADLayer>> ActiveLayerChanged;
+        public event EventHandler<ValueChangedEventArgs<CADLayer>>? ActiveLayerChanged;
 
         /// <summary>
         /// 所有内容图层;
         /// </summary>
         public IEnumerable<CADLayer> Layers
         {
-            get { return (IEnumerable<CADLayer>)GetValue(LayersProperty); }
-            set { SetValue(LayersProperty, value); }
+            get => (IEnumerable<CADLayer>)GetValue(LayersProperty);
+            set => SetValue(LayersProperty, value);
         }
 
         public static readonly DependencyProperty LayersProperty =
@@ -1061,7 +1064,7 @@ namespace Tida.CAD.WPF {
         /// <param name="e"></param>
         private static void Layers_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is CADControl ctrl))
+            if (d is not CADControl ctrl)
             {
                 return;
             }
@@ -1103,18 +1106,22 @@ namespace Tida.CAD.WPF {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Layers_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void Layers_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            if(!(sender is IEnumerable<CADLayer> layers)) {
+            if(sender is not IEnumerable<CADLayer> layers) {
                 return;
             }
 
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
+                    if(e.NewItems == null)
+                    {
+                        break;
+                    }
                     foreach (var item in e.NewItems)
                     {
-                        if (!(item is CADLayer layer))
+                        if (item is not CADLayer layer)
                         {
                             continue;
                         }
@@ -1125,9 +1132,13 @@ namespace Tida.CAD.WPF {
 
 
                 case NotifyCollectionChangedAction.Remove:
+                    if(e.OldItems == null)
+                    {
+                        break;
+                    }
                     foreach (var item in e.OldItems)
                     {
-                        if (!(item is CADLayer layer))
+                        if (item is not CADLayer layer)
                         {
                             continue;
                         }
@@ -1225,13 +1236,13 @@ namespace Tida.CAD.WPF {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CADLayer_DrawObjectsAdded(object sender,IEnumerable<DrawObject> e)
+        private void CADLayer_DrawObjectsAdded(object? sender,IEnumerable<DrawObject> e)
         {
             if (e == null)
             {
                 return;
             }
-            if(!(sender is CADLayer CADLayer))
+            if(sender is not CADLayer CADLayer)
             {
                 return;
             }
@@ -1244,8 +1255,8 @@ namespace Tida.CAD.WPF {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CADLayer_DrawObjectClearing(object sender, EventArgs e) {
-            if(!(sender is CADLayer layer)) {
+        private void CADLayer_DrawObjectClearing(object? sender, EventArgs e) {
+            if(sender is not CADLayer layer) {
                 return;
             }
 
@@ -1315,9 +1326,9 @@ namespace Tida.CAD.WPF {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DrawObject_IsVisibleChanged(object sender, EventArgs e)
+        private void DrawObject_IsVisibleChanged(object? sender, EventArgs e)
         {
-            if (!(sender is DrawObject drawObject))
+            if (sender is not DrawObject drawObject)
             {
                 return;
             }
@@ -1331,8 +1342,8 @@ namespace Tida.CAD.WPF {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DrawObject_IsSelectedChanged(object sender, ValueChangedEventArgs<bool> e) {
-            if(!(sender is DrawObject drawObject)) {
+        private void DrawObject_IsSelectedChanged(object? sender, ValueChangedEventArgs<bool> e) {
+            if(sender is not DrawObject drawObject) {
                 return;
             }
 
@@ -1346,13 +1357,13 @@ namespace Tida.CAD.WPF {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CADLayer_DrawObjectsRemoved(object sender, IEnumerable<DrawObject> e)
+        private void CADLayer_DrawObjectsRemoved(object? sender, IEnumerable<DrawObject> e)
         {
             if (e == null)
             {
                 return;
             }
-            if(!(sender is CADLayer CADLayer))
+            if(sender is not CADLayer CADLayer)
             {
                 return;
             }
@@ -1391,14 +1402,14 @@ namespace Tida.CAD.WPF {
         /// remove a drawable object from cache and visual tree;
         /// </summary>
         /// <param name="drawable"></param>
-        private void RemoveDrawable(IDrawable drawable,ContainerVisual containerVisual)
+        private void RemoveDrawable(IDrawable drawable,ContainerVisual? containerVisual)
         {
             if (!_visualDict.TryGetValue(drawable,out var drawingVisual))
             {
                 return;
             }
             _visualDict.Remove(drawable);
-            containerVisual.Children.Remove(drawingVisual);
+            containerVisual?.Children?.Remove(drawingVisual);
             drawable.VisualChanged -= Drawable_VisualChanged;
         }
 
@@ -1430,7 +1441,7 @@ namespace Tida.CAD.WPF {
             var dc = drawingVisual.RenderOpen();
             InternalCanvas.InernalDrawingContext = dc;
 
-            if (!(drawable is CADElement canvasElement) || canvasElement.IsVisible)
+            if (drawable is not CADElement canvasElement || canvasElement.IsVisible)
             {
                 drawable.Draw(InternalCanvas);
             }
@@ -1450,7 +1461,7 @@ namespace Tida.CAD.WPF {
             //遍历缓存中所有的Visual,移除该图层内的所有元素;
             var removeVisualPairs = _visualDict.Where(p =>
             {
-                if (!(p.Key is DrawObject drawObject))
+                if (p.Key is not DrawObject drawObject)
                 {
                     return false;
                 }
@@ -1465,9 +1476,9 @@ namespace Tida.CAD.WPF {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CADLayer_IsVisibleChanged(object sender, EventArgs e)
+        private void CADLayer_IsVisibleChanged(object? sender, EventArgs e)
         {
-            if (!(sender is CADLayer CADLayer))
+            if (sender is not CADLayer CADLayer)
             {
                 return;
             }
@@ -1494,9 +1505,9 @@ namespace Tida.CAD.WPF {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Drawable_VisualChanged(object sender, EventArgs e)
+        private void Drawable_VisualChanged(object? sender, EventArgs e)
         {
-            if (!(sender is IDrawable drawable))
+            if (sender is not IDrawable drawable)
             {
                 return;
             }
@@ -1519,22 +1530,22 @@ namespace Tida.CAD.WPF {
         /// <summary>
         /// The event fired while selecing drawobjects on clicking;
         /// </summary>
-        public event EventHandler<ClickSelectingEventArgs> ClickSelecting;
+        public event EventHandler<ClickSelectingEventArgs>? ClickSelecting;
 
         /// <summary>
         /// The event fired while unselecing drawobjects on clicking;
         /// </summary>
-        public event EventHandler<ClickUnselectingEventArgs> ClickUnselecting;
+        public event EventHandler<ClickUnselectingEventArgs>? ClickUnselecting;
 
         /// <summary>
         /// The event fired after selecing drawobjects on clicking;
         /// </summary>
-        public event EventHandler<ClickSelectedEventArgs> ClickSelected;
+        public event EventHandler<ClickSelectedEventArgs>? ClickSelected;
 
         /// <summary>
         /// The event fired after unselecing drawobjects on clicking;
         /// </summary>
-        public event EventHandler<ClickUnselectedEventArgs> ClickUnselected;
+        public event EventHandler<ClickUnselectedEventArgs>? ClickUnselected;
 
         public ClickSelectMode ClickSelectMode
         {
@@ -1738,7 +1749,7 @@ namespace Tida.CAD.WPF {
         /// 根据选取状态设定Cursor;
         /// </summary>
         /// <param name="e"></param>
-        private Cursor GetCursorOnSelect()
+        private Cursor? GetCursorOnSelect()
         {
             //若存在被悬停的可绘制对象,变更Cursor;
             if (_hoveredDrawObjects.Any())
@@ -2039,7 +2050,7 @@ namespace Tida.CAD.WPF {
         /// <summary>
         /// 当前的鼠标所在的工程数学坐标发生变化事件;
         /// </summary>
-        public event EventHandler<ValueChangedEventArgs<Point>> CurrentMousePositionChanged;
+        public event EventHandler<ValueChangedEventArgs<Point>>? CurrentMousePositionChanged;
 
         /// <summary>
         /// 鼠标移动时,通知当前鼠标的工程数学坐标节点变化;
@@ -2098,33 +2109,33 @@ namespace Tida.CAD.WPF {
         /// <summary>
         /// 鼠标按下事件;
         /// </summary>
-        public event EventHandler<MouseEventArgs> CADPreviewMouseDown;
+        public event EventHandler<MouseEventArgs>? CADPreviewMouseDown;
 
         /// <summary>
         /// 鼠标移动事件;
         /// </summary>
-        public event EventHandler<MouseEventArgs> CADPreviewMouseMove;
+        public event EventHandler<MouseEventArgs>? CADPreviewMouseMove;
 
 
         /// <summary>
         /// 鼠标弹起事件;
         /// </summary>
-        public event EventHandler<MouseEventArgs> CADPreviewMouseUp;
+        public event EventHandler<MouseEventArgs>? CADPreviewMouseUp;
 
         /// <summary>
         /// 键盘按下事件;
         /// </summary>
-        public event EventHandler<KeyEventArgs> CADPreviewKeyDown;
+        public event EventHandler<KeyEventArgs>? CADPreviewKeyDown;
 
         /// <summary>
         /// 键盘弹起事件;
         /// </summary>
-        public event EventHandler<KeyEventArgs> CADPreviewKeyUp;
+        public event EventHandler<KeyEventArgs>? CADPreviewKeyUp;
 
         /// <summary>
         /// 键盘输入事件;
         /// </summary>
-        public event EventHandler<TextCompositionEventArgs> CADPreviewTextInput;
+        public event EventHandler<TextCompositionEventArgs>? CADPreviewTextInput;
 
         
         

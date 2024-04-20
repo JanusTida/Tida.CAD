@@ -27,12 +27,12 @@ namespace Tida.CAD
         /// <summary>
         /// Occurs when isvisible changed;
         /// </summary>
-        public event EventHandler IsVisibleChanged;
+        public event EventHandler? IsVisibleChanged;
 
         /// <summary>
         /// Occurs when the visual content changed;
         /// </summary>
-        public event EventHandler VisualChanged;
+        public event EventHandler? VisualChanged;
 
         /// <summary>
         /// Notify the components that registered the <see cref="IsVisibleChanged"/>;

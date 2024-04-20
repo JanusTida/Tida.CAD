@@ -24,7 +24,7 @@ namespace Tida.CAD.Input
         /// <summary>
         /// MouseButtonEventArgs in WPF;
         /// </summary>
-        public MouseButtonEventArgs MouseButtonEventArgs { get; set; }
+        public MouseButtonEventArgs? MouseButtonEventArgs { get; set; }
 #endif
     }
 }

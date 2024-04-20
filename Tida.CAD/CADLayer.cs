@@ -162,23 +162,23 @@ namespace Tida.CAD
         /// <summary>
         /// 对象被移除事件;
         /// </summary>
-        public event EventHandler<IEnumerable<DrawObject>> DrawObjectsRemoved;
+        public event EventHandler<IEnumerable<DrawObject>>? DrawObjectsRemoved;
         
         /// <summary>
         /// 对象被增加事件;
         /// </summary>
-        public event EventHandler<IEnumerable<DrawObject>> DrawObjectsAdded;
+        public event EventHandler<IEnumerable<DrawObject>>? DrawObjectsAdded;
 
          
         /// <summary>
         /// 绘制对象集合已经被清除事件;
         /// </summary>
-        public event EventHandler DrawObjectsCleared;
+        public event EventHandler? DrawObjectsCleared;
 
         /// <summary>
         /// 绘制对象集合即将被清除事件;
         /// </summary>
-        public event EventHandler DrawObjectsClearing;
+        public event EventHandler? DrawObjectsClearing;
     }
 
 

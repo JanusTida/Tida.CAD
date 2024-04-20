@@ -53,7 +53,7 @@ namespace Tida.CAD.Extensions
         /// <returns></returns>
         public static IEnumerable<TDrawObject> GetAllVisibleDrawObjects<TDrawObject>(this ICADControl cadContext) where TDrawObject : DrawObject
         {
-            return GetAllDrawObjects(cadContext).Select(p => p as TDrawObject).Where(p => p != null);
+            return GetAllDrawObjects(cadContext).OfType<TDrawObject>().Where(p => p != null);
         }
 
         /// <summary>

@@ -25,7 +25,7 @@ namespace Tida.CAD
         /// <param name="pen"></param>
         /// <param name="point0">The position of first </param>
         /// <param name="point1"></param>
-        void DrawLine(Pen pen, Point point0, Point point1);
+        void DrawLine(Pen? pen, Point point0, Point point1);
         
         /// <summary>
         /// Draw an arc ;
@@ -35,7 +35,7 @@ namespace Tida.CAD
         /// <param name="radius">The radius of the arc</param>
         /// <param name="beginangle">The start angle of the arc,this angle starts from the 3 o'clock</param>
         /// <param name="angle">The angle in unclockwise,unit in rad</param>
-        void DrawArc(Pen pen, Point center, double radius, double beginangle, double angle);
+        void DrawArc(Pen? pen, Point center, double radius, double beginangle, double angle);
 
         /// <summary>
         /// Draw a Polygon;
@@ -43,7 +43,7 @@ namespace Tida.CAD
         /// <param name="points">The collection of vertexs of the polygon</param>
         /// <param name="brush"></param>
         /// <param name="pen"></param>
-        void DrawPolygon(IEnumerable<Point> points, Brush brush, Pen pen);
+        void DrawPolygon(IEnumerable<Point> points, Brush? brush, Pen? pen);
 
         /// <summary>
         /// Draw an ellipse;
@@ -51,21 +51,21 @@ namespace Tida.CAD
         /// <param name="brush"></param>
         /// <param name="pen"></param>
         /// <param name="center"></param>
-        void DrawEllipse(Brush brush,Pen pen, Point center,double radiusX,double radiusY);
+        void DrawEllipse(Brush? brush,Pen? pen, Point center,double radiusX,double radiusY);
 
         /// <summary>
         /// Draw text;
         /// </summary>
         /// <param name="formattedText"></param>
         /// <param name="origin"></param>
-        void DrawText(FormattedText formattedText, Point origin);
+        void DrawText(FormattedText? formattedText, Point origin);
 
         /// <summary>
         /// Draw a path;
         /// </summary>
         /// <param name="pen"></param>
         /// <param name="points">The path vertexs of the curve</param>
-        void DrawCurve(Pen pen, IEnumerable<Point> points);
+        void DrawCurve(Pen? pen, IEnumerable<Point> points);
 
         /// <summary>
         /// Draw a rectangle;
@@ -73,7 +73,7 @@ namespace Tida.CAD
         /// <param name="brush"></param>
         /// <param name="pen"></param>
         /// <param name="cadRect"></param>
-        void DrawRectangle(CADRect cadRect,Brush brush, Pen pen);
+        void DrawRectangle(CADRect cadRect,Brush? brush, Pen? pen);
 
 
 #if WPF

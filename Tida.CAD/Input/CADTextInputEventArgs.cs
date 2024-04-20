@@ -14,7 +14,7 @@ namespace Tida.CAD.Input
         /// <summary>
         /// TextCompositionEventArgs in WPF;
         /// </summary>
-        public TextCompositionEventArgs TextCompositionEventArgs { get; set; }
+        public TextCompositionEventArgs? TextCompositionEventArgs { get; set; }
 #endif
     }
 }
