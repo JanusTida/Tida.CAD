@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:local="clr-namespace:Tida.Canvas.Shell.ComponentModel.Languages.zh_CN">
+  <sys:String x:Key="CategoryName_Appearance">外观</sys:String>
+  <sys:String x:Key="DisplayName_IsVisible">可见</sys:String>
+  <sys:String x:Key="DescriptionName_IsVisible">是否可见</sys:String>
+  <sys:String x:Key="CategoryName_State">状态</sys:String>
+  <sys:String x:Key="CategoryName_Geometry">几何</sys:String>
+  <sys:String x:Key="DisplayName_IsSelected">选中</sys:String>
+  <sys:String x:Key="DescriptionName_IsSelected">是否选中</sys:String>
+  <sys:String x:Key="CategoryName_Other">其它</sys:String>
+  <sys:String x:Key="DisplayName_PointPosition">位置</sys:String>
+  <sys:String x:Key="DescriptionName_ScreenRadius">该值指示指定点在屏幕视图的半径,该半径不随画布缩放大小变化而变化</sys:String>
+  <sys:String x:Key="DisplayName_ScreenRadius">视图半径</sys:String>
+  <sys:String x:Key="DescriptionName_PointPosition">指定点在视图上的数学位置</sys:String>
+  <sys:String x:Key="InputInstruction_Line2DStart">起始</sys:String>
+  <sys:String x:Key="InputInstruction_Line2DEnd">终止</sys:String>
+  <sys:String x:Key="InputInstruction_X">X</sys:String>
+  <sys:String x:Key="InputInstruction_Y">Y</sys:String>
+  <sys:String x:Key="DisplayName_Line2D">线段</sys:String>
+  <sys:String x:Key="DescriptionName_Line2D">线段的描述blablabla~</sys:String>
+  <sys:String x:Key="DisplayName_DrawModelLineLine2D">线段</sys:String>
+  <sys:String x:Key="DescriptionName_DrawModelLineLine2D">线模的线段信息</sys:String>
+  <sys:String x:Key="DisplayName_EllipseRadius">半径</sys:String>
+</ResourceDictionary>

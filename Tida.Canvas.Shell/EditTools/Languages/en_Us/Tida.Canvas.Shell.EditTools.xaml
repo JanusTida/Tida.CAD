@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:local="clr-namespace:Tida.Canvas.Shell.EditTools.Languages.zh_CN">
+  <sys:String x:Key="EditToolGroupName_BasicEditor">Basic</sys:String>
+  <sys:String x:Key="EditToolName_SingleLine">Single Line</sys:String>
+  <sys:String x:Key="EditToolName_Point">Point</sys:String>
+  <sys:String x:Key="EditToolName_MultiLine">Multi Lines</sys:String>
+  <sys:String x:Key="EditToolName_RoundDiameterTwoPoints">Create ellipse with diameter</sys:String>
+  <sys:String x:Key="EditToolGroupName_Round">Ellipse</sys:String>
+  <sys:String x:Key="EditToolName_RoundCenterRadiusPoints">Create ellipse with center and radius</sys:String>
+  <sys:String x:Key="EditToolGroupName_Rectangle">Rectangle</sys:String>
+  <sys:String x:Key="EditToolName_RectangleDiagLinePoints">Create rectangle with one diameter</sys:String>
+  <sys:String x:Key="EditToolName_MoveTool">Move</sys:String>
+  <sys:String x:Key="EditToolName_CopyTool">Copy</sys:String>
+  <sys:String x:Key="EditToolName_TrimTool">Trim/Extend</sys:String>
+  <sys:String x:Key="EditToolTip_BeginText_Trim">Trim/Extend tool activated,select objects with rectangle with the mouse to  trim,hold shift to Extend.</sys:String>
+  <sys:String x:Key="EditToolTip_EndText_Trim">Trim/Extend tool exited.</sys:String>
+  <sys:String x:Key="EditToolTip_EndText_Copy">Copy tool exited.</sys:String>
+  <sys:String x:Key="EditToolTip_BeginText_Copy">Copy tool activated,Left click and drag to copy selected objects,hold Ctrl key to select more objects.</sys:String>
+  <sys:String x:Key="EditToolTip_BeginText_Line">Line tool activated.</sys:String>
+  <sys:String x:Key="EditToolTip_EndText_Line">Line tool exited.</sys:String>
+  <sys:String x:Key="EditToolTip_BeginText_Move">Move tool acvtivated,Left click and drag to move selected objects,hold Ctrl key to select more objects.</sys:String>
+  <sys:String x:Key="EditToolTip_EndText_Move">Move tool exited.</sys:String>
+  <sys:String x:Key="EditToolGroupName_Line">Line</sys:String>
+  <sys:String x:Key="EditToolName_OffsetTool">Offset</sys:String>
+  <sys:String x:Key="EditToolName_MirrorTool">Mirror</sys:String>
+  <sys:String x:Key="EditToolTip_BeginText_Offset">Offset tool acvtivated.</sys:String>
+  <sys:String x:Key="EditToolTip_InputOffset">Input the value of offset,press Enter to confirm.</sys:String>
+  <sys:String x:Key="EditToolTip_SelectDrawObject">Left click to selected objects that need to be moved.</sys:String>
+  <sys:String x:Key="EditToolTip_DrawObjectSelected">Objects confirmed.left click to confirm the offset value.</sys:String>
+  <sys:String x:Key="EditToolTip_EndText_Offset">Offset tool exited.</sys:String>
+  <sys:String x:Key="EditToolTip_BeginText_LengthMeasure">Measure tool(Length)  activated.</sys:String>
+  <sys:String x:Key="EditToolTip_EndText_LengthMeasure">Measure tool(Length) exited.</sys:String>
+  <sys:String x:Key="EditToolName_MeasureLength">Length</sys:String>
+  <sys:String x:Key="EditToolGroupName_Measure">Measure</sys:String>
+  <sys:String x:Key="EditToolName_MeasureAngle">Angle</sys:String>
+  <sys:String x:Key="MenuItemName_MeasureShouldCommitMeasureData">Mark</sys:String>
+  <sys:String x:Key="EditToolTip_BeginText_AngleMeasure">Measure tool(Angle) activated.</sys:String>
+  <sys:String x:Key="EditToolTip_EndText_AngleMeasure">Measure tool(Angle) exited.</sys:String>
+  <sys:String x:Key="EditToolTip_AngleMeasure_FirstMouseDownPositionConfirmed">One end point has been specified,please specify the vertex.</sys:String>
+  <sys:String x:Key="EditToolTip_AngleMeasure_SecondMouseDownPositionConfirmed">The vertex has been specifed,please specify the another on.</sys:String>
+  <sys:String x:Key="EditToolTip_AngleMeasure_ConfirmFirstMouseDownPosition">Please specify the first end point.</sys:String>
+  <sys:String x:Key="EditToolTip_AngleMeasure_AngleCreated">One angle has already been created.</sys:String>
+    <sys:String x:Key="EditToolGroupName_Arc">Arc</sys:String>
+    <sys:String x:Key="EditToolName_ArcStartAndCenterThenEnd">Start,Center,End</sys:String>
+</ResourceDictionary>

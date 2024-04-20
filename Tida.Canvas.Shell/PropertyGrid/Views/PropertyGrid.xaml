@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="Tida.Canvas.Shell.PropertyGrid.Views.PropertyGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Tida.Canvas.Shell.PropertyGrid.Views"
+             xmlns:prism="http://prismlibrary.com/" prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Telerik.Windows.Themes.Office2013;component/Themes/Telerik.Windows.Controls.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Telerik.Windows.Themes.Office2013;component/Themes/Telerik.Windows.Controls.Data.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Telerik.Windows.Themes.Office2013;component/Themes/Telerik.Windows.Controls.Input.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <telerik:RadPropertyGrid Item="{Binding Item}"/>
+</UserControl>

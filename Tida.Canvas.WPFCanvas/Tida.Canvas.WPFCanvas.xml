@@ -1,0 +1,1493 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tida.Canvas.WPFCanvas</name>
+    </assembly>
+    <members>
+        <member name="T:Tida.Canvas.WPFCanvas.CanvasControl">
+            <summary>
+            画布控件;
+            </summary>
+            <summary>
+            <see cref="T:Tida.Canvas.Contracts.ICanvasScreenConvertable"/>相关成员;
+            </summary>
+            <summary>
+            只读部分;
+            </summary>
+            <summary>
+            交互预处理部分;
+            </summary>
+            <summary>
+            鼠标,键盘动作的重写;
+            </summary>
+            <summary>
+            网格部分;
+            </summary>
+            <summary>
+            原点部分;
+            </summary>
+            <summary>
+            缩放部分;
+            </summary>
+            <summary>
+            画布拖拽处理部分;
+            </summary>
+            <summary>
+            Cursor(鼠标形状)部分;
+            </summary>
+            <summary>
+            编辑工具以及撤销/重做部分;
+            </summary>
+            <summary>
+            撤销/重做部分;
+            </summary>
+            <summary>
+            内容图层,绘制对象部分;
+            </summary>
+            <summary>
+            辅助规则部分;
+            </summary>
+            <summary>
+            绘制对象的选取(点击,按键)部分;
+            </summary>
+            <summary>
+            绘制对象的选取(拖放)部分;
+            </summary>
+            <summary>
+            与被选择绘制对象的交互部分;
+            </summary>
+            <summary>
+            鼠标实时位置;
+            </summary>
+            <summary>
+            输入设备封装;
+            </summary>
+            <summary>
+            原生对象部分;
+            </summary>
+            <summary>
+            输入事件;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.InternalCanvas">
+            <summary>
+            ICanvas画布工具的内部实现,用于传递到<see cref="!:IDrawable.Draw(ICanvas)"/>中进行绘制;
+            通过更改<see cref="P:Tida.Canvas.WPFCanvas.WindowsCanvas.DrawingContext"/>实现复用的目的;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.CanvasControl._lastMouseDownPointForPan">
+            <summary>
+            记录鼠标按下的位置,拖拽画布时使用;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.CanvasControl._isDragging">
+            <summary>
+            记录是否正在被拖拽;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.CanvasControl._lastPanOffsetBeforeDragging">
+            <summary>
+            记录未拖动前原点的视图坐标(用于拖拽进行中的时候);
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.CanvasControl._visualDict">
+            <summary>
+            可绘制对象与WPF DrawingVisual缓存;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.CanvasControl._undoTransactionBuffer">
+            <summary>
+            撤销编辑事务栈;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.CanvasControl._redoTransactionBuffer">
+            <summary>
+            重做编辑事务栈;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.CanvasControl._handlingRoutedEvent">
+            <summary>
+            是否正在处理路由事件;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.CanvasControl._transactionStackCreatedInOneRoutedEvent">
+            <summary>
+            在一次路由事件的处理时间内中,指示是否已经创建了一个事务栈;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.CanvasControl._activeSnapShape">
+            <summary>
+            当前的活动的辅助图形;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.CanvasControl._hoveredDrawObjects">
+            <summary>
+            当前被悬停的绘制对象集合;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.CanvasControl._canvasLayers">
+            <summary>
+            内部存储维护的所有图层集合;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.CanvasControl._positionHandlers">
+            <summary>
+            内部存储维护的所有位置预处理器集合;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.CanvasControl._lastMouseDownPositionForDragSelecting">
+            <summary>
+            记录上一次鼠标按下的位置,在拖放选择时使用;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.CanvasControl._dragSelectRectangle">
+            <summary>
+            拖放选择时所呈现的矩形对象;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.CanvasControl._anyPointSelectForDragSelect">
+            <summary>
+            拖放选取时是否为任意选中;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.CanvasControl._isRedoing">
+            <summary>
+            是否处于重做中;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.CanvasControl._isUndoing">
+            <summary>
+            是否处于撤销中;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.DrawObjectIsSelectedChanged">
+            <summary>
+            画布内绘制对象选定状态发生了变化事件;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.EditTransactionUndone">
+            <summary>
+            编辑事务已撤销;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.EditTransactionRedone">
+            <summary>
+            编辑事务已重做;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.DrawObjectsRemoved">
+            <summary>
+            绘制对象被移除;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.DrawObjectsAdded">
+            <summary>
+            绘制对象被添加;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.DrawObjectIsEditingChanged">
+            <summary>
+            绘制对象是否正在被编辑变化;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.DragSelect">
+            <summary>
+            拖拽选择事件;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.DrawSelectMouseMove">
+            <summary>
+            拖拽选择鼠标移动事件;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.PreviewInteractionWithDrawObjects">
+            <summary>
+            通知外部,将要针对指定的绘制对象集合,将要进行某种的类型输入交互的预处理事件;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.ClickSelect">
+            <summary>
+            点击选取事件;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.InitializePanOffset">
+            <summary>
+            初始化原点所在坐标;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.SetCenterScreen(Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            通过调整原点的视图偏移,使得某个某个视图坐标的某工程坐标点处于视图中心的位置;
+            </summary>
+            <param name="screenPoint"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.OnRender(System.Windows.Media.DrawingContext)">
+            <summary>
+            重写绘制函数;
+            </summary>
+            <param name="drawingContext"></param>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.CanvasProxy">
+            <summary>
+            画布坐标转化实例;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.UpdateCanvasProxy">
+            <summary>
+            更新<see cref="F:Tida.Canvas.WPFCanvas.CanvasControl._canvasProxy"/>中的关键参数;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.IsReadOnly">
+            <summary>
+            是否只读,指示是否可通过UI操作数据;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.InteractionHandlers">
+            <summary>
+            预处理器集合;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.HandlePosition(Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            对位置进行预处理;
+            </summary>
+            <param name="oriPosition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.SetupInteractionHandler(Tida.Canvas.Contracts.CanvasInteractionHandler)">
+            <summary>
+            装载位置预处理器;
+            </summary>
+            <param name="positionHandler"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.UnSetupInteractionHandler(Tida.Canvas.Contracts.CanvasInteractionHandler)">
+            <summary>
+            卸载位置预处理器;
+            </summary>
+            <param name="positionHandler"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.InteractionHandlers_CollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)">
+            <summary>
+            位置预处理器集合内容发生变化时的响应;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.HandleRoutedEvent``1(``0,System.Collections.Generic.IEnumerable{System.Predicate{``0}})">
+            <summary>
+            处理路由事件的方法,遍历处理器集合中的每一个元素进行处理,直到某一个处理器指示已被处理;
+            </summary>
+            <typeparam name="TEventArgs">事件参数类型</typeparam>
+            <param name="e">事件参数</param>
+            <param name="handlers">处理器集合</param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.OnPreviewMouseWheel(System.Windows.Input.MouseWheelEventArgs)">
+            <summary>
+            鼠标滚动;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.GetMouseWheelEventHandlers">
+            <summary>
+            获取内部所有鼠标滚动的处理器;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.OnPreviewMouseDown(System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            鼠标按下;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.GetMouseDownEventHandlers">
+            <summary>
+            获取内部所有鼠标按下的处理器;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.OnPreviewMouseMove(System.Windows.Input.MouseEventArgs)">
+            <summary>
+            鼠标移动;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.GetMouseMoveEventHandlers">
+            <summary>
+            获取内部所有鼠标移动的处理器;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.OnPreviewMouseUp(System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            鼠标弹起;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.GetMouseUpEventHandlers">
+            <summary>
+            获取内部所有鼠标弹起的处理器;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.OnPreviewKeyDown(System.Windows.Input.KeyEventArgs)">
+            <summary>
+            键盘按下;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.GetKeyDownEventHandlers">
+            <summary>
+            获取内部所有键盘按下的处理器;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.OnPreviewKeyUp(System.Windows.Input.KeyEventArgs)">
+            <summary>
+            键盘弹起;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.GetKeyUpEventHandlers">
+            <summary>
+            获取内部所有键盘弹起的处理器;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.GetTextInputEventHandlers">
+            <summary>
+            获取内部所有键盘键入文字事件;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.GridLineBrush">
+            <summary>
+            网格线颜色;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.GridLineThickness">
+            <summary>
+            网格线宽度;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.DrawGridLines(System.Windows.Media.DrawingContext)">
+            <summary>
+            绘制网格;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.PanLength">
+            <summary>
+            原点的十字边长;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.PanBrush">
+            <summary>
+            原点的十字画刷;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.PanThickness">
+            <summary>
+            原点的十字宽度;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.PanScreenPosition">
+            <summary>
+            原点所在的视图坐标;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.DrawPan(System.Windows.Media.DrawingContext)">
+            <summary>
+            绘制原点十字;
+            </summary>
+            <param name="drawingContext"></param>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.MinZoom">
+            <summary>
+            最小的放大等级;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.Zoom">
+            <summary>
+            缩放等级;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.MouseWheelOnZoom(System.Windows.Input.MouseWheelEventArgs)">
+            <summary>
+            鼠标滚动时的缩放响应;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.MoveUnitPositionToScreenPosition(Tida.Geometry.Primitives.Vector2D,System.Windows.Point)">
+            <summary>
+            通过调整原点的偏移,将某个工程坐标节点的位置对应至视图上某个坐标;
+            </summary>
+            <param name="unitPos"></param>
+            <param name="screenPos"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.MouseDownOnDrag(System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            鼠标按下时的拖拽响应;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.GetCursorOnDrag">
+            <summary>
+            根据当前是否处于拖拽状态设定Cursor;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.MouseMoveOnDrag(System.Windows.Input.MouseEventArgs)">
+            <summary>
+            鼠标移动时的拖拽处理;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.MouseUpOnDrag(System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            鼠标键弹起时的拖拽处理;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.DragCursor">
+            <summary>
+            进行拖动时,显示的鼠标指针;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.UpdateCursor">
+            <summary>
+            更新Cursor;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.GetAllCursorGetters">
+            <summary>
+            获取所有设定Cursor的设置器;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.CheckEditToolAvailable">
+            <summary>
+            根据当前的状态,判断是否可以使用编辑工具;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.CurrentEditTool">
+            <summary>
+            当前的编辑控件;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.CurrentEditTool_PropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            当前编辑工具发生变化时;
+            </summary>
+            <param name="d"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.OnEditToolChanged">
+            <summary>
+            当前编辑工具发生变化时;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.SetupEditTool(Tida.Canvas.Contracts.EditTool)">
+            <summary>
+            装载编辑工具,添加视觉元素,订阅事件等;
+            </summary>
+            <param name="editTool"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.UnSetupEditTool(Tida.Canvas.Contracts.EditTool)">
+            <summary>
+            卸载编辑工具;
+            </summary>
+            <param name="editTool"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.EditTool_CanRedoChanged(System.Object,Tida.Canvas.Events.CanRedoChangedEventArgs)">
+            <summary>
+            编辑工具的可重做状态变更时,触发事件;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.EditTool_CanUndoChanged(System.Object,Tida.Canvas.Events.CanUndoChangedEventArgs)">
+            <summary>
+            编辑工具的可撤销状态变更时,触发事件;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.EditTool_TransactionCommited(System.Object,Tida.Canvas.Contracts.IEditTransaction)">
+            <summary>
+            编辑工具呈递事务时发生;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.OnMouseDownOnEditTool(System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            鼠标按下的编辑处理;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.OnMouseMoveOnEditTool(System.Windows.Input.MouseEventArgs)">
+            <summary>
+            鼠标移动时的编辑处理;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.OnMouseUpOnEditTool(System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            鼠标弹起时的编辑处理;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.OnKeyDownOnEditTool(System.Windows.Input.KeyEventArgs)">
+            <summary>
+            键盘按下时的编辑处理;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.OnKeyUpOnEditTool(System.Windows.Input.KeyEventArgs)">
+            <summary>
+            键盘弹起时的编辑处理;
+            </summary>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.OnTextInputOnEditTool(System.Windows.Input.TextCompositionEventArgs)">
+            <summary>
+            键盘键入时的编辑处理;
+            </summary>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.GetCursorOnEditTool">
+            <summary>
+            根据当前是否处于编辑状态设定Cursor;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.LastEditPosition">
+            <summary>
+            上次编辑的标识位置;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.CanShowSnapOnEditTool">
+            <summary>
+            当当前编辑工具不为空,且指示<see cref="P:Tida.Canvas.Contracts.EditTool.IsEditing"/>为假时,不能显示辅助图形;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.CanUndo">
+            <summary>
+            能否撤销;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.CanRedo">
+            <summary>
+            能否重做;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.CanUndoChanged">
+            <summary>
+            可撤销状态发生变化;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.Redo">
+            <summary>
+            重做;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.Undo">
+            <summary>
+            撤销操作;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.CanRedoChanged">
+            <summary>
+            可重做状态发生变化;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.RaiseCanUndoRedoChangedEvents">
+            <summary>
+            触发可撤销/重做状态变更事件;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.CommitTransaction(Tida.Canvas.Contracts.IEditTransaction)">
+            <summary>
+            添加事务;将事务添加至撤销栈内;
+            </summary>
+            <param name="editTransaction"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.ClearTransactions">
+            <summary>
+            清除所有事务;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.ActiveLayer">
+            <summary>
+            当前活动图层;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.Layers">
+            <summary>
+            所有内容图层;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.Layers_PropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            图层集合发生变更时;
+            </summary>
+            <param name="d"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.Layers_CollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)">
+            <summary>
+            图层集合发生变化时的响应;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.SetupLayer(Tida.Canvas.Contracts.CanvasLayer)">
+            <summary>
+            安装图层,绘制对象,事件注册等操作;
+            </summary>
+            <param name="canvasLayer"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.UnSetupLayer(Tida.Canvas.Contracts.CanvasLayer)">
+            <summary>
+            卸载图层;
+            </summary>
+            <param name="canvasLayer"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.CanvasLayer_DrawObjectsAdded(System.Object,System.Collections.Generic.IEnumerable{Tida.Canvas.Contracts.DrawObject})">
+            <summary>
+            图层内可绘制元素被添加时的响应;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.CanvasLayer_DrawObjectClearing(System.Object,System.EventArgs)">
+            <summary>
+            被清除响应;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.AddDrawObjects(System.Collections.Generic.IEnumerable{Tida.Canvas.Contracts.DrawObject})">
+            <summary>
+            添加绘制对象;
+            </summary>
+            <param name="drawObject"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.RemoveDrawObjects(System.Collections.Generic.IEnumerable{Tida.Canvas.Contracts.DrawObject})">
+            <summary>
+            移除绘制元素;
+            </summary>
+            <param name="drawObject"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.DrawObject_IsVisibleChanged(System.Object,System.EventArgs)">
+            <summary>
+            绘制对象的可见状态发生变化时的动作;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.DrawObject_EditTransActionCommited(System.Object,Tida.Canvas.Contracts.IEditTransaction)">
+            <summary>
+            绘制对象呈递事务时加入到撤销栈中;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.DrawObject_IsSelectedChanged(System.Object,Tida.Canvas.Events.ValueChangedEventArgs{System.Boolean})">
+            <summary>
+            绘制对象选中状态发生变化时,触发相关事件;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.DrawObject_IsEditingChanged(System.Object,Tida.Canvas.Events.ValueChangedEventArgs{System.Boolean})">
+            <summary>
+            绘制对象是否被编辑状态发生变化时,触发相关事件;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.CanvasLayer_DrawObjectsRemoved(System.Object,System.Collections.Generic.IEnumerable{Tida.Canvas.Contracts.DrawObject})">
+            <summary>
+            图层内可绘制元素被移除时的响应;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.AddDrawable(Tida.Canvas.Contracts.IDrawable)">
+            <summary>
+            添加Drawble对象,扩充缓冲区以及VisualTree等操作;
+            </summary>
+            <param name="drawable"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.RemoveDrawable(Tida.Canvas.Contracts.IDrawable)">
+            <summary>
+            移除Drawable对象,删减缓冲区以及VisualTree等操作;
+            </summary>
+            <param name="drawable"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.DrawDrawable(Tida.Canvas.Contracts.IDrawable)">
+            <summary>
+            绘制对象;
+            </summary>
+            <param name="drawable">负责绘制逻辑的单元</param>
+            <remarks>该对象必须</remarks>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.DrawDrawableCore(Tida.Canvas.Contracts.IDrawable,System.Windows.Media.DrawingVisual)">
+            <summary>
+            绘制可绘制对象核心;
+            </summary>
+            <param name="drawable">可绘制对象</param>
+            <param name="drawingVisual">对应的WPF-DrawingVisual</param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.RemoveAllVisualsOfLayer(Tida.Canvas.Contracts.CanvasLayer)">
+            <summary>
+            移除来自对应图层内的所有绘制元素;
+            </summary>
+            <param name="canvasLayer"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.CanvasLayer_IsVisibleChanged(System.Object,System.EventArgs)">
+            <summary>
+            图层可见状态发生变化时的响应;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.Drawable_VisualChanged(System.Object,System.EventArgs)">
+            <summary>
+            某个图像单元内容发生变化时的响应;
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.CanShowSnapOnLayersAndDrawObjects">
+            <summary>
+            根据当前是否存在绘制对象在自编辑的状态,指示是否可以显示辅助图形,
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.IsSnapingEnabled">
+            <summary>
+            辅助是否可用;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.SnapShapeRules">
+            <summary>
+            辅助规则集合;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.MouseMoveOnSnaping(System.Windows.Input.MouseEventArgs)">
+            <summary>
+            鼠标移动时,辅助的判断;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.MouseDownOnSnaping(System.Windows.Input.MouseEventArgs)">
+            <summary>
+            鼠标按下时,辅助的判断;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.SetSnapStateOnMouse(System.Windows.Input.MouseEventArgs)">
+            <summary>
+            根据鼠标的位置设定当前的辅助图形;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="T:Tida.Canvas.WPFCanvas.CanvasControl.CanSnapShowResult">
+            <summary>
+            获取是否能够显示辅助图形的结果;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.CanSnapShowResult.CanShow">
+            <summary>
+            是否能够显示;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.CanSnapShowResult.Handled">
+            <summary>
+            是否已经处理;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.GetCanShowSnapShapeGetters">
+            <summary>
+            获取是否能够显示辅助图形的设定器集合;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.MouseHoverSnapShapeChanged">
+            <summary>
+            鼠标所处的辅助节点发生变化时;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.GetSnapShape(Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            根据关注点的位置,获得辅助图形;
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.Snaping">
+            <summary>
+            正在判断辅助的事件;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.MouseMoveOnSelectDrawObject(System.Windows.Input.MouseEventArgs)">
+            <summary>
+            鼠标移动时绘制对象的可选取状态的感应处理;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.MouseDownOnSelectDrawObject(System.Windows.Input.MouseEventArgs)">
+            <summary>
+            鼠标按下时选取绘制对象的处理;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.KeyDownOnSelectDrawObject(System.Windows.Input.KeyEventArgs)">
+            <summary>
+            键盘按下时选取的处理;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.TabKeyDownOnSelectDrawObject">
+            <summary>
+            键盘按下了Tab时的处理,交替选择单元;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.GetCursorOnSelect">
+            <summary>
+            根据选取状态设定Cursor;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.AddSelectRectangleToDict">
+            <summary>
+            将拖放选中图形加入到<see cref="F:Tida.Canvas.WPFCanvas.CanvasControl._visualDict"/>
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.MouseDownOnDragingSelectDrawObject(System.Windows.Input.MouseEventArgs)">
+            <summary>
+            鼠标按下时拖放选取绘制对象的处理;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.MouseMoveOnDragingSelectDrawObject(System.Windows.Input.MouseEventArgs)">
+            <summary>
+            鼠标移动时拖放选取绘制对象的处理;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.KeyDownOnDragingSelectDrawObject(System.Windows.Input.KeyEventArgs)">
+            <summary>
+            键盘弹起时拖放选取绘制对象的处理;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.EditToolChangedOnDragingSelectDrawObject">
+            <summary>
+            当前编辑编辑工具发生变化时;拖放选取绘制对象的处理;
+            </summary>
+            <param name="editTool"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.HandleDragSelectOnMouseMove(Tida.Canvas.Events.DragSelectMouseMoveEventArgs)">
+            <summary>
+            设置拖放选取时鼠标移动参数;
+            <paramref name="mousePosition">鼠标的当前位置</paramref>
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.CanvasControl._selectedDrawObjectsToBeInteracted">
+            <summary>
+            当前正在与之交互的绘制对象集合缓存;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.CheckInteractWithSelectedDrawObjectsEnabled">
+            <summary>
+            根据当前的状态,判断是否可以与被选择绘制对象交互;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.MouseDownOnSelectedDrawObjects(System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            鼠标按下时与被选取对象的交互;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.MouseMoveOnSelectedDrawObjects(System.Windows.Input.MouseEventArgs)">
+            <summary>
+            鼠标移动时与选取对象的交互;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.KeyDownOnSelectedDrawObjects(System.Windows.Input.KeyEventArgs)">
+            <summary>
+            键盘按下时与选取对象的交互;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.KeyUpOnSelectedDrawObjects(System.Windows.Input.KeyEventArgs)">
+            <summary>
+            键盘弹起时与选取对象的交互;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.CanvasControl.CurrentMousePosition">
+            <summary>
+            当前的鼠标所在的工程数学坐标;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.CurrentMousePositionChanged">
+            <summary>
+            当前的鼠标所在的工程数学坐标发生变化事件;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.MouseMoveOnCurrentMousePosition(System.Windows.Input.MouseEventArgs)">
+            <summary>
+            鼠标移动时,通知当前鼠标的工程数学坐标节点变化;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.CanvasPreviewMouseDown">
+            <summary>
+            鼠标按下事件;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.CanvasPreviewMouseMove">
+            <summary>
+            鼠标移动事件;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.CanvasPreviewMouseUp">
+            <summary>
+            鼠标弹起事件;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.CanvasPreviewKeyDown">
+            <summary>
+            键盘按下事件;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.CanvasPreviewKeyUp">
+            <summary>
+            键盘弹起事件;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.CanvasControl.CanvasPreviewTextInput">
+            <summary>
+            键盘输入事件;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.GetMouseUnitPosition(System.Windows.Input.MouseEventArgs)">
+            <summary>
+            获取鼠标事件的数学坐标位置;
+            </summary>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.CanvasControl.MouseDownOnPreview(System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            鼠标按下时,通知外部;
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="T:Tida.Canvas.WPFCanvas.Constants">
+            <summary>
+            媒体相关常量;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.Constants.DefaultCanvasBackground">
+            <summary>
+            画布的默认背景色;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.Constants.AnySelectBrush">
+            <summary>
+            拖放操作中,任意全选的矩形画刷;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.Constants.AnySelectPen">
+            <summary>
+            拖放操作中,任意全选的笔;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.Constants.AllSelectBrush">
+            <summary>
+            拖放操作中,全选的矩形画刷;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.Constants.AllSelectPen">
+            <summary>
+            拖放操作中,全选的笔;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.WPFCanvas.Geometry.Vector2DAdapter">
+            <summary>
+            <see cref="T:Tida.Geometry.Primitives.Vector2D"/>与<see cref="T:System.Windows.Point"/>的适配器;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.Geometry.Vector2DAdapter.ConvertToSystemPoint(Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            坐标转化为系统坐标;
+            </summary>
+            <param name="vector"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.Geometry.Vector2DAdapter.ConverterToVector2D(System.Windows.Point)">
+            <summary>
+            从系统坐标转化为坐标;
+            </summary>
+            <param name="vector"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.WPFCanvas.Input.InputDeviceWrapper">
+            <summary>
+            输入设备WPF封装;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.WPFCanvas.Input.KeyAdapter">
+            <summary>
+            键盘事件参数适配器;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.Input.KeyAdapter.ConvertToKeyDownEventArgs(System.Windows.Input.KeyEventArgs)">
+            <summary>
+            从WPF鼠标按下参数转化为鼠标按下参数;
+            </summary>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.Input.KeyAdapter.ConvertToKey(System.Windows.Input.Key)">
+            <summary>
+            从WPF系统按键转化为按键;
+            </summary>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.Input.KeyAdapter.ConvertToSystemKey(Tida.Canvas.Input.Key)">
+            <summary>
+            从按键转化为WPF系统按键;
+            </summary>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.Input.KeyAdapter.ConvertToModifierKeys(System.Windows.Input.ModifierKeys)">
+            <summary>
+            从WPF系统修饰键转换为修饰键;
+            </summary>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.WPFCanvas.Input.KeyBoardWrapper">
+            <summary>
+            WPF键盘服务封装;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.Input.KeyBoardWrapper._staticInstance">
+            <summary>
+            静态实例;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.Input.KeyBoardWrapper.PreviewKeyDown">
+            <summary>
+            键盘按下事件;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.Input.KeyBoardWrapper.PreviewKeyUp">
+            <summary>
+            键盘弹起事件;
+            </summary>
+        </member>
+        <member name="E:Tida.Canvas.WPFCanvas.Input.KeyBoardWrapper.PreviewTextInput">
+            <summary>
+            输入事件;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.Input.MouseButtonAdapter.ConvertToMouseButton(System.Windows.Input.MouseButton)">
+            <summary>
+            从<see cref="T:System.Windows.Input.MouseButton"/>转换至<see cref="T:Tida.Canvas.Input.MouseButton"/>
+            </summary>
+            <param name="sysMouseButton"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.Input.MouseButtonStateAdapter.ConvertToMouseButtonState(System.Windows.Input.MouseButtonState)">
+            <summary>
+            从<see cref="T:System.Windows.Input.MouseButtonState"/>转换至<see cref="T:Tida.Canvas.Input.MouseButtonState"/>
+            </summary>
+            <param name="sysMouseButtonState"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.WPFCanvas.Input.MouseEventAdapter">
+            <summary>
+            鼠标参数适配器;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.Input.MouseEventAdapter.ConvertToMouseDownEventArgs(System.Windows.Input.MouseButtonEventArgs,Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            从WPF鼠标按下事件参数转化为<see cref="T:Tida.Canvas.Input.MouseDownEventArgs"/>
+            </summary>
+            <param name="e"></param>
+            <param name="position">指针所在的工程数学坐标</param>
+            <param name="viewLocation">指针所在的视图位置</param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.Input.MouseEventAdapter.ConvertToMouseUpEventArgs(System.Windows.Input.MouseButtonEventArgs,Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            从WPF鼠标弹起事件参数转化为<see cref="T:Tida.Canvas.Input.MouseUpEventArgs"/>
+            </summary>
+            <param name="e"></param>
+            <param name="position"></param>
+            <param name="viewLocation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.Input.MouseEventAdapter.ConvertToMouseMoveEventArgs(Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            从WPF鼠标移动事件参数转化为<see cref="T:Tida.Canvas.Input.MouseMoveEventArgs"/>
+            </summary>
+            <param name="e"></param>
+            <param name="position"></param>
+            <param name="viewLocation"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.WPFCanvas.Input.MouseWrapper">
+            <summary>
+            鼠标服务WPF封装;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.WPFCanvas.Input.TextInputAdapter">
+            <summary>
+            键入文字事件参数适配器;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.Input.TextInputAdapter.ConverterToTextInputEventArgs(System.Windows.Input.TextCompositionEventArgs)">
+            <summary>
+            从WPF<see cref="T:System.Windows.Input.TextCompositionEventArgs"/> 转化为<see cref="T:Tida.Canvas.Input.TextInputEventArgs"/>
+            </summary>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.WPFCanvas.Media.BrushAdapter">
+            <summary>
+            <see cref="!:Media.Brush"/>与<see cref="T:System.Windows.Media.Brush"/>的适配器;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.Media.BrushAdapter.ConvertToSystemBrush(Tida.Canvas.Media.Brush)">
+            <summary>
+            画刷转化为系统画刷的方法;
+            </summary>
+            <param name="brush"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.WPFCanvas.Media.ColorAdapter">
+            <summary>
+            <see cref="!:Media.Color"/>与<see cref="T:System.Windows.Media.Color"/>的适配器;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.Media.ColorAdapter.ConvertToSystemColor(Tida.Canvas.Media.Color)">
+            <summary>
+            从颜色转化为系统颜色;
+            </summary>
+            <param name="pen"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.WPFCanvas.Media.DashStyleAdapter">
+            <summary>
+            <see cref="T:Tida.Canvas.Media.DashStyle"/>与<see cref="T:System.Windows.Media.DashStyle"/>的适配器;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.Media.DashStyleAdapter.ConvertToSystemDashStyle(Tida.Canvas.Media.DashStyle)">
+            <summary>
+            DashStyle转化为系统DashStyle的方法;
+            </summary>
+            <param name="dashStyle"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.WPFCanvas.Media.FormattedTextAdapter">
+            <summary>
+            <see cref="T:Tida.Canvas.Media.FormattedText"/>与<see cref="T:System.Windows.Media.FormattedText"/>转化;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.Media.FormattedTextAdapter._typeFace">
+            <summary>
+            绘制文字所需用到的一个参数;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.WPFCanvas.Media.PenAdapter">
+            <summary>
+            <see cref="!:Media.Pen"/>与<see cref="T:System.Windows.Media.Pen"/>的适配器;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.Media.PenAdapter.ConverterToSystemPen(Tida.Canvas.Media.Pen)">
+            <summary>
+            从笔转化为系统笔;
+            </summary>
+            <param name="pen"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.WPFCanvas.SimpleRectangle">
+            <summary>
+            矩形绘制对象的简单实现,将用于用作拖放选择等;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.SimpleRectangle._rectangle2D">
+            <summary>
+            矩形数据;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.SimpleRectangle._fill">
+            <summary>
+            填充画刷;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.SimpleRectangle._pen">
+            <summary>
+            笔;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.WPFCanvas.VisualContainer">
+            <summary>
+            可视化对象，实现了向界面上添加可视化对象的功能，并且能够获取可视化对象的数量
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.VisualContainer._visuals">
+            <summary>
+            当前所有的可见对象
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.VisualContainer.Visuals">
+            <summary>
+            获取界面上所有的可视化对象
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.VisualContainer.GetVisualChild(System.Int32)">
+            <summary>
+            获取Visual
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.VisualContainer.AddVisual(System.Windows.Media.Visual)">
+            <summary>
+            添加Visual
+            </summary>
+            <param name="visual"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.VisualContainer.RemoveVisual(System.Windows.Media.Visual)">
+            <summary>
+            删除Visual
+            </summary>
+            <param name="visual"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.VisualContainer.ClearVisuals">
+            <summary>
+            清除视图;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.VisualContainer.GetVisual(System.Windows.Point)">
+            <summary>
+            命中测试
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tida.Canvas.WPFCanvas.WindowsCanvas">
+            <summary>
+            本类为根据<see cref="T:System.Windows.Media.DrawingContext"/>为基础所封装的WPF画布实现;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.WindowsCanvas.TypeFace">
+            <summary>
+            绘制文字所需用到的一个参数;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.WindowsCanvas.#ctor(Tida.Canvas.Contracts.ICanvasScreenConvertable)">
+            <summary>
+            根据一个画布-视图转化实现构建;
+            </summary>
+            <param name="canvasProxy">转化实现</param>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.WindowsCanvas.DrawingContext">
+            <summary>
+            被操作的DrawingContext实例;外部可更改本对象,以达到复用对象的目的,避免反复构建画布;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.WindowsCanvas._canvasProxy">
+            <summary>
+            因为绘制需要使用到坐标转换等的功能，以处理工程数学与WPF间的转换;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.WindowsCanvas.ValidateDrawingContext">
+            <summary>
+            验证DrawingContext是否可用;
+            </summary>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.WindowsCanvas.GetLimitedLine2D(Tida.Geometry.Primitives.Line2D,Tida.Geometry.Primitives.Rectangle2D2)">
+            <summary>
+            将线段限制到可见范围内;
+            </summary>
+            <param name="line">原坐标</param>
+            <returns>返回可见的线段</returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.WindowsCanvas.DrawLine(Tida.Canvas.Media.Pen,Tida.Geometry.Primitives.Line2D)">
+            <summary>
+            绘制线段;
+            </summary>
+            <param name="pen"></param>
+            <param name="line"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.WindowsCanvas.DrawArc(Tida.Canvas.Media.Pen,Tida.Geometry.Primitives.Vector2D,System.Double,System.Double,System.Double,System.Boolean)">
+            <summary>
+            绘制圆弧;
+            </summary>
+            <param name="pen"></param>
+            <param name="center"></param>
+            <param name="radius"></param>
+            <param name="beginangle"></param>
+            <param name="angle"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.WindowsCanvas.GetArcGeometry(System.Windows.Point,System.Windows.Point,System.Double,System.Boolean,System.Windows.Media.SweepDirection)">
+            <summary>
+            得到圆弧的几何图形;
+            </summary>
+            <param name="center"></param>
+            <param name="screenRadius"></param>
+            <param name="beginAngle"></param>
+            <param name="angle"></param>
+            <param name="smallAngle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.WindowsCanvas.DrawEllipse(Tida.Canvas.Media.Brush,Tida.Canvas.Media.Pen,Tida.Geometry.Primitives.Vector2D,System.Double,System.Double)">
+            <summary>
+            绘制(椭)圆;
+            </summary>
+            <param name="brush"></param>
+            <param name="pen"></param>
+            <param name="center"></param>
+            <param name="radiusX"></param>
+            <param name="radiusY"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.WindowsCanvas.DrawText(System.String,System.Double,Tida.Canvas.Media.Brush,Tida.Geometry.Primitives.Vector2D,System.Double)">
+            <summary>
+            绘制文字;
+            </summary>
+            <param name="text"></param>
+            <param name="emSize"></param>
+            <param name="foreground"></param>
+            <param name="origin"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.WindowsCanvas.GetCurveGeometry(System.Collections.Generic.IEnumerable{Tida.Geometry.Primitives.Vector2D})">
+            <summary>
+            通过点的集合获取三次贝赛尔曲线
+            </summary>
+            <param name="points"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.WindowsCanvas.DrawCurve(Tida.Canvas.Media.Pen,System.Collections.Generic.IEnumerable{Tida.Geometry.Primitives.Vector2D})">
+            <summary>
+            绘制路径(未封闭区域);
+            </summary>
+            <param name="pen"></param>
+            <param name="points"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.WindowsCanvas.ConvertVectorToScreenPoint(Tida.Geometry.Primitives.Vector2D)">
+            <summary>
+            从坐标节点转换为以当前画布视图为标准的屏幕(系统)节点;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.WindowsCanvas.DrawRectangle(Tida.Geometry.Primitives.Rectangle2D2,Tida.Canvas.Media.Brush,Tida.Canvas.Media.Pen)">
+            <summary>
+            绘制矩形;
+            </summary>
+            <param name="brush">填充颜色</param>
+            <param name="pen"></param>
+            <param name="rectangle"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.WindowsCanvas.DrawFill(System.Collections.Generic.IEnumerable{Tida.Geometry.Primitives.Vector2D},Tida.Canvas.Media.Brush,Tida.Canvas.Media.Pen)">
+            <summary>
+            根据所有的点，组成一个封闭区域，并且填充
+            </summary>
+            <param name="points">所有的顶点坐标</param>
+            <param name="brush">区域颜色</param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.WindowsCanvas.NativeDrawFill(System.Collections.Generic.IEnumerable{System.Windows.Point},System.Windows.Media.Brush,System.Windows.Media.Pen)">
+            <summary>
+            直接根据视图位置,绘制WPF封闭区域;
+            </summary>
+            <param name="screenPoints"></param>
+            <param name="brush"></param>
+            <param name="pen"></param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.WindowsCanvas.NativeDrawRectangle(Tida.Geometry.Primitives.Rectangle2D2,Tida.Canvas.Media.Brush,Tida.Canvas.Media.Pen)">
+            <summary>
+            以视图坐标为标准,绘制矩形;
+            </summary>
+            <param name="rectangle">以视图坐标为准的矩形</param>
+            <param name="brush">填充色</param>
+            <param name="pen">笔</param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.WindowsCanvas.NativeDrawEllipse(Tida.Canvas.Media.Brush,Tida.Canvas.Media.Pen,Tida.Geometry.Primitives.Vector2D,System.Double,System.Double)">
+            <summary>
+            以视图坐标为标准,绘制椭圆;
+            </summary>
+            <param name="rectangle">以视图坐标为准的矩形</param>
+            <param name="brush">填充色</param>
+            <param name="pen">笔</param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.WindowsCanvas.NativeDrawLine(Tida.Canvas.Media.Pen,Tida.Geometry.Primitives.Line2D)">
+            <summary>
+            以视图坐标为标准,绘制线段;
+            </summary>
+            <param name="rectangle">以视图坐标为准的矩形</param>
+            <param name="brush">填充色</param>
+            <param name="pen">笔</param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.WindowsCanvas.PushOpacity(System.Double)">
+            <summary>
+            推入不透明度效果;
+            </summary>
+            <param name="opacity">最大值为1D</param>
+        </member>
+        <member name="M:Tida.Canvas.WPFCanvas.WindowsCanvas.Pop">
+            <summary>
+            将上次的特效获取其他效果出栈;
+            </summary>
+        </member>
+        <member name="T:Tida.Canvas.WPFCanvas.WindowsCanvasScreenConverter">
+            <summary>
+            <see cref="T:Tida.Canvas.Contracts.ICanvasScreenConvertable"/>的一个实现;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.WindowsCanvasScreenConverter.ScreenResolution">
+            <summary>
+            Zoom为1.0时,工程数学单位和视图单位的比率;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.WindowsCanvasScreenConverter.DefaultZoom">
+            <summary>
+            默认缩放比例;
+            </summary>
+        </member>
+        <member name="F:Tida.Canvas.WPFCanvas.WindowsCanvasScreenConverter._zoom">
+            <summary>
+            当前缩放比例;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.WindowsCanvasScreenConverter.PanScreenPosition">
+            <summary>
+            原点所在视图位置;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.WindowsCanvasScreenConverter.ActualWidth">
+            <summary>
+            实际视图宽度;
+            </summary>
+        </member>
+        <member name="P:Tida.Canvas.WPFCanvas.WindowsCanvasScreenConverter.ActualHeight">
+            <summary>
+            实际视图高度;
+            </summary>
+        </member>
+    </members>
+</doc>

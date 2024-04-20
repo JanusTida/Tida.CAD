@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:local="clr-namespace:CDO.Canvas.Shell.App.Languages.zh_CN">
+  <sys:String x:Key="WindowDescrip_CancelingProcess">正在取消工作</sys:String>
+  <sys:String x:Key="MsgText_ConfirmToCancel">确认以取消工作</sys:String>
+  <sys:String x:Key="WindowTitle_InputString">请输入</sys:String>
+  <sys:String x:Key="MsgBtnText_OK">确定</sys:String>
+  <sys:String x:Key="MsgBtnText_No">否</sys:String>
+  <sys:String x:Key="MsgBtnText_Cancel">取消</sys:String>
+  <sys:String x:Key="MsgBtnText_Yes">是</sys:String>
+  <sys:String x:Key="MsgText_NoOptionSelected">未选择项</sys:String>
+  <sys:String x:Key="WindowTitle_Tip">提示</sys:String>
+</ResourceDictionary>
