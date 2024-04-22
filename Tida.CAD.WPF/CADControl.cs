@@ -18,7 +18,7 @@ namespace Tida.CAD.WPF {
     /// <summary>
     /// <see cref="ICADControl"/> implemented with WPF;
     /// </summary>
-    public partial class CADControl : Panel, ICADControl {
+    public partial class CADControl : Grid, ICADControl {
         static CADControl() {
             
             BackgroundProperty.OverrideMetadata(typeof(CADControl), new FrameworkPropertyMetadata(

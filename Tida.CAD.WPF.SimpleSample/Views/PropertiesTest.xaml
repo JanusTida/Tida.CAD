@@ -10,7 +10,7 @@
     <DockPanel>
         <UniformGrid DockPanel.Dock="Bottom">
             <CheckBox IsChecked="{Binding ElementName=cadControl,Path=IsDragSelectEnabled}">Drag Select Enabled</CheckBox>
-            <CheckBox IsChecked="{Binding ElementName=cadControl,Path=IsZoomEnabled}">Zoom Enabled</CheckBox>
+            <CheckBox IsChecked="{Binding ElementName=cadControl,Path=IsMouseWheelingZoomEnabled}">Mouse Zoom Enabled</CheckBox>
             <CheckBox IsChecked="{Binding ElementName=cadControl,Path=IsDragEnabled}">Drag Enabled</CheckBox>
             <StackPanel Orientation="Horizontal">
                 <TextBlock>GridLineThickness</TextBlock>
