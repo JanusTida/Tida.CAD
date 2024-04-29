@@ -34,7 +34,7 @@ namespace Tida.CAD.WPF {
             this.Focusable = true;
             
             RefreshPanPen();
-            RefreshGridLinePen();
+            RefreshGridsPen();
         }
         
         protected readonly VisualContainer VisualContainer = new VisualContainer();
@@ -152,7 +152,7 @@ namespace Tida.CAD.WPF {
             //绘制背景;
             //DrawBackground(drawingContext);
             //绘制网格;
-            DrawGridLines(drawingContext);
+            DrawGrids(drawingContext);
             //因为尺寸可能发生了变化,故需重新设定裁剪区域;
             var clipGeometry = new RectangleGeometry(
                 new Rect
@@ -448,91 +448,91 @@ namespace Tida.CAD.WPF {
     /// </summary>
     public partial class CADControl
     {
-        private Pen? _gridLinePen;
-        private void RefreshGridLinePen()
+        private Pen? _gridPen;
+        private void RefreshGridsPen()
         {
-            if(GridLineBrush == null || GridLineThickness <= 0 || !ShowGridLines)
+            if(GridsBrush == null || GridsThickness <= 0 || !ShowGrids)
             {
-                _gridLinePen = null;
+                _gridPen = null;
                 return;
             }
 
-            _gridLinePen = new Pen { Brush = GridLineBrush,Thickness = GridLineThickness };
-            _gridLinePen.Freeze();
+            _gridPen = new Pen { Brush = GridsBrush,Thickness = GridsThickness };
+            _gridPen.Freeze();
         }
 
         /// <summary>
         /// The brush of grid lines;
         /// </summary>
-        public Brush GridLineBrush
+        public Brush GridsBrush
         {
-            get { return (Brush)GetValue(GridLineBrushProperty); }
-            set { SetValue(GridLineBrushProperty, value); }
+            get { return (Brush)GetValue(GridsBrushProperty); }
+            set { SetValue(GridsBrushProperty, value); }
         }
 
-        private static readonly Brush DefaultGridLineBrush = new SolidColorBrush
+        private static readonly Brush DefaultGridsBrush = new SolidColorBrush
         {
             Color = Color.FromArgb(230, 80, 80, 80)
         };
-        public static readonly DependencyProperty GridLineBrushProperty =
-            DependencyProperty.Register(nameof(GridLineBrush), typeof(Brush), typeof(CADControl), new FrameworkPropertyMetadata(DefaultGridLineBrush, FrameworkPropertyMetadataOptions.AffectsRender, GridLineBrush_PropertyChanged));
+        public static readonly DependencyProperty GridsBrushProperty =
+            DependencyProperty.Register(nameof(GridsBrush), typeof(Brush), typeof(CADControl), new FrameworkPropertyMetadata(DefaultGridsBrush, FrameworkPropertyMetadataOptions.AffectsRender, GridBrush_PropertyChanged));
 
-        private static void GridLineBrush_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void GridBrush_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is not CADControl cadControl)
             {
                 return;
             }
-            cadControl.RefreshGridLinePen();
+            cadControl.RefreshGridsPen();
         }
 
         /// <summary>
         /// The thickness of grid lines;
         /// </summary>
-        public double GridLineThickness
+        public double GridsThickness
         {
-            get { return (double)GetValue(GirdLineThicknessProperty); }
-            set { SetValue(GirdLineThicknessProperty, value); }
+            get { return (double)GetValue(GirdThicknessProperty); }
+            set { SetValue(GirdThicknessProperty, value); }
         }
 
-        public static readonly DependencyProperty GirdLineThicknessProperty =
-            DependencyProperty.Register(nameof(GridLineThickness), typeof(double), typeof(CADControl), new FrameworkPropertyMetadata(0.2D,FrameworkPropertyMetadataOptions.AffectsRender,GridLineThickness_PropertyChanged));
+        public static readonly DependencyProperty GirdThicknessProperty =
+            DependencyProperty.Register(nameof(GridsThickness), typeof(double), typeof(CADControl), new FrameworkPropertyMetadata(0.2D,FrameworkPropertyMetadataOptions.AffectsRender,GridsThickness_PropertyChanged));
 
-        private static void GridLineThickness_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void GridsThickness_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is not CADControl cadControl)
             {
                 return;
             }
-            cadControl.RefreshGridLinePen();
+            cadControl.RefreshGridsPen();
         }
 
 
         /// <summary>
         /// Get or set whether grid lines should be shown;
         /// </summary>
-        public bool ShowGridLines
+        public bool ShowGrids
         {   
-            get { return (bool)GetValue(ShowGridLinesProperty); }
-            set { SetValue(ShowGridLinesProperty, value); }
+            get { return (bool)GetValue(ShowGridsProperty); }
+            set { SetValue(ShowGridsProperty, value); }
         }
 
-        public static readonly DependencyProperty ShowGridLinesProperty =
-            DependencyProperty.Register(nameof(ShowGridLines), typeof(bool), typeof(CADControl), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender, ShowGridLines_PropertyChanged));
+        public static readonly DependencyProperty ShowGridsProperty =
+            DependencyProperty.Register(nameof(ShowGrids), typeof(bool), typeof(CADControl), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender, ShowGrids_PropertyChanged));
 
-        private static void ShowGridLines_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void ShowGrids_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is not CADControl cadControl)
             {
                 return;
             }
-            cadControl.RefreshGridLinePen();
+            cadControl.RefreshGridsPen();
         }
 
         /// <summary>
         /// 绘制网格;
         /// </summary>
-        private void DrawGridLines(DrawingContext drawingContext)
+        private void DrawGrids(DrawingContext drawingContext)
         {
             //获得单元格的边长视图大小;
             var unitLength = CADScreenConverter.ToScreen(1);
@@ -540,7 +540,7 @@ namespace Tida.CAD.WPF {
             {
                 return;
             }
-            if(_gridLinePen == null)
+            if(_gridPen == null)
             {
                 return;
             }
@@ -560,7 +560,7 @@ namespace Tida.CAD.WPF {
             {
                 point0.X = horiPos;
                 point1.X = horiPos;
-                drawingContext.DrawLine(_gridLinePen, point0, point1);
+                drawingContext.DrawLine(_gridPen, point0, point1);
                 horiPos += unitLength;
             }
             #endregion
@@ -575,7 +575,7 @@ namespace Tida.CAD.WPF {
             {
                 point0.Y = vertiPos;
                 point1.Y = vertiPos;
-                drawingContext.DrawLine(_gridLinePen, point0, point1);
+                drawingContext.DrawLine(_gridPen, point0, point1);
                 vertiPos += unitLength;
             }
             #endregion
