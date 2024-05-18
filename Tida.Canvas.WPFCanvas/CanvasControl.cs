@@ -221,7 +221,7 @@ namespace Tida.Canvas.WPFCanvas {
             //绘制背景;
             //DrawBackground(drawingContext);
             //绘制网格;
-            DrawGridLines(drawingContext);
+            DrawGrids(drawingContext);
             //绘制原点十字;
             DrawPan(drawingContext);
 
@@ -728,35 +728,35 @@ namespace Tida.Canvas.WPFCanvas {
         /// <summary>
         /// 网格线颜色;
         /// </summary>
-        public Brush GridLineBrush
+        public Brush GridsBrush
         {
-            get { return (Brush)GetValue(GridLineBrushProperty); }
-            set { SetValue(GridLineBrushProperty, value); }
+            get { return (Brush)GetValue(GridBrushProperty); }
+            set { SetValue(GridBrushProperty, value); }
         }
 
-        private static readonly Brush DefaultGridLineBrush = new SolidColorBrush
+        private static readonly Brush DefaultGridsBrush = new SolidColorBrush
         {
             Color = Color.FromArgb(230, 80, 80, 80)
         };
-        public static readonly DependencyProperty GridLineBrushProperty =
-        DependencyProperty.Register(nameof(GridLineBrush), typeof(Brush), typeof(CanvasControl), new FrameworkPropertyMetadata(DefaultGridLineBrush, FrameworkPropertyMetadataOptions.AffectsRender));
+        public static readonly DependencyProperty GridBrushProperty =
+        DependencyProperty.Register(nameof(GridsBrush), typeof(Brush), typeof(CanvasControl), new FrameworkPropertyMetadata(DefaultGridsBrush, FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
         /// 网格线宽度;
         /// </summary>
-        public double GridLineThickness
+        public double GridsThickness
         {
-            get { return (double)GetValue(GirdLineThicknessProperty); }
-            set { SetValue(GirdLineThicknessProperty, value); }
+            get { return (double)GetValue(GirdsThicknessProperty); }
+            set { SetValue(GirdsThicknessProperty, value); }
         }
 
-        public static readonly DependencyProperty GirdLineThicknessProperty =
-            DependencyProperty.Register(nameof(GridLineThickness), typeof(double), typeof(CanvasControl), new FrameworkPropertyMetadata(0.2D,FrameworkPropertyMetadataOptions.AffectsRender));
+        public static readonly DependencyProperty GirdsThicknessProperty =
+            DependencyProperty.Register(nameof(GridsThickness), typeof(double), typeof(CanvasControl), new FrameworkPropertyMetadata(0.2D,FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
         /// 绘制网格;
         /// </summary>
-        private void DrawGridLines(DrawingContext drawingContext)
+        private void DrawGrids(DrawingContext drawingContext)
         {
             //获得单元格的边长视图大小;
             var unitLength = CanvasProxy.ToScreen(1);
@@ -765,20 +765,20 @@ namespace Tida.Canvas.WPFCanvas {
                 return;
             }
 
-            if(GridLineThickness <= 0)
+            if(GridsThickness <= 0)
             {
                 return;
             }
 
-            if(GridLineBrush == null)
+            if(GridsBrush == null)
             {
                 return;
             }
 
             var pen = new Pen
             {
-                Brush = GridLineBrush,
-                Thickness = GridLineThickness
+                Brush = GridsBrush,
+                Thickness = GridsThickness
             };
             pen.Freeze();
 
@@ -1876,7 +1876,7 @@ namespace Tida.Canvas.WPFCanvas {
                 return;
             }
 
-            if (_layerContainerVisualDict.TryGetValue(canvasLayer,out var layerContaienrVisual))
+            if (!_layerContainerVisualDict.TryGetValue(canvasLayer,out var layerContaienrVisual))
             {
                 return;
             }
