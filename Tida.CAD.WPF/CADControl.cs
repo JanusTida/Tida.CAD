@@ -1438,15 +1438,14 @@ namespace Tida.CAD.WPF {
         /// <param name="drawingVisual">对应的WPF-DrawingVisual</param>
         private void DrawDrawableCore(IDrawable drawable, DrawingVisual drawingVisual)
         {
-            var dc = drawingVisual.RenderOpen();
-            InternalCanvas.InernalDrawingContext = dc;
-
-            if (drawable is not CADElement canvasElement || canvasElement.IsVisible)
+            if (drawable is CADElement canvasElement && !canvasElement.IsVisible)
             {
-                drawable.Draw(InternalCanvas);
+                return;
             }
 
-
+            var dc = drawingVisual.RenderOpen();
+            InternalCanvas.InernalDrawingContext = dc;
+            drawable.Draw(InternalCanvas);
             dc.Close();
             InternalCanvas.InernalDrawingContext = null;
         }

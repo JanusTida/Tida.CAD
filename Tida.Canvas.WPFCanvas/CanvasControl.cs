@@ -2144,15 +2144,13 @@ namespace Tida.Canvas.WPFCanvas {
         /// <param name="drawingVisual">对应的WPF-DrawingVisual</param>
         private void DrawDrawableCore(IDrawable drawable, DrawingVisual drawingVisual)
         {
+            if (drawable is CanvasElement canvasElement && !canvasElement.IsVisible)
+            {
+                return;
+            }
             var dc = drawingVisual.RenderOpen();
             InternalCanvas.DrawingContext = dc;
-
-            if (!(drawable is CanvasElement canvasElement) || canvasElement.IsVisible)
-            {
-                drawable.Draw(InternalCanvas, CanvasProxy);
-            }
-
-
+            drawable.Draw(InternalCanvas, CanvasProxy);
             dc.Close();
             InternalCanvas.DrawingContext = null;
         }
