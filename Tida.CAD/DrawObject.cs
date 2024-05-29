@@ -36,7 +36,7 @@ namespace Tida.CAD {
         /// Get the bounding rect for the drawobject;
         /// </summary>
         /// <returns></returns>
-        public virtual CADRect? GetBoundingRect() => null;
+        public virtual CADRect? GetBoundingRect(ICADScreenConverter screenConverter) => null;
         
         private bool _isSelected;
         /// <summary>

@@ -36,7 +36,7 @@ namespace Tida.CAD.DrawObjects {
             }
         }
 
-        public override CADRect? GetBoundingRect() 
+        public override CADRect? GetBoundingRect(ICADScreenConverter screenConverter) 
         {
             var bottomLeft = new Point(Math.Min(Start.X, End.X), Math.Min(Start.Y, End.Y));
             var width = Math.Abs(Start.X - End.X);

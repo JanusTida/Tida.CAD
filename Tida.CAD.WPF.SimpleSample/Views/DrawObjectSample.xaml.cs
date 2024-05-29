@@ -101,5 +101,16 @@ namespace Tida.CAD.WPF.SimpleSample.Views
             };
             _cadLayer.AddDrawObject(arc);
         }
+
+        private void AddText_Click(object sender, RoutedEventArgs e)
+        {
+            var text = new Text
+            {
+                Content = "Hello World",
+                Position = new Point(0, 0),
+                FontSize = 14
+            };
+            _cadLayer.AddDrawObject(text);
+        }
     }
 }

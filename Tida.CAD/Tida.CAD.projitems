@@ -16,6 +16,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)DrawObjects\LineBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DrawObjects\Polygon.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DrawObjects\Rectangle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DrawObjects\Text.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\ClickSelectedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\ClickUnselectedEventArgs.cs" />
     <Compile Include="..\Tida.CAD\Events\ClickUnselectingEventArgs.cs" />

@@ -83,7 +83,7 @@ namespace Tida.CAD.DrawObjects {
         }
 
         
-        public override CADRect? GetBoundingRect()
+        public override CADRect? GetBoundingRect(ICADScreenConverter screenConverter)
         {
             return Rectangle2D;
         }
