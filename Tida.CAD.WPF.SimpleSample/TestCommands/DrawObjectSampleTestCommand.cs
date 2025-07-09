@@ -5,14 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Tida.CAD.WPF.SimpleSample.Views;
 
-namespace Tida.CAD.WPF.SimpleSample.TestCommands
+namespace Tida.CAD.WPF.SimpleSample.TestCommands;
+
+class DrawObjectSampleTestCommand : ITestCommand
 {
-    class DrawObjectSampleTestCommand : ITestCommand
-    {
-        public string Name => "DrawObjectSample";
+    public string Name => "DrawObjectSample";
 
-        public int Order => 1;
+    public int Order => 1;
 
-        public void Execute(TestExecuteContext testExecuteContext) => new DrawObjectSample().ShowDialog();
-    }
+    public void Execute(TestExecuteContext testExecuteContext) => new DrawObjectSample().ShowDialog();
 }

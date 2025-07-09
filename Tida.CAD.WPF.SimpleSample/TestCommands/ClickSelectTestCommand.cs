@@ -5,17 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Tida.CAD.WPF.SimpleSample.Views;
 
-namespace Tida.CAD.WPF.SimpleSample.TestCommands
+namespace Tida.CAD.WPF.SimpleSample.TestCommands;
+
+internal class ClickSelectTestCommand : ITestCommand
 {
-    internal class ClickSelectTestCommand : ITestCommand
+    public string Name => "ClickSelectTest";
+
+    public int Order => 3;
+
+    public void Execute(TestExecuteContext testExecuteContext)
     {
-        public string Name => "ClickSelectTest";
-
-        public int Order => 3;
-
-        public void Execute(TestExecuteContext testExecuteContext)
-        {
-            new ClickSelectTest().Show();
-        }
+        new ClickSelectTest().Show();
     }
 }

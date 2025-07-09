@@ -1,5 +1,4 @@
-﻿namespace Tida.CAD.Events
-{
-    class DrawObjectsMouseUpEventArgs {
-    }
+﻿namespace Tida.CAD.Events;
+
+class DrawObjectsMouseUpEventArgs {
 }

@@ -14,39 +14,38 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using Tida.CAD.DrawObjects;
 
-namespace Tida.CAD.WPF.SimpleSample
+namespace Tida.CAD.WPF.SimpleSample;
+
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+ 
+    public MainWindow()
     {
-     
-        public MainWindow()
+        InitializeComponent();
+
+        //使用反射获取所有测试命令;
+        var types = Assembly.GetExecutingAssembly().GetTypes();
+        var testCommandTypes = types.Where(type => type != typeof(ITestCommand) && typeof(ITestCommand).IsAssignableFrom(type));
+        var testCommands = testCommandTypes.Select(commandType => Activator.CreateInstance(commandType) as ITestCommand).OrderBy(p => p.Order);
+        foreach (var testCommand in testCommands)
         {
-            InitializeComponent();
-
-            //使用反射获取所有测试命令;
-            var types = Assembly.GetExecutingAssembly().GetTypes();
-            var testCommandTypes = types.Where(type => type != typeof(ITestCommand) && typeof(ITestCommand).IsAssignableFrom(type));
-            var testCommands = testCommandTypes.Select(commandType => Activator.CreateInstance(commandType) as ITestCommand).OrderBy(p => p.Order);
-            foreach (var testCommand in testCommands)
+            var button = new Button
             {
-                var button = new Button
+                Content = new Viewbox { Child = new TextBlock { Text = testCommand.Name } }
+            };
+            button.Click += delegate
+            {
+                var executeContext = new TestExecuteContext
                 {
-                    Content = new Viewbox { Child = new TextBlock { Text = testCommand.Name } }
+                    MainWindow = this
                 };
-                button.Click += delegate
-                {
-                    var executeContext = new TestExecuteContext
-                    {
-                        MainWindow = this
-                    };
-                    testCommand.Execute(executeContext);
-                };
-                uniformGrid.Children.Add(button);
-            }
-
+                testCommand.Execute(executeContext);
+            };
+            uniformGrid.Children.Add(button);
         }
+
     }
 }

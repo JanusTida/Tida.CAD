@@ -689,13 +689,17 @@ public partial class Text : DrawObject
         var thisPosition = e.Position;
 
         var textBBox = _fmtedTextGeo.Bounds;
-
+        
         var btmLeft = new Point(textBBox.BottomLeft.X, -textBBox.BottomLeft.Y);
         
         //if (IsAlmostEqualTo(thisPosition,btmLeft, 0.1))
         //{
         //    Debug.WriteLine(111);
         //}
+    }
+    protected override void OnMouseMoveCore(CADMouseEventArgs e)
+    {
+        base.OnMouseMoveCore(e);
     }
 }
 #endif

@@ -4,56 +4,55 @@ using System.Text;
 using System.Windows;
 using System.Windows.Media;
 
-namespace Tida.CAD.DrawObjects
+namespace Tida.CAD.DrawObjects;
+
+/// <summary>
+/// A draw object that draws a polygon;
+/// </summary>
+public class Polygon:DrawObject
 {
-    /// <summary>
-    /// A draw object that draws a polygon;
-    /// </summary>
-    public class Polygon:DrawObject
+    private IEnumerable<Point>? _points;
+    public IEnumerable<Point>? Points 
+    { 
+        get => _points;
+        set
+        {
+            _points = value;
+            RaiseVisualChanged();
+        }
+    }
+
+    private Pen? _pen;
+    public Pen? Pen
     {
-        private IEnumerable<Point>? _points;
-        public IEnumerable<Point>? Points 
+        get => _pen;
+        set
+        {
+            _pen = value;
+            RaiseVisualChanged();
+        }
+    }
+
+    private Brush? _brush;
+
+    public Brush? Brush
+    {
+        get { return _brush; }
+        set 
         { 
-            get => _points;
-            set
-            {
-                _points = value;
-                RaiseVisualChanged();
-            }
+            _brush = value;
+            RaiseVisualChanged();
         }
+    }
 
-        private Pen? _pen;
-        public Pen? Pen
+
+    public override void Draw(ICanvas canvas)
+    {
+        if(Points == null)
         {
-            get => _pen;
-            set
-            {
-                _pen = value;
-                RaiseVisualChanged();
-            }
+            return;
         }
-
-        private Brush? _brush;
-
-        public Brush? Brush
-        {
-            get { return _brush; }
-            set 
-            { 
-                _brush = value;
-                RaiseVisualChanged();
-            }
-        }
-
-
-        public override void Draw(ICanvas canvas)
-        {
-            if(Points == null)
-            {
-                return;
-            }
-            canvas.DrawPolygon(Points, Brush, Pen);
-            base.Draw(canvas);  
-        }
+        canvas.DrawPolygon(Points, Brush, Pen);
+        base.Draw(canvas);  
     }
 }

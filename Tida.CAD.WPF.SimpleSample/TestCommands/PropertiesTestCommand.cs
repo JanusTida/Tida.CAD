@@ -5,14 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Tida.CAD.WPF.SimpleSample.Views;
 
-namespace Tida.CAD.WPF.SimpleSample.TestCommands
+namespace Tida.CAD.WPF.SimpleSample.TestCommands;
+
+internal class PropertiesTestCommand : ITestCommand
 {
-    internal class PropertiesTestCommand : ITestCommand
-    {
-        public string Name => "PropertiesTest";
+    public string Name => "PropertiesTest";
 
-        public int Order => 2;
+    public int Order => 2;
 
-        public void Execute(TestExecuteContext testExecuteContext) => new PropertiesTest().ShowDialog();
-    }
+    public void Execute(TestExecuteContext testExecuteContext) => new PropertiesTest().ShowDialog();
 }
