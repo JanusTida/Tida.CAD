@@ -1,14 +1,9 @@
-﻿using System.Windows;
-
-namespace Tida.CAD.Events;
+﻿namespace Tida.CAD.Events;
 
 /// <summary>
 /// The mouse move events args when drag selecting;
 /// </summary>
-public class DragSelectMouseMoveEventArgs :
-#if WPF
-    RoutedEventArgs
-#endif
+public class DragSelectMouseMoveEventArgs : RoutedEventArgs
 {
     public DragSelectMouseMoveEventArgs(CADRect rect,Point position) {
         Rect = rect;

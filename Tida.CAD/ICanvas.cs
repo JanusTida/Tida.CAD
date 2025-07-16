@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Media;
 
 namespace Tida.CAD;
 
@@ -58,14 +56,14 @@ public interface ICanvas {
     /// </summary>
     /// <param name="formattedText"></param>
     /// <param name="origin"></param>
-    void DrawText(FormattedText? formattedText, Point origin);
+    void DrawText(FormattedText formattedText, Point origin);
 
     /// <summary>
     /// Draw a path;
     /// </summary>
     /// <param name="pen"></param>
     /// <param name="points">The path vertexs of the curve</param>
-    void DrawCurve(Pen? pen, IEnumerable<Point> points);
+    void DrawCurve(Pen pen, IEnumerable<Point> points);
 
     /// <summary>
     /// Draw a rectangle;
@@ -75,8 +73,5 @@ public interface ICanvas {
     /// <param name="cadRect"></param>
     void DrawRectangle(CADRect cadRect,Brush? brush, Pen? pen);
 
-
-#if WPF
     DrawingContext DrawingContext { get; }
-#endif
 }

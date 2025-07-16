@@ -1,21 +1,21 @@
-﻿using System;
+﻿using Avalonia;
+using Avalonia.Media;
+using System;
 using System.Collections.Generic;
-using System.Windows;
 using System.Linq;
-using System.Windows.Media;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Schema;
 
-namespace Tida.CAD.WPF;
+namespace Tida.CAD.Avalonia;
 
-/// <summary>
-/// A WPF canvas implemented with <see cref="DrawingContext"/>;
-/// </summary>
-public class WPFCanvas : ICanvas
+class AvaloniaCanvas : ICanvas
 {
     /// <summary>
     /// Create an instance of WPFCanvas;
     /// </summary>
     /// <param name="cadScreenConverter">An converter instance</param>
-    public WPFCanvas(ICADScreenConverter cadScreenConverter)
+    public AvaloniaCanvas(ICADScreenConverter cadScreenConverter)
     {
         CADScreenConverter = cadScreenConverter ?? throw new ArgumentNullException(nameof(cadScreenConverter));
     }
@@ -33,19 +33,6 @@ public class WPFCanvas : ICanvas
     public ICADScreenConverter CADScreenConverter { get; }
 
     /// <summary>
-    /// Validate <see cref="DrawingContext"/> is available at present;
-    /// </summary>
-    private void ValidateDrawingContext()
-    {
-        //如若DrawingContext为空,则不可执行动作;
-        if (DrawingContext == null)
-        {
-            throw new InvalidOperationException($"The {nameof(DrawingContext)} should be set to perform this operation.");
-        }
-
-    }
-
-    /// <summary>
     /// Draw a line;
     /// </summary>
     /// <param name="pen"></param>
@@ -55,8 +42,6 @@ public class WPFCanvas : ICanvas
         {
             return;
         }
-
-        ValidateDrawingContext();
 
         var screenPoint1 = CADScreenConverter.ToScreen(point0);
         var screenPoint2 = CADScreenConverter.ToScreen(point1);
@@ -80,7 +65,6 @@ public class WPFCanvas : ICanvas
     /// <param name="angle"></param>
     public void DrawArc(Pen? pen, Point center, double radius, double beginangle, double angle)
     {
-        ValidateDrawingContext();
         beginangle %= (Math.PI * 2);
         angle %= (Math.PI * 2);
 
@@ -92,7 +76,7 @@ public class WPFCanvas : ICanvas
         var startScreenPoint = CADScreenConverter.ToScreen(startPoint);
         var endScreenPoint = CADScreenConverter.ToScreen(endPoint);
 
-     
+
         var screenRadius = CADScreenConverter.ToScreen(radius);
 
         var arcGeometry = GetArcGeometry
@@ -100,7 +84,7 @@ public class WPFCanvas : ICanvas
             startScreenPoint,
             endScreenPoint,
             screenRadius,
-            SweepDirection.Counterclockwise
+            SweepDirection.CounterClockwise
         );
 
         DrawingContext.DrawGeometry
@@ -121,23 +105,34 @@ public class WPFCanvas : ICanvas
     /// <param name="angle"></param>
     /// <param name="smallAngle"></param>
     /// <returns></returns>
-    private static PathGeometry GetArcGeometry(Point startScreenPoint, Point endScreenPoint, double screenRadius , SweepDirection sweepDirection)
+    private static PathGeometry GetArcGeometry(Point startScreenPoint, Point endScreenPoint, double screenRadius, SweepDirection sweepDirection)
     {
-        var arcSegment = new ArcSegment(endScreenPoint, new Size(screenRadius, screenRadius), 0D, false, sweepDirection, true);
+        //var arcSegment = new ArcSegment(endScreenPoint, new Size(screenRadius, screenRadius), 0D, false, sweepDirection, true);
+        var arcSegment = new ArcSegment
+        {
+            Point = endScreenPoint,
+            Size = new Size(screenRadius, screenRadius),
+            SweepDirection = sweepDirection,
+            RotationAngle = 0D,
 
-        var segments = new PathSegment[] { arcSegment };
-        var pathFigure = new PathFigure(startScreenPoint, segments, false);
+        };
 
-        var figures = new PathFigure[] { pathFigure };
+        var segments = new PathSegments { arcSegment };
+        var pathFigure = new PathFigure
+        {
+            StartPoint = startScreenPoint,
+            Segments = segments,
+            IsClosed = false
+        };
 
-        arcSegment.Freeze();
-        pathFigure.Freeze();
+        var figures = new PathFigures { pathFigure };
 
-        return new PathGeometry(figures, FillRule.EvenOdd, null);
+        
+        return new PathGeometry { Figures = figures, FillRule = FillRule.EvenOdd };
     }
 
     /// <summary>
-    /// 绘制(椭)圆;
+    /// Draw a ellipse;
     /// </summary>
     /// <param name="brush"></param>
     /// <param name="pen"></param>
@@ -146,8 +141,6 @@ public class WPFCanvas : ICanvas
     /// <param name="radiusY"></param>
     public void DrawEllipse(Brush? brush, Pen? pen, Point center, double radiusX, double radiusY)
     {
-        ValidateDrawingContext();
-
         radiusX = CADScreenConverter.ToScreen(radiusX);
         radiusY = CADScreenConverter.ToScreen(radiusY);
         center = CADScreenConverter.ToScreen(center);
@@ -155,22 +148,21 @@ public class WPFCanvas : ICanvas
     }
 
     /// <summary>
-    /// 绘制文字;
+    /// Draw a text;
     /// </summary>
     /// <param name="text"></param>
     /// <param name="emSize"></param>
     /// <param name="foreground"></param>
     /// <param name="origin"></param>
-    public void DrawText(FormattedText? formattedText, Point origin)
+    public void DrawText(FormattedText formattedText, Point origin)
     {
-        ValidateDrawingContext();
         var originScreenPoint = CADScreenConverter.ToScreen(origin);
         var nativeOriginScreenPoint = originScreenPoint;
         DrawingContext.DrawText(formattedText, nativeOriginScreenPoint);
     }
 
     /// <summary>
-    /// 通过点的集合获取三次贝赛尔曲线
+    /// Get bezier curve from points;
     /// </summary>
     /// <param name="points"></param>
     /// <returns></returns>
@@ -186,19 +178,24 @@ public class WPFCanvas : ICanvas
         var pathFigure = new PathFigure();
         var pathGeometry = new PathGeometry();
 
-        pathFigure.Segments.Add(bezier);
-        pathGeometry.Figures.Add(pathFigure);
+        pathFigure.Segments = [bezier];
+        pathGeometry.Figures = [pathFigure];
 
         if (screenPoints.Length >= 1)
         {
             pathFigure.StartPoint = screenPoints[0];
 
-            //因为此处使用的三次贝塞尔曲线要求点的数量为3的倍数,所以在未能正处情况下,重复最后一项至下一个三的倍数;
+            //Because the PolyBezierSegment requires the number of points to be a multiple of 3,
+            // we repeat the last point to make the number of points a multiple of 3.
             var repeatCount = (3 - (screenPoints.Length % 3)) % 3;
 
             var lastScreenPoint = screenPoints[screenPoints.Length - 1];
             for (int i = 0; i < repeatCount; i++)
             {
+                if(bezier.Points == null)
+                {
+                    bezier.Points = [];
+                }
                 bezier.Points.Add(lastScreenPoint);
             }
         }
@@ -207,16 +204,12 @@ public class WPFCanvas : ICanvas
     }
 
     /// <summary>
-    /// 绘制路径(未封闭区域);
+    /// Draw a curve;
     /// </summary>
     /// <param name="pen"></param>
     /// <param name="points"></param>
     public void DrawCurve(Pen? pen, IEnumerable<Point> points)
     {
-
-        ValidateDrawingContext();
-
-        ////使用一个变量存储上一次的视图点;
         //Point? lastScreenPoint = null;
         //foreach (var point in points)
         //{
@@ -242,8 +235,6 @@ public class WPFCanvas : ICanvas
     /// <param name="rect"></param>
     public void DrawRectangle(CADRect rect, Brush? brush, Pen? pen)
     {
-        ValidateDrawingContext();
-
         var topLeftInScreen = CADScreenConverter.ToScreen(rect.TopLeft);
         var widthInScreen = CADScreenConverter.ToScreen(rect.Width);
         var heightInScreen = CADScreenConverter.ToScreen(rect.Height);
@@ -253,15 +244,14 @@ public class WPFCanvas : ICanvas
 
     public void DrawPolygon(IEnumerable<Point> points, Brush? brush, Pen? pen)
     {
-        ValidateDrawingContext();
         DrawFill(points, brush, pen);
     }
 
     /// <summary>
-    /// 根据所有的点，组成一个封闭区域，并且填充
+    /// Create a closed region by all points, and fill it with the specified brush and pen.
     /// </summary>
-    /// <param name="points">所有的顶点坐标</param>
-    /// <param name="brush">区域颜色</param>
+    /// <param name="points">The points to create the region</param>
+    /// <param name="brush">The brush to fill the region</param>
     private void DrawFill(IEnumerable<Point> points, Brush? brush, Pen? pen)
     {
 
@@ -269,9 +259,6 @@ public class WPFCanvas : ICanvas
         {
             throw new ArgumentNullException(nameof(points));
         }
-
-        ValidateDrawingContext();
-
         NativeDrawFill(
             points.Select(p => CADScreenConverter.ToScreen(p)),
             brush,
@@ -281,7 +268,7 @@ public class WPFCanvas : ICanvas
 
 
     /// <summary>
-    /// 直接根据视图位置,绘制WPF封闭区域;
+    /// Draw a closed region by all points, and fill it with the specified brush and pen.with native screen points;
     /// </summary>
     /// <param name="screenPoints"></param>
     /// <param name="brush"></param>
@@ -293,12 +280,10 @@ public class WPFCanvas : ICanvas
             throw new ArgumentNullException(nameof(screenPoints));
         }
 
-        ValidateDrawingContext();
-
         //操作PathGeometry中的Figures以绘制(封闭)区域
         var paths = new PathGeometry();
 
-        var pfc = new PathFigureCollection();
+        var pfc = new PathFigures();
         var pf = new PathFigure();
         pfc.Add(pf);
 
@@ -318,6 +303,10 @@ public class WPFCanvas : ICanvas
             //若若StartPoint被设定,则加入线段;
             var ps = new LineSegment();
             ps.Point = p;
+            if(pf.Segments == null)
+            {
+                pf.Segments = [];
+            }
             pf.Segments.Add(ps);
         }
 
@@ -328,10 +317,10 @@ public class WPFCanvas : ICanvas
     }
 
     /// <summary>
-    /// 以视图坐标为标准,绘制椭圆;
+    /// Draw a ellipse;with native screen points;
     /// </summary>
-    /// <param name="brush">填充色</param>
-    /// <param name="pen">笔</param>
+    /// <param name="brush">The brush to fill the ellipse</param>
+    /// <param name="pen">The pen to decorate the border of the ellipse</param>
     public void NativeDrawEllipse(Brush? brush, Pen? pen, Point center, double radiusX, double radiusY)
     {
         DrawingContext.DrawEllipse(
@@ -342,6 +331,4 @@ public class WPFCanvas : ICanvas
             radiusY
         );
     }
-
-
 }

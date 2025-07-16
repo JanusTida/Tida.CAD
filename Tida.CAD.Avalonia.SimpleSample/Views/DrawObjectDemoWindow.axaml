@@ -1,0 +1,23 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:tidacad="https://github.com/Tida.CAD"
+		xmlns:vm="using:Tida.CAD.Avalonia.SimpleSample.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Tida.CAD.Avalonia.SimpleSample.DrawObjectDemoWindow"
+		x:DataType="vm:DrawObjectDemoWindowViewModel"
+        Title="DrawObject Demo">
+	<DockPanel>
+		<UniformGrid DockPanel.Dock="Bottom">
+			<Button Command="{Binding AddLineCommand}">Add Line</Button>
+			<Button Command="{Binding AddRectCommand}">Add Rect</Button>
+			<Button Command="{Binding ChangeLayerBackgroundCommand}">Change LayerBackground</Button>
+			<Button Command="{Binding ClearCommand}">Clear</Button>
+			<Button Command="{Binding AddPolygonCommand}">Add Polygon</Button>
+			<Button Command="{Binding AddArcCommand}">Add Arc</Button>
+			<Button Command="{Binding AddTextCommand}">Add Text</Button>
+		</UniformGrid>
+		<tidacad:CADControl Layers="{Binding Layers}"/>
+	</DockPanel>
+</Window>

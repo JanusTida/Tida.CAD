@@ -92,14 +92,22 @@ public partial class DrawObjectSample : Window
 
     private void AddArc_Click(object sender, RoutedEventArgs e)
     {
-        var arc = new Arc
-        {
-            Pen = new Pen { Brush = Brushes.White,Thickness = 2 },
-            BeginAngle = 0,
-            Angle = (double)185 / 180 * Math.PI,
-            Radius = 2
-        };
-        _cadLayer.AddDrawObject(arc);
+        _cadLayer.AddDrawObject
+        (
+            new Arc 
+            { 
+                Pen = new Pen { Brush = Brushes.White, Thickness = 2 },
+                Center = new Point(0, 0), 
+                Radius = 2, 
+                BeginAngle = 0, 
+                Angle = ConvertDegreesToRadians(185.0) 
+            }
+        );
+    }
+
+    private static double ConvertDegreesToRadians(double v)
+    {
+        return v / 180 * Math.PI;
     }
 
     private void AddText_Click(object sender, RoutedEventArgs e)

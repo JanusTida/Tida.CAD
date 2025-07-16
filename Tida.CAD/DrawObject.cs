@@ -170,7 +170,7 @@ public abstract partial class DrawObject {
 
     }
 
-    public void OnTextInput(TextCompositionEventArgs e) {
+    public void OnTextInput(TextInputEventArgs e) {
         PreviewTextInput?.Invoke(this, e);
         if (e.Handled) {
             return;
@@ -179,7 +179,7 @@ public abstract partial class DrawObject {
         OnTextInputCore(e);
     }
 
-    protected virtual void OnTextInputCore(TextCompositionEventArgs e) {
+    protected virtual void OnTextInputCore(TextInputEventArgs e) {
         
     }
 
@@ -188,5 +188,5 @@ public abstract partial class DrawObject {
     public event EventHandler<CADMouseButtonEventArgs>? PreviewMouseUp;
     public event EventHandler<CADKeyEventArgs>? PreviewKeyDown;
     public event EventHandler<CADKeyEventArgs>? PreviewKeyUp;
-    public event EventHandler<TextCompositionEventArgs>? PreviewTextInput;
+    public event EventHandler<TextInputEventArgs>? PreviewTextInput;
 }

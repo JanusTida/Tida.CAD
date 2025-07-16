@@ -34,6 +34,8 @@ public static class GeometryExtensions
 
     private static double GetLengthSquared(this Vector vector) => vector.X * vector.X + vector.Y * vector.Y;
 
+    private static double CrossProduct(this Vector vector1, Vector vector2) => vector1.X * vector2.Y - vector1.Y * vector2.X;
+
     /// <summary>
     /// Get the intersect point of two lines if it exists, return null when it doesn't exist;
     /// </summary>
@@ -43,9 +45,9 @@ public static class GeometryExtensions
     public static Point? GetIntersectPoint(Point point1,Point point2,Point point3,Point point4,bool isSegement = true, double espilon = SMALL_NUMBER)
     {
         espilon = espilon < 0 ? SMALL_NUMBER : espilon;
-        var rxs = Vector.CrossProduct(point2 - point1,point4 - point3);
+        var rxs = CrossProduct(point2 - point1,point4 - point3);
         if (Math.Abs(rxs) < espilon) return null;
-        var r = Vector.CrossProduct(point3 - point1,point4 - point3) / rxs;
+        var r = CrossProduct(point3 - point1,point4 - point3) / rxs;
         var point = Evaluate(point1,point2,r);
         if (!isSegement) return point;
         var t = ClosestParameter(point1,point2,point);
@@ -57,10 +59,10 @@ public static class GeometryExtensions
 
     private static double ClosestParameter(Point point1,Point point2,Point testPoint)
     {
-        var v = point2 - point1;
+        Vector v = point2 - point1;
         var ls = v.GetLengthSquared();
         var v1 = testPoint - point1;
-        var v2 = testPoint - point2;
+        Vector v2 = testPoint - point2;
         var result = 0.0d;
         if (ls > 0)
         {

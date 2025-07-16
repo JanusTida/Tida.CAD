@@ -183,23 +183,16 @@ public partial class CADControl : Grid, ICADControl {
 }
 
 /// <summary>
-/// <see cref="ICanvasScreenConvertable"/>相关成员;
+/// <see cref="ICADScreenConverter"/> implemented with WPF;
 /// </summary>
 public partial class CADControl {
-
-    private static readonly DependencyPropertyKey CADScreenConverterPropertyKey = DependencyProperty.RegisterReadOnly(nameof(CADScreenConverter), typeof(ICADScreenConverter), typeof(CADControl), new PropertyMetadata());
-    public static readonly DependencyProperty CADScreenConverterProperty = CADScreenConverterPropertyKey.DependencyProperty;
-
  
-    private readonly WPFCADScreenConverter _cadScreenConverter = new WPFCADScreenConverter();
+    private readonly WPFCADScreenConverter _cadScreenConverter = new();
 
     /// <summary>
     /// 画布坐标转化实例;
     /// </summary>
-    public ICADScreenConverter CADScreenConverter {
-        get => _cadScreenConverter;
-        set => throw new NotSupportedException($"The {nameof(CADScreenConverter)} property is readonly!");
-    }
+    public ICADScreenConverter CADScreenConverter => _cadScreenConverter;
 
     /// <summary>
     /// 更新<see cref="_cadScreenConverter"/>中的关键参数;
@@ -1014,7 +1007,7 @@ public partial class CADControl
     /// <summary>
     /// 当前活动图层;
     /// </summary>
-    public CADLayer ActiveLayer
+    public CADLayer? ActiveLayer
     {
         get { return (CADLayer)GetValue(ActiveLayerProperty); }
         set { SetValue(ActiveLayerProperty, value); }

@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Windows;
-using Tida.CAD.Events;
 using System.Linq;
-using System.Collections.Generic;
 using Tida.CAD.Extensions;
-using System.Windows.Media;
-using Tida.CAD.Input;
 
 namespace Tida.CAD.DrawObjects; 
 /// <summary>

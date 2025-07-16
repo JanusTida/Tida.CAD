@@ -1,32 +1,23 @@
-﻿#if WPF
-using System.Diagnostics;
-using System;
-using Tida.CAD;
-using MedGeo = System.Windows.Media.Geometry;
-using System.Windows.Media;
-using System.Windows;
+﻿using System;
 using Tida.CAD.Events;
 using System.Linq;
 using Tida.CAD.Input;
 using System.Collections.Generic;
+#if WPF
+using System.Windows.Media;
+using System.Windows;
+#elif Avalonia
+using Avalonia.Media;
+using Avalonia;
+#endif
 
 namespace Tida.CAD.DrawObjects;
 
 /// <summary>
-/// 可绘制对象-文本;
+/// DrawObject for Text;
 /// </summary>
 public partial class Text : DrawObject
 {
-    /// <summary>
-    /// 构造函数;
-    /// </summary>
-    /// <param name="content"></param>
-    /// <param name="typeface"></param>
-    /// <param name="fontSize"></param>
-    /// <param name="foreground"></param>
-    /// <param name="position"></param>
-    /// <param name="flowDirection"></param>
-    /// <param name="angle"></param>
     public Text()
     {
         _fmtdText = GetFormattedText(
@@ -38,7 +29,7 @@ public partial class Text : DrawObject
             _textAlignment
         );
 
-        _fmtedTextGeo = _fmtdText.BuildGeometry(_position);
+        _fmtedTextGeometry = _fmtdText.BuildGeometry(_position);
     }
 
     public static FormattedText GetFormattedText(
@@ -51,6 +42,7 @@ public partial class Text : DrawObject
         double pixelsPerDip = 1
     )
     {
+#if WPF
 #if NET45 || NET46
         var formattedText = new FormattedText(
             content,
@@ -77,6 +69,19 @@ public partial class Text : DrawObject
             TextAlignment = textAlignment,
         };
 #endif
+#elif Avalonia
+        var formattedText = new FormattedText(
+            content,
+            System.Globalization.CultureInfo.CurrentCulture,
+            flowDirection,
+            typeface,
+            fontSize,
+            foreground
+        )
+        {
+            TextAlignment = textAlignment
+        };
+#endif
         return formattedText;
     }
 }
@@ -90,7 +95,7 @@ public partial class Text : DrawObject
     /// 以画布坐标原点的文本几何信息;
     /// 注意:边界框各点Y值需要取反为真实画布坐标系中的坐标;
     /// </summary>
-    private MedGeo _fmtedTextGeo { get; set; } = MedGeo.Empty;
+    private Geometry? _fmtedTextGeometry;
 
     /// <summary>
     /// 文本内容;
@@ -109,7 +114,7 @@ public partial class Text : DrawObject
             var args = new ValueChangedEventArgs<FormattedText>(value, _fmtdText);
             _fmtdText = value;
 
-            _fmtedTextGeo = _fmtdText.BuildGeometry(Position);
+            _fmtedTextGeometry = _fmtdText.BuildGeometry(Position);
 
             FormattedTextChanged?.Invoke(this, args);
             RaiseVisualChanged();
@@ -144,7 +149,7 @@ public partial class Text : DrawObject
                 TextAlignment
             );
 
-            _fmtedTextGeo = _fmtdText.BuildGeometry(Position);
+            _fmtedTextGeometry = _fmtdText.BuildGeometry(Position);
 
             ContentChanged?.Invoke(this, args);
             RaiseVisualChanged();
@@ -171,7 +176,7 @@ public partial class Text : DrawObject
 
             _fmtdText.SetFontTypeface(value);
 
-            _fmtedTextGeo = _fmtdText.BuildGeometry(Position);
+            _fmtedTextGeometry = _fmtdText.BuildGeometry(Position);
 
             TypefaceChanged?.Invoke(this, args);
             RaiseVisualChanged();
@@ -197,7 +202,7 @@ public partial class Text : DrawObject
 
             _fmtdText.SetFontSize(value);
 
-            _fmtedTextGeo = _fmtdText.BuildGeometry(Position);
+            _fmtedTextGeometry = _fmtdText.BuildGeometry(Position);
 
             FontSizeChanged?.Invoke(this, args);
             RaiseVisualChanged();
@@ -224,7 +229,7 @@ public partial class Text : DrawObject
 
             _fmtdText.SetForegroundBrush(value);
 
-            _fmtedTextGeo = _fmtdText.BuildGeometry(Position);
+            _fmtedTextGeometry = _fmtdText.BuildGeometry(Position);
 
             ForegroundChanged?.Invoke(this, args);
             RaiseVisualChanged();
@@ -251,7 +256,7 @@ public partial class Text : DrawObject
 
             _fmtdText.TextAlignment = value;
 
-            _fmtedTextGeo = _fmtdText.BuildGeometry(Position);
+            _fmtedTextGeometry = _fmtdText.BuildGeometry(Position);
 
             TextAlignmentChanged?.Invoke(this, args);
             RaiseVisualChanged();
@@ -275,7 +280,7 @@ public partial class Text : DrawObject
             var args = new ValueChangedEventArgs<Point>(value, _position);
             _position = value;
 
-            _fmtedTextGeo = _fmtdText.BuildGeometry(value);
+            _fmtedTextGeometry = _fmtdText.BuildGeometry(value);
 
             PositionChanged?.Invoke(this, args);
             RaiseVisualChanged();
@@ -285,7 +290,7 @@ public partial class Text : DrawObject
     public event EventHandler<ValueChangedEventArgs<Point>>? PositionChanged;
 
     /// <summary>
-    /// 角度;
+    /// Angle,In degrees, clockwise from the x-axis.
     /// </summary>
     private double _angle = 0D;
 
@@ -371,6 +376,12 @@ public partial class Text : DrawObject
 /// </summary>
 public partial class Text : DrawObject
 {
+#if Avalonia
+    private static double DegreeToRadian(double angle)
+    {
+        return angle * Math.PI / 180;
+    }
+#endif
     /// <summary>
     /// 绘制方法;
     /// </summary>
@@ -381,7 +392,7 @@ public partial class Text : DrawObject
         {
             return;
         }
-            
+#if WPF
         canvas.DrawingContext.PushTransform
         (
             new RotateTransform
@@ -391,10 +402,22 @@ public partial class Text : DrawObject
                 Position.Y
             )
         );
-        
+#elif Avalonia
+        canvas.DrawingContext.PushTransform
+        (
+            Matrix.CreateRotation(DegreeToRadian(Angle)) * Matrix.CreateTranslation(Position.X, Position.Y)
+        );
+#endif
         canvas.DrawText(FmtdText, Position);
+#if WPF
         canvas.DrawingContext.Pop();
-        // 绘制文本边界框
+#elif Avalonia
+        canvas.DrawingContext.PushTransform
+        (
+            Matrix.CreateTranslation(-Position.X, -Position.Y) * Matrix.CreateRotation(DegreeToRadian(-Angle))
+        );
+#endif
+        // Draw bounding box;
         //var rect2d = GetBoundingRect();
         //if (rect2d != null)
         //    drawMethod.DrawRectangle(
@@ -452,7 +475,7 @@ public partial class Text : DrawObject
     }
 
     /// <summary>
-    /// 绘制文本的选中状态;
+    /// Draw selected text state;
     /// </summary>
     /// <param name="canvas"></param>
     /// <param name="copyFmtdText"></param>
@@ -470,8 +493,11 @@ public partial class Text : DrawObject
     )
     {
         if (copyFmtdText == null)
+        {
             throw new ArgumentNullException(nameof(copyFmtdText));
+        }
 
+#if WPF
         canvas.DrawingContext.PushTransform
         (
             new RotateTransform
@@ -481,11 +507,24 @@ public partial class Text : DrawObject
                 origion.Y
             )                        
         );
+#elif Avalonia
+        canvas.DrawingContext.PushTransform
+        (
+            Matrix.CreateRotation(DegreeToRadian(angle)) * Matrix.CreateTranslation(origion.X, origion.Y)
+        );
+#endif
 
         // 显示选中对象;
         canvas.DrawText(copyFmtdText, origion);
 
+#if WPF
         canvas.DrawingContext.Pop();
+#elif Avalonia
+        canvas.DrawingContext.PushTransform
+        (
+            Matrix.CreateTranslation(-origion.X, -origion.Y) * Matrix.CreateRotation(DegreeToRadian(-angle))
+        );
+#endif
 
     }
 }
@@ -528,11 +567,13 @@ public partial class Text : DrawObject
     /// <returns></returns>
     public override CADRect? GetBoundingRect(ICADScreenConverter screenConverter)
     {
-        if (_fmtedTextGeo == MedGeo.Empty)
+        if (_fmtedTextGeometry == null)
+        {
             return null;
+        }
 
-        var rectBBox = _fmtedTextGeo.Bounds;
-        if (rectBBox == Rect.Empty)
+        var rectBBox = _fmtedTextGeometry.Bounds;
+        if (rectBBox == new Rect(0,0,0,0))
             return null;
 
         // 由于屏幕坐标系与绘图坐标系不一致,
@@ -580,14 +621,19 @@ public partial class Text : DrawObject
     {
         var v = line.End - line.Start;
         var ls = v.X * v.X + v.Y * v.Y;
-        var v1 = testPoint - line.Start;
-        var v2 = testPoint - line.End;
+        Vector v1 = testPoint - line.Start;
+        Vector v2 = testPoint - line.End;
         var result = 0.0d;
         if (ls > 0)
         {
             if (v1.X * v1.X + v1.Y * v1.Y <= v2.X * v2.X + v2.Y * v2.Y)
+            {
                 result = v1 * v / ls;
-            else result = 1 + v2 * v / ls;
+            }
+            else
+            {
+                result = 1 + v2 * v / ls;
+            }
         }
         return result;
     }
@@ -597,9 +643,17 @@ public partial class Text : DrawObject
         //double rxs = (line1.End - line1.Start).Cross(line2.End - line2.Start);
         var line1Vector = (line1.End - line1.Start);
         var line2Vector = (line2.End - line2.Start);
+#if WPF
         double rxs = Vector.CrossProduct(line1Vector,line2Vector);
+#elif Avalonia
+        double rxs = Vector.Cross(line1Vector,line2Vector);
+#endif
         if (Math.Abs(rxs) < espilon) return null;
+#if WPF
         double r = Vector.CrossProduct(line2.Start - line1.Start,line2.End - line2.Start) / rxs;
+#elif Avalonia
+        double r = Vector.Cross(line2.Start - line1.Start,line2.End - line2.Start) / rxs;
+#endif
         var point = line1.Start + line1Vector * r;
         if (!isSegement) return point;
         var t = ClosestParameter(line1,point);
@@ -683,12 +737,12 @@ public partial class Text : DrawObject
             throw new ArgumentNullException(nameof(e));
         }
 
-        if (_fmtedTextGeo == null || _fmtedTextGeo.Bounds == Rect.Empty)
+        if (_fmtedTextGeometry == null || _fmtedTextGeometry.Bounds == new Rect(0,0,0,0))
             return;
 
         var thisPosition = e.Position;
 
-        var textBBox = _fmtedTextGeo.Bounds;
+        var textBBox = _fmtedTextGeometry.Bounds;
         
         var btmLeft = new Point(textBBox.BottomLeft.X, -textBBox.BottomLeft.Y);
         
@@ -702,4 +756,3 @@ public partial class Text : DrawObject
         base.OnMouseMoveCore(e);
     }
 }
-#endif

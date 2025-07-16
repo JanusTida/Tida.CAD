@@ -19,6 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)DrawObjects\Text.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\ClickSelectedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events\ClickUnselectedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Using.cs" />
     <Compile Include="..\Tida.CAD\Events\ClickUnselectingEventArgs.cs" />
     <Compile Include="..\Tida.CAD\CADElement.cs" />
     <Compile Include="..\Tida.CAD\CADLayer.cs" />

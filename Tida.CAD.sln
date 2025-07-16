@@ -16,6 +16,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tida.CAD.Avalonia", "Tida.CAD.Avalonia\Tida.CAD.Avalonia.csproj", "{56635EBD-289F-4BEC-9523-24C5CF05CD53}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{1DC8B399-74F0-4BCA-8D5E-CEC19B89771C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Avalonia", "Avalonia", "{2CD547F7-80F9-4684-BF0B-0A406C569AB6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tida.CAD.Avalonia.SimpleSample", "Tida.CAD.Avalonia.SimpleSample\Tida.CAD.Avalonia.SimpleSample.csproj", "{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,9 +96,35 @@ Global
 		{56635EBD-289F-4BEC-9523-24C5CF05CD53}.Release|x64.Build.0 = Release|Any CPU
 		{56635EBD-289F-4BEC-9523-24C5CF05CD53}.Release|x86.ActiveCfg = Release|Any CPU
 		{56635EBD-289F-4BEC-9523-24C5CF05CD53}.Release|x86.Build.0 = Release|Any CPU
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}.Debug|ARM.Build.0 = Debug|Any CPU
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}.Debug|x64.Build.0 = Debug|Any CPU
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}.Debug|x86.Build.0 = Debug|Any CPU
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}.Release|ARM.ActiveCfg = Release|Any CPU
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}.Release|ARM.Build.0 = Release|Any CPU
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}.Release|ARM64.Build.0 = Release|Any CPU
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}.Release|x64.ActiveCfg = Release|Any CPU
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}.Release|x64.Build.0 = Release|Any CPU
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}.Release|x86.ActiveCfg = Release|Any CPU
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{15E7E29F-57B3-4FD1-AC7E-F2D5806BFBB4} = {1DC8B399-74F0-4BCA-8D5E-CEC19B89771C}
+		{D02D1BBE-A0A4-433C-BF8F-682A7D3C0286} = {1DC8B399-74F0-4BCA-8D5E-CEC19B89771C}
+		{56635EBD-289F-4BEC-9523-24C5CF05CD53} = {2CD547F7-80F9-4684-BF0B-0A406C569AB6}
+		{3E201E29-4734-49C5-9F9B-B5E2EFD2F831} = {2CD547F7-80F9-4684-BF0B-0A406C569AB6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32B050FB-5ADD-4CE8-83B6-CEEAD9AD0F32}
@@ -100,5 +132,6 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Tida.CAD\Tida.CAD.projitems*{15e7e29f-57b3-4fd1-ac7e-f2d5806bfbb4}*SharedItemsImports = 5
 		Tida.CAD\Tida.CAD.projitems*{3370d07e-c3a7-4071-91d3-578059591f3c}*SharedItemsImports = 13
+		Tida.CAD\Tida.CAD.projitems*{56635ebd-289f-4bec-9523-24c5cf05cd53}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

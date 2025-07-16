@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Windows;
-using System.Windows.Media;
 using Tida.CAD;
 using Tida.CAD.Extensions;
 using Tida.CAD.Input;
@@ -18,7 +16,9 @@ public class Rectangle : DrawObject {
             Brush = Brushes.Blue,
             Thickness = 3
         };
+#if WPF
         _defaultSelectionPen.Freeze();
+#endif
     }
 
     private static Pen _defaultSelectionPen;
