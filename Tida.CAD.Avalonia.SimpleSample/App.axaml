@@ -6,5 +6,6 @@
 
     <Application.Styles>
         <FluentTheme />
+		<StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Simple/Simple.xaml" />
     </Application.Styles>
 </Application>

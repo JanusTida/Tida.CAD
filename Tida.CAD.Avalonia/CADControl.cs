@@ -1,9 +1,11 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using Avalonia.Media.Immutable;
 using Avalonia.VisualTree;
 using System;
 using System.Collections.Generic;
@@ -26,9 +28,10 @@ public class CADControl : Control, ICADControl
         PanBrushProperty.Changed.AddClassHandler<CADControl>((control, args) => control.HandlePanBrushChanged(args));
         PanThicknessProperty.Changed.AddClassHandler<CADControl>((control, args) => control.HandlePanThickness(args));
         PanScreenPositionProperty.Changed.AddClassHandler<CADControl>((control, args) => control.HandlePanScreenPositionChanged(args));
+        PanLengthProperty.Changed.AddClassHandler<CADControl>((control, args) => control.HandlePanLengthChanged(args));
 
         GridsBrushProperty.Changed.AddClassHandler<CADControl>((control, args) => control.HandleGridsBrushChanged(args));
-        GirdsThicknessProperty.Changed.AddClassHandler<CADControl>((control, args) => control.HandleGridsThicknessChanged(args));
+        GridsThicknessProperty.Changed.AddClassHandler<CADControl>((control, args) => control.HandleGridsThicknessChanged(args));
         ShowGridsProperty.Changed.AddClassHandler<CADControl>((control, args) => control.HandleShowGridsChanged(args));
     }
 
@@ -41,8 +44,14 @@ public class CADControl : Control, ICADControl
         VisualChildren.Add(_gridsVisual);
         VisualChildren.Add(_layersContainerVisual);
         VisualChildren.Add(_panVisual);
-        
+
+        _panVisual.PanThickness = PanThickness;
+        _panVisual.PanBrush = PanBrush;
+        _panVisual.PanLength = PanLength;
         _panVisual.RefreshPanPen();
+
+        _gridsVisual.GridsBrush = GridsBrush;
+        _gridsVisual.GridsThickness = GridsThickness;
         _gridsVisual.RefreshGridsPen();
     }
 
@@ -161,7 +170,7 @@ public class CADControl : Control, ICADControl
     public static readonly StyledProperty<double> MinZoomProperty =
         AvaloniaProperty.Register<CADControl, double>(nameof(MinZoom),defaultValue: DefaultMinZoom);
 
-
+    public const double DefaultZoom = 1;
     /// <summary>
     /// The value of zoom level;
     /// </summary>
@@ -175,7 +184,7 @@ public class CADControl : Control, ICADControl
     /// The value of zoom level;
     /// </summary>
     public static readonly StyledProperty<double> ZoomProperty =
-        AvaloniaProperty.Register<CADControl, double>(nameof(Zoom),defaultValue: 1D);
+        AvaloniaProperty.Register<CADControl, double>(nameof(Zoom),defaultBindingMode: BindingMode.TwoWay, defaultValue: DefaultZoom);
     private void HandleZoomChanged(AvaloniaPropertyChangedEventArgs e)
     {
         UpdateCADScreenConverter();
@@ -192,14 +201,14 @@ public class CADControl : Control, ICADControl
     /// </summary>
     public bool IsMouseWheelingZoomEnabled
     {
-        get { return (bool)GetValue(IsMouseWheelingOnZoomEnabledProperty); }
-        set { SetValue(IsMouseWheelingOnZoomEnabledProperty, value); }
+        get { return (bool)GetValue(IsMouseWheelingZoomEnabledProperty); }
+        set { SetValue(IsMouseWheelingZoomEnabledProperty, value); }
     }
 
     /// <summary>
     /// Get or set whether user can to change zoom by mouse wheeling;
     /// </summary>
-    public static readonly StyledProperty<bool> IsMouseWheelingOnZoomEnabledProperty =
+    public static readonly StyledProperty<bool> IsMouseWheelingZoomEnabledProperty =
         AvaloniaProperty.Register<CADControl, bool>(nameof(IsMouseWheelingZoomEnabled), defaultValue: true);
 
     /// <summary>
@@ -279,6 +288,7 @@ public class CADControl : Control, ICADControl
     #region Pan(The crosshair in the center of the canvas)
     private readonly PanVisual _panVisual;
 
+    public const double DefaultPanLength = 72;
     /// <summary>
     /// The length of the crosshair in the center of the canvas.(in pixels)
     /// </summary>
@@ -289,27 +299,46 @@ public class CADControl : Control, ICADControl
     }
 
     public static readonly StyledProperty<double> PanLengthProperty =
-        AvaloniaProperty.Register<CADControl, double>(nameof(PanLength), defaultValue: PanVisual.DefaultPanLength);
+        AvaloniaProperty.Register<CADControl, double>(nameof(PanLength), defaultValue: DefaultPanLength);
 
+    private void HandlePanLengthChanged(AvaloniaPropertyChangedEventArgs e)
+    {
+        _panVisual.PanLength = PanLength;
+        _panVisual.RefreshPanPen();
+        _visualInvalidationType |= VisualInvalidationType.Pan;
+        if (_isVisualInvalidationSuspended)
+        {
+            return;
+        }
+        ResumeVisualInvalidation();
+    }
+    
+    public static readonly IImmutableSolidColorBrush DefaultPanBrush = Brushes.White;
     /// <summary>
     /// The brush of the crosshair in the center of the canvas.
     /// </summary>
-    public Brush PanBrush
+    public IBrush PanBrush
     {
         get => GetValue(PanBrushProperty);
         set => SetValue(PanBrushProperty, value);
     }
 
-    public static readonly StyledProperty<Brush> PanBrushProperty =
-        AvaloniaProperty.Register<CADControl, Brush>(nameof(PanBrush), defaultValue: PanVisual.DefaultPanBrush);
+    public static readonly StyledProperty<IBrush> PanBrushProperty =
+        AvaloniaProperty.Register<CADControl, IBrush>(nameof(PanBrush), defaultValue: DefaultPanBrush);
 
     private void HandlePanBrushChanged(AvaloniaPropertyChangedEventArgs e)
     {
         _panVisual.PanBrush = PanBrush;
         _panVisual.RefreshPanPen();
-        _panVisual.InvalidateVisual();
+        _visualInvalidationType |= VisualInvalidationType.Pan;
+        if (_isVisualInvalidationSuspended)
+        {
+            return;
+        }
+        ResumeVisualInvalidation();
     }
 
+    public const double DefaultPanThickness = 2;
     /// <summary>
     /// The thickness of the crosshair in the center of the canvas.(in pixels)
     /// </summary>
@@ -320,13 +349,18 @@ public class CADControl : Control, ICADControl
     }
 
     public static readonly StyledProperty<double> PanThicknessProperty =
-        AvaloniaProperty.Register<CADControl, double>(nameof(PanThickness), defaultValue: PanVisual.DefaultPanThickness);
+        AvaloniaProperty.Register<CADControl, double>(nameof(PanThickness), defaultValue: DefaultPanThickness);
 
     private void HandlePanThickness(AvaloniaPropertyChangedEventArgs _)
     {
         _panVisual.PanThickness = PanThickness;
         _panVisual.RefreshPanPen();
-        _panVisual.InvalidateVisual();
+        _visualInvalidationType |= VisualInvalidationType.Pan;
+        if (_isVisualInvalidationSuspended)
+        {
+            return;
+        }
+        ResumeVisualInvalidation();
     }
 
     /// <summary>
@@ -369,41 +403,51 @@ public class CADControl : Control, ICADControl
 
     #region Grids
     private readonly GridsVisual _gridsVisual;
+    public static readonly IImmutableSolidColorBrush DefaultGridsBrush = new ImmutableSolidColorBrush(Color.FromArgb(230, 80, 80, 80));
     /// <summary>
     /// The brush of grid lines;
     /// </summary>
-    public Brush GridsBrush
+    public IBrush GridsBrush
     {
-        get { return (Brush)GetValue(GridsBrushProperty); }
+        get { return GetValue(GridsBrushProperty); }
         set { SetValue(GridsBrushProperty, value); }
     }
 
-    public static readonly StyledProperty<Brush> GridsBrushProperty =
-        AvaloniaProperty.Register<CADControl,Brush>(nameof(GridsBrush), defaultValue:GridsVisual.DefaultGridsBrush);
+    public static readonly StyledProperty<IBrush> GridsBrushProperty =
+        AvaloniaProperty.Register<CADControl, IBrush>(nameof(GridsBrush), defaultValue:DefaultGridsBrush);
     private void HandleGridsBrushChanged(AvaloniaPropertyChangedEventArgs _)
     {
         _gridsVisual.GridsBrush = GridsBrush;
         _gridsVisual.RefreshGridsPen();
-        _gridsVisual.InvalidateVisual();
-    }
-    
-    /// <summary>
-    /// The thickness of grid lines;
-    /// </summary>
-    public double GridsThickness
-    {
-        get { return (double)GetValue(GirdsThicknessProperty); }
-        set { SetValue(GirdsThicknessProperty, value); }
+        _visualInvalidationType |= VisualInvalidationType.Grids;
+        if (_isVisualInvalidationSuspended)
+        {
+            return;
+        }
+        ResumeVisualInvalidation();
     }
 
-    public static readonly StyledProperty<double> GirdsThicknessProperty =
-        AvaloniaProperty.Register<CADControl,double>(nameof(GridsThickness),defaultValue:GridsVisual.DefaultGridsThickness);
+    public const double DefaultGridsThickness = 2;
+
+    public double GridsThickness
+    {
+        get { return GetValue(GridsThicknessProperty); }
+        set { SetValue(GridsThicknessProperty, value); }
+    }
+
+    public static readonly StyledProperty<double> GridsThicknessProperty =
+        AvaloniaProperty.Register<CADControl, double>(nameof(GridsThickness), defaultValue: DefaultGridsThickness);
 
     private void HandleGridsThicknessChanged(AvaloniaPropertyChangedEventArgs _)
     {
         _gridsVisual.GridsThickness = GridsThickness;
         _gridsVisual.RefreshGridsPen();
-        _gridsVisual.InvalidateVisual();
+        _visualInvalidationType |= VisualInvalidationType.Grids;
+        if (_isVisualInvalidationSuspended)
+        {
+            return;
+        }
+        ResumeVisualInvalidation();
     }
 
 
@@ -418,14 +462,111 @@ public class CADControl : Control, ICADControl
 
     public static readonly StyledProperty<bool> ShowGridsProperty =
         AvaloniaProperty.Register<CADControl,bool>(nameof(ShowGrids), defaultValue: true);
-
+    
     private void HandleShowGridsChanged(AvaloniaPropertyChangedEventArgs _)
     {
         _gridsVisual.IsVisible = ShowGrids;
         _gridsVisual.RefreshGridsPen();
-        _gridsVisual.InvalidateVisual();
+        _visualInvalidationType |= VisualInvalidationType.Grids;
+        if (_isVisualInvalidationSuspended)
+        {
+            return;
+        }
+        ResumeVisualInvalidation();
     }
 
+    #endregion
+
+    #region Mouse dragging
+
+    private (Point dragStartPoint,Point panScreenPositionBeforeDrag)? _dragInfo;
+    /// <summary>
+    /// Get or set is drag behavior enabled;
+    /// </summary>
+    public bool IsDragEnabled
+    {
+        get { return GetValue(IsDragEnabledProperty); }
+        set { SetValue(IsDragEnabledProperty, value); }
+    }
+
+    public static readonly StyledProperty<bool> IsDragEnabledProperty =
+        AvaloniaProperty.Register<CADControl, bool>(nameof(IsDragEnabled), defaultValue: true);
+
+    public const MouseDragButton DefaultDragButton = MouseDragButton.Left;
+    public MouseDragButton DragButton
+    {
+        get { return GetValue(DragButtonProperty); }
+        set { SetValue(DragButtonProperty, value); }
+    }
+    
+    public static readonly StyledProperty<MouseDragButton> DragButtonProperty =
+        AvaloniaProperty.Register<CADControl, MouseDragButton>(nameof(DragButton), defaultValue: DefaultDragButton);
+
+    private static readonly IReadOnlyDictionary<PointerUpdateKind,MouseDragButton> PointerUpdateKindToMouseDragButton = new Dictionary<PointerUpdateKind, MouseDragButton>
+    {
+        { PointerUpdateKind.LeftButtonPressed, MouseDragButton.Left },
+        { PointerUpdateKind.RightButtonPressed, MouseDragButton.Right },
+        { PointerUpdateKind.MiddleButtonPressed, MouseDragButton.Middle },
+        { PointerUpdateKind.LeftButtonReleased, MouseDragButton.Left },
+        { PointerUpdateKind.RightButtonReleased, MouseDragButton.Right },
+        { PointerUpdateKind.MiddleButtonReleased, MouseDragButton.Middle }
+    };
+
+    private bool PointerPressedOnDrag(PointerPressedEventArgs args)
+    {
+        if(!IsDragEnabled)
+        {
+            return false;
+        }
+        var properties = args.GetCurrentPoint(this).Properties;
+        if(!PointerUpdateKindToMouseDragButton.TryGetValue(properties.PointerUpdateKind,out var mouseButton))
+        {
+            return false;
+        }
+        if(mouseButton != DragButton)
+        {
+            return false;
+        }
+        _dragInfo = (args.GetPosition(this),PanScreenPosition);
+        return false;
+    }
+    private bool PointerMovedOnDrag(PointerEventArgs args)
+    {
+        if (!IsDragEnabled || _dragInfo == null)
+        {
+            return false;
+        }
+        var currentPoint = args.GetPosition(this);
+        var delta = currentPoint - _dragInfo.Value.dragStartPoint;
+        if (delta.NearlyEquals(new Point(0,0)))
+        {
+            return false;
+        }
+        SuspendVisualInvalidation();
+        var panScreenPositionBeforeDrag = _dragInfo.Value.panScreenPositionBeforeDrag;
+        PanScreenPosition = new Point(panScreenPositionBeforeDrag.X + delta.X, panScreenPositionBeforeDrag.Y + delta.Y);
+        ResumeVisualInvalidation();
+        return false;
+    }
+
+    private bool PointerReleasedOnDrag(PointerReleasedEventArgs args)
+    {
+        if (!IsDragEnabled || _dragInfo == null)
+        {
+            return false;
+        }
+        var properties = args.GetCurrentPoint(this).Properties;
+        if (!PointerUpdateKindToMouseDragButton.TryGetValue(properties.PointerUpdateKind, out var mouseButton))
+        {
+            return false;
+        }
+        if (mouseButton != DragButton)
+        {
+            return false;
+        }
+        _dragInfo = null;
+        return false;
+    }
     #endregion
 
     #region Mouse and keyboard events
@@ -436,7 +577,8 @@ public class CADControl : Control, ICADControl
     /// <typeparam name="TEventArgs">事件参数类型</typeparam>
     /// <param name="e">事件参数</param>
     /// <param name="handlers">处理器集合</param>
-    private void HandleRoutedEvent<TEventArgs>(
+    private void HandleRoutedEvent<TEventArgs>
+    (
         TEventArgs e,
         IEnumerable<Predicate<TEventArgs>> handlers
     ) where TEventArgs : RoutedEventArgs
@@ -462,7 +604,6 @@ public class CADControl : Control, ICADControl
     /// <returns></returns>
     private IEnumerable<Predicate<PointerWheelEventArgs>> GetPointerWheelEventHandlers()
     {
-        //缩放响应;
         yield return PointerWheelOnZoom;
     }
     protected override void OnPointerWheelChanged(PointerWheelEventArgs e)
@@ -470,16 +611,38 @@ public class CADControl : Control, ICADControl
         HandleRoutedEvent(e, GetPointerWheelEventHandlers());
         base.OnPointerWheelChanged(e);
     }
+    
+    private IEnumerable<Predicate<PointerPressedEventArgs>> GetPointerPressedEventHandlers()
+    {
+        yield return PointerPressedOnDrag;
+    }
 
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
+        HandleRoutedEvent(e, GetPointerPressedEventHandlers());
         base.OnPointerPressed(e);
     }
+
+    private IEnumerable<Predicate<PointerEventArgs>> GetPointerMovedEventHandlers()
+    {
+        yield return PointerMovedOnDrag;
+    }
+
     protected override void OnPointerMoved(PointerEventArgs e)
     {
+        HandleRoutedEvent(e, GetPointerMovedEventHandlers());
         base.OnPointerMoved(e);
     }
 
+    private IEnumerable<Predicate<PointerReleasedEventArgs>> GetPointerReleasedEventHandlers()
+    {
+        yield return PointerReleasedOnDrag;
+    }
+    protected override void OnPointerReleased(PointerReleasedEventArgs e)
+    {
+        HandleRoutedEvent(e, GetPointerReleasedEventHandlers());
+        base.OnPointerReleased(e);
+    }
     #endregion
 
 #pragma warning disable CS0067 // The event is never used

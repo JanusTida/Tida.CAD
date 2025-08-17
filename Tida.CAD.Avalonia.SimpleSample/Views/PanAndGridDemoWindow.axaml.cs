@@ -1,14 +1,12 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
 using Avalonia.Markup.Xaml;
-using System;
 
 namespace Tida.CAD.Avalonia.SimpleSample;
 
-public partial class DrawObjectDemoWindow : Window
+public partial class PanAndGridDemoWindow : Window
 {
-    public DrawObjectDemoWindow()
+    public PanAndGridDemoWindow()
     {
         InitializeComponent();
     }

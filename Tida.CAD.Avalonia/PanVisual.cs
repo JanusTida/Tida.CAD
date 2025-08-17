@@ -15,15 +15,12 @@ class PanVisual : Visual
         _cadScreenConverter = cadScreenConverter;
     }
     private readonly ICADScreenConverter _cadScreenConverter;
-    public const double DefaultPanLength = 72;
-    public double PanLength { get; set; } = DefaultPanLength;
-
-    public static readonly Brush DefaultPanBrush = Brushes.White;
     
-    public Brush PanBrush { get; set; } = DefaultPanBrush;
+    public double PanLength { get; set; }
+    
+    public IBrush? PanBrush { get; set; }
 
-    public const double DefaultPanThickness = 2;
-    public double PanThickness { get; set; } = DefaultPanThickness;
+    public double PanThickness { get; set; }
 
     private Pen? _panPen;
     public void RefreshPanPen()

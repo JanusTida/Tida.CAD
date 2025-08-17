@@ -29,17 +29,12 @@ class GridsVisual : Visual
     /// <summary>
     /// The brush of grid lines;
     /// </summary>
-    public Brush GridsBrush { get; set; } = DefaultGridsBrush;
-    public static readonly Brush DefaultGridsBrush = new SolidColorBrush
-    {
-        Color = Color.FromArgb(230, 80, 80, 80)
-    };
-
-    public const double DefaultGridsThickness = 2;
+    public IBrush? GridsBrush { get; set; }
+    
     /// <summary>
     /// The thickness of grid lines;
     /// </summary>
-    public double GridsThickness { get; set; } = DefaultGridsThickness;
+    public double GridsThickness { get; set; }
     /// <summary>
     /// Draw the grid lines;
     /// </summary>

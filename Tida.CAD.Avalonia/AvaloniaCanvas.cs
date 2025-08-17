@@ -139,7 +139,7 @@ class AvaloniaCanvas : ICanvas
     /// <param name="center"></param>
     /// <param name="radiusX"></param>
     /// <param name="radiusY"></param>
-    public void DrawEllipse(Brush? brush, Pen? pen, Point center, double radiusX, double radiusY)
+    public void DrawEllipse(IBrush? brush, Pen? pen, Point center, double radiusX, double radiusY)
     {
         radiusX = CADScreenConverter.ToScreen(radiusX);
         radiusY = CADScreenConverter.ToScreen(radiusY);
@@ -233,7 +233,7 @@ class AvaloniaCanvas : ICanvas
     /// <param name="brush">The brush to fill the rect</param>
     /// <param name="pen">The pen to decorate the border of the rect</param>
     /// <param name="rect"></param>
-    public void DrawRectangle(CADRect rect, Brush? brush, Pen? pen)
+    public void DrawRectangle(CADRect rect, IBrush? brush, Pen? pen)
     {
         var topLeftInScreen = CADScreenConverter.ToScreen(rect.TopLeft);
         var widthInScreen = CADScreenConverter.ToScreen(rect.Width);
@@ -242,7 +242,7 @@ class AvaloniaCanvas : ICanvas
         DrawingContext.DrawRectangle(brush, pen, rectInScreen);
     }
 
-    public void DrawPolygon(IEnumerable<Point> points, Brush? brush, Pen? pen)
+    public void DrawPolygon(IEnumerable<Point> points, IBrush? brush, Pen? pen)
     {
         DrawFill(points, brush, pen);
     }
@@ -252,7 +252,7 @@ class AvaloniaCanvas : ICanvas
     /// </summary>
     /// <param name="points">The points to create the region</param>
     /// <param name="brush">The brush to fill the region</param>
-    private void DrawFill(IEnumerable<Point> points, Brush? brush, Pen? pen)
+    private void DrawFill(IEnumerable<Point> points, IBrush? brush, Pen? pen)
     {
 
         if (points == null)
@@ -273,7 +273,7 @@ class AvaloniaCanvas : ICanvas
     /// <param name="screenPoints"></param>
     /// <param name="brush"></param>
     /// <param name="pen"></param>
-    private void NativeDrawFill(IEnumerable<Point> screenPoints, Brush? brush, Pen? pen)
+    private void NativeDrawFill(IEnumerable<Point> screenPoints, IBrush? brush, Pen? pen)
     {
         if (screenPoints == null)
         {
@@ -321,7 +321,7 @@ class AvaloniaCanvas : ICanvas
     /// </summary>
     /// <param name="brush">The brush to fill the ellipse</param>
     /// <param name="pen">The pen to decorate the border of the ellipse</param>
-    public void NativeDrawEllipse(Brush? brush, Pen? pen, Point center, double radiusX, double radiusY)
+    public void NativeDrawEllipse(IBrush? brush, Pen? pen, Point center, double radiusX, double radiusY)
     {
         DrawingContext.DrawEllipse(
             brush,

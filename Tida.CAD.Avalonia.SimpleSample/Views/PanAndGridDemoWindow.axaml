@@ -1,0 +1,58 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:tidacad="https://github.com/Tida.CAD"
+		xmlns:vm="using:Tida.CAD.Avalonia.SimpleSample.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Tida.CAD.Avalonia.SimpleSample.PanAndGridDemoWindow"
+		x:DataType="vm:PanAndGridDemoWindowViewModel"
+        Title="Pand and grid demo">
+	<DockPanel>
+		<StackPanel DockPanel.Dock="Bottom">
+			<StackPanel.Styles>
+				<Style Selector="TextBlock">
+					<Setter Property="VerticalAlignment" Value="Center"/>
+				</Style>
+			</StackPanel.Styles>
+			<StackPanel Orientation="Horizontal">
+				<TextBlock>Zoom:</TextBlock>
+				<Slider VerticalAlignment="Center" Width="120" 
+						Value="{Binding Zoom}" 
+						Minimum="{Binding MinZoom}"
+						Maximum="{Binding MaxZoom}"/>
+				<TextBlock Text="{Binding Zoom}"/>
+				<CheckBox Margin="18,0,0,0" IsChecked="{Binding IsMouseWheelingZoomEnabled}">IsMouseWheelingZoomEnabled</CheckBox>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<TextBlock>PanThickness</TextBlock>
+				<NumericUpDown Value="{Binding PanThickness}"/>
+
+				<TextBlock Margin="18,0,0,0">PanLength:</TextBlock>
+				<NumericUpDown Value="{Binding PanLength}"/>
+				
+				<TextBlock Margin="18,0,0,0">Pan brush:</TextBlock>
+				<ColorPicker Color="{Binding PanColor}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<TextBlock>GridsBrush:</TextBlock>
+				<ColorPicker Color="{Binding GridsColor}"/>
+				
+				<TextBlock Margin="18,0,0,0">GridsThickness:</TextBlock>
+				<NumericUpDown Value="{Binding GridsThickness}" />
+			</StackPanel>
+		</StackPanel>
+		<tidacad:CADControl MinZoom="{Binding MinZoom}" 
+							Zoom="{Binding Zoom}"
+							IsMouseWheelingZoomEnabled="{Binding IsMouseWheelingZoomEnabled}"
+							
+							PanThickness="{Binding PanThickness}"
+							PanBrush="{Binding PanBrush}"
+							PanLength="{Binding PanLength}"
+							
+							GridsThickness="{Binding GridsThickness}"
+							GridsBrush="{Binding GridsBrush}"
+							/>
+		
+	</DockPanel>
+</Window>

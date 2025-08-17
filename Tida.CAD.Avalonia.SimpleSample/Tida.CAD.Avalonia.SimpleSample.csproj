@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
+	<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,6 +27,9 @@
   <ItemGroup>
     <Compile Update="Views\DrawObjectDemoWindow.axaml.cs">
       <DependentUpon>DrawObjectDemoWindow.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PanAndGridDemoWindow.axaml.cs">
+      <DependentUpon>PanAndGridDemoWindow.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>
