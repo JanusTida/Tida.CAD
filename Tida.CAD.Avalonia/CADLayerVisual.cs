@@ -14,8 +14,14 @@ class CADLayerVisual : Visual
     {
         Layer = layer;
         Canvas = canvas;
-
+        
         IsVisible = Layer.IsVisible;
+        Layer.VisualChanged += Layer_VisualChanged;
+    }
+
+    private void Layer_VisualChanged(object? sender, EventArgs e)
+    {
+        InvalidateVisual();
     }
 
     public CADLayer Layer { get; }

@@ -51,4 +51,9 @@ public interface ICADScreenConverter {
     /// The current zoom of the cad;
     /// </summary>
     double Zoom { get;  }
+
+    /// <summary>
+    /// The position of the pan in screen(in pixel);
+    /// </summary>
+    Point PanScreenPosition { get; set; }
 }

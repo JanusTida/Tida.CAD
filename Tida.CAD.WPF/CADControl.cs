@@ -132,17 +132,6 @@ public partial class CADControl : Grid, ICADControl {
     }
 
     /// <summary>
-    /// 通过调整原点的视图偏移,使得某个某个视图坐标的某工程坐标点处于视图中心的位置;
-    /// </summary>
-    /// <param name="screenPoint"></param>
-    protected void SetCenterScreen(Point screenPoint) {
-        PanScreenPosition = new Point(
-            PanScreenPosition.X + this.ActualWidth / 2 - screenPoint.X,
-            PanScreenPosition.Y + this.ActualHeight / 2 - screenPoint.Y
-        );
-    }
-
-    /// <summary>
     /// 重写绘制函数;
     /// </summary>
     /// <param name="drawingContext"></param>
@@ -815,9 +804,11 @@ public partial class CADControl
     /// </summary>
     /// <param name="unitPos"></param>
     /// <param name="screenPos"></param>
-    private void MoveUnitPositionToScreenPosition(
+    private void MoveUnitPositionToScreenPosition
+    (
         Point unitPos,
-        Point screenPos)
+        Point screenPos
+    )
     {
         var unitPosInScreen = CADScreenConverter.ToScreen(unitPos);
         //通过调整原点的视图偏移实现;

@@ -8,8 +8,8 @@
         x:Class="Tida.CAD.Avalonia.SimpleSample.DrawObjectDemoWindow"
 		x:DataType="vm:DrawObjectDemoWindowViewModel"
         Title="DrawObject Demo">
-	<DockPanel>
-		<UniformGrid DockPanel.Dock="Bottom">
+	<DockPanel Margin="18">
+		<UniformGrid DockPanel.Dock="Bottom" PointerPressed="UniformGrid_PointerPressed" Background="Purple">
 			<Button Command="{Binding AddLineCommand}">Add Line</Button>
 			<Button Command="{Binding AddRectCommand}">Add Rect</Button>
 			<Button Command="{Binding ChangeLayerBackgroundCommand}">Change LayerBackground</Button>
